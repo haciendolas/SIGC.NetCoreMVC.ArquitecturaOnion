@@ -1,0 +1,59 @@
+﻿@{
+    Layout = null;
+}
+<div class="card-body border-bottom-dashed border-bottom">
+    <form>
+        <div class="row pb-2">
+            <label for="txtNroInspeccion" class="col-sm-2 col-form-label">Tipo Contribuyente</label>
+            <div class="col-sm-4">
+                <select class="form-select" id="scboAreaInspeccionadora" name="scboAreaInspeccionadora">
+                </select>
+            </div>
+            <label for="txtNroInspeccion" class="col-sm-1 col-form-label">Rubro</label>
+            <div class="col-sm-2">
+                <select class="form-select" id="scboAreaInspeccionadora" name="scboAreaInspeccionadora">
+                </select>
+            </div>
+            <label for="txtNroInspeccion" class="col-sm-1 col-form-label">Estado</label>
+            <div class="col-sm-2">
+                <select class="form-select" id="scboAreaInspeccionadora" name="scboAreaInspeccionadora">
+                </select>
+            </div>
+        </div>
+
+        <div class="row pb-2">
+            <label for="txtNroInspeccion" class="col-sm-2 col-form-label">N° Documento</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" id="txtCod_Inspe" name="NroInspeccion" />
+            </div>
+            <label for="txtNroInspeccion" class="col-sm-1 col-form-label">Razón Social</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" id="txtCod_Inspe" name="NroInspeccion" />
+            </div>
+
+        </div>
+    </form>
+</div>
+<div class="card-body">
+    <div class="table-responsive table-card p-1">
+        <table class="table align-middle">
+            <thead class="table-light text-muted">
+                <tr>
+                    <th class="text-center">ID</th>
+                    <th class="text-center">Tipo Contribuyente</th>
+                    <th class="text-center">N° Documento</th>
+                    <th class="text-center">Razón Social</th>
+                    <th class="text-center">Dirección</th>
+                    <th class="text-center">Rubro</th>
+                    <th class="text-center">País</th>
+                    <th class="text-center">Estado</th>
+                    <th class="text-center">Última fecha</th>
+                    <th class="text-center">Último usuario </th>
+                    <th class="text-center" colspan="2">Opciones</th>
+                </tr>
+            </thead>
+            <tbody id="details-list">
+            </tbody>
+        </table>
+    </div>
+</div>

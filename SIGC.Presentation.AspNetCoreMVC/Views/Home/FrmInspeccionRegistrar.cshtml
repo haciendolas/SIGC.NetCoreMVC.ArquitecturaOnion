@@ -1,0 +1,166 @@
+﻿@{Layout = null;}
+<form id="frmInspeccion" class="needs-validation" novalidate method="dialog">
+    <h5 class="p-2">Todos los campos(<i class=" ri-asterisk align-middle text-danger"></i>) son obligatorios</h5>
+    <h1 class="fs-18 mb-1"> 1. Inspección</h1>
+    <div class="card-body">
+        <div class="row align-items-center g-3">
+            <input type="hidden" id="profile_type" value="@ViewBag.profile_type" />
+            <div class="row pb-2">
+                <label for="txtNroInspeccion" class="col-sm-2 col-form-label">Nro Inspección</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="txtCod_Inspe" name="NroInspeccion" readonly value="GENERADO" />
+                </div>
+                <label for="cboEstadoInspeccion" class="col-sm-2 col-form-label">Estado <i class=" ri-asterisk align-middle text-danger"></i></label>
+                <div class="col-sm-4">
+                    <select class="form-select" id="cboEstadoInspeccion" name="EstadoInspeccion">
+                        
+                    </select>
+                </div>
+            </div>
+            <div class="row pb-2">
+                <label for="cboUnidadInspeccionada" class="col-sm-2 col-form-label">Unidad Inspeccionada <i class=" ri-asterisk align-middle text-danger"></i></label>
+                <div class="col-sm-4">
+                    <select class="form-select" id="cboUnidadInspeccionada" name="UnidadInspeccionada">
+                        @{
+                           
+                        }
+                    </select>
+                </div>
+                <label for="cboUbicacion" class="col-sm-2 col-form-label">Ubicación <i class=" ri-asterisk align-middle text-danger"></i></label>
+                <div class="col-sm-4">
+                    <select class="form-select" id="cboUbicacion" name="Ubicacion">
+                        @{
+                           
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="row pb-2">
+                <label for="txtLugar" class="col-sm-2 col-form-label">Área Fisica<i class=" ri-asterisk align-middle text-danger"></i></label>
+                <div class="col-sm-4">
+                    <input type="hidden" id="hdcod_lugar" name="cod_lugar" />
+                    <input type="hidden" id="hdcod_sub_lugar" name="cod_sub_lugar" />
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="txtLugar" name="Lugar" readonly />
+                        <button class="btn btn-info" id="btn-buscar-ubicacion" type="button"><i class="ri-search-line search-icon me-2 align-bottom"></i>Buscar</button>
+                    </div>
+                </div>
+                <label for="txtAreaResponsable" class="col-sm-2 col-form-label">Área Responsable <i class=" ri-asterisk align-middle text-danger"></i></label>
+                <div class="col-sm-4">
+                    <input type="hidden" id="hdcod_area_respo" name="cod_area_respo" />
+                    <input type="text" class="form-control" id="txtAreaResponsable" name="AreaResponsable" readonly />
+                </div>
+            </div>
+            <div class="row pb-2" id="div-responsable-area">
+                <label for="txtResponsableArea" class="col-sm-2 col-form-label">Responsable del Área <i class=" ri-asterisk align-middle text-danger"></i></label>
+                <div class="col-sm-10">
+                    <input type="hidden" id="hdcod_responsable" name="cod_responsable" />
+                    <input type="hidden" id="hdcod_respo_reg" name="cod_respo_reg" />
+                    <input type="text" class="form-control" id="txtResponsableArea" name="ResponsableArea" readonly />
+                </div>
+            </div>
+            <div class="row pb-2">
+                <label for="cboTipoInspeccion" class="col-sm-2 col-form-label">Tipo Inspección <i class=" ri-asterisk align-middle text-danger"></i></label>
+                <div class="col-sm-4">
+                    <div class="input-group">
+                        <select class="form-select" id="cboTipoInspeccion" name="TipoInspeccion">
+                            
+                        </select>
+                        <button class="btn btn-info" id="btn-buscar-clasificacion" type="button"><i class="ri-search-line search-icon me-2 align-bottom"></i>Buscar</button>
+                    </div>
+                </div>
+                <label for="txtResponsableArea" class="col-sm-2 col-form-label">Clasificación <i class=" ri-asterisk align-middle text-danger"></i></label>
+                <div class="col-sm-4">
+                    <input type="hidden" id="hdcod_subcla_inspe" name="cod_subcla_inspe" />
+                    <input type="hidden" id="hdcod_cla_inspe" name="cod_cla_inspe" />
+                    <input type="text" class="form-control" id="txtClasificacion" name="Clasificacion" readonly />
+                </div>
+            </div>
+            <div class="row pb-2">
+                <label for="dtpFechaInspeccion" class="col-sm-2 col-form-label">Fecha Inspección <i class=" ri-asterisk align-middle text-danger"></i></label>
+                <div class="col-sm-4">
+                    <div class="input-group">
+                        <input type="date" class="form-control flatpickr-input" id="dtpFechaInspeccion" name="FechaInspeccion"
+                               data-provider="flatpickr" data-date-format="d/m/Y"
+                               readonly="readonly">
+                        <span class="input-group-text fs-15" id="span-dtpFechaInspeccion" style="cursor:pointer"><i class="ri-calendar-event-fill"></i></span>
+                    </div>
+                </div>
+                <label for="txtHoraInspeccion" class="col-sm-2 col-form-label">Hora Inspección(24h) <i class=" ri-asterisk align-middle text-danger"></i></label>
+                <div class="col-sm-4">
+                    <input type="time" class="form-control" id="txtHoraInspeccion" name="HoraInspeccion" value="@DateTime.Now.ToShortTimeString()" />
+                </div>
+            </div>
+            <div class="row pb-2">
+                <label for="txtObjetivoInspeccion" class="col-sm-2 col-form-label">Objetivo<br /> Inspección <i class=" ri-asterisk align-middle text-danger"></i></label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="txtObjetivoInspeccion" name="ObjetivoInspeccion" rows="2">Verificar el cumplimiento de los estándares de seguridad, salud ocupacional y medio ambiente</textarea>
+                </div>
+            </div>
+            <div class="row pb-2">
+                <label for="txtDescripcionCausa" class="col-sm-2 col-form-label">Descripción <br /> de Causa <i class=" ri-asterisk align-middle text-danger"></i></label>
+                <div class="col-sm-4">
+                    <textarea class="form-control" id="txtDescripcionCausa" name="DescripcionCausa" rows="2"></textarea>
+                </div>
+                <label for="txtConclucionRecomendacion" class="col-sm-2 col-form-label">Conclusiones y Recomendaciones <i class=" ri-asterisk align-middle text-danger"></i></label>
+                <div class="col-sm-4">
+                    <textarea class="form-control" id="txtConclucionRecomendacion" name="ConclucionRecomendacion" rows="2">Continuar fomentando la gestión preventiva de SSO en el área de trabajo</textarea>
+                </div>
+            </div>
+            <div class="row pb-2" id="div-comentario" style="display:none">
+                <label for="txtComentarioModificacion" class="col-sm-2 col-form-label">Comentario<br /> modificación <i class=" ri-asterisk align-middle text-danger"></i></label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="txtComentarioModificacion" name="ComentarioModificacion" rows="2"></textarea>
+                </div>
+            </div>
+            <div class="row pb-2">
+                <label class="col-sm-2 col-form-label">Participantes Inspección <i class=" ri-asterisk align-middle text-danger"></i></label>
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <ul class="list-group list-group-horizontal-md" id="ul-inspector">
+                        </ul>
+                        <button class="btn btn-info" id="btn-buscar-inspector" type="button"><i class="ri-search-line search-icon me-2 align-bottom"></i>Buscar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row pb-2 mt-3">
+                <div class="text-end">
+                    <button type="button" class="btn btn-light" id="btnNewInspeccion"><i class="ri-file-text-fill align-bottom me-1 fs-13"></i>&nbsp;Nuevo&nbsp;</button>&nbsp;&nbsp;
+                    <button type="button" class="btn btn-primary" id="btnRegInspeccion"><i class="ri-save-3-line align-bottom me-1 fs-13"></i><span>Guardar</span></button>&nbsp;&nbsp;
+                    <button type="button" class="btn btn-success" id="btnFinalizar"><i class="ri-send-plane-fill align-bottom me-1 fs-13"></i>&nbsp;Enviar&nbsp;</button>
+                </div>
+            </div>
+        </div>
+        <strong><i class=" ri-asterisk align-middle text-danger"></i> Haga clic en botón "Agregar" para añadir observaciones encontradas en esta Inspección</strong>
+        <h1 class="fs-18 mb-1">2. Observaciones&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-success" id="btn-agregar-observacion"><i class="ri-add-fill me-1 align-bottom"></i> Agregar</button></h1>
+        <div class="table-responsive">
+            <table class="invoice-table table table-borderless table-nowrap mb-0">
+                <thead class="align-middle">
+                    <tr class="table-active">
+                        <th scope="col" class="text-center">Nro Observación</th>
+                        <th scope="col" class="text-center">Tipo Observación</th>
+                        <th scope="col" class="text-center">¿Acto o Condición?</th>
+                        <th scope="col" class="text-center">Tipo de Condición/Acto Subestándar</th>
+                        <th scope="col" class="text-center">Descripción</th>
+                        <th scope="col" class="text-center">Nivel de Riesgo</th>
+                        <th scope="col" class="text-center">Acción Preventiva</th>
+                        <th scope="col" class="text-center">Responsable</th>
+                        <th scope="col" class="text-center">Área Responsable</th>
+                        <th scope="col" class="text-center">Fecha Prog.<br /> Levantamiento</th>
+                        <th scope="col" class="text-center">Evidencia</th>
+                        <th scope="col" class="text-center">Fecha Real<br /> Levantamiento</th>
+                        <th scope="col" class="text-center">Levantamiento</th>
+                        <th scope="col" class="text-center" colspan="2">Opciónes</th>
+                    </tr>
+                </thead>
+                <tbody id="detalle-linea-obs">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</form>
+@Html.Partial("FrmModalUbicacionBuscar")
+@Html.Partial("FrmModalObservacionAgregar")
+@Html.Partial("FrmModalInspectorBuscar")
+@Html.Partial("FrmModalClasificacionBuscar")
+@Html.Partial("FrmModalUbicacionMultipleBuscar")

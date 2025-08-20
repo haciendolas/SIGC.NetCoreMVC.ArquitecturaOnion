@@ -1,0 +1,31 @@
+﻿@{Layout = null;}
+<div class="modal fade" id="modal-ubicacion-buscar" style="z-index:99999" tabindex="-1" aria-labelledby="titulo-ubicacion" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-2">
+                <h5 class="modal-title" id="titulo-ubicacion">BUSCAR ÁREA</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">                  
+                    <table class="table">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="width:30px"></th>
+                                <th colspan="2" style="text-align:left">Área</th>                               
+                            </tr>
+                        </thead>
+                        <tbody id="list-ubicacion">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="hstack gap-2 justify-content-end">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="btn-modal-ubicacion-cerrar"><i class="ri-close-fill align-bottom"></i>Cerrar</button>
+                    <button type="button" class="btn btn-success" id="btn-modal-ubicacion-aceptar"><i class="ri-check-fill align-bottom"></i>Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

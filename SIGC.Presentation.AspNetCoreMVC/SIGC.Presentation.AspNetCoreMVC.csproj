@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Inventory\Controllers\" />
+    <Folder Include="Areas\Inventory\Data\" />
+    <Folder Include="Areas\Inventory\Models\" />
+    <Folder Include="Areas\Inventory\Views\" />
+    <Folder Include="Areas\Purchase\Data\" />
+    <Folder Include="Areas\Purchase\Models\" />
+    <Folder Include="Areas\Sale\Controllers\" />
+    <Folder Include="Areas\Sale\Data\" />
+    <Folder Include="Areas\Sale\Models\" />
+    <Folder Include="Areas\Sale\Views\" />
+    <Folder Include="Areas\Security\Data\" />
+    <Folder Include="Areas\Security\Models\" />
+    <Folder Include="wwwroot\scripts\Areas\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
+  </ItemGroup>
+
+</Project>

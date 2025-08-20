@@ -1,0 +1,114 @@
+﻿@{
+    Layout = null;
+}
+<form id="frmInspeccion" class="needs-validation" novalidate method="dialog">
+    <h6 class="pt-2">&nbsp;&nbsp;Todos los campos(<i class=" ri-asterisk align-middle text-danger"></i>) son obligatorios</h6>
+    <div class="card-body">
+        <div class="row align-items-center g-3">
+            <div class="col-sm-9">
+                <div class="row g-3 pb-2">
+                    <div class="col-sm-4">
+                        <label for="scboEmpresaInspeccionadora">Código</label>
+                        <input type="text" class="form-control" id="txtsNroInspeccion" name="txtsNroInspeccion" value="GENERADO" readonly />
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="scboAreaInspeccionadora">Pais<i class=" ri-asterisk align-middle text-danger"></i></label>
+                        <select class="form-select" id="scboAreaInspeccionadora" name="scboAreaInspeccionadora">
+                        </select>
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="scboAreaInspeccionadora">N° Documento<i class=" ri-asterisk align-middle text-danger"></i></label>
+                        <input type="text" class="form-control" id="txtCod_Inspe" name="NroInspeccion" />
+                    </div>
+                </div>
+                <div class="row g-3 pb-2">
+                    <div class="col-sm-4">
+                        <label for="scboEmpresaInspeccionadora">Fecha incripción<i class=" ri-asterisk align-middle text-danger"></i></label>
+                        <input type="date" class="form-control" id="txtsNroInspeccion" name="txtsNroInspeccion" />
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="scboAreaInspeccionadora">Tipo contribuyente<i class=" ri-asterisk align-middle text-danger"></i></label>
+                        <select class="form-select" id="scboAreaInspeccionadora" name="scboAreaInspeccionadora">
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="txtNroInspeccion" class="col-sm-4 col-form-label">Estado</label>
+                        <div class="col-sm-8">
+                            <div class="form-check form-switch form-switch-md form-switch-secondary" dir="ltr">
+                                <input type="checkbox" class="form-check-input" checked id="schkInspeccionRealizada">
+                                <label class="form-check-label" for="schkInspeccionRealizada">Activo</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row pb-2">
+                    <label for="txtNroInspeccion" class="col-sm-2 col-form-label">Razón social<i class=" ri-asterisk align-middle text-danger"></i></label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="txtCod_Inspe" name="NroInspeccion" />
+                    </div>
+                </div>
+                <div class="row pb-2">
+                    <label for="txtNroInspeccion" class="col-sm-2 col-form-label">Nombre comercial<i class=" ri-asterisk align-middle text-danger"></i></label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="txtCod_Inspe" name="NroInspeccion" />
+                    </div>
+                </div>
+                <div class="row pb-2">
+                    <label for="txtNroInspeccion" class="col-sm-2 col-form-label">Direccón fiscal<i class=" ri-asterisk align-middle text-danger"></i></label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="txtCod_Inspe" name="NroInspeccion" />
+                    </div>
+                </div>
+                <div class="row pb-2">
+                    <label for="txtNroInspeccion" class="col-sm-2 col-form-label">Rubro<i class=" ri-asterisk align-middle text-danger"></i></label>
+                    <div class="col-sm-4">
+                        <select class="form-select" id="scboAreaInspeccionadora" name="scboAreaInspeccionadora">
+                        </select>
+                    </div>
+                    <label for="txtNroInspeccion" class="col-sm-2 col-form-label">Correo<i class=" ri-asterisk align-middle text-danger"></i></label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="txtCod_Inspe" name="NroInspeccion" />
+                    </div>
+
+                </div>
+                <div class="row pb-2">
+                    <label for="txtNroInspeccion" class="col-sm-2 col-form-label">Teléfono</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="txtCod_Inspe" name="NroInspeccion" />
+                    </div>
+                    <label for="txtNroInspeccion" class="col-sm-2 col-form-label">Célular</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="txtCod_Inspe" name="NroInspeccion" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card border card-border-light">
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <h4>LOGO</h4>
+                            <div class="profile-user position-relative d-inline-block mx-auto  mb-4">
+                                <img src="~/assets/images/users/avatar-1.jpg" class="img-thumbnail user-profile-image" alt="user-profile-image">
+                                <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
+                                    <input id="profile-img-file-input" type="file" class="profile-img-file-input">
+                                    <label for="profile-img-file-input" class="profile-photo-edit avatar-xs">
+                                        <span class="avatar-title rounded-circle bg-light text-body">
+                                            <i class="ri-camera-fill"></i>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-9 pb-2 mt-3">
+                <div class="text-end">
+                    <button type="button" class="btn btn-light" id="btnNewInspeccion"><i class="ri-file-text-fill align-bottom me-1 fs-13"></i>&nbsp;Nuevo&nbsp;</button>&nbsp;&nbsp;
+                    <button type="button" class="btn btn-primary" id="btnRegInspeccion"><i class="ri-save-3-line align-bottom me-1 fs-13"></i><span>Guardar</span></button>&nbsp;&nbsp;
+                    <button type="submit" class="btn btn-primary" id="btnFinalizar"><i class="ri-pencil-fill align-bottom me-1 fs-13"></i>&nbsp;Editar&nbsp;</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form> 

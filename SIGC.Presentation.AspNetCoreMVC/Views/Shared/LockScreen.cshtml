@@ -1,0 +1,66 @@
+﻿@{
+    Layout = null;
+}
+<div class="row justify-content-center pt-5">
+    <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-4 col-sm-4">
+        <div class="card mt-4">
+            <div class="card-body p-4">                
+                <div class="user-thumb text-center pt-2">
+                    <img id="img-user-image-lock" src="assets/images/users/user-dummy-img.jpg" class="rounded-circle img-thumbnail avatar-lg" alt="thumbnail">
+                    <h5 class="font-size-15 mt-3" id="h-user-name-lock">Administrador</h5>
+                </div>
+                <div class="p-2 mt-3">
+                    <form method="post" method="dialog" class="needs-validation" novalidate>
+                        <div class="mb-3">
+                            <label class="form-label" for="txtUserpassword">Contraseña</label>
+                            <input type="password" class="form-control" id="txtUserpassword" autofocus />
+                        </div>
+                        <div class="mb-2 mt-4">
+                            <button class="btn btn-secondary w-100" type="button" id="btnDesbloquear">Iniciar sesión</button>
+                        </div>
+                    </form> 
+                </div>
+            </div>           
+        </div>      
+    </div>
+</div>
+<script>
+    $(function () {
+        $('#img-user-image-lock').attr('src', $('#img-user-image').attr('src'));
+        $('#h-user-name-lock').text($('#span-user-name-text').text());
+        function _fnDesbloquear() {
+            if ($('#txtUserpassword').val() == '') {
+                $('#txtUserpassword').attr({ 'placeholder': 'Ingrese contraseña' }).focus();
+                return;
+            };
+            $.ajax({
+                url: Uti.Url.Base + "/Authenticate/Authenticate",
+                type: "POST",
+                data: {
+                    UserPassword: $.trim($('#txtUserpassword').val()),
+                    UserName: $.trim($('#span-user-name-sub-text').text()),
+                   },
+                beforeSend: function () { },
+                success: function (response) {
+                    if (response.url == 'Dashboard') {
+                        $('#ajaxModal').addClass('animated fadeOutDown');
+                        $('.modal-backdrop').remove(); $('body').removeClass('modal-open');
+                        $('#btn-modal-accept').hide();
+                        $('body').removeClass('modal-open');
+                        $('body').removeAttr('style');
+                        setTimeout(function () {
+                            $('#ajaxModal').remove();
+                        }, 500);
+                    }
+                    else {
+                        $('#txtUserpassword').prop({ 'placeholder': 'Clave incorrecta', 'value': '' }).focus();
+                    }
+                },
+                error: function () { },
+                complete: function () { }
+            })
+        };
+        $('#btnDesbloquear').click(function () { _fnDesbloquear(); });
+        $('#txtUserpassword').prop('value', '').focus();
+   });
+</script>

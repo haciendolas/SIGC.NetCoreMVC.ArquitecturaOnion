@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "PROVEEDORES";
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card">
+    <div class="card-body p-0">
+        <ul class="nav nav-tabs nav-border-top nav-border-top-primary mb-3" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#nav-border-top-home" role="tab" aria-selected="true">
+                    <i class="ri-list-ordered align-middle me-1 fs-20"></i>
+                    Busqueda Proveedor
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#nav-border-top-profile" role="tab" aria-selected="false">
+                    <i class="ri-book-3-fill align-middle me-1 fs-20"></i>
+                    Formulario Proveedor
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#nav-border-top-info" role="tab" aria-selected="false">
+                    <i class=" ri-settings-2-fill align-middle me-1 fs-20"></i>
+                    Info Adicional Proveedor
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content text-muted">
+            <div class="tab-pane active" id="nav-border-top-home" role="tabpanel">
+                <partial name="SupplierSearch" />
+            </div>
+            <div class="tab-pane" id="nav-border-top-profile" role="tabpanel">
+                <partial name="SupplierForm" />
+            </div>
+            <div class="tab-pane" id="nav-border-top-info" role="tabpanel">
+            </div>
+        </div>
+    </div>
+</div>

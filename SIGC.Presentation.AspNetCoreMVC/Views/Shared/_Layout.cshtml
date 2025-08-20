@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html lang="es" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none">
+<head> 
+    <meta charset="utf-8" />
+    <title>S.I.G.C - @ViewData["Title"]</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="Themesbrand" name="author" />
+    <base href="/" />
+    <link rel="shortcut icon" href="~/assets/images/favicon.ico">
+    <link href="~/assets/libs/jsvectormap/css/jsvectormap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/assets/js/layout.js"></script>
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <style>
+        .error {
+            width: 100%;
+            margin-top: 0.25rem;
+            font-size: .875em;
+            color: #f06548;
+        }
+
+        .disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+    </style>
+
+</head>
+<body>
+    @using System.Web;
+    @using SIGC.Presentation.AspNetCoreMVC.Filters;
+    @using SIGC.Presentation.AspNetCoreMVC.Extensions;
+    @{
+        /*
+        if (Context.Session.GetObject<AuthenticationIdentity>("AuthenticationIdentity") != null)
+        {
+            var authenticationIdentity = Context.Session.GetObject<AuthenticationIdentity>("AuthenticationIdentity");
+            ViewBag.UserID = authenticationIdentity.UserID;
+            ViewBag.UserName = authenticationIdentity.UserName;
+            ViewBag.UserFullName = authenticationIdentity.UserFullName;
+            ViewBag.UserProfileType = authenticationIdentity.UserProfileType;
+            ViewBag.UserImage = (authenticationIdentity.UserImage == "sin_foto" ? Url.Content("~/assets/images/users/user-dummy-img.jpg") : authenticationIdentity.UserImage);
+        }
+        */
+        String UrlBase = System.Web.HttpUtility.JavaScriptStringEncode(new Uri(new Uri(String.Format("{0}://{1}{2}", Context.Request.Scheme, Context.Request.Host, Context.Request.Path)), Url.Content("~/")).ToString());
+        UrlBase = UrlBase.Substring(0, UrlBase.Length - 1);
+    }
+    <div id="layout-wrapper">  
+        <input type="hidden" value="@UrlBase" id="UrlBase" />
+         <partial name="_Header" />
+        @*========== App Menu ==========*@       
+          <partial name="_Sidebar" />
+        @*Left Sidebar End*@ 
+        @*Vertical Overlay*@ 
+        <div class="vertical-overlay"></div>        
+        @*Start right Content here*@     
+        <div class="main-content">
+            <div class="page-content">
+                <div class="container-fluid">
+                    @*start page title*@ 
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="mb-sm-0">Analytics</h4>
+
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboards</a></li>
+                                        <li class="breadcrumb-item active">Analytics</li>
+                                    </ol>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    @*end page title*@    
+                    @RenderBody()
+                </div>
+                @*container-fluid*@
+            </div>
+            @*End Page-content*@
+              <partial name="_Footer" />
+        </div>
+        @*end main content*@
+    </div>
+    @* END layout-wrapper*@
+    @*start back-to-top*@
+    <button onclick="topFunction()" class="btn btn-danger btn-icon" id="back-to-top">
+        <i class="ri-arrow-up-line"></i>
+    </button>
+    @*end back-to-top*@
+    <div class="customizer-setting d-none d-md-block">
+        <div class="btn-info btn-rounded shadow-lg btn btn-icon btn-lg p-2" data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas">
+            <i class='mdi mdi-spin mdi-cog-outline fs-22'></i>
+        </div>
+    </div>
+    @*Theme Settings*@
+     <partial name="_Settings" />
+    <script src="~/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="~/assets/libs/node-waves/waves.min.js"></script>
+    <script src="~/assets/libs/feather-icons/feather.min.js"></script>
+    <script src="~/assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
+    <script src="~/assets/js/plugins.js"></script>  
+    <script src="~/assets/libs/apexcharts/apexcharts.min.js"></script>  
+    <script src="~/assets/libs/jsvectormap/js/jsvectormap.min.js"></script>
+    <script src="~/assets/libs/jsvectormap/maps/world-merc.js"></script>
+    <script src="~/assets/js/pages/dashboard-analytics.init.js"></script> 
+    <script src="~/assets/js/app.js"></script>
+    <script src="~/assets/libs/jquery/jquery-3.6.0.min.js"></script>
+    <script src="~/assets/libs/validation/jquery.validate.min.js"></script>
+    <script src="~/assets/libs/validation/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/scripts/jsUti.js"></script>
+    <script type="text/javascript">javascript: window.history.forward(1);</script>
+    <script>
+        $('#lock-screen').on('click',function(){
+            Uti.Modal.Session();
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

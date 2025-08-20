@@ -1,0 +1,6 @@
+@SIGC.Presentation.WebApi_HostAddress = http://localhost:5224
+
+GET {{SIGC.Presentation.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

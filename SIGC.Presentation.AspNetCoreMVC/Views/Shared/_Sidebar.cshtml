@@ -1,0 +1,386 @@
+﻿@{
+    Layout = null;
+}
+<div class="app-menu navbar-menu">    
+    <div class="navbar-brand-box">       
+        @*Dark Logo*@
+        <a href="index.html" class="logo logo-dark">
+            <span class="logo-sm">
+                <img src="assets/images/logo-sm.png" alt="" height="22">
+            </span>
+            <span class="logo-lg">
+                <img src="assets/images/logo-dark.png" alt="" height="17">
+            </span>
+        </a>
+        @*Light Logo*@
+        <a href="index.html" class="logo logo-light">
+            <span class="logo-sm">
+                <img src="assets/images/logo-sm.png" alt="" height="22">
+            </span>
+            <span class="logo-lg">
+                <img src="assets/images/logo-light.png" alt="" height="17">
+            </span>
+        </a>
+        <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">
+            <i class="ri-record-circle-line"></i>
+        </button>
+    </div>
+
+    <div id="scrollbar">
+        <div class="container-fluid">
+            <div id="two-column-menu"></div>
+            <ul class="navbar-nav" id="navbar-nav">
+                <li class="menu-title"><span data-key="t-menu">PANEL</span></li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
+                        <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Dashboards</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarDashboards">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="dashboard-analytics.html" class="nav-link" data-key="t-compra">Compras </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="dashboard-crm.html" class="nav-link" data-key="t-venta"> Ventas </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="index.html" class="nav-link" data-key="t-inventario"> Inventario </a>
+                            </li> 
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarHumanResources" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarHumanResources">
+                        <i class="ri-apps-2-line"></i> <span data-key="t-recurso-humanos">Recursos Humanos</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarHumanResources">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="apps-chat.html" class="nav-link" data-key="t-area">Area</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="apps-chat.html" class="nav-link" data-key="t-cargo">Cargo</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="apps-chat.html" class="nav-link" data-key="t-personal">Datos Personal</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="apps-chat.html" class="nav-link" data-key="t-contrato">Contrato</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="apps-calendar.html" class="nav-link" data-key="t-establecimiento">Establecimiento</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                 <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarInventario" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarInventario">
+                        <i class="ri-apps-2-line"></i> <span data-key="t-inventario">Inventario</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarInventario">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="apps-calendar.html" class="nav-link" data-key="t-proveedor">Almacen</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="apps-chat.html" class="nav-link" data-key="t-comprobante">Categoria</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="apps-chat.html" class="nav-link" data-key="t-pagos">Producto</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="apps-chat.html" class="nav-link" data-key="t-pagos">Movimiento</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#sidebarEmail" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarEmail" data-key="t-reportes">
+                                    Reportes
+                                </a>
+                                <div class="collapse menu-dropdown" id="sidebarEmail">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a href="apps-mailbox.html" class="nav-link" data-key="t-proveedor">Almacen</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="apps-mailbox.html" class="nav-link" data-key="t-proveedor">Categoria</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="apps-mailbox.html" class="nav-link" data-key="t-comprobantes">Producto</a>
+                                        </li>
+                                        @*
+                                        <li class="nav-item">
+                                            <a href="#sidebaremailTemplates" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebaremailTemplates" data-key="t-email-templates">
+                                                Email Templates <span class="badge badge-pill bg-danger" data-key="t-new">Otros</span>
+                                            </a>
+                                            <div class="collapse menu-dropdown" id="sidebaremailTemplates">
+                                                <ul class="nav nav-sm flex-column">
+                                                    <li class="nav-item">
+                                                        <a href="apps-email-basic.html" class="nav-link" data-key="t-basic-action"> Basic Action </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a href="apps-email-ecommerce.html" class="nav-link" data-key="t-ecommerce-action"> Ecommerce Action </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        *@
+                                    </ul>
+                                </div>
+                            </li>  
+                        </ul>
+                    </div>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
+                        <i class="ri-apps-2-line"></i> <span data-key="t-compras">Compras</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarApps">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a asp-area="Purchase" asp-controller="Supplier" asp-action="" class="nav-link" data-key="t-proveedor">Proveedor</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="apps-chat.html" class="nav-link" data-key="t-comprobante">Comprobante</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="apps-chat.html" class="nav-link" data-key="t-pagos">Pagos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#sidebarEmail" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarEmail" data-key="t-reportes">
+                                    Reportes
+                                </a>
+                                <div class="collapse menu-dropdown" id="sidebarEmail">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a href="apps-mailbox.html" class="nav-link" data-key="t-proveedor">Proveedor</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="apps-mailbox.html" class="nav-link" data-key="t-proveedor">Pagos</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="apps-mailbox.html" class="nav-link" data-key="t-comprobantes">Comprobantes</a>
+                                        </li>
+                                        @*
+                                        <li class="nav-item">
+                                            <a href="#sidebaremailTemplates" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebaremailTemplates" data-key="t-email-templates">
+                                                Email Templates <span class="badge badge-pill bg-danger" data-key="t-new">Otros</span>
+                                            </a>
+                                            <div class="collapse menu-dropdown" id="sidebaremailTemplates">
+                                                <ul class="nav nav-sm flex-column">
+                                                    <li class="nav-item">
+                                                        <a href="apps-email-basic.html" class="nav-link" data-key="t-basic-action"> Basic Action </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a href="apps-email-ecommerce.html" class="nav-link" data-key="t-ecommerce-action"> Ecommerce Action </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        *@
+                                    </ul>
+                                </div>
+                            </li>  
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarLayouts" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
+                        <i class="ri-layout-3-line"></i> <span data-key="t-Ventas">Ventas</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarLayouts">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="layouts-horizontal.html" target="_blank" class="nav-link" data-key="t-serue">Serie</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="layouts-detached.html" target="_blank" class="nav-link" data-key="t-caja">Caja</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#sidebarEmail" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarEmail" data-key="t-reportes">
+                                    Cliente
+                                </a>
+                                <div class="collapse menu-dropdown" id="sidebarEmail">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a href="apps-mailbox.html" class="nav-link" data-key="t-natural">Natural</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="apps-mailbox.html" class="nav-link" data-key="t-juridico">Juridico</a>
+                                        </li>  
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a href="layouts-two-column.html" target="_blank" class="nav-link" data-key="t-precio">Precio</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="layouts-two-column.html" target="_blank" class="nav-link" data-key="t-pedido">Pedido</a>
+                            </li> 
+                            <li class="nav-item">
+                                <a href="layouts-vertical-hovered.html" target="_blank" class="nav-link" data-key="t-boleta">Comprobante</a>
+                            </li> 
+                            <li class="nav-item">
+                                <a href="layouts-two-column.html" target="_blank" class="nav-link" data-key="t-factura">Nota Credito</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="layouts-two-column.html" target="_blank" class="nav-link" data-key="t-cobranza">Cobranza</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#sidebarGuia" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarGuia" data-key="t-guia-remision">
+                                    Guía de Remisión
+                                </a>
+                                <div class="collapse menu-dropdown" id="sidebarGuia">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a href="apps-mailbox.html" class="nav-link" data-key="t-natural">Guia Remitente</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="apps-mailbox.html" class="nav-link" data-key="t-juridico">Guia Transportista</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#sidebarSunat" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarSunat" data-key="t-sunat">
+                                    Sunat
+                                </a>
+                                <div class="collapse menu-dropdown" id="sidebarSunat">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a href="apps-mailbox.html" class="nav-link" data-key="t-natural">Comunicacón de Baja</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="apps-mailbox.html" class="nav-link" data-key="t-juridico">Resumén diario</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#sidebarVReporte" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarVReporte" data-key="t-reportes">
+                                    Reportes
+                                </a>
+                                <div class="collapse menu-dropdown" id="sidebarVReporte">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a href="apps-mailbox.html" class="nav-link" data-key="t-cliente">Cliente</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="apps-mailbox.html" class="nav-link" data-key="t-comprobante">Comprobante</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Pages</span></li>
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarAuth" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAuth">
+                        <i class="ri-account-circle-line"></i> <span data-key="t-seguridad">Seguridad</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarAuth">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a asp-area="Security" asp-controller="Role" asp-action="" class="nav-link" data-key="t-rol">Rol</a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-area="Security" asp-controller="User" asp-action="" class="nav-link" data-key="t-rol">Usuario</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#sidebarSignIn" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarSignIn" data-key="t-rol">
+                                    Interna
+                                </a>
+                                <div class="collapse menu-dropdown" id="sidebarSignIn">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a href="auth-signin-basic.html" class="nav-link" data-key="t-pagina">
+                                                Pagina
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-area="Security" asp-controller="Company" asp-action="" class="nav-link" data-key="t-empresa">
+                                                Empresa
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="auth-signin-basic.html" class="nav-link" data-key="t-rol-empresa">
+                                                Role Empresa
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="auth-signin-cover.html" class="nav-link" data-key="t-usuario-empresa">
+                                                Usuario Empresa
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="auth-signin-cover.html" class="nav-link" data-key="t-tablas-generales">
+                                                Tablas Generales
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li> 
+                        </ul>
+                    </div>
+                </li>
+  
+                <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-components">Components</span></li>
+
+             
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarMultilevel" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarMultilevel">
+                        <i class="ri-share-line"></i> <span data-key="t-multi-level">Multi Level</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarMultilevel">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" data-key="t-level-1.1"> Level 1.1 </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#sidebarAccount" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAccount" data-key="t-level-1.2">
+                                    Level
+                                    1.2
+                                </a>
+                                <div class="collapse menu-dropdown" id="sidebarAccount">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link" data-key="t-level-2.1"> Level 2.1 </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#sidebarCrm" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarCrm" data-key="t-level-2.2">
+                                                Level 2.2
+                                            </a>
+                                            <div class="collapse menu-dropdown" id="sidebarCrm">
+                                                <ul class="nav nav-sm flex-column">
+                                                    <li class="nav-item">
+                                                        <a href="#" class="nav-link" data-key="t-level-3.1">
+                                                            Level 3.1
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a href="#" class="nav-link" data-key="t-level-3.2">
+                                                            Level 3.2
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+        <!-- Sidebar -->
+    </div>
+
+    <div class="sidebar-background"></div>
+</div>

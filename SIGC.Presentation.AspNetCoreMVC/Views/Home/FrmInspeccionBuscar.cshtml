@@ -1,0 +1,101 @@
+﻿@{Layout = null;}
+<div class="card-body border-bottom-dashed border-bottom">
+    <form>
+        <div class="row g-3 pb-2">
+            <div class="col-sm-4">
+                <label for="scboUnidadInspeccionada">Unidad Inspeccionada</label>
+                <select class="form-select" id="scboUnidadInspeccionada" name="scboUnidadInspeccionada">
+                    @{
+                        
+                    }
+                </select>
+            </div>
+            <div class="col-sm-4">
+                <label for="scboAreaInspeccionada">Área Inspeccionada</label>
+                <select class="form-select" id="scboAreaInspeccionada" name="scboAreaInspeccionada">
+                    <option value="%">Seleccionar Área</option>
+                </select>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-check form-switch form-switch-md" dir="ltr">
+                    <input type="checkbox" class="form-check-input" @ViewBag.disabled @(ViewBag.disabled=="disabled" ? "checked=checked": "") id="schkInspeccionRealizada">
+                    <label class="form-check-label" for="schkInspeccionRealizada">Mostrar solo mis inspecciones realizadas</label>
+                </div>
+                <input type="text" class="form-control" placeholder="Nro Inspección" id="txtsNroInspeccion" name="txtsNroInspeccion" />               
+            </div>
+        </div>
+        <div class="row g-3 pb-2">
+            <div class="col-sm-4">
+                <label for="sdtpFechaInicio">Fecha Inspección Desde</label>
+                <div class="input-group">
+                    <input type="date" class="form-control flatpickr-input" id="sdtpFechaInicio" name="sdtpFechaInicio"
+                           data-provider="flatpickr" data-date-format="d/m/Y"
+                           readonly="readonly">
+                    <span class="input-group-text fs-15" id="span-sdtpFechaInicio" style="cursor:pointer"><i class="ri-calendar-event-fill"></i></span>
+                </div>              
+            </div>
+            <div class="col-sm-4">
+                <label for="sdtpFechaFin">Fecha Inspección Hasta</label>
+                <div class="input-group">
+                    <input type="text" class="form-control flatpickr-input" id="sdtpFechaFin" name="sdtpFechaFin" data-provider="flatpickr" data-date-format="d/m/Y" readonly="readonly">
+                    <span class="input-group-text fs-15" id="span-sdtpFechaFin" style="cursor:pointer"><i class="ri-calendar-event-fill"></i></span>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <label for="scboEstadoInspeccion">Estado</label>
+                <select class="form-select" id="scboEstadoInspeccion" name="scboEstadoInspeccion">
+           
+                </select>
+            </div>            
+        </div>
+        <div class="row  g-3 pb-2">
+            <div class="col-sm-4">
+                <label for="scboEmpresaInspeccionadora">Empresa Inspeccionadora</label>
+                <select class="form-select" id="scboEmpresaInspeccionadora" name="scboEmpresaInspeccionadora" @ViewBag.disabled>
+                  
+                </select>
+            </div>
+            <div class="col-sm-4">
+                <label for="scboAreaInspeccionadora">Área Inspeccionadora</label>
+                <select class="form-select" id="scboAreaInspeccionadora" name="scboAreaInspeccionadora" @ViewBag.disabled>
+                   
+                </select>
+            </div>
+            <div class="col-sm-4">
+                <label>&nbsp;</label>
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <button type="button" class="btn btn-info w-100" id="sbtnBuscar"><i class="ri-search-line search-icon me-2 align-bottom"></i>Buscar</button>
+                    </div>
+                    <div class="col-sm-6" style="display:none">
+                        <button type="button" class="btn btn-info  w-100" data-bs-toggle="offcanvas" href="#offcanvasExample"><i class="ri-filter-3-line align-bottom me-1"></i> +</button>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </form>
+</div>
+
+<div class="card-body">
+    <div class="table-responsive table-card mb-1">
+        <table class="table align-middle">
+            <thead class="table-light text-muted">
+                <tr>                 
+                    <th class="text-center">Nro Inspección</th>
+                    <th class="text-center">Fecha Inspección</th>
+                    <th class="text-center">Empresa Ejecutante</th>
+                    <th class="text-center">Area Ejecutante</th>
+                    <th class="text-center">¿Quien realizo la Inspección?</th>
+                    <th class="text-center">Unidad Inspeccionada</th>
+                    <th class="text-center">Área Inspeccionada</th>
+                    <th class="text-center">Responsable Área</th>
+                    <th class="text-center">Estado</th>  
+                    <th class="text-center">Color</th>  
+                    <th class="text-center" colspan="2">Ver</th>
+                </tr>
+            </thead>
+            <tbody id="details-list">                
+            </tbody>
+        </table>         
+    </div>
+</div>

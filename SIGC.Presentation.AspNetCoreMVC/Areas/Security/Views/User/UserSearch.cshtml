@@ -1,0 +1,51 @@
+﻿@{
+    Layout = null;
+}
+<div class="card-body border-bottom-dashed border-bottom">
+    <form> 
+        <div class="row  g-3 pb-2">
+            <div class="col-sm-4">
+                <label for="scboEmpresaInspeccionadora">Apellidos y Nombres</label>
+                <input type="text" class="form-control" id="txtsNroInspeccion" name="txtsNroInspeccion" />
+            </div>
+            <div class="col-sm-2">
+                <label for="scboEmpresaInspeccionadora">Usuario</label>
+                <input type="text" class="form-control" id="txtsNroInspeccion" name="txtsNroInspeccion" />
+            </div>
+            <div class="col-sm-2">
+                <label for="scboAreaInspeccionadora">Estado</label>
+                <select class="form-select" id="scboAreaInspeccionadora" name="scboAreaInspeccionadora">
+                </select>
+            </div>
+            <div class="col-sm-4">
+                <label>&nbsp;</label>
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <button type="button" class="btn btn-info w-100" id="sbtnBuscar"><i class="ri-search-line search-icon me-2 align-bottom"></i>Buscar</button>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="card-body">
+    <div class="table-responsive table-card mb-1">
+        <table class="table align-middle">
+            <thead class="table-light text-muted">
+                <tr>
+                    <th class="text-center">ID</th>                    
+                    <th class="text-center">Apellidos</th>
+                    <th class="text-center">Nombres</th>
+                    <th class="text-center">Usuario</th>
+                    <th class="text-center">Roles</th>
+                    <th class="text-center">Estado</th>
+                    <th class="text-center">Última fecha</th>
+                    <th class="text-center">Último usuario </th>        
+                    <th class="text-center" colspan="2">Opciones</th>
+                </tr>
+            </thead>
+            <tbody id="details-list">
+            </tbody>
+        </table>
+    </div>
+</div>

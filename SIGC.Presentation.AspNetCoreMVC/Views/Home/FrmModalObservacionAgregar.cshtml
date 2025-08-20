@@ -1,0 +1,263 @@
+﻿@{Layout = null;}
+<div class="modal fade zoomIn" id="modal-observacion-agregar" tabindex="-1" aria-labelledby="titulo-observacion" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-2">
+                <h5 class="modal-title" id="titulo-observacion">FORMULARIO DE OBSERVACIÓN</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="hd-action-obs" value="CREAR_EVIDENCIA" />
+                <input type="hidden" id="hd-row-index" />
+                <h5 style="text-align:right">Todos los campos(<i class=" ri-asterisk align-middle text-danger"></i>) son obligatorios</h5>
+                <form class="row g-3" id="frmObservacion" method="dialog">
+                    <h5 class="mt-2 mb-0">1.Datos de Observación</h5>
+                    <div class="col-lg-6">
+                        <label for="txtCodObservacionObs" class="form-label">Código de Observación</label>
+                        <input class="form-control" type="text" id="txtCodObservacionObs" name="CodObservacionObs" readonly />
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="cboTipoObservacionObs" class="form-label">Tipo de Observación <i class=" ri-asterisk align-middle text-danger"></i></label>
+                        <select class="form-select" id="cboTipoObservacionObs" name="TipoObservacionObs">
+                            
+                        </select>
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="cboActoCondicionObs" class="form-label">Acto/Condición Identificada <i class=" ri-asterisk align-middle text-danger"></i></label>
+                        <select class="form-select" id="cboActoCondicionObs" name="ActoCondicionObs">
+                           
+                        </select>
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="cboTipoAccionCondicionObs" class="form-label">Tipo de Acto/Condición Subestándar <i class=" ri-asterisk align-middle text-danger"></i></label>
+                        <select class="form-select" id="cboTipoAccionCondicionObs" name="TipoAccionCondicionObs">
+                            <option value="">Seleccionar un Tipo</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="txtDescripcionActo" class="form-label">Descripción de Acto/Condición <i class=" ri-asterisk align-middle text-danger"></i></label>
+                        <textarea class="form-control" id="txtDescripcionActo" name="DescripcionActo" rows="3"></textarea>
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="txtAccionPreventivaObs" class="form-label">Acción Preventiva/Correctiva <i class=" ri-asterisk align-middle text-danger"></i></label>
+                        <textarea class="form-control" id="txtAccionPreventivaObs" name="AccionPreventivaObs" rows="3"></textarea>
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="cboUbicacionObs" class="form-label">Lugar de la Observación <i class=" ri-asterisk align-middle text-danger"></i></label>
+                        <div class="input-group">
+                            <select class="form-select" id="cboUbicacionObs" name="UbicacionObs">
+                                
+                            </select>
+                            <button class="btn btn-info" id="btn-buscar-ubicacion-obs" type="button"><i class="ri-search-line search-icon me-2 align-bottom"></i>Buscar</button>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <input type="hidden" id="hdcod_lugar_obs" name="cod_lugar_obs">
+                        <input type="hidden" id="hdcod_sub_lugar_obs" name="cod_sub_lugar_obs">
+                        <label for="txtLugarObs" class="form-label">Lugar <i class=" ri-asterisk align-middle text-danger"></i></label>
+                        <input class="form-control" type="text" id="txtLugarObs" name="LugarObs" readonly />
+                    </div>
+
+                    <div class="col-lg-12">
+                        <label for="cboNivelRiesgoObs" class="form-label">Nivel de Riesgo <i class=" ri-asterisk align-middle text-danger"></i></label>
+                        <input type="text" id="cboNivelRiesgoObs" class="form-control" name="NivelRiesgoObs" num_niv_riesgo="0" readonly="readonly" />
+                        <div class="table-responsive">
+                            <table class="table table-borderless align-middle" id="leyenda-table">
+                                <tr>
+                                    <td style="width: 12%; writing-mode: vertical-lr; transform: rotate(180deg);" rowspan="5" align="center" valign="middle" class="border bg-yellow"><strong>SEVERIDAD</strong></td>
+                                    <td style="width:12%" class="border"><strong>Catastrifico</strong></td>
+                                    <td style="width:12%" align="center" valign="middle" class="border">1</td>
+                                    <td style="width: 12%; cursor: pointer" align="center" valign="middle" class="bg-danger" id="td1" onclick="fnSelected(1,'A')"><strong>1</strong></td>
+                                    <td style="width: 13%; cursor: pointer" align="center" valign="middle" class="bg-danger" id="td2" onclick="fnSelected(2,'A')"><strong>2</strong></td>
+                                    <td style="width: 13%; cursor: pointer" align="center" valign="middle" class="bg-danger" id="td4" onclick="fnSelected(4,'A')"><strong>4</strong></td>
+                                    <td style="width: 13%; cursor: pointer" align="center" valign="middle" class="bg-danger" id="td7" onclick="fnSelected(7,'A')"><strong>7</strong></td>
+                                    <td style="width: 13%; cursor: pointer" align="center" valign="middle" class="bg-yellow" id="td11" onclick="fnSelected(11,'M')"><strong>11</strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="border"><strong>Mortalidad</strong></td>
+                                    <td align="center" valign="middle" class="border"><strong>2</strong></td>
+                                    <td style="cursor:pointer" align="center" valign="middle" class="bg-danger" id="td3" onclick="fnSelected(3,'A')"><strong>3</strong></td>
+                                    <td style="cursor:pointer" align="center" valign="middle" class="bg-danger" id="td5" onclick="fnSelected(5,'A')"><strong>5</strong></td>
+                                    <td style="cursor:pointer" align="center" valign="middle" class="bg-danger" id="td8" onclick="fnSelected(8,'A')"><strong>8</strong></td>
+                                    <td style="cursor:pointer" align="center" valign="middle" class="bg-yellow" id="td12" onclick="fnSelected(12,'M')"><strong>12</strong></td>
+                                    <td style="cursor:pointer" align="center" valign="middle" class="bg-success" id="td16" onclick="fnSelected(16,'B')"><strong>16</strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="border"><strong>Permanente</strong></td>
+                                    <td align="center" valign="middle" class="border"><strong>3</strong></td>
+                                    <td style="cursor:pointer" align="center" valign="middle" class="bg-danger" id="td6" onclick="fnSelected(6,'A')"><strong>6</strong></td>
+                                    <td style="cursor:pointer" align="center" valign="middle" class="bg-yellow" id="td9" onclick="fnSelected(9,'M')"><strong>9</strong></td>
+                                    <td style="cursor:pointer" align="center" valign="middle" class="bg-yellow" id="td13" onclick="fnSelected(13,'M')"><strong>13</strong></td>
+                                    <td style="cursor:pointer" align="center" valign="middle" class="bg-success" id="td17" onclick="fnSelected(17,'B')"><strong>17</strong></td>
+                                    <td style="cursor:pointer" align="center" valign="middle" class="bg-success" id="td20" onclick="fnSelected(20,'B')"><strong>20</strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="border"><strong>Temporal</strong></td>
+                                    <td align="center" valign="middle" class="border"><strong>4</strong></td>
+                                    <td style="cursor:pointer" align="center" valign="middle" class="bg-yellow" id="td10" onclick="fnSelected(10,'M')"><strong>10</strong></td>
+                                    <td style="cursor:pointer" align="center" valign="middle" class="bg-yellow" id="td14" onclick="fnSelected(14,'M')"><strong>14</strong></td>
+                                    <td style="cursor:pointer" align="center" valign="middle" class="bg-success" id="td18" onclick="fnSelected(18,'B')"><strong>18</strong></td>
+                                    <td style="cursor:pointer" align="center" valign="middle" class="bg-success" id="td21" onclick="fnSelected(21,'B')"><strong>21</strong></td>
+                                    <td style="cursor:pointer" align="center" valign="middle" class="bg-success" id="td23" onclick="fnSelected(23,'B')"><strong>23</strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="border"><strong>Menor</strong></td>
+                                    <td align="center" valign="middle" class="border"><strong>5</strong></td>
+                                    <td style="cursor:pointer" align="center" valign="middle" class="bg-yellow" id="td15" onclick="fnSelected(15,'M')"><strong>15</strong></td>
+                                    <td style="cursor:pointer" align="center" valign="middle" class="bg-success" id="td19" onclick="fnSelected(19,'B')"><strong>19</strong></td>
+                                    <td style="cursor:pointer" align="center" valign="middle" class="bg-success" id="td22" onclick="fnSelected(22,'B')"><strong>22</strong></td>
+                                    <td style="cursor:pointer" align="center" valign="middle" class="bg-success" id="td24" onclick="fnSelected(24,'B')"><strong>24</strong></td>
+                                    <td style="cursor:pointer" align="center" valign="middle" class="bg-success" id="td25" onclick="fnSelected(25,'B')"><strong>25</strong></td>
+                                </tr>
+                                <tr>
+                                    <td align="center" valign="middle" nowrap="nowrap">&nbsp;</td>
+                                    <td nowrap="nowrap">&nbsp;</td>
+                                    <td align="center" valign="middle" nowrap="nowrap">&nbsp;</td>
+                                    <td align="center" valign="middle" class="border"><strong>A</strong></td>
+                                    <td align="center" valign="middle" class="border"><strong>B</strong></td>
+                                    <td align="center" valign="middle" class="border"><strong>C</strong></td>
+                                    <td align="center" valign="middle" class="border"><strong>D</strong></td>
+                                    <td align="center" valign="middle" class="border"><strong>E</strong></td>
+                                </tr>
+                                <tr>
+                                    <td align="center" valign="middle" nowrap="nowrap">&nbsp;</td>
+                                    <td nowrap="nowrap">&nbsp;</td>
+                                    <td align="center" valign="middle" nowrap="nowrap">&nbsp;</td>
+                                    <td align="center" valign="middle" class="border"><strong>Común</strong></td>
+                                    <td align="center" valign="middle" class="border"><strong>Ha sucedido</strong></td>
+                                    <td align="center" valign="middle" class="border"><strong>Podria suceder</strong></td>
+                                    <td align="center" valign="middle" class="border"><strong>Raro que suceda</strong></td>
+                                    <td align="center" valign="middle" class="border"><strong>Practicamente imposible que suceda</strong></td>
+                                </tr>
+                                <tr>
+                                    <td align="center" valign="middle" nowrap="nowrap">&nbsp;</td>
+                                    <td nowrap="nowrap">&nbsp;</td>
+                                    <td align="center" valign="middle" nowrap="nowrap">&nbsp;</td>
+                                    <td colspan="5" align="center" valign="middle" style="background-color:#ffd800"><strong>PROBABILIDAD</strong></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="dtpFechaLevantamientoObs" class="form-label">Fecha de Levantamiento <i class=" ri-asterisk align-middle text-danger"></i></label>
+                        <div class="input-group">
+                            <input type="date" class="form-control flatpickr-input" id="dtpFechaLevantamientoObs" name="FechaLevantamientoObs"
+                                   data-provider="flatpickr" data-date-format="d/m/Y"
+                                   readonly="readonly">
+                            <span class="input-group-text fs-15" style="cursor:pointer"><i class="ri-calendar-event-fill" id="span-dtpFechaLevantamientoObs"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="chkResponsableSocioObs" class="form-label">¿El responsable es un socio estratégico?</label>
+                        <div class="form-check form-switch form-switch-md" dir="ltr">
+                            <input type="checkbox" class="form-check-input" id="chkResponsableSocioObs">
+                            <label class="form-check-label" for="chkResponsableSocioObs">&nbsp;</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="cboEmpresaResponsableObs" class="form-label">Empresa Responsable <i class=" ri-asterisk align-middle text-danger"></i></label>
+                        <select class="form-select" id="cboEmpresaResponsableObs" name="EmpresaResponsableObs">
+                           
+                        </select>
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="cboAreaResponsableObs" class="form-label">Área Responsable <i class=" ri-asterisk align-middle text-danger"></i></label>
+                        <select class="form-select" id="cboAreaResponsableObs" name="AreaResponsableObs">
+                            <option value="">Elija una Area</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="cboResponsableObs" class="form-label">Responsable <i class=" ri-asterisk align-middle text-danger"></i></label>
+                        <select class="form-select" id="cboResponsableObs" name="ResponsableObs">
+                            <option value="">Elija un Responsable</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <label for="txtEvidenciaNombre" class="form-label">Nombre Evidencia</label>
+                        <input class="form-control" type="text" id="txtEvidenciaNombre" name="EvidenciaNombre" readonly />
+                    </div>
+                    <div class="col-lg-12">
+                        <label for="flEvidenciaObs" class="form-label">Evidencia</label>
+                        <div class="input-group">
+                            <input class="form-control" type="file" id="flEvidenciaObs" name="EvidenciaObs" />
+                            <button class="btn btn-info" id="btn-upload-file-evidencia" type="button"><i class="ri-upload-line me-2 align-bottom"></i>Adjuntar</button>
+                        </div>
+                    </div>
+                </form><br />
+                       <form class="row g-3" id="frmLevantamiento" method="dialog">
+                           <h5 class="mt-4 mb-0">2.Datos del Levantamiento</h5>
+                           <div class="col-lg-6">
+                               <label for="flLevantamientoObs" class="form-label">Levantamiento</label>
+                               <div class="input-group">
+                                   <input class="form-control" type="file" id="flLevantamientoObs" name="flLevantamientoObs" />
+                                   <button class="btn btn-info" id="btn-upload-file-levantamiento" type="button"><i class="ri-upload-line me-2 align-bottom"></i>Adjuntar</button>
+                               </div>
+                           </div>
+                           <div class="col-lg-6">
+                               <label for="txtLevantamientoNombre" class="form-label">Nombre Levantamiento</label>
+                               <input class="form-control" type="text" id="txtLevantamientoNombre" name="LevantamientoNombre" readonly />
+                           </div>
+                           <div class="col-lg-12">
+                               <label for="txtLevantamientoObs" class="form-label">Observación Levantamiento <i class=" ri-asterisk align-middle text-danger"></i></label>
+                               <textarea class="form-control" id="txtLevantamientoObs" name="LevantamientoObs" rows="3"></textarea>
+                           </div>
+                           @{ if (ViewBag.disabled == "")
+                               {
+                           <div class="col-lg-10">
+                               <label for="txtComentarioModificacionObs" class="form-label">
+                                   Comentario modificación <i class=" ri-asterisk align-middle text-danger"></i>
+                               </label>
+                               <textarea class="form-control" id="txtComentarioModificacionObs" name="ComentarioModificacionObs" rows="3"></textarea>
+                           </div>
+                           <div class="col-lg-2">
+                               <label for="chkflag_vobo" class="form-label">Visto Bueno</label>
+                               <div class="form-check form-switch form-switch-md" dir="ltr">
+                                   <input type="checkbox" class="form-check-input" id="chkflag_vobo">
+                                   <label class="form-check-label" for="chkflag_vobo">&nbsp;</label>
+                               </div>
+                           </div>
+                                   }
+                               }
+                       </form>
+            </div>
+            <div class="modal-footer">
+                <div class="hstack gap-2 justify-content-end">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="btn-modal-observacion-cerrar"><i class="ri-close-fill align-bottom"></i>Cerrar</button>
+                    <button type="button" class="btn btn-success" id="bnt-modal-observation-aceptar"><i class="ri-check-fill align-bottom"></i>Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .tachado {
+        text-decoration: line-through;
+        color: red;
+    }
+    #leyenda-table .bg-yellow {
+        background-color: #ffd800;
+        border: 1px solid #000000;
+        cursor:pointer;
+    }
+    #leyenda-table .bg-success {
+        background-color: #7af916;
+        border: 1px solid #000000;
+        color: #ffffff;
+        cursor: pointer;
+    }
+    #leyenda-table .bg-danger {
+        background-color: #f8190a;
+        color: #ffffff;
+        border: 1px solid #000000;
+        cursor: pointer;
+    }
+    #leyenda-table .border {
+        border: 2px solid #000000;
+    }
+    #leyenda-table .bg-selected {
+        background-color: #7c5716;
+        opacity: 0.5;
+    }
+</style>

@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "INSPECCIÓN";
+}
+@{ Layout = "~/Views/Shared/_Layout.cshtml"; }
+@section scripts {
+    <script type="text/javascript" src="~/Areas/SaludOcupacional/Scripts/jsManInspeccion.js?v=1.1"></script> }
+<div class="card">
+    <div class="card-body">
+        <ul class="nav nav-pills nav-customs nav-danger mb-3" role="tablist">
+            <li class="nav-item" id="li-tab-search">
+                <a class="nav-link" data-bs-toggle="tab" href="#tab-search" role="tab">Busqueda de inspecciones</a>
+            </li>
+            <li class="nav-item" id="li-tab-register">
+                <a class="nav-link active" data-bs-toggle="tab" href="#tab-register" role="tab">Registro de inspección</a>
+            </li>
+        </ul>
+        <div class="tab-content text-muted">
+            <div class="tab-pane" id="tab-search" role="tabpanel">
+                @Html.Partial("FrmInspeccionBuscar")
+                @Html.Partial("FrmInspeccionFilter")
+            </div>
+            <div class="tab-pane active" id="tab-register" role="tabpanel">
+                @Html.Partial("FrmInspeccionRegistrar")
+            </div>
+        </div>
+    </div>
+</div>
