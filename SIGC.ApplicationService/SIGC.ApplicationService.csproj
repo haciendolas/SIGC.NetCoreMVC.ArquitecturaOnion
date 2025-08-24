@@ -10,4 +10,13 @@
     <PackageReference Include="MediatR" Version="12.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SIGC.DomainService\SIGC.DomainService.csproj" />
+    <ProjectReference Include="..\SIGC.Infrastructure.CrossCutting\SIGC.Infrastructure.CrossCutting.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\CategoryFeatures\CategoryUpdate\" />
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using SIGC.Infrastructure.CrossCutting.Wrappers;
 
 namespace SIGC.ApplicationService.Features.AuthFeatures.Queries.UserLogin
 {
@@ -6,5 +7,5 @@ namespace SIGC.ApplicationService.Features.AuthFeatures.Queries.UserLogin
             string CompanyDocumentNumber,
             string UserName,
             string UserPassword
-        ) : IRequest<string>;
+        ) : IRequest<MsgResponse<object>>;
 }

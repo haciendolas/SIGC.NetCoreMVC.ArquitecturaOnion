@@ -17,6 +17,7 @@
         public const string EXIST_APPLICATION_CODE = "ExistApplicationCode";
         public const string EXIST_APPLICATION_NAME = "ExistApplicationName";
         public const string EXIST_COMPANY_DOCUMENTNUMBER = "ExistCompanyDocumentNumber";
+        public const string EXIST_CATEGORY_CATEGORYNAME = "ExistCategoryCategoryName";    
         //ERRORES DE DE REGISTROS
         public const string ERROR_OBJECT = "ErrorObject";
         public const string ERROR_OPERATION = "ErrorOperation";

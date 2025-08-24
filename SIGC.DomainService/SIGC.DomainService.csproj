@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="IRepositories\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\SIGC.DomainModel\SIGC.DomainModel.csproj" />
   </ItemGroup>
 

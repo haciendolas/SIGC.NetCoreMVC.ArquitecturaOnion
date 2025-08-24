@@ -9,6 +9,12 @@
             public const string NAME_EXISTS = "NAME_EXISTS";
         }
 
+        public class Category
+        {
+            public const string OK = "OK";            
+            public const string NAME_EXISTS = "NAME_EXISTS";
+        }
+
         public class Company
         {
             public const string OK = "OK";

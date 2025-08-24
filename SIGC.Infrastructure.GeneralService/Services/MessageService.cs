@@ -48,7 +48,8 @@ public class MessageService(IServiceProvider ServiceProvider) : IMessageService
                 { MessageDescriptionConst.QUERY_EMPTY, "No records found." },
                 { MessageDescriptionConst.VALID_CREDENTIAL, "Verified credentials, welcome to the system." },
                 { MessageDescriptionConst.INVALID_CREDENTIAL, "The username and/or password is incorrect." },
-                { MessageDescriptionConst.EXIST_COMPANY_DOCUMENTNUMBER, "The company document number already exists." }
+                { MessageDescriptionConst.EXIST_COMPANY_DOCUMENTNUMBER, "The company document number already exists." },
+                { MessageDescriptionConst.EXIST_CATEGORY_CATEGORYNAME, "The category name already exists." }
             },
 
             [(short)IdiomEnum.Spanish] = new()
@@ -75,7 +76,8 @@ public class MessageService(IServiceProvider ServiceProvider) : IMessageService
                 { MessageDescriptionConst.QUERY_EMPTY, "No se encontrarón registros." },
                 { MessageDescriptionConst.VALID_CREDENTIAL, "Credenciales verificadas,bienvenido al sistema." },
                 { MessageDescriptionConst.INVALID_CREDENTIAL, "El usuario y/o contraseña es incorrecta." },
-                { MessageDescriptionConst.EXIST_COMPANY_DOCUMENTNUMBER, "El número del documento de la empresa ya existe." }
+                { MessageDescriptionConst.EXIST_COMPANY_DOCUMENTNUMBER, "El número del documento de la empresa ya existe." },
+                { MessageDescriptionConst.EXIST_CATEGORY_CATEGORYNAME, "El nombre de la categoria ya existe." }
             }
         };
     }
