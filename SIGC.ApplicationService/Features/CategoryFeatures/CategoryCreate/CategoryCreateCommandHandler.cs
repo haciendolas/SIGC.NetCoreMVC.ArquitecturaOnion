@@ -18,7 +18,12 @@ namespace SIGC.ApplicationService.Features.CategoryFeatures.CategoryCreate
         {
             var MsgResponse = new MsgResponse<object>();
             try{
-                var Model = Category.Create(Request.CategoryName, Request.StateId, DateTime.Now, CurrentSessionService.UserID);
+                var Model = Category.Create(
+                        Request.CategoryName,
+                        Request.StateId, 
+                        DateTime.Now, 
+                        CurrentSessionService.UserID
+                    );
 
                 var Validate = await CategoryValidateRepository.ValidateAsync(Model, CancellationToken);
                 if (Validate == VerifyRegistryConst.Category.OK)
@@ -35,6 +40,11 @@ namespace SIGC.ApplicationService.Features.CategoryFeatures.CategoryCreate
                             StateId = Model.StateId,
                             CreatedDate = Model.CreatedDate,
                         };
+                    }
+                    else
+                    {
+                        MsgResponse.Type = MessageTypeConst.ERROR;
+                        MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.ERROR_INSERT);
                     }
                 }
                 else{

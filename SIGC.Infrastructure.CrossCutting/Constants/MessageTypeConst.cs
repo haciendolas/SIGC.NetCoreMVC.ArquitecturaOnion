@@ -7,5 +7,6 @@
         public const string ERROR = "Error";
         public const string ALERT = "Alert";
         public const string QUERY = "Query";
+        public const string EXCEPTION = "Exception";
     }
 }
