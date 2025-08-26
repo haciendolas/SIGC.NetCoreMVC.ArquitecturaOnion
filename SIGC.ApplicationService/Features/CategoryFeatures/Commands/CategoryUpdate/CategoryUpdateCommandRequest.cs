@@ -2,7 +2,7 @@
 using SIGC.DomainModel.Enums;
 using SIGC.Infrastructure.CrossCutting.Wrappers;
 
-namespace SIGC.ApplicationService.Features.CategoryFeatures.CategoryUpdate
+namespace SIGC.ApplicationService.Features.CategoryFeatures.Commands.CategoryUpdate
 {
     public record struct CategoryUpdateCommandRequest
     (

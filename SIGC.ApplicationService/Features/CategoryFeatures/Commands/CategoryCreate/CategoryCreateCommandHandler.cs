@@ -5,7 +5,7 @@ using SIGC.DomainService.IServices;
 using SIGC.Infrastructure.CrossCutting.Constants;
 using SIGC.Infrastructure.CrossCutting.Wrappers;
 
-namespace SIGC.ApplicationService.Features.CategoryFeatures.CategoryCreate
+namespace SIGC.ApplicationService.Features.CategoryFeatures.Commands.CategoryCreate
 {
     internal class CategoryCreateCommandHandler(
         ICategoryCreateRepository CategoryCreateRepository,
@@ -35,10 +35,10 @@ namespace SIGC.ApplicationService.Features.CategoryFeatures.CategoryCreate
                         MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.PROCESS_FULLYCOMPLETED);
                         MsgResponse.Data = new
                         {
-                            CategoryId = Model.CategoryId,
-                            CategoryName = Model.CategoryName,
-                            StateId = Model.StateId,
-                            CreatedDate = Model.CreatedDate,
+                            Model.CategoryId,
+                            Model.CategoryName,
+                            Model.StateId,
+                            Model.CreatedDate,
                         };
                     }
                     else

@@ -5,7 +5,7 @@ using SIGC.DomainService.IServices;
 using SIGC.Infrastructure.CrossCutting.Constants;
 using SIGC.Infrastructure.CrossCutting.Wrappers;
 
-namespace SIGC.ApplicationService.Features.CategoryFeatures.CategoryUpdate
+namespace SIGC.ApplicationService.Features.CategoryFeatures.Commands.CategoryUpdate
 {
     internal class CategoryUpdateCommandHandler(
         ICategoryUpdateRepository CategoryUpdateRepository,

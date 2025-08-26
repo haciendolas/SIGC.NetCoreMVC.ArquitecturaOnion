@@ -37,6 +37,17 @@ namespace SIGC.DomainModel.Models
             };
         }
 
+        public static Category ChangeState(int CategoryId,StateEnum StateId, DateTime UpdatedDate, int UpdatedBy)
+        {            
+            return new Category()
+            {
+                CategoryId = CategoryId,                
+                StateId = StateId,
+                CreatedDate = UpdatedDate,
+                CreatedBy = UpdatedBy
+            };
+        }
+
         private static void Validate(string CategoryName, DateTime CreatedDate, int CreatedBy)
         {
             if (string.IsNullOrWhiteSpace(CategoryName)) throw new ArgumentNullException("El nombre de la categoria no debe estar vacia" + nameof(CategoryName));

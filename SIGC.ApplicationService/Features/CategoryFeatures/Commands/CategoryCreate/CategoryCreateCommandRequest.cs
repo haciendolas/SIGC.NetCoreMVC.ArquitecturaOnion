@@ -2,7 +2,7 @@
 using SIGC.DomainModel.Enums;
 using SIGC.Infrastructure.CrossCutting.Wrappers;
 
-namespace SIGC.ApplicationService.Features.CategoryFeatures.CategoryCreate
+namespace SIGC.ApplicationService.Features.CategoryFeatures.Commands.CategoryCreate
 {
     public record struct CategoryCreateCommandRequest
      (
