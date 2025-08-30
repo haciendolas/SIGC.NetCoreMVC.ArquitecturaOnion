@@ -4,6 +4,6 @@ namespace SIGC.DomainService.IRepositories.IUserRepositories
 {
    public interface IUserLoginRepository
     {
-        Task<UserLoginResponseDto> GetAsync(UserLoginRequestDto UserCredentials);
+        Task<UserLoginResponseDto?> GetAsync(UserLoginRequestDto UserCredentials);
     }
 }

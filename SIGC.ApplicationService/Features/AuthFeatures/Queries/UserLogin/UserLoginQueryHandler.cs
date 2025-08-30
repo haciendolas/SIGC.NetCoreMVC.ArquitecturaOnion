@@ -29,22 +29,22 @@ namespace SIGC.ApplicationService.Features.AuthFeatures.Queries.UserLogin
             var MsgResponse = new MsgResponse<object>();
                 MsgResponse.Type = MessageTypeConst.QUERY;
 
-            if(UserLoginResponse == default){
-                MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.INVALID_CREDENTIAL);                
+            if(UserLoginResponse == null){
+                MsgResponse.Message = MessageDescriptionConst.INVALID_CREDENTIAL_DESCRIPTION;                
             }
             else{
-                MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.VALID_CREDENTIAL);
+                MsgResponse.Message = MessageDescriptionConst.VALID_CREDENTIAL_DESCRIPTION;
                 AppUserDto AppUser = new AppUserDto(){
-                    UserID = UserLoginResponse.UserID,
+                    UserID = UserLoginResponse.Value.UserID,
                     UserName = request.UserName,
-                    UserFirstName = UserLoginResponse.UserFirstName,
-                    UserLastName = UserLoginResponse.UserLastName,
-                    UserMail = UserLoginResponse.UserMail,
-                    CompanyID = UserLoginResponse.CompanyID,
+                    UserFirstName = UserLoginResponse.Value.UserFirstName,
+                    UserLastName = UserLoginResponse.Value.UserLastName,
+                    UserMail = UserLoginResponse.Value.UserMail,
+                    CompanyID = UserLoginResponse.Value.CompanyID,
                     IdiomID = (short)IdiomEnum.Spanish,
-                    CompanyDocumentNumber = UserLoginResponse.CompanyDocumentNumber,
-                    CompanyTradeName = UserLoginResponse.CompanyTradeName,
-                    CompanySocialReason = UserLoginResponse.CompanySocialReason,
+                    CompanyDocumentNumber = UserLoginResponse.Value.CompanyDocumentNumber,
+                    CompanyTradeName = UserLoginResponse.Value.CompanyTradeName,
+                    CompanySocialReason = UserLoginResponse.Value.CompanySocialReason,
                     RoleCodes = "1,2"
                 };
                 var AccessToken = await GenerateJWTToken.GenerateJWTToken(AppUser);

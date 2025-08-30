@@ -1,5 +1,6 @@
 
 using SIGC.ApplicationService;
+using SIGC.Infrastructure.ADONET.SQLSERVER;
 using SIGC.Infrastructure.GeneralService;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +14,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSIGCCoreApplicationService();
 builder.Services.AddSIGCInfrastructureGeneralService();
-
+builder.Services.AddSIGCInfrastructureADONETSQLSERVER(builder.Configuration,"ConnectionStrings");
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

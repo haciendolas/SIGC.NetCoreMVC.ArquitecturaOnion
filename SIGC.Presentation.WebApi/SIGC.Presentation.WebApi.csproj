@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SIGC.ApplicationService\SIGC.ApplicationService.csproj" />
+    <ProjectReference Include="..\SIGC.Infrastructure.ADONET.SQLSERVER\SIGC.Infrastructure.ADONET.SQLSERVER.csproj" />
     <ProjectReference Include="..\SIGC.Infrastructure.GeneralService\SIGC.Infrastructure.GeneralService.csproj" />
   </ItemGroup>
 
