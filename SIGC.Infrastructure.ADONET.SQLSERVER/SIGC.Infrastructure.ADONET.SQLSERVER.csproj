@@ -16,4 +16,8 @@
     <ProjectReference Include="..\SIGC.DomainService\SIGC.DomainService.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repositories\UserRepositories\" />
+  </ItemGroup>
+
 </Project>

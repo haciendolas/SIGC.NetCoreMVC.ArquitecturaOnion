@@ -12,9 +12,9 @@ public class MessageService(IServiceProvider ServiceProvider) : IMessageService
 
     public string GetMessageResult(string messageResultCode)
     {
-        if (_messages.ContainsKey(CurrentSessionAppService.IdiomID) &&
-            _messages[CurrentSessionAppService.IdiomID].ContainsKey(messageResultCode))
-            return _messages[CurrentSessionAppService.IdiomID][messageResultCode];
+        if (_messages.ContainsKey(CurrentSessionAppService.IsAuthenticated ? CurrentSessionAppService.IdiomID:(short)IdiomEnum.Spanish) &&
+            _messages[CurrentSessionAppService.IsAuthenticated ? CurrentSessionAppService.IdiomID: (short)IdiomEnum.Spanish].ContainsKey(messageResultCode))
+            return _messages[CurrentSessionAppService.IsAuthenticated ? CurrentSessionAppService.IdiomID:(short)IdiomEnum.Spanish][messageResultCode];
 
         return "¡Traductor de idioma no disponible!";
     }
@@ -49,7 +49,10 @@ public class MessageService(IServiceProvider ServiceProvider) : IMessageService
                 { MessageDescriptionConst.VALID_CREDENTIAL, "Verified credentials, welcome to the system." },
                 { MessageDescriptionConst.INVALID_CREDENTIAL, "The username and/or password is incorrect." },
                 { MessageDescriptionConst.EXIST_COMPANY_DOCUMENTNUMBER, "The company document number already exists." },
-                { MessageDescriptionConst.EXIST_CATEGORY_CATEGORYNAME, "The category name already exists." }
+                { MessageDescriptionConst.EXIST_CATEGORY_CATEGORYNAME, "The category name already exists." },
+                { MessageDescriptionConst.INVALID_JWT_TOKEN, "The token is invalid or has expired." },
+                { MessageDescriptionConst.VALID_JWT_TOKEN, "The token is valid but not expired." },
+                { MessageDescriptionConst.INVALID_RANDOM_TOKEN, "The refresh token is invalid or has expired." }
             },
 
             [(short)IdiomEnum.Spanish] = new()
@@ -77,7 +80,10 @@ public class MessageService(IServiceProvider ServiceProvider) : IMessageService
                 { MessageDescriptionConst.VALID_CREDENTIAL, "Credenciales verificadas,bienvenido al sistema." },
                 { MessageDescriptionConst.INVALID_CREDENTIAL, "El usuario y/o contraseña es incorrecta." },
                 { MessageDescriptionConst.EXIST_COMPANY_DOCUMENTNUMBER, "El número del documento de la empresa ya existe." },
-                { MessageDescriptionConst.EXIST_CATEGORY_CATEGORYNAME, "El nombre de la categoria ya existe." }
+                { MessageDescriptionConst.EXIST_CATEGORY_CATEGORYNAME, "El nombre de la categoria ya existe." },
+                { MessageDescriptionConst.INVALID_JWT_TOKEN, "El token es inválido o ha expirado." },
+                { MessageDescriptionConst.VALID_JWT_TOKEN, "El token es válido aun no expirado." },
+                { MessageDescriptionConst.INVALID_RANDOM_TOKEN, "El refresh token es inválido o ha expirado." }
             }
         };
     }

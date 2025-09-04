@@ -3,6 +3,6 @@
     public class AppDbContext
     {
         public string ConnectionDBCommerce360 { get; set; } = null!;
-        public string ConnectionDBContabilidad { get; set; } = null!;
+        public string ConnectionDBAccounting360 { get; set; } = null!;
     }
 }

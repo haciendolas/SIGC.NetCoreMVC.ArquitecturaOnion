@@ -1,6 +1,6 @@
-﻿namespace SIGC.DomainModel.Dtos.User
+﻿namespace SIGC.DomainModel.Dtos.Auth
 {
-    public record struct UserLoginRequestDto(
+    public record struct AuthLoginRequestDto(
         string CompanyDocumentNumber,
         string UserName,
         string UserPassword

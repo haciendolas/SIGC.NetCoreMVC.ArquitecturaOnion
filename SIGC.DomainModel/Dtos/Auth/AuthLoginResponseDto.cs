@@ -1,7 +1,8 @@
-﻿namespace SIGC.DomainModel.Dtos.User
+﻿namespace SIGC.DomainModel.Dtos.Auth
 {
-    public record struct UserLoginResponseDto(
+    public record struct AuthLoginResponseDto(
         int UserID,
+        string UserName,
         string UserFirstName,
         string UserLastName,
         string UserMail,

@@ -10,4 +10,8 @@
     <ProjectReference Include="..\SIGC.DomainModel\SIGC.DomainModel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="IRepositories\IUserRepositories\" />
+  </ItemGroup>
+
 </Project>

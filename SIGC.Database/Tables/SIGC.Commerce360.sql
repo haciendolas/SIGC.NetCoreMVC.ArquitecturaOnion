@@ -83,3 +83,18 @@ CREATE TABLE Security.UserCompany(
   CONSTRAINT Usercompany_CHK_StateID CHECK(StateID IN(0,1,2))
 ) 
 GO
+CREATE  TABLE Security.Token(
+   TokenID INT NOT NULL IDENTITY(1,1),
+   CompanyID INT NOT NULL,
+   UserID INT NOT NULL,   
+   TokenSessionJson NVARCHAR(max),
+   TokenRefreshRandom VARCHAR(100),
+   TokenAccessJWT VARCHAR(100),
+   TokenCreateDateTime DATETIME NOT NULL DEFAULT GETDATE(),
+   TokenExpirationRandomDateTime DATETIME NOT NULL,
+   TokenExpirationJWTDateTime DATETIME NOT NULL,
+   TokenRevocationDateTime DATETIME ,
+   StateID AS (IIf(TokenRevocationDateTime IS NULL,1 ,0)), 
+   CONSTRAINT Token_PK_TokenID PRIMARY KEY(TokenID),
+   CONSTRAINT Token_FK_UserID FOREIGN KEY(UserID) REFERENCES Security.[User](UserID)
+)

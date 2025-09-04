@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SIGC.ApplicationService.Features.AuthFeatures.Queries.UserLogin;
+using SIGC.ApplicationService.Features.AuthFeatures.Commands.AuthRefreshToken;
+using SIGC.ApplicationService.Features.AuthFeatures.Queries.AuthLoginToken;
+
 
 namespace SIGC.Presentation.WebApi.Controllers
 { 
@@ -12,10 +13,19 @@ namespace SIGC.Presentation.WebApi.Controllers
         //[SwaggerOperation(Summary = "Inicar sesión", Description = " Permite Inicar sesión.")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
        // [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> SignIn([FromBody] UserLoginQueryRequest Query, CancellationToken CancellationToken)
+        public async Task<IActionResult> SignIn([FromBody] AuthLoginTokenQueryRequest Query, CancellationToken CancellationToken)
         {
             return Ok(await Mediator.Send(Query));
         }
 
+        [AllowAnonymous]
+        [HttpPost("Refresh")]
+        //[SwaggerOperation(Summary = "Inicar sesión", Description = " Permite Inicar sesión.")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        // [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Refresh([FromBody] AuthRefreshTokenCommandRequest Command, CancellationToken CancellationToken)
+        {
+            return Ok(await Mediator.Send(Command));
+        }
     }
 }

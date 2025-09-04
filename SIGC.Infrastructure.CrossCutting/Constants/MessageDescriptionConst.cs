@@ -34,5 +34,8 @@
         public const string VALID_CREDENTIAL = "ValidCredentials";
         public const string INVALID_CREDENTIAL_DESCRIPTION = "El usuario y/o contraseña es incorrecta.";
         public const string VALID_CREDENTIAL_DESCRIPTION = "Credenciales verificadas,bienvenido al sistema.";
+        public const string INVALID_JWT_TOKEN = "InvalidJWTToken";
+        public const string VALID_JWT_TOKEN = "ValidJWTToken";
+        public const string INVALID_RANDOM_TOKEN = "InvalidRandomToken";
     }
 }

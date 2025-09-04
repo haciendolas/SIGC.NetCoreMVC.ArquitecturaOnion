@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using SIGC.ApplicationService.Commons.Mappers.Auth;
 using System.Reflection;
 
 namespace SIGC.ApplicationService
@@ -13,6 +14,7 @@ namespace SIGC.ApplicationService
                 cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly());
             });
 
+            services.AddScoped<IAuthMapper, AuthMapper>();
             return services;
         }
     }
