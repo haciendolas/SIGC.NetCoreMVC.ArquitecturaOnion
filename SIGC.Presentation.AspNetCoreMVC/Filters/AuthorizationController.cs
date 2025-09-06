@@ -1,16 +1,17 @@
-﻿ 
+﻿
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using SIGC.Presentation.AspNetCoreMVC.Controllers;
 using SIGC.Presentation.AspNetCoreMVC.Extensions;
+using SIGC.Presentation.AspNetCoreMVC.Helpers;
 
 namespace SIGC.Presentation.AspNetCoreMVC.Filters
 {
     public class AuthorizationController : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext){
-            if (filterContext.HttpContext.Session.GetObject<AuthenticationIdentity>("AuthenticationIdentity") == null){
+            if (filterContext.HttpContext.Session.GetObject<AuthenticationIdentity>(ConstantsHelper.SessionKeys.AuthenticationIdentity) == null){
                 
                 string NameController = filterContext.RouteData.Values["controller"].ToString();
                 if (filterContext.HttpContext.Request.Method == "GET" && NameController != "Lock")

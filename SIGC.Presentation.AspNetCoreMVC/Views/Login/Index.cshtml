@@ -73,7 +73,11 @@
                                             <label class="form-label" for="UserPassword">Contraseña</label>
                                             <div class="position-relative auth-pass-inputgroup mb-3">
                                                 <input type="password" class="form-control pe-5" id="UserPassword" name="UserPassword">
-                                                <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
+                                                <input type="hidden" id="icon-class" value="ri-eye-off-fill" />
+                                                <a class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted" id="btnPassword">
+                                                    <i id="icon-eye-off" class="ri-eye-off-fill align-middle"></i>
+                                                    <i id="icon-eye-on" style="display:none" class="ri-eye-fill align-middle"></i>
+                                                </a>
                                             </div>
                                         </div>
                                         @*
@@ -85,7 +89,13 @@
                                         <div class="mt-4">
                                             <button class="btn btn-success w-100" type="submit" id="login-btn">Iniciar Sesión</button>
                                         </div>
-                                        <div id="lblRespuesta"></div>
+                                        <div id="alert-danger" style="display:none" class="alert alert-danger alert-dismissible alert-label-icon label-arrow fade show mb-xl-0 mt-2" role="alert">
+                                            <i class="ri-error-warning-line label-icon"></i>
+                                            <strong class="lblRespuesta"></strong>
+                                        </div>
+                                        <div id="alert-success" style="display:none" class="alert alert-success alert-border-left alert-dismissible fade show mt-2" role="alert">
+                                            <i class="ri-check-double-line label-icon me-3 align-middle fs-16"></i><strong class="lblRespuesta"></strong>
+                                        </div>
                                         @*                                       
                                         <div class="mt-4 text-center">
                                             <div class="signin-other-title">

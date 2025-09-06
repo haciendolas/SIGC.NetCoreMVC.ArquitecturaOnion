@@ -12,7 +12,7 @@ namespace SIGC.Presentation.WebApi.Controllers
         [HttpPost("SignIn")]
         //[SwaggerOperation(Summary = "Inicar sesión", Description = " Permite Inicar sesión.")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-       // [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status400BadRequest)]
+        //[ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SignIn([FromBody] AuthLoginTokenQueryRequest Query, CancellationToken CancellationToken)
         {
             return Ok(await Mediator.Send(Query));
@@ -22,7 +22,7 @@ namespace SIGC.Presentation.WebApi.Controllers
         [HttpPost("Refresh")]
         //[SwaggerOperation(Summary = "Inicar sesión", Description = " Permite Inicar sesión.")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-        // [ProducesResponseType(typeof(StatusCodeResponse), StatusCodes.Status400BadRequest)]
+        //[ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Refresh([FromBody] AuthRefreshTokenCommandRequest Command, CancellationToken CancellationToken)
         {
             return Ok(await Mediator.Send(Command));

@@ -17,8 +17,8 @@ namespace SIGC.ApplicationService.Features.AuthFeatures.Queries.AuthLoginToken
          IGenerateTokenService GenerateTokenService,
          ITokenCreateRepository TokenCreateRepository,
          IAuthMapper AuthMapper
-    ) : IRequestHandler<AuthLoginTokenQueryRequest, MsgResponse<AuthTokenResponseDto>>{
-        public async Task<MsgResponse<AuthTokenResponseDto>> Handle(AuthLoginTokenQueryRequest Request, CancellationToken CancellationToken)
+    ) : IRequestHandler<AuthLoginTokenQueryRequest, MsgResponse<AuthTokenResponseDto?>>{
+        public async Task<MsgResponse<AuthTokenResponseDto?>> Handle(AuthLoginTokenQueryRequest Request, CancellationToken CancellationToken)
         {
             var UserLoginRequest = new AuthLoginRequestDto()
             {
@@ -29,7 +29,7 @@ namespace SIGC.ApplicationService.Features.AuthFeatures.Queries.AuthLoginToken
            
             var AuthLoginResponse = await AuthLoginRepository.LoginAsync(UserLoginRequest, CancellationToken);
 
-            var MsgResponse = new MsgResponse<AuthTokenResponseDto>();
+            var MsgResponse = new MsgResponse<AuthTokenResponseDto?>();
                 MsgResponse.Type = MessageTypeConst.QUERY;
 
             if(AuthLoginResponse == null){

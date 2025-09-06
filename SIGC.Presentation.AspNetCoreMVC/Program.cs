@@ -1,4 +1,7 @@
 using SIGC.Presentation.AspNetCoreMVC.Filters;
+using SIGC.Presentation.AspNetCoreMVC.Helpers;
+using SIGC.Presentation.AspNetCoreMVC.Services;
+using SIGC.Presentation.AspNetCoreMVC.Services.AuthService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +17,20 @@ builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
 });
- 
+
+builder.Services.Configure<ApiEndpoints>(builder.Configuration.GetSection("ApiEndpoints"));
+var endpoints = builder.Configuration.GetSection("ApiEndpoints").Get<ApiEndpoints>();
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddHttpClient(ConstantsHelper.HttpClientNames.ApiCommerce360, client => client.BaseAddress = new Uri(endpoints!.Commerce360))
+                .AddHttpMessageHandler<AccessTokenHandler>();
+
+builder.Services.AddHttpClient(ConstantsHelper.HttpClientNames.ApiAuth360, client => client.BaseAddress = new Uri(endpoints!.Commerce360)); 
+
+builder.Services.AddScoped<IApiService,ApiService>();
+builder.Services.AddScoped<IApiServiceFactory,ApiServiceFactory>();
+builder.Services.AddScoped<IAuthService,AuthService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -33,7 +49,19 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.UseSession();
-
+/*
+app.Use(async (context, next) =>
+{
+    try
+    {
+        await next();
+    }
+    catch (SessionExpiredException)
+    {
+        context.Response.Redirect("/Login");
+    }
+});
+*/
 app.MapControllerRoute(
     name: "areas",
    // pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"

@@ -34,18 +34,18 @@
     @using System.Web;
     @using SIGC.Presentation.AspNetCoreMVC.Filters;
     @using SIGC.Presentation.AspNetCoreMVC.Extensions;
+    @using SIGC.Presentation.AspNetCoreMVC.Helpers
     @{
-        /*
-        if (Context.Session.GetObject<AuthenticationIdentity>("AuthenticationIdentity") != null)
+
+        if (Context.Session.GetObject<AuthenticationIdentity>(ConstantsHelper.SessionKeys.AuthenticationIdentity) != null)
         {
-            var authenticationIdentity = Context.Session.GetObject<AuthenticationIdentity>("AuthenticationIdentity");
-            ViewBag.UserID = authenticationIdentity.UserID;
+            var authenticationIdentity = Context.Session.GetObject<AuthenticationIdentity>(ConstantsHelper.SessionKeys.AuthenticationIdentity);
+            ViewBag.UserID = authenticationIdentity!.UserID;
             ViewBag.UserName = authenticationIdentity.UserName;
-            ViewBag.UserFullName = authenticationIdentity.UserFullName;
-            ViewBag.UserProfileType = authenticationIdentity.UserProfileType;
-            ViewBag.UserImage = (authenticationIdentity.UserImage == "sin_foto" ? Url.Content("~/assets/images/users/user-dummy-img.jpg") : authenticationIdentity.UserImage);
+            ViewBag.UserFullName = authenticationIdentity.UserFullName;         
+            ViewBag.UserImage = authenticationIdentity.UserImage ?? Url.Content("~/assets/images/users/user-dummy-img.jpg");
         }
-        */
+        
         String UrlBase = System.Web.HttpUtility.JavaScriptStringEncode(new Uri(new Uri(String.Format("{0}://{1}{2}", Context.Request.Scheme, Context.Request.Host, Context.Request.Path)), Url.Content("~/")).ToString());
         UrlBase = UrlBase.Substring(0, UrlBase.Length - 1);
     }

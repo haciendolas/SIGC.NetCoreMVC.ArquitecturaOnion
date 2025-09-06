@@ -8,5 +8,5 @@ namespace SIGC.ApplicationService.Features.AuthFeatures.Queries.AuthLoginToken
             string CompanyDocumentNumber,
             string UserName,
             string UserPassword
-    ) : IRequest<MsgResponse<AuthTokenResponseDto>>;
+    ) : IRequest<MsgResponse<AuthTokenResponseDto?>>;
 }

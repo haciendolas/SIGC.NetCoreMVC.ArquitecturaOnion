@@ -1,9 +1,7 @@
-﻿namespace SIGC.Presentation.AspNetCoreMVC.Models
+﻿namespace SIGC.Presentation.AspNetCoreMVC.Models.Auth
 {
-    public class UserResponseDto
+    public class AuthLoginTokenRequestModel
     {
-        public int UserId { get; set; }
-        public int CompanyId { get; set; }
         public string CompanyDocumentNumber { get; set; } = null!;
         public string UserName { get; set; } = null!;
         public string UserPassword { get; set; } = null!;

@@ -10,18 +10,13 @@ namespace SIGC.Presentation.AspNetCoreMVC.Extensions
             session.SetString(key, data);
         }
 
-        public static T GetObject<T>
-            (this ISession session, string key)
+        public static T? GetObject<T>(this ISession session, string key)
         {
             string data = session.GetString(key);
-            if (data == null)
-            {
+            if (data is null)
                 return default;
-            }
-            else
-            {
-                return JsonConvert.DeserializeObject<T>(data);
-            }
-        }
+            return JsonConvert.DeserializeObject<T>(data)!;            
+        } 
+ 
     }
 }

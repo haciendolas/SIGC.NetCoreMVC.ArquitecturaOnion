@@ -11,13 +11,13 @@
                     if ($('#icon-class').hasClass('ri-eye-fill')) {
                         $('#icon-class').removeClass('ri-eye-fill');  
                         $('#icon-class').addClass('ri-eye-off-fill');
-                        $('#txtUserPassword').attr('type', 'password').focus();
+                        $('#UserPassword').attr('type', 'password').focus();
                         $('#icon-eye-off').show(); $('#icon-eye-on').hide();
                     }
                     else {                       
                         $('#icon-class').removeClass('ri-eye-off-fill');
                         $('#icon-class').addClass('ri-eye-fill');
-                        $('#txtUserPassword').attr('type', 'text').focus();
+                        $('#UserPassword').attr('type', 'text').focus();
                         $('#icon-eye-off').hide(); $('#icon-eye-on').show();
                     }
                 });
