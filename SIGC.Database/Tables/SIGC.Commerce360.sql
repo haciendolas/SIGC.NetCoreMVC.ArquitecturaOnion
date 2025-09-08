@@ -42,7 +42,6 @@ CREATE TABLE Security.Company(
   CONSTRAINT Company_CHK_StateID CHECK(StateID IN(0,1,2))
 ) 
 GO
-
 CREATE TABLE Security.CompanyRegister(
    CompanyIDRegister   INT NOT NULL,
    CompanyID INT NOT NULL,
@@ -81,6 +80,86 @@ CREATE TABLE Security.UserCompany(
   CONSTRAINT Usercompany_FK_CompanyID FOREIGN KEY(CompanyID) REFERENCES Security.Company(CompanyID),
   CONSTRAINT Usercompany_FK_UserID FOREIGN KEY(UserID) REFERENCES Security.[User](UserID),   
   CONSTRAINT Usercompany_CHK_StateID CHECK(StateID IN(0,1,2))
+) 
+GO
+CREATE TABLE Security.Page (
+  PageID INT NOT NULL IDENTITY(1,1),  
+  PageParentID INT,
+  PageHierarchy VARCHAR(12) NOT NULL,
+  PageName VARCHAR(50) NOT NULL, 
+  PageUrlName VARCHAR(50),
+  PageIconName VARCHAR(1500),
+  PageDescription VARCHAR(200),
+  PageOrder SMALLINT NOT NULL,
+  StateID SMALLINT NOT NULL DEFAULT 1,   
+  PageCreatedDateTime DATETIME NOT NULL DEFAULT GETDATE(),
+  PageCreatedUserID INT NOT NULL,
+  PageUpdatedDateTime DATETIME,
+  PageUpdatedUserID INT,    
+  CONSTRAINT Page_PK_PageID PRIMARY KEY CLUSTERED(PageID) ,
+  CONSTRAINT Page_FK_PageParentID FOREIGN KEY(PageParentID) REFERENCES Security.Page(PageID),  
+  CONSTRAINT Page_CHK_StateID CHECK(StateID IN(0,1,2))   
+)
+GO
+CREATE TABLE Security.PageAction(
+	PageActionID INT IDENTITY(1,1),
+	PageID INT NOT NULL,
+	PageActionName VARCHAR(30) NOT NULL ,	 	
+	PageActionDescription VARCHAR(50) NULL,
+	StateID SMALLINT NOT NULL DEFAULT 1,
+    CONSTRAINT PageAction_PK_PageActionID PRIMARY KEY CLUSTERED(PageActionID),
+	CONSTRAINT PageAction_FK_PageID FOREIGN KEY(PageID) REFERENCES Security.Page(PageID),
+    CONSTRAINT PageAction_CHK_StateID CHECK(StateID IN(0,1,2)),
+    CONSTRAINT PageAction_UNQ_PageActionName UNIQUE(PageActionName)
+) 
+GO
+CREATE TABLE Security.PageCompany(
+  CompanyID INT NOT NULL,
+  PageID INT NOT NULL,
+  StateID SMALLINT NOT NULL DEFAULT 1,   
+  PageCompanyCreatedDateTime DATETIME NOT NULL DEFAULT GETDATE(),
+  PageCompanyCreatedUserID INT NOT NULL,
+  PageCompanyUpdatedDateTime DATETIME,
+  PageCompanyUpdatedUserID INT,
+  CONSTRAINT PageCompany_PK_CompanyID_PageID PRIMARY KEY NONCLUSTERED(CompanyID,PageID),
+  CONSTRAINT PageCompany_FK_CompanyID FOREIGN KEY(CompanyID) REFERENCES Security.Company(CompanyID),
+  CONSTRAINT PageCompany_FK_PageID FOREIGN KEY(PageID) REFERENCES Security.Page(PageID),  
+  CONSTRAINT PageCompany_CHK_StateID CHECK(StateID IN(0,1,2))
+) 
+GO
+CREATE TABLE Security.[Role](
+  RoleID INT NOT NULL IDENTITY(1,1),
+  CompanyID INT NOT NULL,  
+  RoleCode VARCHAR(5) NOT NULL, 
+  RoleName VARCHAR(50) NOT NULL,
+  RoleDescription VARCHAR(150),
+  StateID SMALLINT NOT NULL DEFAULT 1,    
+  RoleCreatedDateTime DATETIME NOT NULL DEFAULT GETDATE(),
+  RoleCreatedUserID INT NOT NULL,
+  RoleUpdatedDateTime DATETIME,
+  RoleUpdatedUserID INT,  
+  CONSTRAINT Role_PK_RoleID PRIMARY KEY CLUSTERED(RoleID),
+  CONSTRAINT Role_FK_CompanyID FOREIGN KEY(CompanyID) REFERENCES Security.Company(CompanyID),   
+  CONSTRAINT Role_CHK_StateID CHECK(StateID IN(0,1,2))
+)  
+GO 
+CREATE TABLE Security.RolePermission(
+	CompanyID INT NOT NULL,
+	RoleID int NOT NULL,
+    PageID INT NOT NULL,
+	PageActionID int NOT NULL,  
+	PageRoleCreatedDateTime DATETIME NOT NULL DEFAULT GETDATE(),
+	CONSTRAINT RolePermission_PK_CompanyID_RoleID_PageActionID PRIMARY KEY NONCLUSTERED(CompanyID,RoleID,PageID,PageActionID),	 
+	CONSTRAINT RolePermission_FK_CompanyID_RoleID FOREIGN KEY(RoleID) REFERENCES Security.[Role](RoleID)
+)  
+GO
+CREATE TABLE Security.UserRole(
+  CompanyID INT NOT NULL,
+  UserID INT NOT NULL,
+  RoleID INT NOT NULL, 
+  CONSTRAINT UserRole_PK_CompanyID_UserID_RoleID PRIMARY KEY NONCLUSTERED(CompanyID,UserID,RoleID),
+  CONSTRAINT UserRole_FK_UserID FOREIGN KEY(UserID) REFERENCES Security.[User](UserID), 
+  CONSTRAINT UserRole_FK_CompanyID_RoleID FOREIGN KEY(RoleID) REFERENCES Security.[Role](RoleID) 
 ) 
 GO
 CREATE  TABLE Security.Token(
