@@ -25,6 +25,7 @@
             public const string AuthenticationIdentity = "authenticationIdentity";
             public const string AccessToken = "accessToken";
             public const string RefreshToken = "refreshToken";
+            public const string MenuSidebar = "menuSidebar";
         }
     }
 }

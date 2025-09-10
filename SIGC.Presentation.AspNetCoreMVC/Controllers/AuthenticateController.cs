@@ -5,16 +5,19 @@ using SIGC.Presentation.AspNetCoreMVC.Filters;
 using SIGC.Presentation.AspNetCoreMVC.Helpers;
 using SIGC.Presentation.AspNetCoreMVC.Models.Auth;
 using SIGC.Presentation.AspNetCoreMVC.Services.AuthService;
+using SIGC.Presentation.AspNetCoreMVC.Services.RolePermissionService;
 
 namespace SIGC.Presentation.AspNetCoreMVC.Controllers
 {
     public class AuthenticateController : BaseController
     {       
         private readonly IAuthService AuthService;
-       
-        public AuthenticateController(IAuthService AuthService)
+        private readonly IRolePermissionService RolePermissionService;
+        public AuthenticateController(IAuthService AuthService,
+            IRolePermissionService RolePermissionService)
         {
-            this.AuthService = AuthService;           
+            this.AuthService = AuthService;
+            this.RolePermissionService = RolePermissionService;
         }
        
         [HttpPost]
@@ -22,18 +25,17 @@ namespace SIGC.Presentation.AspNetCoreMVC.Controllers
             string Url = string.Empty;
             string Message = string.Empty;
             var ApiResponse = await AuthService.SignIn(model);
-
-            // var response = UserList().FirstOrDefault(f => f.UserPassword == model.UserPassword && f.UserName == model.UserName && f.CompanyDocumentNumber == model.CompanyDocumentNumber);
+                       
             if (ApiResponse.Data is not null)        {
                 Url = "Dashboard";
 
-                var authenticationIdentity = ConvertsHelper.ExtractUserInfo(ApiResponse.Data.Value.AccessToken); 
+                var AuthenticationIdentity = ConvertsHelper.ExtractUserInfo(ApiResponse.Data.Value.AccessToken); 
 
                 if (HttpContext.Session != null)
                 {
                     if (HttpContext.Session.GetObject<AuthenticationIdentity>(ConstantsHelper.SessionKeys.AuthenticationIdentity) == null)
                     {
-                        HttpContext.Session.SetObject(ConstantsHelper.SessionKeys.AuthenticationIdentity, authenticationIdentity);
+                        HttpContext.Session.SetObject(ConstantsHelper.SessionKeys.AuthenticationIdentity, AuthenticationIdentity);
                     }
                     if (string.IsNullOrWhiteSpace(HttpContext.Session.GetString(ConstantsHelper.SessionKeys.AccessToken)))
                     {
@@ -42,6 +44,15 @@ namespace SIGC.Presentation.AspNetCoreMVC.Controllers
                     if (string.IsNullOrWhiteSpace(HttpContext.Session.GetString(ConstantsHelper.SessionKeys.RefreshToken)))
                     {
                         HttpContext.Session.SetString(ConstantsHelper.SessionKeys.RefreshToken, ApiResponse.Data.Value.RefreshToken);
+                    }
+                    if (string.IsNullOrWhiteSpace(HttpContext.Session.GetString(ConstantsHelper.SessionKeys.MenuSidebar)))
+                    {
+                        var ApiResponseRolePermission = await RolePermissionService.RolePermissionList(new Models.RolePermission.RolePermissionListRequestModel
+                        {
+                            UserID = AuthenticationIdentity.UserID,
+                            CompanyID = AuthenticationIdentity.CompanyID
+                        });
+                        HttpContext.Session.SetObject(ConstantsHelper.SessionKeys.MenuSidebar, ApiResponseRolePermission.Data!);
                     }
                 }               
             }       

@@ -2,6 +2,7 @@ using SIGC.Presentation.AspNetCoreMVC.Filters;
 using SIGC.Presentation.AspNetCoreMVC.Helpers;
 using SIGC.Presentation.AspNetCoreMVC.Services;
 using SIGC.Presentation.AspNetCoreMVC.Services.AuthService;
+using SIGC.Presentation.AspNetCoreMVC.Services.RolePermissionService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,15 +22,17 @@ builder.Services.AddSession(options =>
 builder.Services.Configure<ApiEndpoints>(builder.Configuration.GetSection("ApiEndpoints"));
 var endpoints = builder.Configuration.GetSection("ApiEndpoints").Get<ApiEndpoints>();
 
+
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient(ConstantsHelper.HttpClientNames.ApiCommerce360, client => client.BaseAddress = new Uri(endpoints!.Commerce360))
                 .AddHttpMessageHandler<AccessTokenHandler>();
 
-builder.Services.AddHttpClient(ConstantsHelper.HttpClientNames.ApiAuth360, client => client.BaseAddress = new Uri(endpoints!.Commerce360)); 
-
+builder.Services.AddHttpClient(ConstantsHelper.HttpClientNames.ApiAuth360, client => client.BaseAddress = new Uri(endpoints!.Commerce360));
+builder.Services.AddScoped<AccessTokenHandler>();
 builder.Services.AddScoped<IApiService,ApiService>();
 builder.Services.AddScoped<IApiServiceFactory,ApiServiceFactory>();
 builder.Services.AddScoped<IAuthService,AuthService>();
+builder.Services.AddScoped<IRolePermissionService, RolePermissionService>();
 
 var app = builder.Build();
 

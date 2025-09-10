@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using SIGC.ApplicationService.Features.AuthFeatures.Commands.AuthRefreshToken;
 using SIGC.ApplicationService.Features.AuthFeatures.Queries.AuthLoginToken;
+using SIGC.Infrastructure.CrossCutting.Wrappers;
+using Swashbuckle.AspNetCore.Annotations;
 
 
 namespace SIGC.Presentation.WebApi.Controllers
@@ -10,9 +12,9 @@ namespace SIGC.Presentation.WebApi.Controllers
     {
         [AllowAnonymous]
         [HttpPost("SignIn")]
-        //[SwaggerOperation(Summary = "Inicar sesión", Description = " Permite Inicar sesión.")]
+        [SwaggerOperation(Summary = "Inicar sesión", Description = " Permite Inicar sesión.")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-        //[ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SignIn([FromBody] AuthLoginTokenQueryRequest Query, CancellationToken CancellationToken)
         {
             return Ok(await Mediator.Send(Query));
@@ -20,9 +22,9 @@ namespace SIGC.Presentation.WebApi.Controllers
 
         [AllowAnonymous]
         [HttpPost("Refresh")]
-        //[SwaggerOperation(Summary = "Inicar sesión", Description = " Permite Inicar sesión.")]
+        [SwaggerOperation(Summary = "Generar JWT", Description = " Permite Generar JWT.")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-        //[ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Refresh([FromBody] AuthRefreshTokenCommandRequest Command, CancellationToken CancellationToken)
         {
             return Ok(await Mediator.Send(Command));
