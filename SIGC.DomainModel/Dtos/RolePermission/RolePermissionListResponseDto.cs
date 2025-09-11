@@ -7,6 +7,7 @@
         string PageHierarchy,
         string PageName,
         string PageUrlName,
-        string PageIconName
+        string PageIconName,
+        short PageOrder
     );    
 }

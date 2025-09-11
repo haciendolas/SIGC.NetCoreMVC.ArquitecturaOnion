@@ -8,5 +8,6 @@
         public string PageName { get; set; } = null!;
         public string PageUrlName { get; set; } = null!;
         public string PageIconName { get; set; } = null!;
+        public short PageOrder { get; set; }
     }
 }

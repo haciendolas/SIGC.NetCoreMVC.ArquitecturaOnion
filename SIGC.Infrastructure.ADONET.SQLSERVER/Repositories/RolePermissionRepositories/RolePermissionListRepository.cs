@@ -43,8 +43,9 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RolePermissionReposi
                                    PageHierarchy = Validation.SqlDBToString(ref DataReader, "PageHierarchy"),
                                    PageName = Validation.SqlDBToString(ref DataReader, "PageName"),
                                    PageUrlName = Validation.SqlDBToString(ref DataReader, "PageUrlName"),
-                                   PageIconName = Validation.SqlDBToString(ref DataReader, "PageIconName")                          
-                                };
+                                   PageIconName = Validation.SqlDBToString(ref DataReader, "PageIconName"),
+                                   PageOrder = Validation.SqlDBToInt16(ref DataReader, "PageOrder")
+                               };
                                 List.Add(Get);
                             }
                         }
