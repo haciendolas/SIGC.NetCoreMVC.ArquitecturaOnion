@@ -1,4 +1,4 @@
-﻿namespace SIGC.Infrastructure.CrossCutting.Enums;
+﻿namespace SIGC.DomainModel.Enums;
 
 public enum SortTypeEnum
 {

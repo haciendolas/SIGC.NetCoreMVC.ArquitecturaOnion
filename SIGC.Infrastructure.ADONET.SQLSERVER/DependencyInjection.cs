@@ -3,11 +3,13 @@ using Microsoft.Extensions.DependencyInjection;
 using SIGC.DomainService.IRepositories.IAuthRepositories;
 using SIGC.DomainService.IRepositories.ICategoryRepositories;
 using SIGC.DomainService.IRepositories.IRolePermissionRepositories;
+using SIGC.DomainService.IRepositories.IRoleRepositories;
 using SIGC.DomainService.IRepositories.ITokenRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.AppDBContext;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.AuthRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CategoryRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RolePermissionRepositories;
+using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RoleRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.TokenRepositories;
 
 namespace SIGC.Infrastructure.ADONET.SQLSERVER
@@ -38,6 +40,8 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
             services.AddScoped<ICategoryValidateRepository, CategoryValidateRepository>();
 
             services.AddScoped<IRolePermissionListRepository, RolePermissionListRepository>();
+
+            services.AddScoped<IRolePaginationRepository, RolePaginationRepository>();
 
             return services;
         }

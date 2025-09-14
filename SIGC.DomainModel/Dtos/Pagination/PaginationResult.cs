@@ -1,4 +1,4 @@
-﻿namespace SIGC.Infrastructure.CrossCutting.Wrappers;
+﻿namespace SIGC.DomainModel.Dtos.Pagination;
 
 public class PaginationResult<T> where T : class
 {
@@ -16,5 +16,5 @@ public class PaginationResult<T> where T : class
     /// Lista de registros en la página actual
     /// </summary>
   // public IQueryable<T> Entities { get; set; } = null!; //Items
-    public IEnumerable<T> Items { get; set; } = Enumerable.Empty<T>();
+    public List<T> Items { get; set; } = new List<T>();
 }
