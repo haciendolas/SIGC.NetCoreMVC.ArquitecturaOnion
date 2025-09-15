@@ -1,3 +1,4 @@
+using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.RoleService;
 using SIGC.Presentation.AspNetCoreMVC.Filters;
 using SIGC.Presentation.AspNetCoreMVC.Helpers;
 using SIGC.Presentation.AspNetCoreMVC.Services;
@@ -33,6 +34,8 @@ builder.Services.AddScoped<IApiService,ApiService>();
 builder.Services.AddScoped<IApiServiceFactory,ApiServiceFactory>();
 builder.Services.AddScoped<IAuthService,AuthService>();
 builder.Services.AddScoped<IRolePermissionService, RolePermissionService>();
+
+builder.Services.AddScoped<IRoleService, RoleService>();
 
 var app = builder.Build();
 

@@ -17,9 +17,9 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RoleRepositories
             ConnectionString = Options.Value.ConnectionDBCommerce360;
         }
 
-        public async Task<PaginationResult<RolePaginationResponseDto>> PaginationAsync(RolePaginationResquestDto RolePaginationResquest, CancellationToken CancellationToken = default)
+        public async Task<PaginationResponseDto<RolePaginationResponseDto>> PaginationAsync(RolePaginationResquestDto RolePaginationResquest, CancellationToken CancellationToken = default)
         {
-            var Pagination = new PaginationResult<RolePaginationResponseDto>();          
+            var Pagination = new PaginationResponseDto<RolePaginationResponseDto>();          
             using (SqlConnection Connection = new SqlConnection(ConnectionString))
             {
                 await Connection.OpenAsync(CancellationToken);
@@ -51,7 +51,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RoleRepositories
                                     RoleLastUpdatedDateTime = Validation.SqlDBToDateTime(ref DataReader, "RoleLastUpdatedDateTime"),
                                     RoleLastUpdatedUserName = Validation.SqlDBToString(ref DataReader, "RoleLastUpdatedUserName")                                
                                 };
-                                Pagination.Items.Add(Get);
+                                Pagination.Entities.Add(Get);
                                 Pagination.Filtered = Validation.SqlDBToInt32(ref DataReader, "RecordsFiltered");
                                 Pagination.Total = Validation.SqlDBToInt32(ref DataReader, "RecordsTotal");
                             }                          

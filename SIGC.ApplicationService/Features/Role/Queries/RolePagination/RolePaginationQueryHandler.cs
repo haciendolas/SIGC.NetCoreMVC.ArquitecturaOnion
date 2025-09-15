@@ -29,17 +29,17 @@ namespace SIGC.ApplicationService.Features.Role.Queries.RolePagination
                var Response = await RolePaginationRepository.PaginationAsync(new RolePaginationResquestDto{
                                         CompanyID = Request.CompanyID,
                                         StateID = Request.StateID,
-                                        Parameters  = new PaginationParameters(){
+                                        Parameters  = new PaginationParametersDto(){
                                             Search =Request.Search ?? "",
                                             PageNumber = Request.PageNumber,
                                             PageSize = Request.PageSize
                                         }
                                     }, CancellationToken);
 
-               if(!Response.Items.Any()) MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.QUERY_EMPTY);
+               if(!Response.Entities.Any()) MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.QUERY_EMPTY);
 
                MsgResponse.Data = new PaginationResultDto<RolePaginationQueryResponse>();
-               MsgResponse.Data.Entities  = Response.Items.Select(s=> new RolePaginationQueryResponse{
+               MsgResponse.Data.Items  = Response.Entities.Select(s=> new RolePaginationQueryResponse{
                                             RoleID = s.RoleID,
                                             RoleCode = s.RoleCode,
                                             RoleName = s.RoleName,

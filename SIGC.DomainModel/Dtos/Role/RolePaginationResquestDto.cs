@@ -6,6 +6,6 @@ namespace SIGC.DomainModel.Dtos.Role
     (
         int CompanyID, 
         short StateID,      
-        PaginationParameters Parameters
+        PaginationParametersDto Parameters
     );    
 }

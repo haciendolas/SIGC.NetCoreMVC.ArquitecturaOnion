@@ -5,12 +5,15 @@
     <form> 
         <div class="row  g-3 pb-2">
             <div class="col-sm-4">
-                <label for="scboEmpresaInspeccionadora">Nombre Rol</label>
-                <input type="text" class="form-control" id="txtsNroInspeccion" name="txtsNroInspeccion" />
+                <label for="txtsRolName">Nombre Rol</label>
+                <input type="text" class="form-control" id="stxtRoleName" name="sRolName" />
             </div>
             <div class="col-sm-4">
-                <label for="scboAreaInspeccionadora">Estado</label>
-                <select class="form-select" id="scboAreaInspeccionadora" name="scboAreaInspeccionadora">
+                <label for="scboStateID">Estado</label>
+                <select class="form-select" id="scboStateID" name="sStateID">
+                    <option value="10">Todos</option>
+                    <option value="1">Activo</option>
+                    <option value="0">Inactivo</option>
                 </select>
             </div>
             <div class="col-sm-4">
@@ -26,19 +29,19 @@
 </div>
 <div class="card-body">
     <div class="table-responsive table-card p-1">
-        <table class="table align-middle">
+        <table class="table align-middle" id="dtRol">
             <thead class="table-light text-muted">
                 <tr>
-                    <th class="text-center">ID</th>
-                    <th class="text-center">Código</th>
-                    <th class="text-center">Nombre rol</th>
-                    <th class="text-center">Estado</th>
-                    <th class="text-center">Última fecha</th>
-                    <th class="text-center">Último usuario </th>        
-                    <th class="text-center" colspan="2">Opciones</th>
+                    <td class="text-center">ID</td>
+                    <td class="text-center">Código</td>
+                    <td class="text-center">Nombre rol</td>
+                    <td class="text-center">Estado</td>
+                    <td class="text-center">Última fecha</td>
+                    <td class="text-center">Último usuario </td>        
+                    <td class="text-center">Opciones</td>
                 </tr>
             </thead>
-            <tbody id="details-list">
+            <tbody id="details-list"> 
             </tbody>
         </table>
     </div>

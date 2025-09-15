@@ -1,7 +1,0 @@
-﻿namespace SIGC.Infrastructure.CrossCutting.Enums;
-
-public enum SortTypeEnum
-{
-    Ascending = 0,
-    Descending = 1
-}

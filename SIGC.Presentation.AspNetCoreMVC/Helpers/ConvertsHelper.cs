@@ -73,5 +73,20 @@ namespace SIGC.Presentation.AspNetCoreMVC.Helpers
 
             return AuthenticationIdentity;
         }
+
+        public static Dictionary<string, string> GetQueryParams(object obj)
+        {
+            var dict = new Dictionary<string, string>();
+            if (obj == null) return dict;
+            foreach (var prop in obj.GetType().GetProperties())
+            {
+                var value = prop.GetValue(obj);
+                if (value != null)
+                {
+                    dict[prop.Name] = value.ToString();
+                }
+            }
+            return dict;
+        }
     }
 }

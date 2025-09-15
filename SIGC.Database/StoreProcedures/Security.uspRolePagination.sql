@@ -27,7 +27,7 @@ BEGIN
 	  WHERE R.CompanyID=@CompanyID
 	  AND R.StateID=@StateID OR @StateID=10 
 	  AND R.RoleName LIKE '%'+@RoleName+'%'
-	 ORDER BY R.RoleID ASC OFFSET ((@PageNumber-1)*@PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY 
+	 ORDER BY R.RoleID DESC OFFSET ((@PageNumber-1)*@PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY 
 
 	SET NOCOUNT OFF
  

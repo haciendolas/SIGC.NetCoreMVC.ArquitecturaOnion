@@ -18,8 +18,6 @@
     <Folder Include="Areas\Sale\Models\" />
     <Folder Include="Areas\Sale\Views\" />
     <Folder Include="Areas\Security\Data\" />
-    <Folder Include="Areas\Security\Models\" />
-    <Folder Include="wwwroot\scripts\Areas\" />
   </ItemGroup>
 
   <ItemGroup>

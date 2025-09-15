@@ -5,7 +5,7 @@ using SIGC.Infrastructure.CrossCutting.Wrappers;
 
 namespace SIGC.ApplicationService.Features.Role.Queries.RolePagination
 {
-    public class RolePaginationQueryRequest: PaginationParameters, IRequest<MsgResponse<PaginationResultDto<RolePaginationQueryResponse>>>
+    public class RolePaginationQueryRequest: PaginationParametersDto, IRequest<MsgResponse<PaginationResultDto<RolePaginationQueryResponse>>>
     {
         public int CompanyID { get; set; }         
         public short StateID { get; set; }

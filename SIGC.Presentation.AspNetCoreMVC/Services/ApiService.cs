@@ -1,4 +1,6 @@
-﻿using System.Net.Http.Headers;
+﻿using Microsoft.AspNetCore.WebUtilities;
+using SIGC.Presentation.AspNetCoreMVC.Helpers;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text.Json;
 
@@ -24,9 +26,18 @@ namespace SIGC.Presentation.AspNetCoreMVC.Services
         }
 
         // ========== POST (JSON) ==========
-        public async Task<TResponse> PostAsync<TRequest, TResponse>(string endpoint, TRequest data)
+        public async Task<TResponse> PostAsync<TRequest, TResponse>(string endpoint, TRequest? body, object? queryParams = null)
         {
-            var jsonContent = new StringContent(JsonSerializer.Serialize(data), System.Text.Encoding.UTF8, "application/json");
+            HttpContent? jsonContent = null;
+            if(body is not null)
+               jsonContent = new StringContent(JsonSerializer.Serialize(body), System.Text.Encoding.UTF8, "application/json");
+
+            if (queryParams is not null)
+            {
+                var queryDict = ConvertsHelper.GetQueryParams(queryParams);
+                endpoint = QueryHelpers.AddQueryString(endpoint, queryDict);
+            }
+
             var response = await HttpClient.PostAsync(endpoint, jsonContent);
             response.EnsureSuccessStatusCode();
 

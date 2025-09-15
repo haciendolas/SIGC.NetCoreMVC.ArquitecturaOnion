@@ -2,7 +2,7 @@
 
 namespace SIGC.DomainModel.Dtos.Pagination;
 
-public class PaginationParameters
+public class PaginationParametersDto
 {
    // public string? SortField { get; set; }
    // public SortTypeEnum SortType { get; set; }

@@ -9,9 +9,9 @@
     "sSearch":       "Buscar:",  
     "sUrl":          "",  
     "oPaginate": {  
-        "sFirst":    "<i class='fal fa-angle-double-left'></i>",  
-        "sPrevious": "<i class='fal fa-angle-left'></i>",  
-        "sNext":     "<i class='fal fa-angle-right'></i>",  
-        "sLast":     "<i class='fal fa-angle-double-right'></i>"  
+        "sFirst":    "<i class='bx bx-first-page'></i>",  
+        "sPrevious": "<i class='bx bx-chevrons-left'></i>",  
+        "sNext":     "<i class='bx bx-chevrons-right'></i>",  
+        "sLast":     "<i class='bx bx-last-page'></i>"
     }  
 }

@@ -1,6 +1,6 @@
 ﻿namespace SIGC.DomainModel.Dtos.Pagination;
 
-public class PaginationResult<T> where T : class
+public class PaginationResponseDto<T> where T : class
 {
     /// <summary>
     /// Total de registros sin aplicar filtros
@@ -15,6 +15,5 @@ public class PaginationResult<T> where T : class
     /// <summary>
     /// Lista de registros en la página actual
     /// </summary>
-  // public IQueryable<T> Entities { get; set; } = null!; //Items
-    public List<T> Items { get; set; } = new List<T>();
+    public List<T> Entities { get; set; } = new List<T>();
 }
