@@ -10,6 +10,6 @@ namespace SIGC.Presentation.AspNetCoreMVC.Controllers
         public AuthenticationIdentity GetSession()
         {            
             return HttpContext.Session.GetObject<AuthenticationIdentity>(ConstantsHelper.SessionKeys.AuthenticationIdentity) ?? new AuthenticationIdentity();
-        }      
+        } 
     }
 }

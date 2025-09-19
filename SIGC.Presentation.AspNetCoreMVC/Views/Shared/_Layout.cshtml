@@ -29,9 +29,13 @@
             opacity: 0.6;
             cursor: not-allowed;
             pointer-events: none;
+        } 
+        .table-card .dataTables_filter, .table-card  {
+            padding: 0;
+            padding-bottom: 0;
         }
     </style>
-
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
 </head>
 <body>
     @using System.Web;
@@ -82,6 +86,7 @@
                     </div>
                     @*end page title*@    
                     @RenderBody()
+                    <partial name="Modal" />
                 </div>
                 @*container-fluid*@
             </div>
@@ -114,9 +119,7 @@
     <script src="~/assets/libs/jsvectormap/maps/world-merc.js"></script>
     <script src="~/assets/js/pages/dashboard-analytics.init.js"></script>
 
-    <script src="~/assets/libs/jquery/jquery-3.6.0.min.js"></script>
-    <!--<script src="https://code.jquery.com/jquery-3.6.0.min.js" ></script>-->
- 
+    <script src="~/assets/libs/jquery/jquery-3.6.0.min.js"></script> 
   
     <script src="~/assets/libs/dataTables/jquery.dataTables.min.js"></script>
     <script src="~/assets/libs/dataTables/dataTables.bootstrap5.min.js"></script>
@@ -126,10 +129,11 @@
     <script src="~/assets/libs/dataTables/buttons.html5.min.js"></script>
     <script src="~/assets/libs/dataTables/vfs_fonts.js"></script>
     <script src="~/assets/libs/dataTables/pdfmake.min.js"></script>
-    <script src="~/assets/libs/dataTables/jszip.min.js"></script>
+    <script src="~/assets/libs/dataTables/jszip.min.js"></script>  
 
     <script src="~/assets/js/app.js"></script>
-  
+    <script src="assets/libs/prismjs/prism.js"></script>
+
     <script src="~/assets/libs/validation/jquery.validate.min.js"></script>
     <script src="~/assets/libs/validation/jquery.validate.unobtrusive.min.js"></script>
 

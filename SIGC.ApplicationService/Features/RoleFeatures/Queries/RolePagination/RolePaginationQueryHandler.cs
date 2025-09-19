@@ -7,7 +7,7 @@ using SIGC.DomainService.IServices;
 using SIGC.Infrastructure.CrossCutting.Constants;
 using SIGC.Infrastructure.CrossCutting.Wrappers;
 
-namespace SIGC.ApplicationService.Features.Role.Queries.RolePagination
+namespace SIGC.ApplicationService.Features.RoleFeatures.Queries.RolePagination
 {
     internal class RolePaginationQueryHandler : IRequestHandler<RolePaginationQueryRequest, MsgResponse<PaginationResultDto<RolePaginationQueryResponse>>>
     {
@@ -43,11 +43,13 @@ namespace SIGC.ApplicationService.Features.Role.Queries.RolePagination
                                             RoleID = s.RoleID,
                                             RoleCode = s.RoleCode,
                                             RoleName = s.RoleName,
+                                            StateID = s.StateID,
                                             RoleDescription = s.RoleDescription,
                                             RoleLastUpdatedDateTime = s.RoleLastUpdatedDateTime,
                                             RoleLastUpdatedUserName = s.RoleLastUpdatedUserName
                                         }).ToList();
-                MsgResponse.Data.Count = Response.Total;
+                MsgResponse.Data.TotalRecords = Response.Total;
+                MsgResponse.Data.RecordsFiltered = Response.Filtered;
             return MsgResponse;
 
         }

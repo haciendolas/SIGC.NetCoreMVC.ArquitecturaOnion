@@ -1,0 +1,29 @@
+﻿@{
+    Layout = null;
+}
+<div id="message-modal-generic" class="modal fade" aria-hidden="true" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header pt-3">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pt-0">
+                <div class="text-center">
+                    <lord-icon id="message-loard-icon-generic" src="https://cdn.lordicon.com/tdrtiskw.json" trigger="loop" colors="primary:#f7b84b,secondary:#f7b84b" style="width:120px;height:120px"></lord-icon>
+                    <div class="mx-4 mx-sm-5">
+                        <h2 id="message-title-generic">Advertencia!</h2>
+                        <h5 class="text-muted" id="message-description-generic">El dato ingresado ya se encuentra registrado!</h5>
+                    </div>
+                </div>
+                <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
+                    <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal" id="btn-modal-not">Cerrar</button>
+                    <button type="button" class="btn w-sm btn-danger" id="btn-modal-yes" name="btn-modal-yes">Aceptar</button>
+                </div>
+            </div>
+            <div class="modal-footer bg-light p-2 justify-content-center" id="message-error-generic">
+                Especificar aqui detalle del error
+            </div>
+        </div>
+    </div>
+</div>
+ 

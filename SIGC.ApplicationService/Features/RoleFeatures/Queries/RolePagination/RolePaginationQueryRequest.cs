@@ -3,7 +3,7 @@ using SIGC.ApplicationService.Commons.Dtos;
 using SIGC.DomainModel.Dtos.Pagination;
 using SIGC.Infrastructure.CrossCutting.Wrappers;
 
-namespace SIGC.ApplicationService.Features.Role.Queries.RolePagination
+namespace SIGC.ApplicationService.Features.RoleFeatures.Queries.RolePagination
 {
     public class RolePaginationQueryRequest: PaginationParametersDto, IRequest<MsgResponse<PaginationResultDto<RolePaginationQueryResponse>>>
     {

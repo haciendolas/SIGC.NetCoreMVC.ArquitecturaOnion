@@ -332,69 +332,102 @@
             }
         },
         Modal: {
-            Message: function (title, msg, tipo, funcion = null) {
-                $('#btn-modal-accept span').text('Aceptar'), $('#btn-modal-close span').text('Cerrar');
-                $('#btn-modal-close').show(), $('#btn-modal-accept').removeAttr('click').hide();
-                modal_color_bg = 'modal modal-primary fade';
-                alert_icon_bg = 'alert-icon bg-primary';
-                alert_icon_img = 'fa fa-check';
-                button_close_bg = 'btn btn-danger btn-sm btn-pills waves-effect waves-themed';
-                $('#btn-modal-close').show();
-                switch (tipo) {
+            Message: function (type, message, funcion = null) {              
+                $('#message-modal-generic #btn-modal-not').text('Cerrar');
+                $('#message-modal-generic #btn-modal-yes').hide().text('Aceptar');
+                $('#message-modal-generic #message-error-generic').hide().text('');
+                switch (type) {
                     case Uti.Message.Type.Success: // 'Success':
-                        modal_color_bg = 'modal modal-primary fade';
-                        alert_icon_bg = 'alert-icon bg-primary';
-                        alert_icon_img = 'fa fa-check'
-                        button_close_bg = 'btn btn-primary btn-sm btn-pills waves-effect waves-themed';
+                        $('#message-modal-generic').modal('show');
+                        $('#message-title-generic').html('Proceso!');
+                        $('#message-description-generic').html(message);
+                        $('#message-modal-generic #btn-modal-not').prop({ 'class': 'btn btn-success' });
+                        $('#message-loard-icon-generic').prop({
+                            'src': 'https://cdn.lordicon.com/uvofdfal.json',
+                            'trigger': 'loop',
+                            'colors': 'primary:#30e849,secondary:#30e849',
+                            'style':'width:110px;height:110px'
+                        });
                         break;
                     case Uti.Message.Type.Warning://'Warning':
-                        modal_color_bg = 'modal modal-warning fade';
-                        alert_icon_bg = 'alert-icon bg-warning';
-                        alert_icon_img = 'fa fa-info'
-                        button_close_bg = 'btn btn-warning btn-sm btn-pills waves-effect waves-themed';
+                        $('#message-modal-generic').modal('show');
+                        $('#message-title-generic').html('Advertencia!');
+                        $('#message-description-generic').html(message);
+                        $('#message-modal-generic #btn-modal-not').prop({ 'class': 'btn btn-warning' });
+                        $('#message-loard-icon-generic').prop({
+                            'src': 'https://cdn.lordicon.com/tdrtiskw.json',
+                            'trigger': 'loop',
+                            'colors': 'primary:#f7b84b,secondary:#f7b84b',
+                            'style': 'width:120px;height:120px'
+                        });
                         break;                  
                     case Uti.Message.Type.Error:// 'Error':
-                        modal_color_bg = 'modal modal-danger fade';
-                        alert_icon_bg = 'alert-icon bg-danger';
-                        alert_icon_img = 'fa fa-close'
-                        button_close_bg = 'btn btn-danger btn-sm btn-pills waves-effect waves-themed';
-                        break;
-                    case Uti.Message.Type.Alert: // 'Alert':
-                        modal_color_bg = 'modal modal-success fade';
-                        alert_icon_bg = 'alert-icon bg-success';
-                        alert_icon_img = 'fa fa-close'
-                        button_close_bg = 'btn btn-success btn-sm btn-pills waves-effect waves-themed';
-                        break;
-                    case Uti.Message.Type.Confirm:// 'Confirm':
-                        modal_color_bg = 'modal modal-info fade';
-                        alert_icon_bg = 'alert-icon bg-info';
-                        alert_icon_img = 'fa fa-user-times'
-                        button_close_bg = 'btn btn-info btn-sm btn-pills waves-effect waves-themed';
-                        $('#btn-modal-accept span').text('Si'), $('#btn-modal-close span').text('No');
-                        $('#btn-modal-accept').show();
+                        let messageError = message;
+                        if (message.includes(',')) {
+                            messageError = message.split(',')[0];
+                            $('#message-error-generic').html(message.split(',')[1]).show();
+                        }                       
+                        $('#message-modal-generic').modal('show');
+                        $('#message-title-generic').html('Error!');
+                        $('#message-description-generic').html(messageError);
+                        $('#message-modal-generic #btn-modal-not').prop({ 'class': 'btn btn-danger' });
+                        $('#message-loard-icon-generic').prop({
+                            'src': 'https://cdn.lordicon.com/ebyacdql.json',
+                            'trigger': 'hover',
+                            'state':'hover-cross-2',
+                            'colors':'primary:#e83a30',
+                            'style':'width:100px;height:100px'
+                        });
+                        break;          
+                    case Uti.Message.Type.ConfirmDelete:// 'Confirm Delete':
+                        $('#message-modal-generic').modal('show');
+                        $('#message-title-generic').html('¿Estas seguro realizar esta operación?');
+                        $('#message-description-generic').html(message);
+                        $('#message-modal-generic #btn-modal-not').show().prop({ 'class': 'btn w-sm btn-light' });
+                        $('#message-modal-generic #btn-modal-yes').show().prop({ 'class': 'btn w-sm btn-danger' });
+                        $('#message-loard-icon-generic').prop({
+                            'src': 'https://cdn.lordicon.com/gsqxdxog.json',                           
+                            'trigger': 'loop',                             
+                            'colors': 'primary:#f7b84b,secondary:#f06548',
+                            'style': 'width:110px;height:110px'
+                        });
+            
                         if (funcion) {
-                            $('#btn-modal-accept').attr('onclick', '' + funcion + '').show();
+                            $('#btn-modal-yes').attr('onClick', '' + funcion + '');
+                        }
+                        break;
+                    case Uti.Message.Type.ConfirmProcess:// 'Confirm Process':
+                        $('#message-modal-generic').modal('show');
+                        $('#message-title-generic').html('¿Estas seguro realizar esta operación?');
+                        $('#message-description-generic').html(message);
+                        $('#message-modal-generic #btn-modal-not').show().prop({ 'class': 'btn w-sm btn-light' });
+                        $('#message-modal-generic #btn-modal-yes').show().prop({ 'class': 'btn w-sm btn-success' });
+                        $('#message-loard-icon-generic').prop({
+                            'src': 'https://cdn.lordicon.com/biqqsrac.json',
+                            'trigger': 'loop',  
+                            'colors': 'primary:#66a1ee,secondary:#66a1ee',
+                            'style': 'width:110px;height:110px'
+                        });
+                        if (funcion) {
+                            $('#btn-modal-yes').attr('onClick', '' + funcion + '');
                         }
                         break;
                     case Uti.Message.Type.Session: //'Session':
-                        modal_color_bg = 'modal modal-info fade';
-                        alert_icon_bg = 'alert-icon bg-info';
-                        alert_icon_img = 'fa fa-user-times'
-                        button_close_bg = 'btn btn-info btn-sm rounded';
-                        $('#btn-modal-close').hide();
-                        $('#btn-modal-accept').attr('onclick', '' + funcion + '').show();
+                        $('#message-modal-generic').modal('show');
+                        $('#message-title-generic').html('Su sesión se ha terminado');
+                        $('#message-description-generic').html(message ?? 'Vuelva a iniciar sessíon');
+                        $('#message-modal-generic #btn-modal-not').prop({ 'class': 'btn w-sm btn-light' });
+                        $('#message-modal-generic #btn-modal-yes').prop({ 'class': 'btn w-sm btn-success' });
+                        $('#message-loard-icon-generic').prop({
+                            'src': 'https://cdn.lordicon.com/bushiqea.json',
+                            'trigger': 'loop',
+                            'colors': 'primary:#e83a30',
+                            'style': 'width:110px;height:110px'
+                        });
+                        $('#btn-modal-not').hide();
+                        $('#btn-modal-yes').attr('onClick', '' + funcion + '').text('Iniciar Sesión').show();
                         break;
-                }
-                if (tipo != undefined || tipo != null) {
-                    $('#modal-message .title').html(title);
-                    $('#modal-message .mensaje').html(msg);
-                    $('#modal-message #alert-icon-bg-msg').removeClass().addClass(alert_icon_bg);
-                    $('#modal-message #alert-icon-bg-msg i').removeClass().addClass(alert_icon_img);
-                    $('#modal-message #btn-modal-accept').removeClass().addClass(button_close_bg);
-                    $('#modal-message #btn-modal-close').removeClass().addClass(button_close_bg);
-                  //$('#modal-message').removeClass().addClass(modal_color_bg);
-                    $('#modal-message').modal('show');
-                }
+                }         
             },
             Process: function (modo, msg) {
                 if (modo == 'open') {
@@ -504,9 +537,9 @@
             Type: {
                 Success: 'Success',
                 Warning: 'Warning',
-                Error: 'Error',
-                Alert: 'Alert',               
-                Confirm: 'Confirm',
+                Error: 'Error',                          
+                ConfirmDelete: 'ConfirmDelete',
+                ConfirmProcess: 'ConfirmProcess',
                 Session: 'Session'
             },
             Description: { 
@@ -702,5 +735,6 @@
     }
 }();
 $(function () {
-    $('#span_mensajes').hide();  
+    $('#span_mensajes').hide();
+    $('#message-error-generic').hide();
 });

@@ -42,7 +42,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
             services.AddScoped<IRolePermissionListRepository, RolePermissionListRepository>();
 
             services.AddScoped<IRolePaginationRepository, RolePaginationRepository>();
-
+            services.AddScoped<IRoleChangeStateRepository, RoleChangeStateRepository>();
             return services;
         }
     }
