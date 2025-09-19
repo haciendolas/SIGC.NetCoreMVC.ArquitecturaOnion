@@ -15,7 +15,7 @@
    Identifcador:		   Date Update  |   User Update   |  Description Update  
      @1
 ==============================================================================*/
-CREATE PROCEDURE Security.uspRoleChangeState
+ALTER PROCEDURE Security.uspRoleChangeState
 (   
    @CompanyID INT,
    @RoleID INT,
@@ -27,7 +27,7 @@ CREATE PROCEDURE Security.uspRoleChangeState
 AS
 BEGIN 
     UPDATE Security.[Role] SET StateID = @StateID ,
-	                           RoleUpdatedDateTime = @RoleCreatedUserID,
+	                           RoleUpdatedDateTime = @RoleCreatedDateTime,
 							   RoleUpdatedUserID = @RoleCreatedUserID
 	       WHERE CompanyID=@CompanyID AND RoleID = @RoleID
 END
