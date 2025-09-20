@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using SIGC.DomainModel.Enums;
 using SIGC.DomainModel.Models;
 using SIGC.DomainService.IRepositories.IRoleRepositories;
 using SIGC.DomainService.IServices;
@@ -40,7 +41,10 @@ namespace SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleChangeState
                 if (RecordAffected > 0)
                 {
                     MsgResponse.Type = MessageTypeConst.SUCCESS;
-                    MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.SATISFACTORY_CHANGE);
+                    if (Request.StateID == StateEnum.Deleted)                    
+                        MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.SATISFACTORY_DELETE);                  
+                    else
+                        MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.SATISFACTORY_CHANGE);
                 }
                 else
                 {

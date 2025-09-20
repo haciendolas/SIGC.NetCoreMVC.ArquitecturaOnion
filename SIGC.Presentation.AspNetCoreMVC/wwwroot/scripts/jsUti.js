@@ -175,70 +175,60 @@
         },
         Ajax: {
             Custom: function (options, successCallback) {
+                if (options.type == null) options.type = Uti.Variable.FetchAjax.Type.Post; 
                 if (options.url == null) options.url = "";
-
+                if (options.async == null) options.async = true; //true peticion asincrona | false no asincrona =ejecuta una funcion despues de haberse terminado la otra
+                if (options.dataType == null) options.dataType = Uti.Variable.FetchAjax.DataType.Json; // Tipo de respuesta que retornada del controlador
                 if (options.data == null) options.data = {};
-
-                if (options.async == null) options.async = true; //true peticion asincrona | false no asincrona = ejecuta una funcion despues de haberse terminado la otra
-
-                if (options.dataType == null) options.dataType = "json";
-
-                if (options.contentType == null) {
-                    options.contentType = "application/json;charset=utf-8";
-                    if (options.dataType === "text") {
-                        options.contentType = "application/json";
-                    }
-                }
-
-                if (options.type == null) {
-                    options.type = "POST";
-                }
-                if (options.type == "POST" || options.type == "PUT") {
-                    if (
-                        options.contentType !=
-                        Uti.Variable.FetchAjax.ContentType.ApplicationFormUrlencodedCharset
-                    )
-                        options.data = JSON.stringify(options.data);
-                }
-
-                if (options.cache == null) options.cache = false // true Borrar la cache
-
+                if (options.cache == null) options.cache = false; // true Borrar la cache
+                if (options.contentType == null) options.contentType = Uti.Variable.FetchAjax.ContentType.ApplicationJsonCharset //options.contentType = > El tipo de contenido que se enviara al controlador
+            
                 if (options.preload == null || options.preload == undefined) options.preload = true;
+                if (options.msgload == null || options.msgload == undefined) options.msgload = 'default';
 
-                $.ajax({
+                let config = {
                     type: options.type,
                     url: options.url,
-                    contentType: options.contentType,
-                    dataType: options.dataType,
                     async: options.async,
+                    dataType: options.dataType, 
                     data: options.data,
+                    cache: options.cache
+                }       
+                if (options.type != Uti.Variable.FetchAjax.Type.Get) {
+                    const isFormData = options.data instanceof FormData;
+                    const isJson = options.contentType?.includes(Uti.Variable.FetchAjax.ContentType.ApplicationJson) || (options.data && typeof options.data === "object");
+                    config.processData = true;
+                    if (isFormData) {
+                        config.contentType = false;
+                        config.processData = false;
+                    } else if (isJson) {
+                        config.contentType = Uti.Variable.FetchAjax.ContentType.ApplicationJsonCharset;                 
+                        config.data = JSON.stringify(options.data);
+                    } else {
+                        config.contentType = Uti.Variable.FetchAjax.ContentType.ApplicationFormUrlencodedCharset;
+                    }
+                } 
+
+                $.ajax({
+                    ...config,
                     beforeSend: function () {
-                        if (options.preload) { 
-                          if (options.type == "GET")
-                              Uti.Modal.Process("open",Uti.Message.Description.LoadingInformation);
-                          else Uti.Modal.Process("open");
-                        }
+                        if (options.preload) {
+                            if (options.type == "GET")
+                                Uti.Modal.Process("open", Uti.Message.Description.LoadingInformation);
+                            else
+                                if (options.msgload == 'default') Uti.Modal.Process("open");
+                                else Uti.Modal.Process("open", Uti.Message.Description.LoadingInformation);
+                        };
                     },
                     success: function (response) {
-                        if (
-                            successCallback != null &&
-                            typeof successCallback == "function"
-                        )                                    
-                        successCallback(response);
-                          
+                        if (successCallback != null && typeof successCallback == "function")
+                            successCallback(response);
                     },
-                    error: function (xhr, status, error) {
-                        console.log("Error", xhr);                        
-                        Uti.Modal.Message(
-                            Uti.Message.Title.AssistantError,
-                            Uti.Message.Description.ErrorAjax + (error ? ' - ' + error:''),
-                            Uti.Message.Type.Error
-                        );
+                    error: function (xhr, status, error) {                    
+                        Uti.Modal.Message(Uti.Message.Type.Error,Uti.Message.Description.ErrorAjax);
                     },
-                    complete: function (complete) {
-                        if (options.preload) Uti.Modal.Process();
-                    },
-                });
+                    complete: function (complete) { Uti.Modal.Process(); }
+                }); 
             },
         },
         DataTable: {
@@ -627,8 +617,7 @@
         Variable: {
             FetchAjax: {
                 ContentType: {
-                    ApplicationFormUrlencodedCharset:
-                        "application/x-www-form-urlencoded; charset=UTF-8",
+                    ApplicationFormUrlencodedCharset: "application/x-www-form-urlencoded; charset=UTF-8",
                     ApplicationJsonCharset: "application/json;charset=utf-8",
                     ApplicationJson: "application/json",
                 },
@@ -646,15 +635,10 @@
                     Delete: "DELETE",
                 },
             },
-            ObjectiveState: {
-                Aprobado: "APR",
-                Activo: "ACT",
-                Pendiente: 'PEN'                
-            },                      
-            ProfileType: {
-                Lider: '2',
-                Subordinado: '1',
-                Jefe:'4'
+            StateType: {
+                Inactive: 0,
+                Active: 1,
+                Delete:2
             }
         },
         HttpsServices: {

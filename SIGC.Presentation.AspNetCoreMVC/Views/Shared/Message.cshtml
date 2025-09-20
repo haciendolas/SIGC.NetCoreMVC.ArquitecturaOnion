@@ -1,5 +1,16 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@{ Layout = null;}
+@using SIGC.Presentation.AspNetCoreMVC.Helpers
+<span class="msghide" id="span_mensajes" style="display:none">
+    <span id="@EnumsHelper.MessageTitle.AssistantSearch">@EnumsHelper.GetEnumDescription(EnumsHelper.MessageTitle.AssistantSearch)</span>
+    <span id="@EnumsHelper.MessageTitle.AssistantOperation">@EnumsHelper.GetEnumDescription(EnumsHelper.MessageTitle.AssistantOperation)</span>
+    <span id="@EnumsHelper.MessageTitle.AssistantSession">@EnumsHelper.GetEnumDescription(EnumsHelper.MessageTitle.AssistantSession)</span>
+    <span id="@EnumsHelper.MessageDescription.VerifyExpiredSession">@EnumsHelper.GetEnumDescription(EnumsHelper.MessageDescription.VerifyExpiredSession)</span>
+    <span id="@EnumsHelper.MessageDescription.ErrorAjax">@EnumsHelper.GetEnumDescription(EnumsHelper.MessageDescription.ErrorAjax)</span>
+    <span id="@EnumsHelper.MessageDescription.ProcessInformation">@EnumsHelper.GetEnumDescription(EnumsHelper.MessageDescription.ProcessInformation)</span>
+    <span id="@EnumsHelper.MessageDescription.LoadingInformation">@EnumsHelper.GetEnumDescription(EnumsHelper.MessageDescription.LoadingInformation)</span>
+    <span id="@EnumsHelper.MessageDescription.NotFoundInformation">@EnumsHelper.GetEnumDescription(EnumsHelper.MessageDescription.NotFoundInformation)</span>
+    <span id="@EnumsHelper.MessageDescription.QuestionDelete">@EnumsHelper.GetEnumDescription(EnumsHelper.MessageDescription.QuestionDelete)</span>
+    <span id="@EnumsHelper.MessageTitle.AssistantDetalleLinea">@EnumsHelper.GetEnumDescription(EnumsHelper.MessageTitle.AssistantDetalleLinea)</span>
+    <span id="@EnumsHelper.MessageDescription.RequiredDetalleLinea">@EnumsHelper.GetEnumDescription(EnumsHelper.MessageDescription.RequiredDetalleLinea)</span>
+    <span id="@EnumsHelper.MessageDescription.RequiredSeleccionarDetalleLinea">@EnumsHelper.GetEnumDescription(EnumsHelper.MessageDescription.RequiredSeleccionarDetalleLinea)</span>
+</span>

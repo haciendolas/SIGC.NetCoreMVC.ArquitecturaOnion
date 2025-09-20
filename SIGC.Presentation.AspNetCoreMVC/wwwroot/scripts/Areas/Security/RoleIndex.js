@@ -1,23 +1,26 @@
 ﻿$(function () {
     const Role = {
         _Init: function () {   
-            Role._Search.fnDataTableRole();
+            Role._Search.fnRoleDataTable();
             $('#scboStateID').on('change', function () {
-                Role._Search.fnDataTableRole();
+                Role._Search.fnRoleDataTable();
             });
             $('#stxtRoleName').on('keyup', Uti.SetTimeout.Debounce((event) => {
                         const keyCode = event.keyCode ? event.keyCode : event.which;           
                         if (!(keyCode == 32 || keyCode == '32')) {
-                            Role._Search.fnDataTableRole();
+                            Role._Search.fnRoleDataTable();
                         };
                     })
             );
             $('#sbtnBuscar').on('click', function () {
-                Role._Search.fnDataTableRole();
+                Role._Search.fnRoleDataTable();
             });
+            $('#btn-modal-yes').on('click', function () {
+                Role._Operation.fnRoleChangeState(1, $('#message-modal-generic #hd-modal-id').val(), Uti.Variable.StateType.Delete);
+            });            
         },
         _Search: {
-            fnDataTableRole: function () {
+            fnRoleDataTable: function () {
                 $('#dtRol').dataTable({
                     oLanguage: {
                         sUrl: Uti.DataTable.sUrl,
@@ -54,7 +57,7 @@
                     bAutoWidth: false,
                     bDestroy: true,
                     sServerMethod: "POST",
-                    sAjaxSource: Uti.Url.Base + '/Security/Role/RolePagination',
+                    sAjaxSource: Uti.Url.Base + '/Security/Role/RoleDataTable',
                     fnServerParams: function (aoData) {
                         aoData.push(
                             { name: 'sStateID', value: $('#scboStateID').val() },
@@ -72,8 +75,7 @@
                         { bSortable: true, aTargets: [5], sClass: 'text-center' },
                         { bSortable: false, aTargets: [6], sClass: 'text-center' },
                         { bSortable: false, aTargets: [7], sClass: 'text-center' },
-                        { bSortable: false, aTargets: [8], sClass: 'text-center' },
-                        { bSortable: false, aTargets: [9], sClass: 'text-center' }
+                        { bSortable: false, aTargets: [8], sClass: 'text-center' }                   
                     ],
                     order: [[0, 'desc']],
                     bSort: false,
@@ -82,13 +84,16 @@
                             //Role._Search.fnGetRole(data[0]);
                         }).tooltip();
                         $(row).find('a[name=slnkInactive]').click(function () {
+                            Role._Operation.fnRoleChangeState(1, data[0], Uti.Variable.StateType.Inactive);
                             //   Role._Operation.fnChangeStateRole(data[0], Uti.Variable.StateType.Active);
                         }).tooltip();
                         $(row).find('a[name=slnkActive]').click(function () {
                             //  Role._Operation.fnChangeStateRole(data[0], Uti.Variable.StateType.Inactive);
+                            Role._Operation.fnRoleChangeState(1, data[0], Uti.Variable.StateType.Active);
                         }).tooltip();
                         $(row).find('a[name=slnkDelete]').click(function () {
-                            //  Role._Operation.fnChangeStateRole(data[0], Uti.Variable.StateType.Inactive);
+                            Uti.Modal.Message(Uti.Message.Type.ConfirmDelete, Uti.Message.Description);
+                            $('#message-modal-generic #hd-modal-id').val(data[0]);
                         }).tooltip();
                     },
                     drawCallback: function (data) {
@@ -97,7 +102,27 @@
                     }
                 });
             }
-        } 
+        },
+        _Operation: {
+            fnRoleChangeState: function (CompanyID, RoleID, StateID) {
+                const options = {
+                    url: Uti.Url.Base + '/Security/Role/RoleChangeState',
+                    data: {
+                        CompanyID: CompanyID,
+                        RoleID: RoleID,
+                        StateID: StateID
+                    },
+                    type: Uti.Variable.FetchAjax.Type.Post
+                };
+                Uti.Ajax.Custom(options, function (response) {
+                    console.log(response);
+                    Uti.Modal.Message(response.type, response.message, response.function);
+                    if (response.type == Uti.Message.Type.Success) {
+                        Role._Search.fnRoleDataTable();
+                    }
+                });              
+            }
+        }
     }
     Role._Init();
 });

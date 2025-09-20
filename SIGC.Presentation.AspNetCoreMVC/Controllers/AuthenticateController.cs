@@ -56,7 +56,7 @@ namespace SIGC.Presentation.AspNetCoreMVC.Controllers
                     }
                 }               
             }       
-            return Ok(new { Message=ApiResponse.Message, Url = Url });
+            return Json(new { Message=ApiResponse.Message, Url = Url });
         }
         /*
         [HttpGet]

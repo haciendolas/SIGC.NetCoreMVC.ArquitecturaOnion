@@ -26,6 +26,7 @@ BEGIN
 	  INNER JOIN Security.[User] U WITH(NOLOCK) ON ISNULL(R.RoleUpdatedUserID,R.RoleCreatedUserID)=U.UserID
 	  WHERE R.CompanyID=@CompanyID
 	  AND R.StateID=@StateID OR @StateID=10 
+	  AND R.StateID!=2
 	  AND R.RoleName LIKE '%'+@RoleName+'%'
 	 ORDER BY R.RoleID DESC OFFSET ((@PageNumber-1)*@PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY 
 
