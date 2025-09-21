@@ -4,7 +4,7 @@
     {
         /// <summary>
         /// Request sequence number sent by DataTable, same value must be returned in response
-        /// </summary>       
+        /// </summary>   
         public string sEcho { get; set; }
         /// <summary>
         /// Text used for filtering

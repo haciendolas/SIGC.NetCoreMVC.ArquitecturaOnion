@@ -2,7 +2,7 @@
 {
     public static class ConstantsHelper
     {
-        public class CustomClaimTypes
+        public static class CustomClaimTypes
         {
             public const string USER_ID = "userID";
             public const string USER_NAME = "userName";
@@ -14,13 +14,13 @@
             public const string ROLE_CODES = "roleCodes";
         }
 
-        public class HttpClientNames
+        public static class HttpClientNames
         {
             public const string ApiCommerce360 = "ApiCommerce360";
             public const string ApiAuth360 = "ApiAuth360";
         }
 
-        public class SessionKeys
+        public static class SessionKeys
         {
             public const string AuthenticationIdentity = "authenticationIdentity";
             public const string AccessToken = "accessToken";

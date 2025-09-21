@@ -45,13 +45,13 @@
                         input.attr({ placeholder: 'Buscar rol...', type: 'text' });
                         input.off();
                         input.on('keyup', Uti.SetTimeout.Debounce((event) => {
-                            const valor = event.target.value;
-                            const keyCode = event.keyCode ? event.keyCode : event.which;
-                            if (!(keyCode == 32 || keyCode == '32')) {
-                                $('#dtRol').DataTable().search(valor).draw();
-                            };
-                        })
-                        );
+                                    const valor = event.target.value;
+                                    const keyCode = event.keyCode ? event.keyCode : event.which;
+                                    if (!(keyCode == 32 || keyCode == '32')) {
+                                        $('#dtRol').DataTable().search(valor).draw();
+                                    };
+                                 })
+                         );
                     },
                     bJQueryUI: false,
                     bAutoWidth: false,
@@ -62,7 +62,7 @@
                         aoData.push(
                             { name: 'sStateID', value: $('#scboStateID').val() },
                             { name: 'sCompanyID', value: $('#scboCompanyID').val() },
-                            { name: 'sSearch', value: $.trim($('#stxtRoleName').val()) }
+                            { name: 'sSearch', value: $('#stxtRoleName').val().trim() }
                         );
                     },
                     sPaginationType: 'full_numbers',
@@ -80,25 +80,21 @@
                     order: [[0, 'desc']],
                     bSort: false,
                     rowCallback: function (row, data, dataIndex) {
-                        $(row).find('a[name=slnkEdit]').click(function () {
-                            //Role._Search.fnGetRole(data[0]);
+                        $(row).find('a[name=slnkEdit]').on('click',function () {                   
                         }).tooltip();
-                        $(row).find('a[name=slnkInactive]').click(function () {
-                            Role._Operation.fnRoleChangeState(1, data[0], Uti.Variable.StateType.Inactive);
-                            //   Role._Operation.fnChangeStateRole(data[0], Uti.Variable.StateType.Active);
+                        $(row).find('a[name=slnkInactive]').on('click',function () {
+                            Role._Operation.fnRoleChangeState(1, data[0], Uti.Variable.StateType.Inactive);                           
                         }).tooltip();
-                        $(row).find('a[name=slnkActive]').click(function () {
-                            //  Role._Operation.fnChangeStateRole(data[0], Uti.Variable.StateType.Inactive);
+                        $(row).find('a[name=slnkActive]').on('click',function () {                           
                             Role._Operation.fnRoleChangeState(1, data[0], Uti.Variable.StateType.Active);
                         }).tooltip();
-                        $(row).find('a[name=slnkDelete]').click(function () {
-                            Uti.Modal.Message(Uti.Message.Type.ConfirmDelete, Uti.Message.Description);
+                        $(row).find('a[name=slnkDelete]').on('click',function () {
+                            Uti.Modal.Message(Uti.Message.Type.ConfirmDelete);
                             $('#message-modal-generic #hd-modal-id').val(data[0]);
                         }).tooltip();
                     },
                     drawCallback: function (data) {
-                        const response = data.json;
-                        //$('#dtRol_filter input').removeClass().addClass('form-control');
+                        const response = data.json;                         
                     }
                 });
             }
@@ -114,10 +110,12 @@
                     },
                     type: Uti.Variable.FetchAjax.Type.Post
                 };
-                Uti.Ajax.Custom(options, function (response) {
-                    console.log(response);
+                Uti.Ajax.Custom(options, function (response) { 
                     Uti.Modal.Message(response.type, response.message, response.function);
-                    if (response.type == Uti.Message.Type.Success) {
+                    if (response.type === Uti.Message.Type.Session) {
+                        Uti.Modal.Process();
+                    }               
+                    if (response.type === Uti.Message.Type.Success) {
                         Role._Search.fnRoleDataTable();
                     }
                 });              

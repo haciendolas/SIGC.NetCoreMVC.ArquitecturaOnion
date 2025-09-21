@@ -151,5 +151,12 @@ namespace SIGC.Presentation.AspNetCoreMVC.Helpers
             [Description("Asistente de verificación de conexión a internet")]
             AssistantConnectionWWW
         } 
+
+        public enum StateType
+        {
+            Inactive= 0,
+            Active= 1,
+            Delete = 2
+        }
     }
 }

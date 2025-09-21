@@ -10,5 +10,6 @@
         public const string COMPANY_TRADENAME = "companyTradeName";
         public const string COMPANY_SOCIALREASON = "companySocialReason";
         public const string ROLE_CODES = "roleCodes";
+        public const string PERMISSIONS = "permissions";
     }
 }

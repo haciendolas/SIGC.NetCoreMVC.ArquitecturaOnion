@@ -55,7 +55,7 @@ namespace SIGC.Infrastructure.GeneralService.Services
 
         private List<Claim> GetClaims(AppUserDto AppUser)
         {
-            return new List<Claim>
+            var Claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Sid, AppUser.UserID.ToString()),
                 new Claim(ClaimTypes.Name, AppUser.UserName),
@@ -66,6 +66,15 @@ namespace SIGC.Infrastructure.GeneralService.Services
                 new Claim(CustomClaimTypes.COMPANY_SOCIALREASON, AppUser.CompanySocialReason),
                 new Claim(CustomClaimTypes.COMPANY_TRADENAME, AppUser.CompanyTradeName)
             };
+
+            if (AppUser.Permissions is not null)
+            {
+                foreach (var permission in AppUser.Permissions)
+                {
+                    Claims.Add(new Claim(CustomClaimTypes.PERMISSIONS, permission));
+                }
+            }
+            return Claims;
         }
 
         private SigningCredentials GetSigningCredentials()

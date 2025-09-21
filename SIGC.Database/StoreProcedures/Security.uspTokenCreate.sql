@@ -4,7 +4,7 @@
    Description:            Permite crear un registro de la tabla Security.Token
    Execute:
 		/*  
-		  DECLARE @TokenID SMALLINT  
+		  DECLARE @TokenID INT  
 		  EXECUTE Security.uspTokenCreate 
 			@TokenID=@TokenID OUTPUT,
 			@CompanyID=1,

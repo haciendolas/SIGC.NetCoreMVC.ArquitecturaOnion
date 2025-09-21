@@ -322,7 +322,7 @@
             }
         },
         Modal: {
-            Message: function (type, message, funcion = null) {              
+            Message: function (type, message=null, funcion = null) {              
                 $('#message-modal-generic #btn-modal-not').text('Cerrar');
                 $('#message-modal-generic #btn-modal-yes').hide().text('Aceptar');
                 $('#message-modal-generic #message-error-generic').hide().text('');
@@ -371,8 +371,8 @@
                         break;          
                     case Uti.Message.Type.ConfirmDelete:// 'Confirm Delete':
                         $('#message-modal-generic').modal('show');
-                        $('#message-title-generic').html('¿Estas seguro realizar esta operación?');
-                        $('#message-description-generic').html(message);
+                        $('#message-title-generic').html('¿Estas seguro de eliminar?');
+                        $('#message-description-generic').html(message ?? 'Realmente desea eliminar estos registros,Este proceso no se puede deshacer');
                         $('#message-modal-generic #btn-modal-not').show().prop({ 'class': 'btn w-sm btn-light' });
                         $('#message-modal-generic #btn-modal-yes').show().prop({ 'class': 'btn w-sm btn-danger' });
                         $('#message-loard-icon-generic').prop({
@@ -388,8 +388,8 @@
                         break;
                     case Uti.Message.Type.ConfirmProcess:// 'Confirm Process':
                         $('#message-modal-generic').modal('show');
-                        $('#message-title-generic').html('¿Estas seguro realizar esta operación?');
-                        $('#message-description-generic').html(message);
+                        $('#message-title-generic').html('¿Confirmar Proceso?');
+                        $('#message-description-generic').html(message ?? '');
                         $('#message-modal-generic #btn-modal-not').show().prop({ 'class': 'btn w-sm btn-light' });
                         $('#message-modal-generic #btn-modal-yes').show().prop({ 'class': 'btn w-sm btn-success' });
                         $('#message-loard-icon-generic').prop({
