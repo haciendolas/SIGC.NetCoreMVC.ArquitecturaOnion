@@ -27,6 +27,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RoleRepositories
                 {
                     Command.CommandText = "Security.uspRolePagination";
                     Command.CommandType = CommandType.StoredProcedure;
+                    Command.Parameters.Add("@RecordsTotal", SqlDbType.Int).Direction = ParameterDirection.Output;            
                     Command.Parameters.AddWithValue("@CompanyID", RolePaginationResquest.CompanyID);
                     Command.Parameters.AddWithValue("@RoleName", RolePaginationResquest.Parameters.Search);
                     Command.Parameters.AddWithValue("@StateID", RolePaginationResquest.StateID);
@@ -52,11 +53,12 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RoleRepositories
                                     RoleLastUpdatedUserName = Validation.SqlDBToString(ref DataReader, "RoleLastUpdatedUserName")                                
                                 };
                                 Pagination.Entities.Add(Get);
-                                Pagination.Filtered = Validation.SqlDBToInt32(ref DataReader, "RecordsFiltered");
-                                Pagination.Total = Validation.SqlDBToInt32(ref DataReader, "RecordsTotal");
+                                Pagination.Filtered = Validation.SqlDBToInt32(ref DataReader, "RecordsFiltered");                               
                             }                          
                         }
                     }
+                    Pagination.Total = Convert.ToInt32(Command.Parameters["@RecordsTotal"].Value); ;
+                   
                 }
             }
             return Pagination;

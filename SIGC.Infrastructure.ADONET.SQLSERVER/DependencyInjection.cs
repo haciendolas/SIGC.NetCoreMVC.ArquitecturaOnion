@@ -40,9 +40,14 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
             services.AddScoped<ICategoryValidateRepository, CategoryValidateRepository>();
 
             services.AddScoped<IRolePermissionListRepository, RolePermissionListRepository>();
+            services.AddScoped<IRolePermissionCreateRepository, RolePermissionCreateRepository>();
 
             services.AddScoped<IRolePaginationRepository, RolePaginationRepository>();
             services.AddScoped<IRoleChangeStateRepository, RoleChangeStateRepository>();
+            services.AddScoped<IRoleCreateRepository, RoleCreateRepository>();
+            services.AddScoped<IRoleUpdateRepository, RoleUpdateRepository>();
+            services.AddScoped<IRoleVerifyCodeAndNameRepository, RoleVerifyCodeAndNameRepository>();
+           
             return services;
         }
     }

@@ -34,7 +34,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.TokenRepositories
                     Command.Parameters.AddWithValue("@TokenExpirationJWTDateTime", Model.TokenExpirationJWTDateTime);
                     Command.Connection = Connection;
                     RecordAffected = await Command.ExecuteNonQueryAsync(CancellationToken);
-                    Model.TokenID = Convert.ToInt16(Command.Parameters["@TokenID"].Value);                    
+                    Model.TokenID = Convert.ToInt32(Command.Parameters["@TokenID"].Value);                    
                 }
             }
             return RecordAffected;

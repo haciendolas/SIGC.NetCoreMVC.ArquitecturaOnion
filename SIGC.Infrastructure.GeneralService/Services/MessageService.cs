@@ -52,7 +52,9 @@ public class MessageService(IServiceProvider ServiceProvider) : IMessageService
                 { MessageDescriptionConst.EXIST_CATEGORY_CATEGORYNAME, "The category name already exists." },
                 { MessageDescriptionConst.INVALID_JWT_TOKEN, "The token is invalid or has expired." },
                 { MessageDescriptionConst.VALID_JWT_TOKEN, "The token is valid but not expired." },
-                { MessageDescriptionConst.INVALID_RANDOM_TOKEN, "The refresh token is invalid or has expired." }
+                { MessageDescriptionConst.INVALID_RANDOM_TOKEN, "The refresh token is invalid or has expired." },
+                { MessageDescriptionConst.EXIST_ROLE_ROLECODE, "The role code already exists." },
+                { MessageDescriptionConst.EXIST_ROLE_ROLENAME, "The role name already exists." }
             },
 
             [(short)IdiomEnum.Spanish] = new()
@@ -83,7 +85,10 @@ public class MessageService(IServiceProvider ServiceProvider) : IMessageService
                 { MessageDescriptionConst.EXIST_CATEGORY_CATEGORYNAME, "El nombre de la categoria ya existe." },
                 { MessageDescriptionConst.INVALID_JWT_TOKEN, "El token es inválido o ha expirado." },
                 { MessageDescriptionConst.VALID_JWT_TOKEN, "El token es válido aun no expirado." },
-                { MessageDescriptionConst.INVALID_RANDOM_TOKEN, "El refresh token es inválido o ha expirado." }
+                { MessageDescriptionConst.INVALID_RANDOM_TOKEN, "El refresh token es inválido o ha expirado." },
+                { MessageDescriptionConst.EXIST_ROLE_ROLECODE, "El código del rol ya existe." },
+                { MessageDescriptionConst.EXIST_ROLE_ROLENAME, "El nombre de role ya existe." },
+
             }
         };
     }

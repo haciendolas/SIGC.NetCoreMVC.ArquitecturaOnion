@@ -26,7 +26,8 @@
    @RoleName VARCHAR(50),
    @RetMsg VARCHAR(11) OUTPUT
 AS
-BEGIN
+BEGIN   
+   SET NOCOUNT ON;
     SET @RetMsg='OK'
 
 	IF EXISTS(SELECT RoleID FROM Security.[Role] R WITH(NOLOCK) WHERE R.RoleCode=@RoleCode
@@ -44,4 +45,6 @@ BEGIN
 	  SET @RetMsg='NAME_EXISTS'	
 	  RETURN 
 	END
+
+	 SET NOCOUNT OFF;
 END
