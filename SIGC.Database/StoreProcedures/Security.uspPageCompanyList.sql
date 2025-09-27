@@ -1,7 +1,7 @@
  -- =============================================================================          
 -- Author:                 JOEL CASTILLO ROJAS      
 -- Create date:            27/09/2025
--- Description:            Permite obtener listado de paginas activas de la tabla  [Security].[Page]
+-- Description:            Permite obtener listado de paginas activas por empresa de la tabla  [Security].[PageCompany]
 -- Update:				   Joel Castillo Rojas    
 -- Exec                    Exec Security.uspPageCompanyList @CompanyID=1
 -- ============================================================================== 
@@ -9,17 +9,10 @@ ALTER PROCEDURE Security.uspPageCompanyList
   @CompanyID INT
 AS
 BEGIN
-	SET NOCOUNT ON ;
-
-	WITH PageCompanyCT AS (
-		SELECT DISTINCT P.PageID, P.PageHierarchy, P.PageParentID
-		FROM Security.PageCompany PC WITH(NOLOCK) 
-		INNER JOIN Security.Page P WITH(NOLOCK) ON PC.PageID = P.PageID AND P.StateID = 1
-		WHERE PC.CompanyID = @CompanyID		     
-	),
-
-	RecursivePageCT AS (   
-		SELECT 
+	SET NOCOUNT ON ; 
+ 
+    WITH RecursivePageCT AS (   
+		SELECT 		   
 			P.PageID,
 		    P.PageParentID,
 			P.PageHierarchy,   
@@ -27,12 +20,13 @@ BEGIN
 		    P.PageIconName,			
 			P.PageOrder
 		FROM [Security].[Page] P WITH(NOLOCK)
-		INNER JOIN PageCompanyCT PC WITH(NOLOCK) ON P.PageID = PC.PageID
+		INNER JOIN PageCompany PC WITH(NOLOCK) ON P.PageID = PC.PageID
+		WHERE PC.CompanyID = @CompanyID		   
 
 		UNION ALL
 
 		-- Recursividad hacia los padres
-			SELECT 
+			SELECT 			
 			P.PageID,
 		    P.PageParentID,
 			P.PageHierarchy,   
