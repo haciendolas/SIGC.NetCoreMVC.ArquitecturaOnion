@@ -12,22 +12,22 @@ namespace SIGC.Presentation.WebApi.Controllers
     public class RoleController : BaseController
     {        
         [HttpPost("RolePagination")]
-        [SwaggerOperation(Summary = "Paginación de rol", Description = " Permite la paginación de rol.")]
+        [SwaggerOperation(Summary = "Paginación de rol", Description = "Permite la paginación de rol.")]
         [ProducesResponseType(typeof(MsgResponse<PaginationResultDto<RolePaginationQueryResponse>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RolePagination([FromQuery] RolePaginationQueryRequest Query, CancellationToken CancellationToken)
         {
-            var Response = await Mediator.Send(Query);
+            var Response = await Mediator.Send(Query, CancellationToken);
             return Ok(Response);
         }
         
         [HttpPut("RoleChangeState")]
-        [SwaggerOperation(Summary = "Cambiar el estado del rol", Description = " Permite cambiar el estado de rol.")]
+        [SwaggerOperation(Summary = "Cambiar el estado del rol", Description = "Permite cambiar el estado de rol.")]
         [ProducesResponseType(typeof(MsgResponse<object?>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RoleChangeState([FromBody] RoleChangeStateCommandRequest Command, CancellationToken CancellationToken)
         {
-            var Response = await Mediator.Send(Command);
+            var Response = await Mediator.Send(Command, CancellationToken);
             return Ok(Response);
         }
 
@@ -37,7 +37,7 @@ namespace SIGC.Presentation.WebApi.Controllers
         [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RoleCreate([FromBody] RoleCreateCommandRequest Command, CancellationToken CancellationToken)
         {
-            var Response = await Mediator.Send(Command);
+            var Response = await Mediator.Send(Command, CancellationToken);
             return Ok(Response);
         }
     }
