@@ -1,7 +1,9 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
+using SIGC.DomainModel.Dtos.Commons;
 using SIGC.DomainModel.Dtos.Page;
 using SIGC.DomainService.IRepositories.IPageRepositories;
+using SIGC.DomainService.IServices;
 using SIGC.Infrastructure.ADONET.SQLSERVER.AppDBContext;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Extensions;
 using System.Data;
@@ -11,9 +13,11 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.PageRepositories
     internal class PageListRepository : IPageListRepository
     {
         private readonly string ConnectionString;
-        public PageListRepository(IOptions<AppDbContext> Options)
+        private readonly IJsonSerializerService JsonSerializerService;
+        public PageListRepository(IOptions<AppDbContext> Options, IJsonSerializerService JsonSerializerService)
         {
             ConnectionString = Options.Value.ConnectionDBCommerce360;
+            this.JsonSerializerService = JsonSerializerService;
         }
         public async Task<List<PageListResponseDto>> ListAsync(CancellationToken CancellationToken = default)
         {
@@ -40,7 +44,8 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.PageRepositories
                                     PageHierarchy = Validation.SqlDBToString(ref DataReader, "PageHierarchy"),
                                     PageName = Validation.SqlDBToString(ref DataReader, "PageName"),                                   
                                     PageIconName = Validation.SqlDBToString(ref DataReader, "PageIconName"),
-                                    PageOrder = Validation.SqlDBToInt16(ref DataReader, "PageOrder")
+                                    PageOrder = Validation.SqlDBToInt16(ref DataReader, "PageOrder"),
+                                    PageAction = JsonSerializerService.Deserialize<List<PageActionResponseDto>>(Validation.SqlDBToString(ref DataReader, "PageAction"))
                                 };
                                 List.Add(Get);
                             }

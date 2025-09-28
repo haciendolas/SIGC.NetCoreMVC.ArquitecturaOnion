@@ -10,7 +10,21 @@ AS
 BEGIN
 	SET NOCOUNT ON
      
-    SELECT P.PageID,P.PageParentID,P.PageHierarchy,P.PageName,P.PageIconName,P.PageOrder
+    SELECT P.PageID,P.PageParentID,P.PageHierarchy,P.PageName,P.PageIconName,P.PageOrder,
+	      'PageAction'=  
+	      '[' + ISNULL(STUFF((SELECT ','  + '{'+ 
+								 '"PageActionID":' + CONVERT(VARCHAR(10), PA.PageActionID)+','+
+								  '"PageActionName":"' +ISNULL(PA.PageActionName,'')+'",'+ 
+								  '"PageActionDescription":"' +ISNULL(PA.PageActionDescription,'') +'"'+
+							 '}'  
+							 FROM [Security].PageAction PA										 						 
+							 WHERE PA.PageID=P.PageID AND PA.StateID=1 
+							 FOR XML PATH(''), TYPE
+					    )
+						.value(N'.[1]', N'varchar(max)'),1,1,''
+					)
+				,'')
+		+']'
 	FROM [Security].[Page] P WITH(NOLOCK) 
 	WHERE P.StateID=1 
 

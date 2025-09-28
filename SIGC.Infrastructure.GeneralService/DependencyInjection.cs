@@ -11,6 +11,7 @@ namespace SIGC.Infrastructure.GeneralService
             services.AddSingleton<ICurrentSessionService, CurrentSessionService>();
             services.AddScoped<IGenerateTokenService,GenerateTokenService>();
             services.AddScoped<IMessageService, MessageService>();
+            services.AddScoped<IJsonSerializerService, JsonSerializerService>();
 
             return services;
         }

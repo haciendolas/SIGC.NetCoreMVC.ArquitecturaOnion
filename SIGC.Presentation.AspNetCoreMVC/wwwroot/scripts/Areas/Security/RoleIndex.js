@@ -1,7 +1,8 @@
 ﻿$(function () {
     const Role = {
         _Init: function () {   
-            Role._Search.fnRoleDataTable();
+            Role._Search.fnRoleDataTable();       
+            Role._Search.fnPageTreeView();
             $('#scboStateID').on('change', function () {
                 Role._Search.fnRoleDataTable();
             });
@@ -97,6 +98,26 @@
                         const response = data.json;                         
                     }
                 });
+            },
+            fnPageTreeView: function () {
+                const CompanyID = 1;
+                debugger
+                const options = {
+                    url: Uti.Url.Base + '/Security/Role/PageList' ,
+                    data: { CompanyID: CompanyID },
+                    type: Uti.Variable.FetchAjax.Type.Get
+                };
+                Uti.Ajax.Custom(options, function (response) {
+                    console.log(response);
+                    $('#div-treeview-page').html(response.data);
+                    Uti.Modal.Message(response.type, response.message, response.function);
+                    if (response.type === Uti.Message.Type.Session) {
+                        Uti.Modal.Process();
+                    }
+                    if (response.type === Uti.Message.Type.Success) {
+                        
+                    }
+                });      
             }
         },
         _Operation: {

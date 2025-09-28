@@ -10,7 +10,7 @@ ALTER PROCEDURE Security.uspPageCompanyList
 AS
 BEGIN
 	SET NOCOUNT ON ; 
- 
+   
     WITH RecursivePageCT AS (   
 		SELECT 		   
 			P.PageID,
@@ -43,7 +43,21 @@ BEGIN
 			RP.PageHierarchy,   
 			RP.PageName,
 		    RP.PageIconName,			 
-			RP.PageOrder
+			RP.PageOrder,
+			'PageAction'=  
+			  '[' + ISNULL(STUFF((SELECT ','  + '{'+ 
+									 '"PageActionID":' + CONVERT(VARCHAR(10), PA.PageActionID)+','+
+									  '"PageActionName":"' +ISNULL(PA.PageActionName,'')+'",'+ 
+									  '"PageActionDescription":"' +ISNULL(PA.PageActionDescription,'') +'"'+
+								 '}'  
+								 FROM [Security].PageAction PA										 						 
+								 WHERE PA.PageID=RP.PageID AND PA.StateID=1 
+								 FOR XML PATH(''), TYPE
+							)
+							.value(N'.[1]', N'varchar(max)'),1,1,''
+						)
+					,'')
+			+']'
 	FROM RecursivePageCT RP ORDER BY RP.PageHierarchy,RP.PageOrder
 
 	SET NOCOUNT OFF;

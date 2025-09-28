@@ -1,7 +1,9 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
+using SIGC.DomainModel.Dtos.Commons;
 using SIGC.DomainModel.Dtos.PageCompany;
 using SIGC.DomainService.IRepositories.IPageCompanyRepositories;
+using SIGC.DomainService.IServices;
 using SIGC.Infrastructure.ADONET.SQLSERVER.AppDBContext;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Extensions;
 using System.Data;
@@ -11,9 +13,11 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.PageCompanyRepositor
     internal class PageCompanyListRepository : IPageCompanyListRepository
     {
         private readonly string ConnectionString;
-        public PageCompanyListRepository(IOptions<AppDbContext> Options)
+        private readonly IJsonSerializerService JsonSerializerService;
+        public PageCompanyListRepository(IOptions<AppDbContext> Options, IJsonSerializerService JsonSerializerService)
         {
             ConnectionString = Options.Value.ConnectionDBCommerce360;
+            this.JsonSerializerService = JsonSerializerService;
         }
 
         public async Task<List<PageCompanyListResponseDto>> ListAsync(int CompanyID, CancellationToken CancellationToken = default)
@@ -42,7 +46,8 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.PageCompanyRepositor
                                     PageHierarchy = Validation.SqlDBToString(ref DataReader, "PageHierarchy"),
                                     PageName = Validation.SqlDBToString(ref DataReader, "PageName"),
                                     PageIconName = Validation.SqlDBToString(ref DataReader, "PageIconName"),
-                                    PageOrder = Validation.SqlDBToInt16(ref DataReader, "PageOrder")
+                                    PageOrder = Validation.SqlDBToInt16(ref DataReader, "PageOrder"),
+                                    PageAction = JsonSerializerService.Deserialize<List<PageActionResponseDto>>(Validation.SqlDBToString(ref DataReader, "PageAction"))
                                 };
                                 List.Add(Get);
                             }

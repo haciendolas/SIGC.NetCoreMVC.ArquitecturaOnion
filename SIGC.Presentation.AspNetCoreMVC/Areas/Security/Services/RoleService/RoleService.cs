@@ -25,5 +25,9 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.RoleService
             return await ApiService.PutAsync<RoleChangeStateRequestModel, ApiResponse<object?>>($"{Controller}/RoleChangeState", Request);
         }
 
+        public async Task<ApiResponse<object?>> RoleCreate(RoleCreateUpdateRequestModel Request)
+        {
+            return await ApiService.PostAsync<RoleCreateUpdateRequestModel, ApiResponse<object?>>($"{Controller}/RoleCreate", Request);
+        }
     }
 }

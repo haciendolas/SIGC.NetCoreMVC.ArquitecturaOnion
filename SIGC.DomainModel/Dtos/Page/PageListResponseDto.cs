@@ -1,4 +1,6 @@
-﻿namespace SIGC.DomainModel.Dtos.Page
+﻿using SIGC.DomainModel.Dtos.Commons;
+
+namespace SIGC.DomainModel.Dtos.Page
 {    public record struct PageListResponseDto
     (
         int PageID,
@@ -6,6 +8,7 @@
         string PageHierarchy,
         string PageName,
         string PageIconName,
-        short PageOrder
-     );   
+        short PageOrder,
+        List<PageActionResponseDto> PageAction
+     ); 
 }
