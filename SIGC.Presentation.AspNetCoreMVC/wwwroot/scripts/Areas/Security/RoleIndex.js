@@ -103,19 +103,21 @@
                 const CompanyID = 1;
                 debugger
                 const options = {
-                    url: Uti.Url.Base + '/Security/Role/PageList' ,
-                    data: { CompanyID: CompanyID },
+                    url: Uti.Url.Base + '/Security/Role/PageList/' + CompanyID,               
                     type: Uti.Variable.FetchAjax.Type.Get
                 };
-                Uti.Ajax.Custom(options, function (response) {
-                    console.log(response);
-                    $('#div-treeview-page').html(response.data);
-                    Uti.Modal.Message(response.type, response.message, response.function);
+                Uti.Ajax.Custom(options, function (response) {                              
                     if (response.type === Uti.Message.Type.Session) {
                         Uti.Modal.Process();
+                        Uti.Modal.Message(response.type, response.message, response.function);
                     }
                     if (response.type === Uti.Message.Type.Success) {
-                        
+                        $('#div-treeview-page').html(response.data).treeview({
+                            collapsed: false,
+                            animated: 'medium',
+                            control: '#sidetreecontrol',
+                            persist: 'location'
+                        });
                     }
                 });      
             }

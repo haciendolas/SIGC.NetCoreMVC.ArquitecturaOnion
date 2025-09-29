@@ -65,18 +65,17 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Security.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> PageList([FromQuery]int? CompanyID)
+       //public async Task<IActionResult> PageList([FromRoute] int? id) 
+       public async Task<IActionResult> PageList([FromRoute(Name = "id")] int? CompanyID)
         {
             var ApiResponsePage = new ApiResponse<List<PageListResponseModel>>();
             if (CompanyID.HasValue)
-            {
-                CompanyID = GetSession().CompanyID;
+            {  
                 ApiResponsePage = await PageCompanyService.PageCompanyList(CompanyID.Value);              
             }
             else{
                 ApiResponsePage = await PageService.PageList();
-            }
-            
+            }            
             var ApiResponse = new ApiResponse<string>();
             ApiResponse.Type = ApiResponsePage.Type;
             ApiResponse.Data = this.PageTreeView(ApiResponsePage.Data!, 0);
@@ -98,24 +97,34 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Security.Controllers
                         var SubList = Pages.Where(w => w.PageParentID == item.PageID).ToList();
                         if (SubList.Any())
                         {
-                            MyUL += "<label>" + item.PageName + "</label>";
+                            MyUL += "<div>";                          
+                            MyUL += "<label id=lblPageID_" + item.PageID+" name=lblPageID >" + item.PageName + "</label>";
+                            MyUL += "</div>";
                             MyUL += this.PageTreeView(Pages, item.PageID);
                         }
-                        else
-                        {
+                        else{
                             if (item.PageAction.Any())
                             {
-                                MyUL += "<input type=checkbox />" + item.PageName;
-                                MyUL += "<div class='form-check pages' id="+item.PageID+">";
+                                MyUL += "<div>";
+                                MyUL += "<input type=hidden id=chkPageID_"+item.PageID+ " name=chkPageID value="+item.PageID+" />";
+                                MyUL += "<label for=chkPageID_" + item.PageID+ " id=lblPageID_"+item.PageID+ " name=lblPageID />" + item.PageName + "</label>";
+                                MyUL += "</div>"; 
+                                MyUL += "<div id="+item.PageID+">";
                                 foreach (var Action in item.PageAction)
                                 {
-                                    MyUL += "<input type=checkbox />" + Action.PageActionDescription+"<br/>";
+                                    MyUL += "<div class='form-check form-check-secondary mb-2'>";
+                                    MyUL += "<input class='form-check-input' type=checkbox id=chkPageActionID_"+Action.PageActionID+" name=chkPageActionID value="+Action.PageActionID+" style='width:23px;height:23px'/>";
+                                    MyUL += "<label class='form-check-label p-1' for=chkPageActionID_" + Action.PageActionID+" id=lblPageActionID_"+Action.PageActionID+" name=lblPageActionID>" + Action.PageActionDescription+"</label>";
+                                    MyUL += "</div>";
                                 }
                                 MyUL += "</div>";
                             }
                             else
                             {
-                                MyUL+="<input type=checkbox />"+item.PageName;
+                                MyUL += "<div class='form-check form-check-secondary mb-2'>";
+                                MyUL += "<input type=checkbox class='form-check-input' id=chkPageID_" + item.PageID + " name=chkPageID  value=" + item.PageID + " style='width:23px;height:23px' />";
+                                MyUL += "<label class='form-check-label p-1' for=chkPageID_" + item.PageID + " id=lblPageID_" + item.PageID + " name=lblPageID />" + item.PageName + "</label>";
+                                MyUL += "</div>";
                             }
                         }
                         MyUL += "</li>";
