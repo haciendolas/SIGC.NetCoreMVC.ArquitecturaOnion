@@ -23,7 +23,7 @@ namespace SIGC.ApplicationService.Features.PageCompanyFeatures.Queries.PageCompa
         public async Task<MsgResponse<List<PageCompanyListResponseDto>>> Handle(PageCompanyListQueryRequest Request, CancellationToken CancellationToken)
         {
             var MsgResponse = new MsgResponse<List<PageCompanyListResponseDto>>();
-            MsgResponse.Type = MessageTypeConst.SUCCESS;
+            MsgResponse.Type = MessageTypeConst.QUERY;
             MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.QUERY_RESULT);
             MsgResponse.Data = await PageCompanyListRepository.ListAsync(Request.CompanyID, CancellationToken);
             if(!MsgResponse.Data.Any())

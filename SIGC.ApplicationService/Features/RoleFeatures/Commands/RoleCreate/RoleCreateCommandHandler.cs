@@ -57,7 +57,7 @@ namespace SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleCreate
                         {
                             await RolePermissionCreateRepository.CreateAsync(new RolePermission
                             {
-                                CompanyID = Item.CompanyID,
+                                CompanyID = Request.CompanyID,
                                 RoleID = Model.RoleID,
                                 PageID = Item.PageID,
                                 PageActionID = Item.PageActionID,

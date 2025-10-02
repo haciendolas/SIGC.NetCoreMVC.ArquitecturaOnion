@@ -22,7 +22,7 @@ namespace SIGC.ApplicationService.Features.PageFeatures.Queries.PageList
         public async Task<MsgResponse<List<PageListResponseDto>>> Handle(PageListQueryRequest request, CancellationToken CancellationToken)
         {
             var MsgResponse = new MsgResponse<List<PageListResponseDto>>();
-            MsgResponse.Type = MessageTypeConst.SUCCESS;
+            MsgResponse.Type = MessageTypeConst.QUERY;
             MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.QUERY_RESULT);
             MsgResponse.Data = await PageListRepository.ListAsync(CancellationToken);
             if(!MsgResponse.Data.Any()){

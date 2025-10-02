@@ -12,8 +12,7 @@
     }
 
     public class RolePermissionCreateRequestModel
-    {
-        public int CompanyID { get; set; }
+    {   
         public int PageID { get; set; }
         public int PageActionID { get; set; }
     }

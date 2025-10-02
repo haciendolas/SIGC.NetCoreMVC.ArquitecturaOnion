@@ -530,7 +530,8 @@
                 Error: 'Error',                          
                 ConfirmDelete: 'ConfirmDelete',
                 ConfirmProcess: 'ConfirmProcess',
-                Session: 'Session'
+                Session: 'Session',
+                Query: 'Query'
             },
             Description: { 
                 VerifyExpiredSession: $('#VerifyExpiredSession').text(),

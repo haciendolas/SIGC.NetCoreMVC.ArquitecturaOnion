@@ -24,7 +24,7 @@ namespace SIGC.ApplicationService.Features.RoleFeatures.Queries.RolePagination
         public async Task<MsgResponse<PaginationResultDto<RolePaginationQueryResponse>>> Handle(RolePaginationQueryRequest Request, CancellationToken CancellationToken)
         {
             var MsgResponse = new MsgResponse<PaginationResultDto<RolePaginationQueryResponse>>();
-                MsgResponse.Type = MessageTypeConst.SUCCESS;
+                MsgResponse.Type = MessageTypeConst.QUERY;
                 MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.QUERY_RESULT);
                var Response = await RolePaginationRepository.PaginationAsync(new RolePaginationResquestDto{
                                         CompanyID = Request.CompanyID,

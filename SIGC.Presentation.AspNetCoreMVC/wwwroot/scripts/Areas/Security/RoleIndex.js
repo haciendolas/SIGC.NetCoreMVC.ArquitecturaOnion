@@ -18,7 +18,10 @@
             });
             $('#btn-modal-yes').on('click', function () {
                 Role._Operation.fnRoleChangeState(1, $('#message-modal-generic #hd-modal-id').val(), Uti.Variable.StateType.Delete);
-            });            
+            });    
+            $('#btnRoleCreate').on('click', function () {
+                Role._Operation.fnRoleCreate();
+            });
         },
         _Search: {
             fnRoleDataTable: function () {
@@ -100,18 +103,17 @@
                 });
             },
             fnPageTreeView: function () {
-                const CompanyID = 1;
-                debugger
+                const CompanyID = 1;              
                 const options = {
                     url: Uti.Url.Base + '/Security/Role/PageList/' + CompanyID,               
                     type: Uti.Variable.FetchAjax.Type.Get
                 };
-                Uti.Ajax.Custom(options, function (response) {                              
+                Uti.Ajax.Custom(options, function (response) { 
+                    Uti.Modal.Message(response.type, response.message, response.function);
                     if (response.type === Uti.Message.Type.Session) {
-                        Uti.Modal.Process();
-                        Uti.Modal.Message(response.type, response.message, response.function);
+                        Uti.Modal.Process();                 
                     }
-                    if (response.type === Uti.Message.Type.Success) {
+                    if (response.type === Uti.Message.Type.Query) {
                         $('#div-treeview-page').html(response.data).treeview({
                             collapsed: false,
                             animated: 'medium',
@@ -137,11 +139,53 @@
                     Uti.Modal.Message(response.type, response.message, response.function);
                     if (response.type === Uti.Message.Type.Session) {
                         Uti.Modal.Process();
-                    }               
+                    }
                     if (response.type === Uti.Message.Type.Success) {
                         Role._Search.fnRoleDataTable();
                     }
                 });              
+            },
+            fnRoleCreate: function () {
+                debugger
+                const RolePermission = new Array();
+                $('#div-treeview-page input:checkbox[name=chkPageID]:checked').each(function (pageIndex, pageElement) {            
+                    RolePermission.push({
+                        PageID: parseInt($(pageElement).val()),
+                        PageActionID: 0
+                    });
+                });
+                $('#div-treeview-page input:hidden[name=chkPageID]').each(function (pageIndex, pageElement) {
+                    debugger
+                    const PageID = parseInt($(pageElement).val());
+                    $('#' + PageID + ' input:checkbox[name=chkPageActionID]:checked').each(function (pageActionIndex, pageActionElement){
+                        RolePermission.push({
+                            PageID: PageID,
+                            PageActionID: parseInt($(pageActionElement).val())
+                        });
+                    });
+                });         
+                const options = {
+                    url: Uti.Url.Base + '/Security/Role/RoleCreate',
+                    data: {
+                        RoleID: parseInt($('#txtRoleID').val() === 'GENERADO' ? 0 : $('#txtRoleID').val()),
+                        CompanyID: 1,
+                        RoleCode: $('#txtRoleCode').val().trim(),
+                        RoleName: $('#txtRoleName').val().trim(),
+                        RoleDescription: $('#txtRoleDescription').val().trim(),
+                        StateID: $('#chkStateID').is(':checked') ? 1 : 0,
+                        RolePermission: RolePermission
+                    },
+                    type: Uti.Variable.FetchAjax.Type.Post
+                };
+                Uti.Ajax.Custom(options, function (response) {
+                    Uti.Modal.Message(response.type, response.message, response.function);
+                    if (response.type === Uti.Message.Type.Session) {
+                        Uti.Modal.Process();
+                    }
+                    if (response.type === Uti.Message.Type.Success) {
+                        Role._Search.fnRoleDataTable();
+                    }
+                });
             }
         }
     }
