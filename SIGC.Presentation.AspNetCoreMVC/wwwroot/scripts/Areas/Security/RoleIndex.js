@@ -145,8 +145,7 @@
                     }
                 });              
             },
-            fnRoleCreate: function () {
-                debugger
+            fnRoleCreate: function () {         
                 const RolePermission = new Array();
                 $('#div-treeview-page input:checkbox[name=chkPageID]:checked').each(function (pageIndex, pageElement) {            
                     RolePermission.push({
@@ -154,8 +153,7 @@
                         PageActionID: 0
                     });
                 });
-                $('#div-treeview-page input:hidden[name=chkPageID]').each(function (pageIndex, pageElement) {
-                    debugger
+                $('#div-treeview-page input:hidden[name=chkPageID]').each(function (pageIndex, pageElement) {                
                     const PageID = parseInt($(pageElement).val());
                     $('#' + PageID + ' input:checkbox[name=chkPageActionID]:checked').each(function (pageActionIndex, pageActionElement){
                         RolePermission.push({
