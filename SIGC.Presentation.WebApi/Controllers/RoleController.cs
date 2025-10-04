@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SIGC.ApplicationService.Commons.Dtos;
 using SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleChangeState;
 using SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleCreate;
+using SIGC.ApplicationService.Features.RoleFeatures.Queries.RoleGet;
 using SIGC.ApplicationService.Features.RoleFeatures.Queries.RolePagination;
 using SIGC.Infrastructure.CrossCutting.Wrappers;
 using Swashbuckle.AspNetCore.Annotations;
@@ -32,13 +32,22 @@ namespace SIGC.Presentation.WebApi.Controllers
         }
 
         [HttpPost("RoleCreate")]
-        [SwaggerOperation(Summary = "Crear un role ", Description = " Permite crear un rol.")]
+        [SwaggerOperation(Summary = "Crear un rol", Description = " Permite crear un rol.")]
         [ProducesResponseType(typeof(MsgResponse<object?>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RoleCreate([FromBody] RoleCreateCommandRequest Command, CancellationToken CancellationToken)
         {
             var Response = await Mediator.Send(Command, CancellationToken);
             return Ok(Response);
+        }
+      
+        [HttpGet("RoleGet/{RoleID}")]
+        [SwaggerOperation(Summary = "Obtener un rol por Id", Description = "Permite obtener un rol por id.")]
+        [ProducesResponseType(typeof(MsgResponse<RoleGetQueryResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> RoleGet([FromRoute] int RoleID, CancellationToken CancellationToken)
+        {
+            return Ok(await Mediator.Send(new RoleGetQueryRequest(RoleID), CancellationToken));
         }
     }
 }

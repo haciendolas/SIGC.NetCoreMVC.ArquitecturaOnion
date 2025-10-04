@@ -51,6 +51,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
             services.AddScoped<IRoleCreateRepository, RoleCreateRepository>();
             services.AddScoped<IRoleUpdateRepository, RoleUpdateRepository>();
             services.AddScoped<IRoleVerifyCodeAndNameRepository, RoleVerifyCodeAndNameRepository>();
+            services.AddScoped<IRoleGetRepository, RoleGetRepository>();
 
             services.AddScoped<IPageListRepository, PageListRepository>();
             services.AddScoped<IPageCompanyListRepository, PageCompanyListRepository>();
