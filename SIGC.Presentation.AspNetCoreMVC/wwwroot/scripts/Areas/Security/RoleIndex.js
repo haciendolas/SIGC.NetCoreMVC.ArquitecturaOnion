@@ -1,6 +1,7 @@
 ﻿$(function () {
     const Role = {
-        _Init: function () {   
+        _Init: function () {
+            Role._Other.fnRoleTabs();
             Role._Search.fnRoleDataTable();       
             Role._Search.fnPageTreeView();
             $('#scboStateID').on('change', function () {
@@ -22,6 +23,25 @@
             $('#btnRoleCreate').on('click', function () {
                 Role._Operation.fnRoleCreate();
             });
+            $('#btnRoleNew').on('click', function () {
+                Role._Clear.fnRoleGet();
+                Role._Other.fnRoleTabs();
+            });
+        },
+        _Clear: {
+            fnRoleGet: function () {
+                $('#txtRoleID').val('GENERADO');
+                $('#txtRoleCode,#txtRoleName,#txtRoleDescription').val('');
+                $('#chkStateID').attr('checked', true);
+                $('#div-treeview-page input:checkbox').attr('checked', false);
+            }
+        },
+        _Other: {
+            fnRoleTabs: function () {
+                $('#role-card ul li a[href="#tab-search"]').removeClass('disabled');
+                $('#role-card ul li a[href="#tab-search"]').attr('data-bs-toggle', 'tab');
+              //$('#role-card ul li a[href="#tab-register"]').tab('show');
+            }            
         },
         _Search: {
             fnRoleDataTable: function () {
@@ -84,7 +104,8 @@
                     order: [[0, 'desc']],
                     bSort: false,
                     rowCallback: function (row, data, dataIndex) {
-                        $(row).find('a[name=slnkEdit]').on('click',function () {                   
+                        $(row).find('a[name=slnkEdit]').on('click', function () {
+                            Role._Search.fnRoleGet(data[0]);
                         }).tooltip();
                         $(row).find('a[name=slnkInactive]').on('click',function () {
                             Role._Operation.fnRoleChangeState(1, data[0], Uti.Variable.StateType.Inactive);                           
@@ -122,6 +143,47 @@
                         });
                     }
                 });      
+            },
+            fnRoleGet: function (RoleID) {              
+                const options = {
+                    url: Uti.Url.Base + '/Security/Role/RoleGet/' + RoleID,
+                    type: Uti.Variable.FetchAjax.Type.Get
+                };
+                Uti.Ajax.Custom(options, function (response) {
+                    Uti.Modal.Message(response.type, response.message, response.function);
+                    if (response.type === Uti.Message.Type.Session) {
+                        Uti.Modal.Process();
+                    }
+                    if (response.type === Uti.Message.Type.Query) {
+                        const { data: rowData } = response;
+                        console.log(rowData);
+                        Role._Clear.fnRoleGet();
+                        $('#txtRoleID').val(rowData.roleID);
+                        $('#txtRoleCode').val(rowData.roleCode.trim());
+                        $('#txtRoleName').val(rowData.roleName.trim());
+                        $('#txtRoleDescription').val(rowData.roleDescription.trim());                      
+                        rowData.pages.forEach(page => {
+                            $('#div-treeview-page input:checkbox[name=chkPageID]').each(function (pageIndex, pageElement) {
+                                if (page.pageID == $(pageElement).val()) {
+                                    $(pageElement).attr('checked', true);
+                                    return false;
+                                }
+                            });
+                            page.actions.forEach(action => {
+                                $('#' + page.pageID + 'input:checkbox[name=chkPageActionID]').each(function (actionIndex, actionElement) {
+                                    if (acion.pageActionID == $(actionElement).val()) {
+                                        $(actionElement).attr('checked', true);
+                                        return;
+                                    }
+                                });
+                            });
+                        });
+
+                        $('#role-card ul li a[href="#tab-search"]').addClass('disabled');
+                        $('#role-card ul li a[href="#tab-search"]').removeAttr('data-bs-toggle');
+                        $('#role-card ul li a[href="#tab-register"]').tab('show');
+                    };
+                });
             }
         },
         _Operation: {

@@ -71,6 +71,12 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Security.Controllers
             return Json(ApiResponse);
         }
 
+        [HttpGet]   
+        public async Task<IActionResult> RoleGet([FromRoute(Name = "id")] int RoleID)
+        {  
+            return Json(await RoleService.RoleGet(RoleID));
+        }
+
         [HttpGet]
        //public async Task<IActionResult> PageList([FromRoute] int? id) 
        public async Task<IActionResult> PageList([FromRoute(Name = "id")] int? CompanyID)

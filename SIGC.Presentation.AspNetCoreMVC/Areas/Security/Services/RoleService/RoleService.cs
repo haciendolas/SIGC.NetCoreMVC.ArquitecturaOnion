@@ -1,4 +1,5 @@
-﻿using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Role;
+﻿using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Page;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Role;
 using SIGC.Presentation.AspNetCoreMVC.Helpers;
 using SIGC.Presentation.AspNetCoreMVC.Models;
 using SIGC.Presentation.AspNetCoreMVC.Services;
@@ -28,6 +29,11 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.RoleService
         public async Task<ApiResponse<object?>> RoleCreate(RoleCreateUpdateRequestModel Request)
         {
             return await ApiService.PostAsync<RoleCreateUpdateRequestModel, ApiResponse<object?>>($"{Controller}/RoleCreate", Request);
+        }
+
+        public async Task<ApiResponse<RoleGetResponseModel?>> RoleGet(int RoleID)
+        {
+            return await ApiService.GetAsync<ApiResponse<RoleGetResponseModel?>> ($"{Controller}/RoleGet/{RoleID}");
         }
     }
 }
