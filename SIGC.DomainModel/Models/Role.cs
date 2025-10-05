@@ -30,6 +30,21 @@ namespace SIGC.DomainModel.Models
             };
         }
 
+        public static Role Update(int RoleID, int CompanyID, string RoleCode, string RoleName, string RoleDescription, StateEnum StateID, DateTime CreatedDateTime, int CreatedBy)
+        {
+            //Validate(CategoryName, CreatedDate, CreatedBy);
+            return new Role()
+            {
+                RoleID = RoleID,
+                CompanyID = CompanyID,
+                RoleCode = RoleCode,
+                RoleName = RoleName,
+                RoleDescription = RoleDescription,
+                StateID = StateID,
+                CreatedDateTime = CreatedDateTime,
+                CreatedBy = CreatedBy
+            };
+        }
         public static Role ChangeState(int CompanyID,int RoleID, StateEnum StateID, DateTime CreatedDateTime, int CreatedBy)
         {           
             return new Role()

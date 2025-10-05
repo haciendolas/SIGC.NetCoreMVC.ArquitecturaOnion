@@ -31,8 +31,8 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RoleRepositories
                     Command.Parameters.AddWithValue("@RoleName", Model.RoleName);
                     Command.Parameters.AddWithValue("@RoleDescription", string.IsNullOrWhiteSpace(Model.RoleDescription) ? DBNull.Value : Model.RoleDescription);
                     Command.Parameters.AddWithValue("@StateID", (short)Model.StateID);
-                    Command.Parameters.AddWithValue("@RoleCreatedUserID", Model.CreatedBy);
-                    Command.Parameters.AddWithValue("@RoleCreatedDateTime", Model.CreatedDateTime);
+                    Command.Parameters.AddWithValue("@RoleUpdatedUserID", Model.CreatedBy);
+                    Command.Parameters.AddWithValue("@RoleUpdatedDateTime", Model.CreatedDateTime);
                     Command.Connection = Connection;
                     RecordAffected = await Command.ExecuteNonQueryAsync(CancellationToken);                   
                 }

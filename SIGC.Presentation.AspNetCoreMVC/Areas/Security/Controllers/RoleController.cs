@@ -8,7 +8,6 @@ using SIGC.Presentation.AspNetCoreMVC.Controllers;
 using SIGC.Presentation.AspNetCoreMVC.Helpers;
 using SIGC.Presentation.AspNetCoreMVC.Models;
 using SIGC.Presentation.AspNetCoreMVC.Services;
-using System.Collections.Generic;
 
 namespace SIGC.Presentation.AspNetCoreMVC.Areas.Security.Controllers
 {
@@ -26,6 +25,30 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Security.Controllers
         }
         public IActionResult Index(){           
             return View("RoleIndex");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RoleCreate([FromBody] RoleCreateUpdateRequestModel Request)
+        {            
+            return Json(await RoleService.RoleCreate(Request));
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> RoleUpdate([FromBody] RoleCreateUpdateRequestModel Request)
+        {            
+            return Json(await RoleService.RoleUpdate(Request));
+        }
+
+        [HttpPost(Name = "RoleChangeState")]
+        public async Task<IActionResult> RoleChangeState([FromBody] RoleChangeStateRequestModel Request)
+        {
+            return Json(await RoleService.RoleChangeState(Request));
+        }
+
+        [HttpGet]   
+        public async Task<IActionResult> RoleGet([FromRoute(Name = "id")] int RoleID)
+        {  
+            return Json(await RoleService.RoleGet(RoleID));
         }
 
         [HttpPost(Name = "RoleDataTable")]
@@ -55,26 +78,6 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Security.Controllers
 
              };
             return Json(new { sEcho = Convert.ToInt32(DataTable.sEcho), iTotalRecords = ApiResponse.Data.TotalRecords, iTotalDisplayRecords = ApiResponse.Data.RecordsFiltered, aaData = result });
-        }
-
-        [HttpPost(Name = "RoleChangeState")]
-        public async Task<IActionResult> RoleChangeState([FromBody] RoleChangeStateRequestModel Request)
-        {            
-            var ApiResponse =  await RoleService.RoleChangeState(Request);
-            return Json(ApiResponse);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> RoleCreate([FromBody] RoleCreateUpdateRequestModel Request)
-        {
-            var ApiResponse = await RoleService.RoleCreate(Request);
-            return Json(ApiResponse);
-        }
-
-        [HttpGet]   
-        public async Task<IActionResult> RoleGet([FromRoute(Name = "id")] int RoleID)
-        {  
-            return Json(await RoleService.RoleGet(RoleID));
         }
 
         [HttpGet]

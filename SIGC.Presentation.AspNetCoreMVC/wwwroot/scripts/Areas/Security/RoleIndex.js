@@ -2,30 +2,37 @@
     const Role = {
         _Init: function () {
             Role._Other.fnRoleTabs();
-            Role._Search.fnRoleDataTable();       
+            Role._Search.fnRoleDataTable();
             Role._Search.fnPageTreeView();
             $('#scboStateID').on('change', function () {
                 Role._Search.fnRoleDataTable();
             });
             $('#stxtRoleName').on('keyup', Uti.SetTimeout.Debounce((event) => {
-                        const keyCode = event.keyCode ? event.keyCode : event.which;           
-                        if (!(keyCode == 32 || keyCode == '32')) {
-                            Role._Search.fnRoleDataTable();
-                        };
-                    })
+                const keyCode = event.keyCode ? event.keyCode : event.which;
+                if (!(keyCode == 32 || keyCode == '32')) {
+                    Role._Search.fnRoleDataTable();
+                };
+            })
             );
             $('#sbtnBuscar').on('click', function () {
                 Role._Search.fnRoleDataTable();
             });
             $('#btn-modal-yes').on('click', function () {
                 Role._Operation.fnRoleChangeState(1, $('#message-modal-generic #hd-modal-id').val(), Uti.Variable.StateType.Delete);
-            });    
-            $('#btnRoleCreate').on('click', function () {
-                Role._Operation.fnRoleCreate();
             });
+            if ($('#btnRoleCreate').length) { 
+                $('#btnRoleCreate').on('click', function () {
+                    Role._Operation.fnRoleCreateUpdate();
+                });
+            };
+            if ($('#btnRoleUpdate').length) {
+                $('#btnRoleUpdate').hide();
+                $('#btnRoleUpdate').on('click', function () {
+                    Role._Operation.fnRoleCreateUpdate();
+                });
+            };
             $('#btnRoleNew').on('click', function () {
-                Role._Clear.fnRoleGet();
-                Role._Other.fnRoleTabs();
+                Role._Clear.fnRoleGet();               
             });
         },
         _Clear: {
@@ -33,7 +40,10 @@
                 $('#txtRoleID').val('GENERADO');
                 $('#txtRoleCode,#txtRoleName,#txtRoleDescription').val('');
                 $('#chkStateID').attr('checked', true);
-                $('#div-treeview-page input:checkbox').attr('checked', false);
+                $('#div-treeview-page input:checkbox').prop('checked', false);
+                if ($('#btnRoleUpdate').length) $('#btnRoleUpdate').hide();
+                if ($('#btnRoleCreate').length) $('#btnRoleCreate').show();              
+                Role._Other.fnRoleTabs();
             }
         },
         _Other: {
@@ -165,15 +175,15 @@
                         rowData.pages.forEach(page => {
                             $('#div-treeview-page input:checkbox[name=chkPageID]').each(function (pageIndex, pageElement) {
                                 if (page.pageID == $(pageElement).val()) {
-                                    $(pageElement).attr('checked', true);
+                                    $(pageElement).prop('checked', true);
                                     return false;
                                 }
                             });
                             page.actions.forEach(action => {
-                                $('#' + page.pageID + 'input:checkbox[name=chkPageActionID]').each(function (actionIndex, actionElement) {
-                                    if (acion.pageActionID == $(actionElement).val()) {
-                                        $(actionElement).attr('checked', true);
-                                        return;
+                                $('#' + page.pageID + ' input:checkbox[name=chkPageActionID]').each(function (actionIndex, actionElement) {
+                                    if (action.pageActionID == $(actionElement).val()) {
+                                        $(actionElement).prop('checked', true);
+                                        return ;
                                     }
                                 });
                             });
@@ -182,6 +192,8 @@
                         $('#role-card ul li a[href="#tab-search"]').addClass('disabled');
                         $('#role-card ul li a[href="#tab-search"]').removeAttr('data-bs-toggle');
                         $('#role-card ul li a[href="#tab-register"]').tab('show');
+                        if ($('#btnRoleUpdate').length) $('#btnRoleUpdate').show();
+                        if ($('#btnRoleCreate').length) $('#btnRoleCreate').hide();
                     };
                 });
             }
@@ -207,7 +219,7 @@
                     }
                 });              
             },
-            fnRoleCreate: function () {         
+            fnRoleCreateUpdate: function () {         
                 const RolePermission = new Array();
                 $('#div-treeview-page input:checkbox[name=chkPageID]:checked').each(function (pageIndex, pageElement) {            
                     RolePermission.push({
@@ -223,11 +235,12 @@
                             PageActionID: parseInt($(pageActionElement).val())
                         });
                     });
-                });         
+                });      
+                const RoleID = parseInt($('#txtRoleID').val() === 'GENERADO' ? 0 : $('#txtRoleID').val())
                 const options = {
-                    url: Uti.Url.Base + '/Security/Role/RoleCreate',
+                    url: Uti.Url.Base + '/Security/Role/'+( RoleID == 0 ? 'RoleCreate':'RoleUpdate' )+'',
                     data: {
-                        RoleID: parseInt($('#txtRoleID').val() === 'GENERADO' ? 0 : $('#txtRoleID').val()),
+                        RoleID: RoleID,
                         CompanyID: 1,
                         RoleCode: $('#txtRoleCode').val().trim(),
                         RoleName: $('#txtRoleName').val().trim(),
@@ -235,7 +248,7 @@
                         StateID: $('#chkStateID').is(':checked') ? 1 : 0,
                         RolePermission: RolePermission
                     },
-                    type: Uti.Variable.FetchAjax.Type.Post
+                    type: RoleID == 0 ? Uti.Variable.FetchAjax.Type.Post : Uti.Variable.FetchAjax.Type.Put
                 };
                 Uti.Ajax.Custom(options, function (response) {
                     Uti.Modal.Message(response.type, response.message, response.function);
@@ -243,6 +256,7 @@
                         Uti.Modal.Process();
                     }
                     if (response.type === Uti.Message.Type.Success) {
+                        Role._Clear.fnRoleGet();
                         Role._Search.fnRoleDataTable();
                     }
                 });
