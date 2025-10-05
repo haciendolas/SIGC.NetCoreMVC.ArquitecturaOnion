@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using SIGC.DomainModel.Models;
 using SIGC.DomainModel.ValueObjects;
+using SIGC.DomainService.IRepositories.IPageCompanyRepositories;
 using SIGC.DomainService.IRepositories.IRolePermissionRepositories;
 using SIGC.DomainService.IRepositories.IRoleRepositories;
 using SIGC.DomainService.IServices;
@@ -16,13 +17,14 @@ namespace SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleCreate
         private readonly IRoleCreateRepository RoleCreateRepository;
         private readonly IRoleVerifyCodeAndNameRepository RoleVerifyCodeAndNameRepository;
         private readonly IRolePermissionCreateRepository RolePermissionCreateRepository;
-
+        private readonly IPageCompanyCreateNotExistsRepository PageCompanyCreateNotExistsRepository;
         public RoleCreateCommandHandler(
             ICurrentSessionService CurrentSessionService,
             IMessageService MessageService,
             IRoleCreateRepository RoleCreateRepository,
             IRoleVerifyCodeAndNameRepository RoleVerifyCodeAndNameRepository,
-            IRolePermissionCreateRepository RolePermissionCreateRepository
+            IRolePermissionCreateRepository RolePermissionCreateRepository,
+            IPageCompanyCreateNotExistsRepository PageCompanyCreateNotExistsRepository
             )
         {
             this.CurrentSessionService = CurrentSessionService;
@@ -30,13 +32,14 @@ namespace SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleCreate
             this.RoleCreateRepository = RoleCreateRepository;
             this.RoleVerifyCodeAndNameRepository = RoleVerifyCodeAndNameRepository;
             this.RolePermissionCreateRepository = RolePermissionCreateRepository;
+            this.PageCompanyCreateNotExistsRepository = PageCompanyCreateNotExistsRepository;
         }
 
         public async Task<MsgResponse<object?>> Handle(RoleCreateCommandRequest Request, CancellationToken CancellationToken)
         {
             var MsgResponse = new MsgResponse<object?>();
             try
-            {
+            {    
                 var Model = Role.Create(
                         Request.CompanyID,
                         Request.RoleCode,
@@ -53,17 +56,29 @@ namespace SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleCreate
                     int RecordAffected = await RoleCreateRepository.CreateAsync(Model, CancellationToken);
                     if (RecordAffected > 0)
                     {
-                        foreach (var Item in Request.RolePermission)
-                        {
-                            await RolePermissionCreateRepository.CreateAsync(new RolePermission
-                            {
+                        var PageIDs = Request.RolePermission.Select(s => s.PageID).Distinct().ToList();
+                        foreach (var PageID in PageIDs) {
+                            var PageCompany = new PageCompany() { 
+                                PageID = PageID,
                                 CompanyID = Request.CompanyID,
-                                RoleID = Model.RoleID,
-                                PageID = Item.PageID,
-                                PageActionID = Item.PageActionID,
-                                PageRoleCreatedDateTime = Model.CreatedDateTime
-                            });
+                                CreatedDateTime = Model.CreatedDateTime,
+                                CreatedBy = CurrentSessionService.UserID
+                            };
+                            await PageCompanyCreateNotExistsRepository.CreateNotExistsAsync(PageCompany, CancellationToken);
+
+                            foreach (var Item in Request.RolePermission.Where(w=>w.PageID == PageID).ToList())
+                            {
+                                await RolePermissionCreateRepository.CreateAsync(new RolePermission
+                                {
+                                    CompanyID = Request.CompanyID,
+                                    RoleID = Model.RoleID,
+                                    PageID = Item.PageID,
+                                    PageActionID = Item.PageActionID,
+                                    PageRoleCreatedDateTime = Model.CreatedDateTime
+                                });
+                            }
                         }
+                     
                         MsgResponse.Type = MessageTypeConst.SUCCESS;
                         MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.SATISFACTORY_INSERT);
                         MsgResponse.Data = new
