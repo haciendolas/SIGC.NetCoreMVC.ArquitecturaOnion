@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using SIGC.DomainModel.Models;
 using SIGC.DomainService.IRepositories.IRoleRepositories;
+using SIGC.DomainService.Transactions;
 using SIGC.Infrastructure.ADONET.SQLSERVER.AppDBContext;
 using System.Data;
 
@@ -10,18 +11,22 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RoleRepositories
     internal class RoleUpdateRepository : IRoleUpdateRepository
     {
         private readonly string ConnectionString;
-        public RoleUpdateRepository(IOptions<AppDbContext> Options)
+        private readonly ITransactionAccessor TransactionAccessor;
+
+        public RoleUpdateRepository(IOptions<AppDbContext> Options,
+             ITransactionAccessor TransactionAccessor
+            )
         {
             ConnectionString = Options.Value.ConnectionDBCommerce360;
+            this.TransactionAccessor = TransactionAccessor;
         }
 
         public async Task<int> UpdateAsync(Role Model, CancellationToken CancellationToken = default)
         {
             int RecordAffected = 0;
-            using (SqlConnection Connection = new SqlConnection(ConnectionString))
-            {
-                await Connection.OpenAsync(CancellationToken);
-                using (SqlCommand Command = new SqlCommand())
+            var Connection = await TransactionAccessor.GetOrOpenConnectionAsync(ConnectionString, CancellationToken);
+            var Transaction = TransactionAccessor.CurrentTransaction; 
+            using (SqlCommand Command = new SqlCommand())
                 {
                     Command.CommandText = "Security.uspRoleUpdate";
                     Command.CommandType = CommandType.StoredProcedure;            
@@ -34,9 +39,9 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RoleRepositories
                     Command.Parameters.AddWithValue("@RoleUpdatedUserID", Model.CreatedBy);
                     Command.Parameters.AddWithValue("@RoleUpdatedDateTime", Model.CreatedDateTime);
                     Command.Connection = Connection;
+                    Command.Transaction = Transaction;
                     RecordAffected = await Command.ExecuteNonQueryAsync(CancellationToken);                   
-                }
-            }
+            }          
             return RecordAffected;
         }
     }

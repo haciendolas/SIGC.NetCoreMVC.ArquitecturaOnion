@@ -7,6 +7,7 @@ using SIGC.DomainService.IRepositories.IPageRepositories;
 using SIGC.DomainService.IRepositories.IRolePermissionRepositories;
 using SIGC.DomainService.IRepositories.IRoleRepositories;
 using SIGC.DomainService.IRepositories.ITokenRepositories;
+using SIGC.DomainService.Transactions;
 using SIGC.Infrastructure.ADONET.SQLSERVER.AppDBContext;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.AuthRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CategoryRepositories;
@@ -15,6 +16,7 @@ using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.PageRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RolePermissionRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RoleRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.TokenRepositories;
+using SIGC.Infrastructure.ADONET.SQLSERVER.Transactions;
 
 namespace SIGC.Infrastructure.ADONET.SQLSERVER
 {
@@ -23,6 +25,8 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
         public static IServiceCollection AddSIGCInfrastructureADONETSQLSERVER(this IServiceCollection services, IConfiguration configuration, string sectionConnectionName)
         {
             services.Configure<AppDbContext>(configuration.GetSection(sectionConnectionName));
+            services.AddScoped<ITransactionAccessor, TransactionAccessor>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddDependencyInjectionRepository();
             return services;

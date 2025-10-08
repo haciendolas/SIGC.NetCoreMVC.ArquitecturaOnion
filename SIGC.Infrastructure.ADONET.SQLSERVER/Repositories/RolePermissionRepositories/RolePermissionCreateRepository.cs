@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using SIGC.DomainModel.ValueObjects;
 using SIGC.DomainService.IRepositories.IRolePermissionRepositories;
+using SIGC.DomainService.Transactions;
 using SIGC.Infrastructure.ADONET.SQLSERVER.AppDBContext;
 using System.Data;
 
@@ -10,18 +11,20 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RolePermissionReposi
     internal class RolePermissionCreateRepository : IRolePermissionCreateRepository
     {
         private readonly string ConnectionString;
-        public RolePermissionCreateRepository(IOptions<AppDbContext> Options)
+        private readonly ITransactionAccessor TransactionAccessor;
+
+        public RolePermissionCreateRepository(IOptions<AppDbContext> Options, ITransactionAccessor TransactionAccessor)
         {
             ConnectionString = Options.Value.ConnectionDBCommerce360;
+            this.TransactionAccessor = TransactionAccessor;
         }
 
         public async Task<int> CreateAsync(RolePermission Model, CancellationToken CancellationToken = default)
         {
             int RecordAffected = 0;
-            using (SqlConnection Connection = new SqlConnection(ConnectionString))
-            {
-                await Connection.OpenAsync(CancellationToken);
-                using (SqlCommand Command = new SqlCommand())
+            var Connection = await TransactionAccessor.GetOrOpenConnectionAsync(ConnectionString, CancellationToken);
+            var Transaction = TransactionAccessor.CurrentTransaction; 
+            using (SqlCommand Command = new SqlCommand())
                 {
                     Command.CommandText = "Security.uspRolePermissionCreate";
                     Command.CommandType = CommandType.StoredProcedure;              
@@ -31,9 +34,9 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RolePermissionReposi
                     Command.Parameters.AddWithValue("@PageActionID", (short)Model.PageActionID);
                     Command.Parameters.AddWithValue("@PageRoleCreatedDateTime", Model.PageRoleCreatedDateTime);           
                     Command.Connection = Connection;
+                    Command.Transaction = Transaction;
                     RecordAffected = await Command.ExecuteNonQueryAsync(CancellationToken);                     
-                }
-            }
+            }          
             return RecordAffected;
         }
     }

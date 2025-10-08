@@ -1,6 +1,8 @@
 ﻿$(function () {
-    const Role = {
+    let RoleValidate = null;
+    const Role = {     
         _Init: function () {
+            Role._Validation.fnRoleCreateUpdateValidate();
             Role._Other.fnRoleTabs();
             Role._Search.fnRoleDataTable();
             Role._Search.fnPageTreeView();
@@ -44,6 +46,8 @@
                 if ($('#btnRoleUpdate').length) $('#btnRoleUpdate').hide();
                 if ($('#btnRoleCreate').length) $('#btnRoleCreate').show();              
                 Role._Other.fnRoleTabs();
+                Role._Validation.fnRoleCreateUpdateReset();
+                $('#txtRoleCode').focus();
             }
         },
         _Other: {
@@ -52,6 +56,42 @@
                 $('#role-card ul li a[href="#tab-search"]').attr('data-bs-toggle', 'tab');
               //$('#role-card ul li a[href="#tab-register"]').tab('show');
             }            
+        },
+        _Validation: {
+            fnRoleCreateUpdateReset: function () {
+                RoleValidate.resetForm();
+                $('#frmRoleCreateUpdate *').removeClass(['invalid-feedback', 'is-invalid']);
+            },
+            fnRoleCreateUpdateValidate: function () {
+                RoleValidate = $('#frmRoleCreateUpdate').validate({
+                    rules: {
+                        RoleCode: { required: true, minlength: 2, maxlength: 5 },
+                        RoleName: { required: true, minlength: 5, maxlength: 50 }                       
+                    },
+                    messages: {
+                        RoleCode: { required: '*Campo requerido', minlength: '*Mínimo 2 caracteres', maxlength: '*Máximo 5 caracteres' },
+                        RoleName: { required: '*Campo requerido', minlength: '*Mínimo 5 caracteres', maxlength: '*Máximo 50 caracteres' }                        
+                    },
+                    highlight: function (element) { 
+                        $(element).addClass('is-invalid'); 
+                    },
+                    unhighlight: function (element) { 
+                        $(element).removeClass('is-invalid');
+                    },
+                    errorPlacement: function (error, element) { 
+                        const $parent = $(element).closest('.error-placeholder');
+                        error.addClass('invalid-feedback');
+
+                        if ($parent.length) {
+                            $parent.append(error);
+                        } else {
+                            error.insertAfter(element);
+                        }
+                    },
+                    submitHandler: function (form) {                    
+                    }
+                });
+            }
         },
         _Search: {
             fnRoleDataTable: function () {
@@ -219,26 +259,27 @@
                     }
                 });              
             },
-            fnRoleCreateUpdate: function () {         
+            fnRoleCreateUpdate: function () {
+              if ($('#frmRoleCreateUpdate').valid()) { 
                 const RolePermission = new Array();
-                $('#div-treeview-page input:checkbox[name=chkPageID]:checked').each(function (pageIndex, pageElement) {            
+                $('#div-treeview-page input:checkbox[name=chkPageID]:checked').each(function (pageIndex, pageElement) {
                     RolePermission.push({
                         PageID: parseInt($(pageElement).val()),
                         PageActionID: 0
                     });
                 });
-                $('#div-treeview-page input:hidden[name=chkPageID]').each(function (pageIndex, pageElement) {                
+                $('#div-treeview-page input:hidden[name=chkPageID]').each(function (pageIndex, pageElement) {
                     const PageID = parseInt($(pageElement).val());
-                    $('#' + PageID + ' input:checkbox[name=chkPageActionID]:checked').each(function (pageActionIndex, pageActionElement){
+                    $('#' + PageID + ' input:checkbox[name=chkPageActionID]:checked').each(function (pageActionIndex, pageActionElement) {
                         RolePermission.push({
                             PageID: PageID,
                             PageActionID: parseInt($(pageActionElement).val())
                         });
                     });
-                });      
+                });
                 const RoleID = parseInt($('#txtRoleID').val() === 'GENERADO' ? 0 : $('#txtRoleID').val())
                 const options = {
-                    url: Uti.Url.Base + '/Security/Role/'+( RoleID == 0 ? 'RoleCreate':'RoleUpdate' )+'',
+                    url: Uti.Url.Base + '/Security/Role/' + (RoleID == 0 ? 'RoleCreate' : 'RoleUpdate') + '',
                     data: {
                         RoleID: RoleID,
                         CompanyID: 1,
@@ -260,7 +301,8 @@
                         Role._Search.fnRoleDataTable();
                     }
                 });
-            }
+             }
+           }
         }
     }
     Role._Init();

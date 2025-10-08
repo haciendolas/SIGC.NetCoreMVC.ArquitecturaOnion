@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using SIGC.ApplicationService.Features.RoleFeatures.Queries.RolePagination;
 using SIGC.DomainService.IRepositories.IRoleRepositories;
 using SIGC.DomainService.IServices;
 using SIGC.Infrastructure.CrossCutting.Constants;

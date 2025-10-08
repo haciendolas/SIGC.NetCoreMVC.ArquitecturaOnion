@@ -5,6 +5,7 @@ using SIGC.DomainService.IRepositories.IPageCompanyRepositories;
 using SIGC.DomainService.IRepositories.IRolePermissionRepositories;
 using SIGC.DomainService.IRepositories.IRoleRepositories;
 using SIGC.DomainService.IServices;
+using SIGC.DomainService.Transactions;
 using SIGC.Infrastructure.CrossCutting.Constants;
 using SIGC.Infrastructure.CrossCutting.Wrappers;
 
@@ -18,13 +19,16 @@ namespace SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleCreate
         private readonly IRoleVerifyCodeAndNameRepository RoleVerifyCodeAndNameRepository;
         private readonly IRolePermissionCreateRepository RolePermissionCreateRepository;
         private readonly IPageCompanyCreateNotExistsRepository PageCompanyCreateNotExistsRepository;
+        private readonly IUnitOfWork UnitOfWork;
+
         public RoleCreateCommandHandler(
             ICurrentSessionService CurrentSessionService,
             IMessageService MessageService,
             IRoleCreateRepository RoleCreateRepository,
             IRoleVerifyCodeAndNameRepository RoleVerifyCodeAndNameRepository,
             IRolePermissionCreateRepository RolePermissionCreateRepository,
-            IPageCompanyCreateNotExistsRepository PageCompanyCreateNotExistsRepository
+            IPageCompanyCreateNotExistsRepository PageCompanyCreateNotExistsRepository,
+            IUnitOfWork UnitOfWork
             )
         {
             this.CurrentSessionService = CurrentSessionService;
@@ -33,6 +37,7 @@ namespace SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleCreate
             this.RoleVerifyCodeAndNameRepository = RoleVerifyCodeAndNameRepository;
             this.RolePermissionCreateRepository = RolePermissionCreateRepository;
             this.PageCompanyCreateNotExistsRepository = PageCompanyCreateNotExistsRepository;
+            this.UnitOfWork = UnitOfWork;
         }
 
         public async Task<MsgResponse<object?>> Handle(RoleCreateCommandRequest Request, CancellationToken CancellationToken)
@@ -53,6 +58,7 @@ namespace SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleCreate
                 var Verify = await RoleVerifyCodeAndNameRepository.VerifyCodeAndNameAsync(Model, CancellationToken);
                 if (Verify == VerifyRegistryConst.Role.OK)
                 {
+                    await UnitOfWork.BeginTransactionAsync(CancellationToken);
                     int RecordAffected = await RoleCreateRepository.CreateAsync(Model, CancellationToken);
                     if (RecordAffected > 0)
                     {
@@ -77,8 +83,8 @@ namespace SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleCreate
                                     PageRoleCreatedDateTime = Model.CreatedDateTime
                                 });
                             }
-                        }
-                     
+                        } 
+
                         MsgResponse.Type = MessageTypeConst.SUCCESS;
                         MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.SATISFACTORY_INSERT);
                         MsgResponse.Data = new
@@ -88,6 +94,8 @@ namespace SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleCreate
                             Model.RoleName,
                             Model.CreatedDateTime,
                         };
+
+                        await UnitOfWork.CommitTransactionAsync(CancellationToken);
                     }
                     else
                     {
@@ -102,12 +110,13 @@ namespace SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleCreate
                 }
             }
             catch(ArgumentNullException ae)
-            {
+            { 
                 MsgResponse.Type = MessageTypeConst.WARNING;
                 MsgResponse.Message = "El codigo de rol es obligatorio";
             }
             catch (Exception ex)
             {
+                await UnitOfWork.RollbackTransactionAsync(CancellationToken);
                 MsgResponse.Type = MessageTypeConst.ERROR;
                 MsgResponse.Message = $"{MessageService.GetMessageResult(MessageDescriptionConst.ERROR_OPERATION)}:{ex.Message}";
 

@@ -5,6 +5,7 @@ using SIGC.DomainService.IRepositories.IPageCompanyRepositories;
 using SIGC.DomainService.IRepositories.IRolePermissionRepositories;
 using SIGC.DomainService.IRepositories.IRoleRepositories;
 using SIGC.DomainService.IServices;
+using SIGC.DomainService.Transactions;
 using SIGC.Infrastructure.CrossCutting.Constants;
 using SIGC.Infrastructure.CrossCutting.Wrappers;
 
@@ -19,7 +20,7 @@ namespace SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleUpdate
         private readonly IRolePermissionCreateRepository RolePermissionCreateRepository;
         private readonly IRolePermissionDeleteRepository RolePermissionDeleteRepository;
         private readonly IPageCompanyCreateNotExistsRepository PageCompanyCreateNotExistsRepository;
-
+        private readonly IUnitOfWork UnitOfWork;
         public RoleUpdateCommandHandler(
             ICurrentSessionService CurrentSessionService,
             IMessageService MessageService,
@@ -27,7 +28,8 @@ namespace SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleUpdate
             IRoleVerifyCodeAndNameRepository RoleVerifyCodeAndNameRepository,
             IRolePermissionCreateRepository RolePermissionCreateRepository,
             IRolePermissionDeleteRepository RolePermissionDeleteRepository,
-            IPageCompanyCreateNotExistsRepository PageCompanyCreateNotExistsRepository
+            IPageCompanyCreateNotExistsRepository PageCompanyCreateNotExistsRepository,
+            IUnitOfWork UnitOfWork
             )
         {
             this.CurrentSessionService = CurrentSessionService;
@@ -37,6 +39,7 @@ namespace SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleUpdate
             this.RolePermissionCreateRepository = RolePermissionCreateRepository;
             this.RolePermissionDeleteRepository = RolePermissionDeleteRepository;
             this.PageCompanyCreateNotExistsRepository = PageCompanyCreateNotExistsRepository;
+            this.UnitOfWork = UnitOfWork;
         }
 
         public async Task<MsgResponse<object?>> Handle(RoleUpdateCommandRequest Request, CancellationToken CancellationToken)
@@ -58,6 +61,7 @@ namespace SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleUpdate
                 var Verify = await RoleVerifyCodeAndNameRepository.VerifyCodeAndNameAsync(Model, CancellationToken);
                 if (Verify == VerifyRegistryConst.Role.OK)
                 {
+                    await UnitOfWork.BeginTransactionAsync(CancellationToken);
                     int RecordAffected = await RoleUpdateRepository.UpdateAsync(Model, CancellationToken);
                     if (RecordAffected > 0)
                     {
@@ -98,6 +102,8 @@ namespace SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleUpdate
                             Model.RoleName,
                             Model.CreatedDateTime,
                         };
+              
+                        await UnitOfWork.CommitTransactionAsync(CancellationToken);
                     }
                     else
                     {
@@ -112,12 +118,13 @@ namespace SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleUpdate
                 }
             }
             catch (ArgumentNullException ae)
-            {
+            {               
                 MsgResponse.Type = MessageTypeConst.WARNING;
                 MsgResponse.Message = "El codigo de rol es obligatorio";
             }
             catch (Exception ex)
             {
+                await UnitOfWork.RollbackTransactionAsync(CancellationToken);
                 MsgResponse.Type = MessageTypeConst.ERROR;
                 MsgResponse.Message = $"{MessageService.GetMessageResult(MessageDescriptionConst.ERROR_OPERATION)}:{ex.Message}";
 

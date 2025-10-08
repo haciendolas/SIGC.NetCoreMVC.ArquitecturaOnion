@@ -4,6 +4,7 @@ using SIGC.DomainModel.Dtos.Role;
 using SIGC.DomainModel.Dtos.RolePermission;
 using SIGC.DomainService.IRepositories.IRoleRepositories;
 using SIGC.DomainService.IServices;
+using SIGC.DomainService.Transactions;
 using SIGC.Infrastructure.ADONET.SQLSERVER.AppDBContext;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Extensions;
 using System.Data;
@@ -14,24 +15,26 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RoleRepositories
     {
         private readonly string ConnectionString;
         private readonly IJsonSerializerService JsonSerializerService;
-        public RoleGetRepository(IOptions<AppDbContext> Options, IJsonSerializerService JsonSerializerService)
+        private readonly ITransactionAccessor TransactionAccessor;
+        public RoleGetRepository(IOptions<AppDbContext> Options, IJsonSerializerService JsonSerializerService,
+            ITransactionAccessor TransactionAccessor)
         {
             ConnectionString = Options.Value.ConnectionDBCommerce360;
             this.JsonSerializerService = JsonSerializerService;
+            this.TransactionAccessor = TransactionAccessor;
         }
 
         public async Task<RoleGetResponseDto?> GetAsync(int RoleID, CancellationToken CancellationToken = default)
         {
             RoleGetResponseDto? Get = null;
-            using (SqlConnection Connection = new SqlConnection(ConnectionString))
-            {
-                Connection.Open();
-                using (SqlCommand Command = new SqlCommand())
-                {
+            var Connection = await TransactionAccessor.GetOrOpenConnectionAsync(ConnectionString, CancellationToken);
+            var Transaction = TransactionAccessor.CurrentTransaction; 
+            using (SqlCommand Command = new SqlCommand()){
                     Command.CommandText = "Security.uspRoleGet";
                     Command.CommandType = CommandType.StoredProcedure;
                     Command.Parameters.AddWithValue("@RoleID", RoleID);              
                     Command.Connection = Connection;
+                    Command.Transaction = Transaction;
                     SqlDataReader DataReader;
                     using (DataReader = await Command.ExecuteReaderAsync(CancellationToken))
                     {
@@ -51,8 +54,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RoleRepositories
                             }
                         }
                     }
-                }
-            }
+            }        
             return Get;
         }
     }
