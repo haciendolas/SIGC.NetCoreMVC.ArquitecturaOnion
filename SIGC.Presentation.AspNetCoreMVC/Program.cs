@@ -1,3 +1,4 @@
+using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.CompanyService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.PageCompanyService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.PageService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.RoleService;
@@ -40,6 +41,7 @@ builder.Services.AddScoped<IRolePermissionService, RolePermissionService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IPageService, PageService>();
 builder.Services.AddScoped<IPageCompanyService, PageCompanyService>();
+builder.Services.AddScoped<ICompanyService,CompanyService>();
 
 var app = builder.Build();
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Page;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Role;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.CompanyService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.PageCompanyService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.PageService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.RoleService;
@@ -8,6 +9,7 @@ using SIGC.Presentation.AspNetCoreMVC.Controllers;
 using SIGC.Presentation.AspNetCoreMVC.Helpers;
 using SIGC.Presentation.AspNetCoreMVC.Models;
 using SIGC.Presentation.AspNetCoreMVC.Services;
+using System.Threading.Tasks;
 
 namespace SIGC.Presentation.AspNetCoreMVC.Areas.Security.Controllers
 {
@@ -17,31 +19,44 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Security.Controllers
         private readonly IRoleService RoleService;
         private readonly IPageService PageService;
         private readonly IPageCompanyService PageCompanyService;
-        public RoleController(IRoleService RoleService, IPageService PageService, IPageCompanyService PageCompanyService)
+        private readonly ICompanyService CompanyService;
+        public RoleController(IRoleService RoleService, IPageService PageService, IPageCompanyService PageCompanyService,
+            ICompanyService CompanyService
+            )
         {
             this.RoleService = RoleService;
             this.PageService = PageService;
             this.PageCompanyService = PageCompanyService;
+            this.CompanyService = CompanyService;
         }
         public IActionResult Index(){           
             return View("RoleIndex");
         }
 
+        public async Task<IActionResult> Company()
+        {
+            ViewBag.CompanyList = (await CompanyService.CompanyList(GetSession().CompanyID)).Data;
+            return View("RoleIndex");
+        }
+
         [HttpPost]
         public async Task<IActionResult> RoleCreate([FromBody] RoleCreateUpdateRequestModel Request)
-        {            
+        {
+            if (Request.CompanyID == 0) Request.CompanyID = GetSession().CompanyID;
             return Json(await RoleService.RoleCreate(Request));
         }
 
         [HttpPut]
         public async Task<IActionResult> RoleUpdate([FromBody] RoleCreateUpdateRequestModel Request)
-        {            
+        {
+            if (Request.CompanyID == 0) Request.CompanyID = GetSession().CompanyID;
             return Json(await RoleService.RoleUpdate(Request));
         }
 
         [HttpPost(Name = "RoleChangeState")]
         public async Task<IActionResult> RoleChangeState([FromBody] RoleChangeStateRequestModel Request)
         {
+            if (Request.CompanyID == 0) Request.CompanyID = GetSession().CompanyID;
             return Json(await RoleService.RoleChangeState(Request));
         }
 
@@ -54,9 +69,10 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Security.Controllers
         [HttpPost(Name = "RoleDataTable")]
         public async Task<IActionResult> RoleDataTable(DataTableHelper DataTable)
         {
+            if (DataTable.sCompanyID == 0) DataTable.sCompanyID = GetSession().CompanyID;
             var ApiResponse = await RoleService.RolePagination(new RolePaginationRequestModel
             {
-                CompanyID = 1,
+                CompanyID = DataTable.sCompanyID,
                 StateID = DataTable.sStateID,
                 PageNumber = (DataTable.iDisplayStart / DataTable.iDisplayLength) + 1,
                 PageSize = DataTable.iDisplayLength,
@@ -85,8 +101,9 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Security.Controllers
        public async Task<IActionResult> PageList([FromRoute(Name = "id")] int? CompanyID)
         {
             var ApiResponsePage = new ApiResponse<List<PageListResponseModel>>();
-            if (CompanyID.HasValue)
-            {  
+            if (CompanyID.HasValue==false)
+            {
+                CompanyID = GetSession().CompanyID;
                 ApiResponsePage = await PageCompanyService.PageCompanyList(CompanyID.Value);              
             }
             else{

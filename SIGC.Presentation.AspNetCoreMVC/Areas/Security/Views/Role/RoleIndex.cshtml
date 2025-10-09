@@ -1,8 +1,20 @@
-﻿@{
+﻿@using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Company
+@{
     ViewBag.Title = "ROL";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="card" id="role-card">
+    @if (@ViewBag.CompanyList!=null){
+        var CompanyList = ViewBag.CompanyList as List<CompanyListResponseModel>;
+        <div class="card-header p-2">
+            <select id="cboCompanyID" name="CompanyID" class="form-select">
+                @foreach (var Item in CompanyList!)
+                {
+                    <option value="@Item.CompanyID">@Item.CompanyDocumentNumber - @Item.CompanySocialReason</option>
+                }
+            </select>
+        </div>      
+     }
     <div class="card-body p-0">
         <ul class="nav nav-tabs nav-border-top nav-border-top-primary mb-3" role="tablist">
             <li class="nav-item">

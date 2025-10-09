@@ -14,13 +14,13 @@
                 if (!(keyCode == 32 || keyCode == '32')) {
                     Role._Search.fnRoleDataTable();
                 };
-            })
+               })
             );
             $('#sbtnBuscar').on('click', function () {
                 Role._Search.fnRoleDataTable();
             });
             $('#btn-modal-yes').on('click', function () {
-                Role._Operation.fnRoleChangeState(1, $('#message-modal-generic #hd-modal-id').val(), Uti.Variable.StateType.Delete);
+                Role._Operation.fnRoleChangeState($('#message-modal-generic #hd-modal-id').val(), Uti.Variable.StateType.Delete);
             });
             if ($('#btnRoleCreate').length) { 
                 $('#btnRoleCreate').on('click', function () {
@@ -36,6 +36,11 @@
             $('#btnRoleNew').on('click', function () {
                 Role._Clear.fnRoleGet();               
             });
+            if ($('#cboCompanyID').length) {
+                $('#cboCompanyID').on('change', function () {
+                    Role._Search.fnRoleDataTable();
+                });
+            };
         },
         _Clear: {
             fnRoleGet: function () {
@@ -48,6 +53,7 @@
                 Role._Other.fnRoleTabs();
                 Role._Validation.fnRoleCreateUpdateReset();
                 $('#txtRoleCode').focus();
+                if ($('#cboCompanyID').length) $('#cboCompanyID').removeAttr('disabled');
             }
         },
         _Other: {
@@ -135,7 +141,7 @@
                     fnServerParams: function (aoData) {
                         aoData.push(
                             { name: 'sStateID', value: $('#scboStateID').val() },
-                            { name: 'sCompanyID', value: $('#scboCompanyID').val() },
+                            { name: 'sCompanyID', value: $('#cboCompanyID').val() },
                             { name: 'sSearch', value: $('#stxtRoleName').val().trim() }
                         );
                     },
@@ -158,10 +164,10 @@
                             Role._Search.fnRoleGet(data[0]);
                         }).tooltip();
                         $(row).find('a[name=slnkInactive]').on('click',function () {
-                            Role._Operation.fnRoleChangeState(1, data[0], Uti.Variable.StateType.Inactive);                           
+                            Role._Operation.fnRoleChangeState(data[0], Uti.Variable.StateType.Inactive);                           
                         }).tooltip();
                         $(row).find('a[name=slnkActive]').on('click',function () {                           
-                            Role._Operation.fnRoleChangeState(1, data[0], Uti.Variable.StateType.Active);
+                            Role._Operation.fnRoleChangeState(data[0], Uti.Variable.StateType.Active);
                         }).tooltip();
                         $(row).find('a[name=slnkDelete]').on('click',function () {
                             Uti.Modal.Message(Uti.Message.Type.ConfirmDelete);
@@ -174,7 +180,7 @@
                 });
             },
             fnPageTreeView: function () {
-                const CompanyID = 1;              
+                const CompanyID = $('#cboCompanyID').val();              
                 const options = {
                     url: Uti.Url.Base + '/Security/Role/PageList/' + CompanyID,               
                     type: Uti.Variable.FetchAjax.Type.Get
@@ -205,13 +211,13 @@
                         Uti.Modal.Process();
                     }
                     if (response.type === Uti.Message.Type.Query) {
-                        const { data: rowData } = response;
-                        console.log(rowData);
+                        const { data: rowData } = response;                      
                         Role._Clear.fnRoleGet();
                         $('#txtRoleID').val(rowData.roleID);
                         $('#txtRoleCode').val(rowData.roleCode.trim());
                         $('#txtRoleName').val(rowData.roleName.trim());
-                        $('#txtRoleDescription').val(rowData.roleDescription.trim());                      
+                        $('#txtRoleDescription').val(rowData.roleDescription.trim());
+                        if ($('#cboCompanyID').length)  $('#cboCompanyID').attr('disabled', 'disabled');
                         rowData.pages.forEach(page => {
                             $('#div-treeview-page input:checkbox[name=chkPageID]').each(function (pageIndex, pageElement) {
                                 if (page.pageID == $(pageElement).val()) {
@@ -239,11 +245,11 @@
             }
         },
         _Operation: {
-            fnRoleChangeState: function (CompanyID, RoleID, StateID) {
+            fnRoleChangeState: function (RoleID, StateID) {
                 const options = {
                     url: Uti.Url.Base + '/Security/Role/RoleChangeState',
                     data: {
-                        CompanyID: CompanyID,
+                        CompanyID: $('#cboCompanyID').val(),
                         RoleID: RoleID,
                         StateID: StateID
                     },
@@ -282,7 +288,7 @@
                     url: Uti.Url.Base + '/Security/Role/' + (RoleID == 0 ? 'RoleCreate' : 'RoleUpdate') + '',
                     data: {
                         RoleID: RoleID,
-                        CompanyID: 1,
+                        CompanyID: $('#cboCompanyID').val(),
                         RoleCode: $('#txtRoleCode').val().trim(),
                         RoleName: $('#txtRoleName').val().trim(),
                         RoleDescription: $('#txtRoleDescription').val().trim(),
