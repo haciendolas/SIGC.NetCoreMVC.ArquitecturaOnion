@@ -6,7 +6,7 @@
 -- Exec                    
         /*
 		DECLARE @RecordsTotal INT
-		Exec Security.uspRolePagination @companyID=1, @RoleName='XSS',@StateID=1,@PageNumber=1,@PageSize=10,
+		Exec Security.uspRolePagination @companyID=1, @RoleName='',@StateID=1,@PageNumber=1,@PageSize=10,
 		@RecordsTotal=@RecordsTotal OUTPUT
 
 		SELECT  @RecordsTotal AS 'RecordsTotal'
@@ -24,7 +24,7 @@ AS
 BEGIN
   SET NOCOUNT ON
 
-    SET @RecordsTotal =(SELECT count(R.RoleID) FROM Security.[Role] R WITH(NOLOCK) )
+    SET @RecordsTotal =(SELECT count(R.RoleID) FROM Security.[Role] R WITH(NOLOCK) WHERE R.CompanyID=@CompanyID AND R.StateID!=2)
 
     SELECT R.RoleID,R.RoleCode,R.RoleName,R.RoleDescription,R.StateID,
 		 ISNULL(R.RoleUpdatedDateTime,R.RoleCreatedDateTime) AS RoleLastUpdatedDateTime,
