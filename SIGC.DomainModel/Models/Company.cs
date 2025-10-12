@@ -18,6 +18,7 @@ namespace SIGC.DomainModel.Models
         public string? CompanyAddress { get; private set; }
         public Int16 TaxpayerTypeID { get; private set; }
         public short SectorID { get; private set; }
+        public string? CompanyCorporateEmail { get; set; }
         public string? CompanyMobile { get; private set; }
         public string? CompanyPhone { get; private set; }
         public string? CompanyLogo { get; private set; }

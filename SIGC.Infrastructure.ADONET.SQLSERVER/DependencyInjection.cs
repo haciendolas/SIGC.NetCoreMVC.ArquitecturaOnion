@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using SIGC.DomainService.IRepositories.IAuthRepositories;
 using SIGC.DomainService.IRepositories.ICategoryRepositories;
+using SIGC.DomainService.IRepositories.ICompanyRegisterRepositories;
 using SIGC.DomainService.IRepositories.ICompanyRepositories;
 using SIGC.DomainService.IRepositories.IPageCompanyRepositories;
 using SIGC.DomainService.IRepositories.IPageRepositories;
@@ -12,6 +13,7 @@ using SIGC.DomainService.Transactions;
 using SIGC.Infrastructure.ADONET.SQLSERVER.AppDBContext;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.AuthRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CategoryRepositories;
+using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CompanyRegisterRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CompanyRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.PageCompanyRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.PageRepositories;
@@ -72,6 +74,8 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
             services.AddScoped<ICompanyChangeStateRepository, CompanyChangeStateRepository>();
             services.AddScoped<ICompanyPaginationRepository, CompanyPaginationRepository>();
             services.AddScoped<ICompanyVerifyDocumentNumberAndSocialReasonRepository, CompanyVerifyDocumentNumberAndSocialReasonRepository>();
+
+            services.AddScoped<ICompanyRegisterCreateRepository, CompanyRegisterCreateRepository>();
             
             return services;
         }

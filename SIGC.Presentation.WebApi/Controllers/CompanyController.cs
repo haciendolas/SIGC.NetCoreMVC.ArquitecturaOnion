@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SIGC.ApplicationService.Features.CompanyFeatures.Queries;
+using SIGC.ApplicationService.Features.CompanyFeatures.Queries.CompanyList;
 using SIGC.DomainModel.Dtos.Company;
 using SIGC.Infrastructure.CrossCutting.Wrappers;
 using Swashbuckle.AspNetCore.Annotations;

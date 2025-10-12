@@ -4,8 +4,12 @@ namespace SIGC.DomainModel.Dtos.Company
 {
     public record struct CompanyPaginationResquestDto
     (
-        int CompanyID, 
-        short StateID,      
+        int CompanyIDRegister,                 
+        short? TaxpayerTypeID, 
+        short? SectorID,
+        string? CompanyDocumentNumber, 
+        string? CompanySocialReason,
+        short StateID,
         PaginationParametersDto Parameters
-    );    
+    );
 }
