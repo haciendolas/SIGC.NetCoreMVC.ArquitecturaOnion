@@ -66,7 +66,13 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
             services.AddScoped<IPageCompanyCreateNotExistsRepository, PageCompanyCreateNotExistsRepository>();
 
             services.AddScoped<ICompanyListRepository, CompanyListRepository>();
-           
+            services.AddScoped<ICompanyCreateRepository, CompanyCreateRepository>();
+            services.AddScoped<ICompanyUpdateRepository, CompanyUpdateRepository>();
+            services.AddScoped<ICompanyGetRepository, CompanyGetRepository>();
+            services.AddScoped<ICompanyChangeStateRepository, CompanyChangeStateRepository>();
+            services.AddScoped<ICompanyPaginationRepository, CompanyPaginationRepository>();
+            services.AddScoped<ICompanyVerifyDocumentNumberAndSocialReasonRepository, CompanyVerifyDocumentNumberAndSocialReasonRepository>();
+            
             return services;
         }
     }
