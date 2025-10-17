@@ -46,9 +46,18 @@ namespace SIGC.Presentation.AspNetCoreMVC.Services
         }
 
         // ========== PUT (JSON) ==========
-        public async Task<TResponse> PutAsync<TRequest, TResponse>(string endpoint, TRequest data)
+        public async Task<TResponse> PutAsync<TRequest, TResponse>(string endpoint, TRequest? body, object? queryParams = null)
         {
-            var jsonContent = new StringContent(JsonSerializer.Serialize(data), System.Text.Encoding.UTF8, "application/json");
+            HttpContent? jsonContent = null;
+            if (body is not null)
+                jsonContent = new StringContent(JsonSerializer.Serialize(body), System.Text.Encoding.UTF8, "application/json");
+
+            if (queryParams is not null)
+            {
+                var queryDict = ConvertsHelper.GetQueryParams(queryParams);
+                endpoint = QueryHelpers.AddQueryString(endpoint, queryDict);
+            }
+
             var response = await HttpClient.PutAsync(endpoint, jsonContent);
             response.EnsureSuccessStatusCode();
 

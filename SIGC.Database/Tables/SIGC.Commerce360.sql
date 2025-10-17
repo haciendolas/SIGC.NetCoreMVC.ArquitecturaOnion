@@ -177,3 +177,14 @@ CREATE  TABLE Security.Token(
    CONSTRAINT Token_PK_TokenID PRIMARY KEY(TokenID),
    CONSTRAINT Token_FK_UserID FOREIGN KEY(UserID) REFERENCES Security.[User](UserID)
 )
+GO
+CREATE TABLE Security.Constant(  
+   ConstantID SMALLINT NOT NULL,
+   ConstantClass INT NOT NULL,
+   ConstantAbbreviation VARCHAR(10),
+   ConstantName VARCHAR(100) NOT NULL,   
+   StateID SMALLINT NOT NULL DEFAULT 1,
+   ConstantCreatedDateTime DATETIME NOT NULL DEFAULT GETDATE(), 
+   CONSTRAINT Constant_PK_ConstantID_ConstantClass PRIMARY KEY CLUSTERED(ConstantClass,ConstantID)  ,
+   CONSTRAINT Constant_CHK_StateID CHECK(StateID IN(0,1,2))
+)

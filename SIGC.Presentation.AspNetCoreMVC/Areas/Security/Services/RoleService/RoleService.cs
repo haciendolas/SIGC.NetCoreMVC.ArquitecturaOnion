@@ -1,5 +1,4 @@
-﻿using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Page;
-using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Role;
+﻿using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Role;
 using SIGC.Presentation.AspNetCoreMVC.Helpers;
 using SIGC.Presentation.AspNetCoreMVC.Models;
 using SIGC.Presentation.AspNetCoreMVC.Services;
