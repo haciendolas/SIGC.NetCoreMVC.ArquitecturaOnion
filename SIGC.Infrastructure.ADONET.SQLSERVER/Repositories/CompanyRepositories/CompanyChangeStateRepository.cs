@@ -26,7 +26,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CompanyRepositories
             var Connection = await TransactionAccessor.GetOrOpenConnectionAsync(ConnectionString, CancellationToken); 
             using (SqlCommand Command = new SqlCommand())
                 {
-                    Command.CommandText = "Security.uspRoleChangeState";
+                    Command.CommandText = "Security.uspCompanyChangeState";
                     Command.CommandType = CommandType.StoredProcedure;
                     Command.Parameters.AddWithValue("@CompanyID", Model.CompanyID);           
                     Command.Parameters.AddWithValue("@StateID", (short)Model.StateID);

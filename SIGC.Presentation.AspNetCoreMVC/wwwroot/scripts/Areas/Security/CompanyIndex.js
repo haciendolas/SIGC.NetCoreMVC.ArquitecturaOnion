@@ -2,6 +2,7 @@
     const Company = {
         _Init: function () {          
             Company._Search.fnCompanyDataTable();
+            Company._Search.fnPageTreeView();
         },
         _Search: {
             fnCompanyDataTable: function () {             
@@ -70,18 +71,55 @@
                             Role._Search.fnRoleGet(data[0]);
                         }).tooltip();
                         $(row).find('a[name=slnkInactive]').on('click', function () {
-                            Role._Operation.fnRoleChangeState(data[0], Uti.Variable.StateType.Inactive);
+                            Company._Operation.fnCompanyChangeState(data[0], Uti.Variable.StateType.Inactive);
                         }).tooltip();
                         $(row).find('a[name=slnkActive]').on('click', function () {
-                            Role._Operation.fnRoleChangeState(data[0], Uti.Variable.StateType.Active);
-                        }).tooltip();
-                        $(row).find('a[name=slnkDelete]').on('click', function () {
-                            Uti.Modal.Message(Uti.Message.Type.ConfirmDelete);
-                            $('#message-modal-generic #hd-modal-id').val(data[0]);
-                        }).tooltip();
+                            Company._Operation.fnCompanyChangeState(data[0], Uti.Variable.StateType.Active);
+                        }).tooltip();              
                     },
                     drawCallback: function (data) {
                         const response = data.json;
+                    }
+                });
+            },
+            fnPageTreeView: function () {
+                const options = {
+                    url: Uti.Url.Base + '/Security/Page/PageList',
+                    type: Uti.Variable.FetchAjax.Type.Get
+                };
+                Uti.Ajax.Custom(options, function (response) {
+                    Uti.Modal.Message(response.type, response.message, response.function);
+                    if (response.type === Uti.Message.Type.Session) {
+                        Uti.Modal.Process();
+                    }
+                    if (response.type === Uti.Message.Type.Query) {
+                        $('#div-treeview-page').html(response.data).treeview({
+                            collapsed: false,
+                            animated: 'medium',
+                            control: '#sidetreecontrol',
+                            persist: 'location'
+                        });
+                    }
+                });
+            }
+        },
+        _Operation: {
+            fnCompanyChangeState: function (CompanyID, StateID) {
+                const options = {
+                    url: Uti.Url.Base + '/Security/Company/CompanyChangeState',
+                    data: {               
+                        CompanyID: CompanyID,
+                        StateID: StateID
+                    },
+                    type: Uti.Variable.FetchAjax.Type.Post
+                };
+                Uti.Ajax.Custom(options, function (response) {
+                    Uti.Modal.Message(response.type, response.message, response.function);
+                    if (response.type === Uti.Message.Type.Session) {
+                        Uti.Modal.Process();
+                    }
+                    if (response.type === Uti.Message.Type.Success) {
+                        Company._Search.fnCompanyDataTable();
                     }
                 });
             }

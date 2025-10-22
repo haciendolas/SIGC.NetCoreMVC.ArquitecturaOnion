@@ -182,7 +182,7 @@
             fnPageTreeView: function () {
                 const CompanyID = $('#cboCompanyID').val();              
                 const options = {
-                    url: Uti.Url.Base + '/Security/Role/PageList/' + CompanyID,               
+                    url: Uti.Url.Base + '/Security/Page/PageList/' + CompanyID,               
                     type: Uti.Variable.FetchAjax.Type.Get
                 };
                 Uti.Ajax.Custom(options, function (response) { 
