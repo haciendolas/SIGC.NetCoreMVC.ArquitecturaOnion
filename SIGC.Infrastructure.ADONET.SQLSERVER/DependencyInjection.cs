@@ -4,22 +4,26 @@ using SIGC.DomainService.IRepositories.IAuthRepositories;
 using SIGC.DomainService.IRepositories.ICategoryRepositories;
 using SIGC.DomainService.IRepositories.ICompanyRegisterRepositories;
 using SIGC.DomainService.IRepositories.ICompanyRepositories;
+using SIGC.DomainService.IRepositories.IConstantRepositories;
 using SIGC.DomainService.IRepositories.IPageCompanyRepositories;
 using SIGC.DomainService.IRepositories.IPageRepositories;
 using SIGC.DomainService.IRepositories.IRolePermissionRepositories;
 using SIGC.DomainService.IRepositories.IRoleRepositories;
 using SIGC.DomainService.IRepositories.ITokenRepositories;
+using SIGC.DomainService.IRepositories.IUbigeoRepositories;
 using SIGC.DomainService.Transactions;
 using SIGC.Infrastructure.ADONET.SQLSERVER.AppDBContext;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.AuthRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CategoryRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CompanyRegisterRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CompanyRepositories;
+using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.ConstantRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.PageCompanyRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.PageRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RolePermissionRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RoleRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.TokenRepositories;
+using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.UbigeoRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Transactions;
 
 namespace SIGC.Infrastructure.ADONET.SQLSERVER
@@ -76,6 +80,12 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
             services.AddScoped<ICompanyVerifyDocumentNumberAndSocialReasonRepository, CompanyVerifyDocumentNumberAndSocialReasonRepository>();
 
             services.AddScoped<ICompanyRegisterCreateRepository, CompanyRegisterCreateRepository>();
+
+            services.AddScoped<IUbigeoListSearchRepository, UbigeoListSearchRepository>();
+            services.AddScoped<IUbigeoListByUbigeoClassRepository, UbigeoListByUbigeoClassRepository>();
+            services.AddScoped<IUbigeoListByClassAndCodeAndLenCodeRepository, UbigeoListByClassAndCodeAndLenCodeRepository>();
+
+            services.AddScoped<IConstantListRepository, ConstantListRepository>();
             
             return services;
         }
