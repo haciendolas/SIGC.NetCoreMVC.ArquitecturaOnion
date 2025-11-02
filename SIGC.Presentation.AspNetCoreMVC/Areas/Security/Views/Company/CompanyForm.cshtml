@@ -1,4 +1,6 @@
-﻿@{
+﻿@using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Constant
+@using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Ubigeo
+@{
     Layout = null;
 }
 <form id="frmCompanyCreateUpdate" class="needs-validation" novalidate method="dialog">
@@ -14,6 +16,15 @@
                 <div class="col-sm-4">
                         <label for="cboCountryID">Pais<i class=" ri-asterisk align-middle text-danger"></i></label>
                         <select class="form-select" id="cboCountryID" name="CountryID">
+                            @if (@ViewBag.CountryList != null)
+                            {
+                                <option>Seleccionar</option>
+                                var CountryList = ViewBag.CountryList as List<UbigeoListByClassAndCodeAndLenCodeResponseModel>;
+                                @foreach (var Item in CountryList!)
+                                {
+                                    <option value="@Item.UbigeoID">@Item.UbigeoName</option>
+                                }
+                            }
                     </select>
                 </div>
                     <div class="col-sm-4">
@@ -29,6 +40,15 @@
                     <div class="col-sm-6">
                         <label for="cboTaxpayerTypeID">Tipo contribuyente<i class=" ri-asterisk align-middle text-danger"></i></label>
                         <select class="form-select" id="cboTaxpayerTypeID" name="TaxpayerTypeID">
+                            @if (@ViewBag.TaxpayerTypeList != null)
+                            {
+                                <option>Seleccionar</option>
+                                var TaxpayerTypeList = ViewBag.TaxpayerTypeList as List<ConstantListResponseModel>;
+                                @foreach (var Item in TaxpayerTypeList!)
+                                {
+                                    <option value="@Item.ConstantID">@Item.ConstantName</option>
+                                }
+                            }
                         </select>
                     </div>
                     <div class="col-sm-2">
@@ -63,6 +83,15 @@
                     <label for="cboRubroID" class="col-sm-2 col-form-label">Rubro<i class=" ri-asterisk align-middle text-danger"></i></label>
                     <div class="col-sm-4">
                         <select class="form-select" id="cboRubroID" name="RubroID">
+                            @if (@ViewBag.RubroList != null)
+                            {
+                                <option>Seleccionar</option>
+                                var RubroList = ViewBag.RubroList as List<ConstantListResponseModel>;
+                                @foreach (var Item in RubroList!)
+                                {
+                                    <option value="@Item.ConstantID">@Item.ConstantName</option>
+                                }
+                            }
                         </select>
                     </div>
                     <label for="txtCompanyCorporateEmail" class="col-sm-2 col-form-label">Correo<i class=" ri-asterisk align-middle text-danger"></i></label>

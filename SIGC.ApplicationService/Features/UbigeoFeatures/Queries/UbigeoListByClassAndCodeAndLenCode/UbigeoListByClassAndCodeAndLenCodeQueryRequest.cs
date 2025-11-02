@@ -4,7 +4,7 @@ using SIGC.Infrastructure.CrossCutting.Wrappers;
 
 namespace SIGC.ApplicationService.Features.UbigeoFeatures.Queries.UbigeoListByClassAndCodeAndLenCode
 {
-    public record struct UbigeoListByClassAndCodeAndLenCodeQueryRequest(
+    public record UbigeoListByClassAndCodeAndLenCodeQueryRequest(
         int UbigeoClass,
         string UbigeoCode,
         int LenUbigeoCode

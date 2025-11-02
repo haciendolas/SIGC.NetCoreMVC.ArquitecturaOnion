@@ -4,7 +4,7 @@ using SIGC.Infrastructure.CrossCutting.Wrappers;
 
 namespace SIGC.ApplicationService.Features.UbigeoFeatures.Queries.UbigeoListSearch
 {
-    public record struct UbigeoListSearchQueryRequest(
+    public record UbigeoListSearchQueryRequest(
        int UbigeoClassContinent,
        string UbigeoName
     ):IRequest<MsgResponse<List<UbigeoListSearchResponseDto>>>;

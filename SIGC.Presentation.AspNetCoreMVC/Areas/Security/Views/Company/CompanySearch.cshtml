@@ -1,17 +1,36 @@
-﻿@{
+﻿@using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Constant
+@{
     Layout = null;
 }
 <div class="card-body border-bottom-dashed border-bottom">
-    <form>  
+    <form> 
         <div class="row pb-2">
             <label for="txtNroInspeccion" class="col-sm-2 col-form-label">Tipo Contribuyente</label>
             <div class="col-sm-4">
                 <select class="form-select" id="scboAreaInspeccionadora" name="scboAreaInspeccionadora">
+                    @if (@ViewBag.TaxpayerTypeList != null)
+                    {
+                        <option>Todos</option>
+                        var TaxpayerTypeList = ViewBag.TaxpayerTypeList as List<ConstantListResponseModel>;
+                        @foreach (var Item in TaxpayerTypeList!)
+                        {
+                            <option value="@Item.ConstantID">@Item.ConstantName</option>
+                        }
+                    }
                 </select>
             </div>
             <label for="txtNroInspeccion" class="col-sm-1 col-form-label">Rubro</label>
             <div class="col-sm-2">
                 <select class="form-select" id="scboAreaInspeccionadora" name="scboAreaInspeccionadora">
+                    @if (@ViewBag.RubroList != null)
+                    {
+                        <option>Todos</option>
+                        var RubroList = ViewBag.RubroList as List<ConstantListResponseModel>;
+                        @foreach (var Item in RubroList!)
+                        {
+                            <option value="@Item.ConstantID">@Item.ConstantName</option>
+                        }
+                    }
                 </select>
             </div>
             <label for="scboStateID" class="col-sm-1 col-form-label">Estado</label>

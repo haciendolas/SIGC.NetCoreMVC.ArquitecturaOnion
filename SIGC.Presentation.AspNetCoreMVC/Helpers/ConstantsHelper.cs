@@ -27,5 +27,17 @@
             public const string RefreshToken = "refreshToken";
             public const string MenuSidebar = "menuSidebar";
         }
+
+        public static class UbigeoKeys
+        {
+            public const Int32 UbigeoClassContinente = 0;
+            public const Int32 UbigeoClassAfrica = 91;
+            public const Int32 UbigeoClassAmerica = 92;
+            public const Int32 UbigeoClassAsia = 93;
+            public const Int32 UbigeoClassEuropa = 94;
+            public const Int32 UbigeoClassOceania = 95;
+            public const String UbigeoCodePeru = "9200";
+            public const Int32 UbigeoIDPeru = 38;
+        }
     }
 }

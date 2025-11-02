@@ -6,7 +6,6 @@ using SIGC.ApplicationService.Features.AuthFeatures.Queries.AuthLoginToken;
 using SIGC.Infrastructure.CrossCutting.Wrappers;
 using Swashbuckle.AspNetCore.Annotations;
 
-
 namespace SIGC.Presentation.WebApi.Controllers
 { 
     public class AuthController : BaseController

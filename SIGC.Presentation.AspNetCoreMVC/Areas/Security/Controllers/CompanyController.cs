@@ -1,9 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Company;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Ubigeo;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.CompanyService;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.ConstantService;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.UbigeoService;
 using SIGC.Presentation.AspNetCoreMVC.Controllers;
 using SIGC.Presentation.AspNetCoreMVC.Helpers;
 using SIGC.Presentation.AspNetCoreMVC.Models;
+using System.Threading.Tasks;
 
 namespace SIGC.Presentation.AspNetCoreMVC.Areas.Security.Controllers
 {
@@ -11,13 +15,27 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Security.Controllers
     public class CompanyController : BaseController
     {
         private readonly ICompanyService CompanyService;
-        public CompanyController(ICompanyService CompanyService)
+        private readonly IConstantService ConstantService;
+        private readonly IUbigeoService UbigeoService;
+        public CompanyController(ICompanyService CompanyService, IConstantService ConstantService, IUbigeoService UbigeoService)
         {
             this.CompanyService = CompanyService;
+            this.ConstantService = ConstantService;
+            this.UbigeoService = UbigeoService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var ApiResponse = await ConstantService.ConstantList("1030,1034");
+            ViewBag.TaxpayerTypeList = ApiResponse.Data.Where(w => w.ConstantClass == 1030 && w.ConstantID!=0).ToList();
+            ViewBag.RubroList = ApiResponse.Data.Where(w => w.ConstantClass == 1034 && w.ConstantID != 0).ToList();
+
+            ViewBag.CountryList = (await UbigeoService.UbigeoListByClassAndCodeAndLenCode(new UbigeoListByClassAndCodeAndLenCodeRequestModel
+                                {
+                                    UbigeoClass = ConstantsHelper.UbigeoKeys.UbigeoClassAmerica,
+                                    UbigeoCode = ConstantsHelper.UbigeoKeys.UbigeoClassAmerica.ToString(),
+                                    LenUbigeoCode = 4
+                                })).Data;
             return View("CompanyIndex");
         }
 

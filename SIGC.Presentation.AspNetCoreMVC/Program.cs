@@ -1,7 +1,9 @@
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.CompanyService;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.ConstantService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.PageCompanyService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.PageService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.RoleService;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.UbigeoService;
 using SIGC.Presentation.AspNetCoreMVC.Filters;
 using SIGC.Presentation.AspNetCoreMVC.Helpers;
 using SIGC.Presentation.AspNetCoreMVC.Services;
@@ -42,6 +44,8 @@ builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IPageService, PageService>();
 builder.Services.AddScoped<IPageCompanyService, PageCompanyService>();
 builder.Services.AddScoped<ICompanyService,CompanyService>();
+builder.Services.AddScoped<IUbigeoService,UbigeoService>();
+builder.Services.AddScoped<IConstantService,ConstantService>();
 
 var app = builder.Build();
 

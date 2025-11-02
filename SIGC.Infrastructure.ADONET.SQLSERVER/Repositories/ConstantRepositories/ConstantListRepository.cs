@@ -26,7 +26,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.ConstantRepositories
             var Connection = await TransactionAccessor.GetOrOpenConnectionAsync(ConnectionString, CancellationToken);
             using (SqlCommand Command = new SqlCommand())
             {
-                Command.CommandText = "Security.uspUbigeoListSearch";
+                Command.CommandText = "Security.uspConstantList";
                 Command.CommandType = CommandType.StoredProcedure;
                 Command.Parameters.AddWithValue("@ConstantClass", ConstantClass);             
                 Command.Connection = Connection;

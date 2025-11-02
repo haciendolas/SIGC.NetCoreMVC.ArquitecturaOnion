@@ -16,8 +16,14 @@ namespace SIGC.Presentation.AspNetCoreMVC.Services
         }
 
         // ========== GET ==========
-        public async Task<T> GetAsync<T>(string endpoint)
+        public async Task<T> GetAsync<T>(string endpoint, object? queryParams = null)
         {
+            if (queryParams is not null)
+            {
+                var queryDict = ConvertsHelper.GetQueryParams(queryParams);
+                endpoint = QueryHelpers.AddQueryString(endpoint, queryDict!);
+            }
+
             var response = await HttpClient.GetAsync(endpoint);
             response.EnsureSuccessStatusCode();
 
