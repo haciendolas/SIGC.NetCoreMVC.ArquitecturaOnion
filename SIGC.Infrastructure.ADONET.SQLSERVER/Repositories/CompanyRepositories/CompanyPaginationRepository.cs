@@ -32,7 +32,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CompanyRepositories
                     Command.Parameters.Add("@RecordsTotal", SqlDbType.Int).Direction = ParameterDirection.Output;
                     Command.Parameters.AddWithValue("@CompanyIDRegister", CompanyPaginationResquest.CompanyIDRegister);
                     Command.Parameters.AddWithValue("@TaxpayerTypeID", CompanyPaginationResquest.TaxpayerTypeID.HasValue ? CompanyPaginationResquest.TaxpayerTypeID.Value: DBNull.Value);
-                    Command.Parameters.AddWithValue("@SectorID", CompanyPaginationResquest.SectorID.HasValue ? CompanyPaginationResquest.SectorID.Value:DBNull.Value );
+                    Command.Parameters.AddWithValue("@RubroID", CompanyPaginationResquest.RubroID.HasValue ? CompanyPaginationResquest.RubroID.Value:DBNull.Value );
                     Command.Parameters.AddWithValue("@CompanyDocumentNumber", CompanyPaginationResquest.CompanyDocumentNumber ?? "");
                     Command.Parameters.AddWithValue("@CompanySocialReason", CompanyPaginationResquest.CompanySocialReason ?? "");
                     Command.Parameters.AddWithValue("@StateID", CompanyPaginationResquest.StateID);
@@ -53,7 +53,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CompanyRepositories
                                     TaxpayerTypeName = Validation.SqlDBToString(ref DataReader, "TaxpayerTypeName"),
                                     CompanyDocumentNumber = Validation.SqlDBToString(ref DataReader, "CompanyDocumentNumber"),
                                     CompanySocialReason = Validation.SqlDBToString(ref DataReader, "CompanySocialReason"),
-                                    SectorName = Validation.SqlDBToString(ref DataReader, "SectorName"),
+                                    RubroName = Validation.SqlDBToString(ref DataReader, "RubroName"),
                                     CountryName = Validation.SqlDBToString(ref DataReader, "CountryName"), 
                                     StateID = Validation.SqlDBToInt16(ref DataReader, "StateID"),
                                     CompanyLastUpdatedDateTime = Validation.SqlDBToDateTime(ref DataReader, "CompanyLastUpdatedDateTime"),

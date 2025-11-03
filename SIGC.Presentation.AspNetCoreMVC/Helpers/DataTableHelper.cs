@@ -42,5 +42,9 @@
         //Parametros Adicionales
         public int sCompanyID { get; set; }
         public short sStateID { get; set; }
+        public short? sTaxpayerTypeID { get; set; }
+        public short? sRubroID { get; set; }
+        public string? sCompanyDocumentNumber { get; set; }
+        public string? sCompanySocialReason { get; set; }
     }
 }

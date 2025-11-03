@@ -5,9 +5,9 @@
 <div class="card-body border-bottom-dashed border-bottom">
     <form> 
         <div class="row pb-2">
-            <label for="txtNroInspeccion" class="col-sm-2 col-form-label">Tipo Contribuyente</label>
+            <label for="scboTaxpayerTypeID" class="col-sm-2 col-form-label">Tipo Contribuyente</label>
             <div class="col-sm-4">
-                <select class="form-select" id="scboAreaInspeccionadora" name="scboAreaInspeccionadora">
+                <select class="form-select" id="scboTaxpayerTypeID">
                     @if (@ViewBag.TaxpayerTypeList != null)
                     {
                         <option>Todos</option>
@@ -21,7 +21,7 @@
             </div>
             <label for="txtNroInspeccion" class="col-sm-1 col-form-label">Rubro</label>
             <div class="col-sm-2">
-                <select class="form-select" id="scboAreaInspeccionadora" name="scboAreaInspeccionadora">
+                <select class="form-select" id="scboRubroID">
                     @if (@ViewBag.RubroList != null)
                     {
                         <option>Todos</option>
@@ -44,15 +44,14 @@
         </div>
 
         <div class="row pb-2">
-            <label for="txtNroInspeccion" class="col-sm-2 col-form-label">N° Documento</label>
+            <label for="stxtCompanyDocumentNumber" class="col-sm-2 col-form-label">N° Documento</label>
             <div class="col-sm-2">
-                <input type="text" class="form-control" id="txtCod_Inspe" name="NroInspeccion" />
+                <input type="text" class="form-control" id="stxtCompanyDocumentNumber" maxlength="15" />
             </div>
-            <label for="txtNroInspeccion" class="col-sm-1 col-form-label">Razón Social</label>
+            <label for="stxtCompanySocialReason" class="col-sm-1 col-form-label">Razón Social</label>
             <div class="col-sm-7">
-                <input type="text" class="form-control" id="txtCod_Inspe" name="NroInspeccion" />
-            </div>
-   
+                <input type="text" class="form-control" id="stxtCompanySocialReason" maxlength="100" />
+            </div>   
         </div> 
     </form>
 </div>

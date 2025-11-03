@@ -27,7 +27,7 @@ CREATE TABLE Security.Company(
   CountryID INT NOT NULL,
   CompanyAddress VARCHAR(200), 
   TaxpayerTypeID SMALLINT DEFAULT 2, 
-  SectorID SMALLINT NOT NULL DEFAULT 3, 
+  RubroID SMALLINT NOT NULL DEFAULT 99, 
   CompanyCorporateEmail VARCHAR(150),
   CompanyMobile VARCHAR(15),
   CompanyPhone VARCHAR(15),

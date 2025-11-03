@@ -9,7 +9,7 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Queries.CompanyPagina
     {
         public int CompanyIDRegister { get; set; }
         public short? TaxpayerTypeID { get; set; }
-        public short? SectorID { get; set; }
+        public short? RubroID { get; set; }
         public string? CompanyDocumentNumber { get; set; }
         public string? CompanySocialReason { get; set; }
         public short StateID { get; set; }

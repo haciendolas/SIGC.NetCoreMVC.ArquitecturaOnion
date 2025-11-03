@@ -29,7 +29,7 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Queries.CompanyPagina
                var Response = await CompanyPaginationRepository.PaginationAsync(new CompanyPaginationResquestDto{
                                         CompanyIDRegister = Request.CompanyIDRegister,
                                        TaxpayerTypeID = Request.TaxpayerTypeID,
-                                       SectorID = Request.SectorID,
+                                       RubroID = Request.RubroID,
                                        CompanyDocumentNumber = Request.CompanyDocumentNumber,
                                        CompanySocialReason = Request.CompanySocialReason,
                                         StateID = Request.StateID,
@@ -48,7 +48,7 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Queries.CompanyPagina
                                        TaxpayerTypeName = s.TaxpayerTypeName,
                                        CompanyDocumentNumber = s.CompanyDocumentNumber,
                                        CompanySocialReason = s.CompanySocialReason,
-                                       SectorName = s.SectorName,
+                                       RubroName = s.RubroName,
                                        CountryName =s.CountryName,
                                        StateID = s.StateID,       
                                        CompanyLastUpdatedDateTime = s.CompanyLastUpdatedDateTime,

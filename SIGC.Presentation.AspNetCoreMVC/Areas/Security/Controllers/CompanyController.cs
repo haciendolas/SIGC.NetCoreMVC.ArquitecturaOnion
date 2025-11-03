@@ -71,8 +71,11 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Security.Controllers
                 CompanyIDRegister = GetSession().CompanyID,
                 StateID = DataTable.sStateID,
                 PageNumber = (DataTable.iDisplayStart / DataTable.iDisplayLength) + 1,
-                PageSize = DataTable.iDisplayLength
-
+                PageSize = DataTable.iDisplayLength,
+                TaxpayerTypeID = DataTable.sTaxpayerTypeID,
+                RubroID =DataTable.sRubroID,
+                CompanyDocumentNumber = DataTable.sCompanyDocumentNumber,
+                CompanySocialReason = DataTable.sCompanySocialReason
             });
             var Lista = ApiResponse.Data;
             var result = from sql in ApiResponse.Data.Items
@@ -81,7 +84,7 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Security.Controllers
                                  sql.TaxpayerTypeName,
                                  sql.CompanyDocumentNumber,
                                  sql.CompanySocialReason,
-                                 sql.SectorName,
+                                 sql.RubroName,
                                  sql.CountryName,
                                  SpanStateType(sql.StateID),
                                  sql.CompanyLastUpdatedDateTime.ToString("dd/MM/yyyy hh:mm:ss"),

@@ -6,7 +6,7 @@ namespace SIGC.DomainModel.Dtos.Company
     (
         int CompanyIDRegister,                 
         short? TaxpayerTypeID, 
-        short? SectorID,
+        short? RubroID,
         string? CompanyDocumentNumber, 
         string? CompanySocialReason,
         short StateID,

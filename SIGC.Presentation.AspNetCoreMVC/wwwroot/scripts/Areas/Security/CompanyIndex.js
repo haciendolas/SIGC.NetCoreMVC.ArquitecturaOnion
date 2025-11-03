@@ -3,6 +3,22 @@
         _Init: function () {          
             Company._Search.fnCompanyDataTable();
             Company._Search.fnPageTreeView();
+            $('#stxtCompanyDocumentNumber').keypress(function (event) {
+                return Uti.KeyBoard.Numbers(event);
+            });
+            $('#stxtCompanySocialReason').keypress(function (event) {
+                return Uti.KeyBoard.LettersAndNumbers(event);
+            });
+            $('#stxtCompanyDocumentNumber,#stxtCompanySocialReason').on('keyup', Uti.SetTimeout.Debounce((event) => {
+                const keyCode = event.keyCode ? event.keyCode : event.which;
+                if (!(keyCode == 32 || keyCode == '32')) {
+                    Company._Search.fnCompanyDataTable();
+                };
+               })
+            );
+            $('#scboTaxpayerTypeID,#scboRubroID,#scboStateID').on('change', function(){
+                Company._Search.fnCompanyDataTable();
+            });
         },
         _Search: {
             fnCompanyDataTable: function () {             
@@ -45,9 +61,11 @@
                     sAjaxSource: Uti.Url.Base + '/Security/Company/CompanyDataTable',
                     fnServerParams: function (aoData) {
                         aoData.push( 
+                            { name: 'sTaxpayerTypeID', value: $('#scboTaxpayerTypeID').val() },
+                            { name: 'sRubroID', value: $('#scboRubroID').val() },
                             { name: 'sStateID', value: $('#scboStateID').val() },
-                         
-                            //{ name: 'sSearch', value: $('#stxtRoleName').val().trim() }
+                            { name: 'sCompanyDocumentNumber', value: $('#stxtCompanyDocumentNumber').val().trim() },
+                            { name: 'sCompanySocialReason', value: $('#stxtCompanySocialReason').val().trim() },
                         );
                     },
                     sPaginationType: 'full_numbers',
