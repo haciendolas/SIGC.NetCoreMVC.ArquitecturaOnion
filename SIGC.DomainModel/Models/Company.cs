@@ -17,7 +17,7 @@ namespace SIGC.DomainModel.Models
         public int CountryID { get; private set; }
         public string? CompanyAddress { get; private set; }
         public Int16 TaxpayerTypeID { get; private set; }
-        public short SectorID { get; private set; }
+        public short RubroID { get; private set; }
         public string? CompanyCorporateEmail { get; set; }
         public string? CompanyMobile { get; private set; }
         public string? CompanyPhone { get; private set; }
@@ -30,7 +30,7 @@ namespace SIGC.DomainModel.Models
 
         public static Company Create(string CompanyTradeName,string CompanySocialReason,
             string CompanyDocumentNumber,DateTime CompanyBirthDate,int CountryID,
-            string? CompanyAddress,short TaxpayerTypeID,short SectorID,string? CompanyMobile,
+            string? CompanyAddress,short TaxpayerTypeID,short RubroID, string? CompanyMobile,
             string? CompanyPhone,string? CompanyLogo, StateEnum StateID,DateTime CreatedDateTime,
             int CreatedBy
             )
@@ -44,7 +44,7 @@ namespace SIGC.DomainModel.Models
                 CountryID = CountryID,
                 CompanyAddress = CompanyAddress,
                 TaxpayerTypeID = TaxpayerTypeID,
-                SectorID = SectorID,
+                RubroID = RubroID,
                 CompanyMobile = CompanyMobile,
                 CompanyPhone = CompanyPhone,
                 CompanyLogo = CompanyLogo,
@@ -56,7 +56,7 @@ namespace SIGC.DomainModel.Models
 
        public static Company Update(int CompanyID, string CompanyTradeName,string CompanySocialReason,
             string CompanyDocumentNumber,DateTime CompanyBirthDate,int CountryID,
-            string? CompanyAddress,short TaxpayerTypeID,short SectorID,string? CompanyMobile,
+            string? CompanyAddress,short TaxpayerTypeID,short RubroID, string? CompanyMobile,
             string? CompanyPhone,string? CompanyLogo, StateEnum StateID,DateTime CreatedDateTime,
             int CreatedBy
             )
@@ -71,7 +71,7 @@ namespace SIGC.DomainModel.Models
                 CountryID = CountryID,
                 CompanyAddress = CompanyAddress,
                 TaxpayerTypeID = TaxpayerTypeID,
-                SectorID = SectorID,
+                RubroID = RubroID,
                 CompanyMobile = CompanyMobile,
                 CompanyPhone = CompanyPhone,
                 CompanyLogo = CompanyLogo,

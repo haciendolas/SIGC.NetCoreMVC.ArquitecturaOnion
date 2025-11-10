@@ -29,7 +29,7 @@
    Identifcador:		   Date Update  |   User Update   |  Description Update  
      @1
 ==============================================================================*/
-CREATE PROCEDURE [Security].uspCompanyCreate
+ALTER PROCEDURE [Security].uspCompanyCreate
 (  @CompanyID INT OUTPUT,   
    @CompanyTradeName VARCHAR(100),
    @CompanySocialReason VARCHAR(150),
@@ -38,7 +38,7 @@ CREATE PROCEDURE [Security].uspCompanyCreate
    @CountryID INT,
    @CompanyAddress VARCHAR(200),
    @TaxpayerTypeID SMALLINT,
-   @SectorID SMALLINT,
+   @RubroID SMALLINT,
    @CompanyCorporateEmail VARCHAR(150),
    @CompanyMobile VARCHAR(15),
    @CompanyPhone VARCHAR(15),
@@ -49,7 +49,7 @@ CREATE PROCEDURE [Security].uspCompanyCreate
 )
 AS
 BEGIN 
-  INSERT INTO [Security].Company(CompanyTradeName, CompanySocialReason, CompanyDocumentNumber, CompanyBirthDate, CountryID, CompanyAddress, TaxpayerTypeID, SectorID, CompanyCorporateEmail, CompanyMobile, CompanyPhone, CompanyLogo, StateID, CompanyCreatedDateTime, CompanyCreatedUserID)
-  VALUES(@CompanyTradeName, @CompanySocialReason, @CompanyDocumentNumber, @CompanyBirthDate, @CountryID, @CompanyAddress, @TaxpayerTypeID, @SectorID, @CompanyCorporateEmail, @CompanyMobile, @CompanyPhone, @CompanyLogo, @StateID, @CompanyCreatedDateTime, @CompanyCreatedUserID)
+  INSERT INTO [Security].Company(CompanyTradeName, CompanySocialReason, CompanyDocumentNumber, CompanyBirthDate, CountryID, CompanyAddress, TaxpayerTypeID, RubroID, CompanyCorporateEmail, CompanyMobile, CompanyPhone, CompanyLogo, StateID, CompanyCreatedDateTime, CompanyCreatedUserID)
+  VALUES(@CompanyTradeName, @CompanySocialReason, @CompanyDocumentNumber, @CompanyBirthDate, @CountryID, @CompanyAddress, @TaxpayerTypeID, @RubroID, @CompanyCorporateEmail, @CompanyMobile, @CompanyPhone, @CompanyLogo, @StateID, @CompanyCreatedDateTime, @CompanyCreatedUserID)
   SET @CompanyID = SCOPE_IDENTITY()
 END

@@ -43,7 +43,7 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Commands.CompanyCreat
                         Request.CountryID,
                         Request.CompanyAddress,
                         Request.TaxpayerTypeID,
-                        Request.SectorID,
+                        Request.RubroID,
                         Request.CompanyMobile,
                         Request.CompanyPhone,
                         Request.CompanyLogo,
@@ -73,7 +73,7 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Commands.CompanyCreat
                 else
                 {
                     MsgResponse.Type = MessageTypeConst.WARNING;
-                    MsgResponse.Message = MessageService.GetMessageResult(Verify == VerifyRegistryConst.Company.DOCUMENTNUMBER_EXISTS ? MessageDescriptionConst.EXIST_COMPANY_DOCUMENTNUMBER : MessageDescriptionConst.EXIST_COMPANY_SOCIALREASON);
+                    MsgResponse.Message = MessageService.GetMessageResult(Verify == VerifyRegistryConst.Company.DOCUMENT_NUMBER_EXISTS ? MessageDescriptionConst.EXIST_COMPANY_DOCUMENTNUMBER : MessageDescriptionConst.EXIST_COMPANY_SOCIALREASON);
                 }
             }
             catch (ArgumentNullException ae)

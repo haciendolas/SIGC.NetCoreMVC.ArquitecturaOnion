@@ -40,13 +40,13 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Security.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CompanyCreate([FromBody] CompanyCreateUpdateRequestModel Request)
+        public async Task<IActionResult> CompanyCreate([FromForm] CompanyCreateUpdateRequestModel Request)
         { 
             return Json(await CompanyService.CompanyCreate(Request));
         }
 
         [HttpPut]
-        public async Task<IActionResult> CompanyUpdate([FromBody] CompanyCreateUpdateRequestModel Request)
+        public async Task<IActionResult> CompanyUpdate([FromForm] CompanyCreateUpdateRequestModel Request)
         {  
             return Json(await CompanyService.CompanyUpdate(Request));
         }

@@ -18,7 +18,7 @@
                         <select class="form-select" id="cboCountryID" name="CountryID">
                             @if (@ViewBag.CountryList != null)
                             {
-                                <option>Seleccionar</option>
+                                <option value="">Seleccionar</option>
                                 var CountryList = ViewBag.CountryList as List<UbigeoListByClassAndCodeAndLenCodeResponseModel>;
                                 @foreach (var Item in CountryList!)
                                 {
@@ -34,15 +34,18 @@
                </div>
                 <div class="row g-3 pb-2">
                     <div class="col-sm-4">
-                        <label for="txtCompanyBirthDate">Fecha incripción<i class=" ri-asterisk align-middle text-danger"></i></label>
-                        <input type="date" class="form-control" id="txtCompanyBirthDate" name="CompanyBirthDate" />
+                        <label for="dtpCompanyBirthDate">Fecha incripción<i class=" ri-asterisk align-middle text-danger"></i></label>
+                        <div class="input-group">
+                            <input type="date" class="form-control flatpickr-input" id="dtpCompanyBirthDate" name="CompanyBirthDate" data-provider="flatpickr" data-date-format="d/m/Y" />
+                            <span class="input-group-text fs-15" id="span-dtpCompanyBirthDate" style="cursor:pointer"><i class="ri-calendar-event-fill"></i></span>
+                        </div>
                     </div>
                     <div class="col-sm-6">
                         <label for="cboTaxpayerTypeID">Tipo contribuyente<i class=" ri-asterisk align-middle text-danger"></i></label>
                         <select class="form-select" id="cboTaxpayerTypeID" name="TaxpayerTypeID">
                             @if (@ViewBag.TaxpayerTypeList != null)
                             {
-                                <option>Seleccionar</option>
+                                <option value="">Seleccionar</option>
                                 var TaxpayerTypeList = ViewBag.TaxpayerTypeList as List<ConstantListResponseModel>;
                                 @foreach (var Item in TaxpayerTypeList!)
                                 {
@@ -85,7 +88,7 @@
                         <select class="form-select" id="cboRubroID" name="RubroID">
                             @if (@ViewBag.RubroList != null)
                             {
-                                <option>Seleccionar</option>
+                                <option value="">Seleccionar</option>
                                 var RubroList = ViewBag.RubroList as List<ConstantListResponseModel>;
                                 @foreach (var Item in RubroList!)
                                 {
@@ -117,9 +120,9 @@
                         <div class="text-center">
                             <h4>LOGO</h4>
                             <div class="profile-user position-relative d-inline-block mx-auto  mb-4">
-                                <img src="~/assets/images/users/avatar-1.jpg" class="img-thumbnail user-profile-image" alt="user-profile-image">
+                                <img style="width:200px;height:200px" src="~/assets/images/users/avatar-1.jpg" id="imgCompanyLogo" class="img-thumbnail user-profile-image" alt="Logo empresa">
                                 <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
-                                    <input id="profile-img-file-input" type="file" class="profile-img-file-input">
+                                    <input id="profile-img-file-input" type="file"  class="profile-img-file-input">
                                     <label for="profile-img-file-input" class="profile-photo-edit avatar-xs">
                                         <span class="avatar-title rounded-circle bg-light text-body">
                                             <i class="ri-camera-fill"></i>

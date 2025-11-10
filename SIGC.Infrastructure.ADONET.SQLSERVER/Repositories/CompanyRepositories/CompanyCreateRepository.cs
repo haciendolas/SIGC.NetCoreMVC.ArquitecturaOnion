@@ -43,7 +43,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CompanyRepositories
                 Command.Parameters.AddWithValue("@CompanyPhone", string.IsNullOrWhiteSpace(Model.CompanyPhone) ? DBNull.Value : Model.CompanyPhone);
                 Command.Parameters.AddWithValue("@CompanyLogo", string.IsNullOrWhiteSpace(Model.CompanyLogo) ? DBNull.Value : Model.CompanyLogo); 
                 Command.Parameters.AddWithValue("@TaxpayerTypeID", Model.TaxpayerTypeID);
-                Command.Parameters.AddWithValue("@SectorID",Model.SectorID);
+                Command.Parameters.AddWithValue("@RubroID", Model.RubroID);
                 Command.Parameters.AddWithValue("@StateID", (short)Model.StateID);
                 Command.Parameters.AddWithValue("@CompanyCreatedUserID", Model.CreatedBy);
                 Command.Parameters.AddWithValue("@CompanyCreatedDateTime", Model.CreatedDateTime);

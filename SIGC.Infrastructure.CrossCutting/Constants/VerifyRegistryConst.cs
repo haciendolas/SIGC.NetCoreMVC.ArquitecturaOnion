@@ -18,7 +18,7 @@
         public static class Company
         {
             public const string OK = "OK";
-            public const string DOCUMENTNUMBER_EXISTS = "DOCUMENTNUMBER_EXISTS";      
+            public const string DOCUMENT_NUMBER_EXISTS = "DOCUMENT_NUMBER_EXISTS";      
         }
 
         public static class Role

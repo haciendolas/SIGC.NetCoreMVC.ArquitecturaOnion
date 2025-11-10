@@ -15,10 +15,7 @@
                     Role._Search.fnRoleDataTable();
                 };
                })
-            );
-            $('#sbtnBuscar').on('click', function () {
-                Role._Search.fnRoleDataTable();
-            });
+            ); 
             $('#btn-modal-yes').on('click', function () {
                 Role._Operation.fnRoleChangeState($('#message-modal-generic #hd-modal-id').val(), Uti.Variable.StateType.Delete);
             });

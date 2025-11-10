@@ -10,10 +10,10 @@
         public int CountryID { get; set; }
         public string? CompanyAddress { get; set; }
         public Int16 TaxpayerTypeID { get; set; }
-        public short SectorID { get; set; }
+        public short RubroID { get; set; }
         public string? CompanyMobile { get; set; }
-        public string? CompanyPhone { get; set; }
-        public string? CompanyLogo { get; set; }
+        public string? CompanyPhone { get; set; } 
         public short StateID { get; set; }
-   }
+        public IFormFile? FormFile { get; set; }
+    }
 }

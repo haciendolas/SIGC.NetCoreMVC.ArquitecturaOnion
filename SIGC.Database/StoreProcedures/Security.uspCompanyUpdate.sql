@@ -26,7 +26,7 @@
    Identifcador:		   Date Update  |   User Update   |  Description Update  
      @1
 ==============================================================================*/
-CREATE PROCEDURE [Security].uspCompanyUpdate
+ALTER PROCEDURE [Security].uspCompanyUpdate
 (  @CompanyID INT,   
    @CompanyTradeName VARCHAR(100),
    @CompanySocialReason VARCHAR(150),
@@ -35,7 +35,7 @@ CREATE PROCEDURE [Security].uspCompanyUpdate
    @CountryID INT,
    @CompanyAddress VARCHAR(200),
    @TaxpayerTypeID SMALLINT,
-   @SectorID SMALLINT,
+   @RubroID SMALLINT,
    @CompanyCorporateEmail VARCHAR(150),
    @CompanyMobile VARCHAR(15),
    @CompanyPhone VARCHAR(15),
@@ -54,7 +54,7 @@ BEGIN
 		  CountryID = @CountryID, 
 		  CompanyAddress=@CompanyAddress,
 		  TaxpayerTypeID=@TaxpayerTypeID,
-		  SectorID = @SectorID, 
+		  RubroID = @RubroID, 
 		  CompanyCorporateEmail = @CompanyCorporateEmail,
 		  CompanyMobile = @CompanyMobile,
 		  CompanyPhone = @CompanyPhone,
