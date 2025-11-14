@@ -8,6 +8,7 @@ using SIGC.ApplicationService.Features.CompanyFeatures.Queries.CompanyList;
 using SIGC.ApplicationService.Features.CompanyFeatures.Queries.CompanyPagination;
 using SIGC.DomainModel.Dtos.Company;
 using SIGC.Infrastructure.CrossCutting.Wrappers;
+using SIGC.Infrastructure.GeneralService.Services;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace SIGC.Presentation.WebApi.Controllers
@@ -18,8 +19,9 @@ namespace SIGC.Presentation.WebApi.Controllers
         [SwaggerOperation(Summary = "Crear una compañia", Description = " Permite crear una compañia.")]
         [ProducesResponseType(typeof(MsgResponse<object?>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CompanyCreate([FromBody] CompanyCreateCommandRequest Command, CancellationToken CancellationToken)
-        {
+        public async Task<IActionResult> CompanyCreate([FromForm] CompanyCreateCommandRequest Command, IFormFile? FormFile, CancellationToken CancellationToken)
+        {            
+            if (FormFile != null) Command.File = new FormFileService(FormFile);
             return Ok(await Mediator.Send(Command, CancellationToken));
         }
 

@@ -7,7 +7,6 @@ using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.UbigeoService;
 using SIGC.Presentation.AspNetCoreMVC.Controllers;
 using SIGC.Presentation.AspNetCoreMVC.Helpers;
 using SIGC.Presentation.AspNetCoreMVC.Models;
-using System.Threading.Tasks;
 
 namespace SIGC.Presentation.AspNetCoreMVC.Areas.Security.Controllers
 {
@@ -89,7 +88,7 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Security.Controllers
                                  SpanStateType(sql.StateID),
                                  sql.CompanyLastUpdatedDateTime.ToString("dd/MM/yyyy hh:mm:ss"),
                                  sql.CompanyLastUpdatedUserName,
-                                 sql.StateID==(short)EnumsHelper.StateType.Active ? LinkHRef(new ControlModel{Value=PermissionModel.AccUpdate}):"&nbsp:",
+                                 sql.StateID==(short)EnumsHelper.StateType.Active ? LinkHRef(new ControlModel{Value=PermissionModel.AccUpdate}):"&nbsp;",
                                  sql.StateID==(short)EnumsHelper.StateType.Active ? LinkHRef(new ControlModel{Value=PermissionModel.AccUnchange}):LinkHRef(new ControlModel{Value=PermissionModel.AccChange})                             
 
              };

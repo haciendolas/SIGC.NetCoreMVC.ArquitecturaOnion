@@ -42,6 +42,7 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Commands.CompanyUpdat
                         Request.CompanyAddress,
                         Request.TaxpayerTypeID,
                         Request.RubroID,
+                        Request.CompanyCorporateEmail,
                         Request.CompanyMobile,
                         Request.CompanyPhone,
                         Request.CompanyLogo,

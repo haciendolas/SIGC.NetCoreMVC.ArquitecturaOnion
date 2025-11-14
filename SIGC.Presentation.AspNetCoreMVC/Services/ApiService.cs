@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.WebUtilities;
+﻿using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.AspNetCore.WebUtilities;
 using SIGC.Presentation.AspNetCoreMVC.Helpers;
 using System.Net.Http.Headers;
 using System.Reflection;
@@ -84,36 +85,98 @@ namespace SIGC.Presentation.AspNetCoreMVC.Services
         // ========== POST Multipart/Form-Data (genérico) ==========
         public async Task<TResponse> PostFormDataAsync<TRequest, TResponse>(
            string endpoint,
-           TRequest dataObject,
-           Dictionary<string, (Stream Stream, string FileName, string ContentType)> files
+           TRequest dataObject           
        )
         {
             using var form = new MultipartFormDataContent();
-
             var props = typeof(TRequest).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            var provider = new FileExtensionContentTypeProvider();
+
             foreach (var prop in props)
             {
                 var value = prop.GetValue(dataObject);
-                if (value != null)
+                if (value == null) continue;
+
+                var type = prop.PropertyType;
+
+                // Manejo DateTime
+                if (type == typeof(DateTime) || type == typeof(DateTime?))
                 {
-                    form.Add(new StringContent(value.ToString()), prop.Name);
+                    form.Add(new StringContent(((DateTime)value).ToString("yyyy-MM-dd")), prop.Name);
+                    continue;
                 }
-            }
 
-            foreach (var file in files)
-            {
-                var (stream, fileName, contentType) = file.Value;
-                var fileContent = new StreamContent(stream);
-                fileContent.Headers.ContentType = new MediaTypeHeaderValue(contentType);
+                // Manejo bool
+                if (type == typeof(bool) || type == typeof(bool?))
+                {
+                    form.Add(new StringContent(((bool)value) ? "true" : "false"), prop.Name);
+                    continue;
+                }
 
-                form.Add(fileContent, file.Key, fileName);
+                // Manejo IFormFile
+                if (value is IFormFile singleFile)
+                {
+                    AddFileToForm(form, singleFile, prop.Name, provider);
+                    continue;
+                }
+
+                // Manejo IEnumerable<IFormFile>
+                if (value is IEnumerable<IFormFile> fileCollection)
+                {
+                    foreach (var file in fileCollection)
+                    {
+                        AddFileToForm(form, file, prop.Name, provider);
+                    }
+                    continue;
+                }
+
+                // Manejo Stream
+                if (value is Stream stream)
+                {
+                    var fileContent = new StreamContent(stream);
+                    fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                    form.Add(fileContent, prop.Name, prop.Name + ".bin");
+                    continue;
+                }
+
+                // Manejo byte[]
+                if (value is byte[] bytes)
+                {
+                    var fileContent = new ByteArrayContent(bytes);
+                    fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                    form.Add(fileContent, prop.Name, prop.Name + ".bin");
+                    continue;
+                }
+
+                // Propiedades normales (string, int, etc.)
+                form.Add(new StringContent(value.ToString()!), prop.Name);
             }
 
             var response = await HttpClient.PostAsync(endpoint, form);
             response.EnsureSuccessStatusCode();
 
             var json = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<TResponse>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            return JsonSerializer.Deserialize<TResponse>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            })!;
+
+
+        }
+
+        // Método auxiliar para agregar IFormFile al form
+        private void AddFileToForm(MultipartFormDataContent form, IFormFile file, string propName, FileExtensionContentTypeProvider provider)
+        {
+            var fileContent = new StreamContent(file.OpenReadStream());
+
+            // Detectar Content-Type usando la extensión
+            if (!provider.TryGetContentType(file.FileName, out var contentType))
+            {
+                contentType = file.ContentType ?? "application/octet-stream";
+            }
+
+            fileContent.Headers.ContentType = new MediaTypeHeaderValue(contentType);
+            form.Add(fileContent, propName, file.FileName);
         }
     }
 }

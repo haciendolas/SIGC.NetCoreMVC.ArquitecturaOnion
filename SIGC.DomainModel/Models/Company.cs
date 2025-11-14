@@ -30,7 +30,7 @@ namespace SIGC.DomainModel.Models
 
         public static Company Create(string CompanyTradeName,string CompanySocialReason,
             string CompanyDocumentNumber,DateTime CompanyBirthDate,int CountryID,
-            string? CompanyAddress,short TaxpayerTypeID,short RubroID, string? CompanyMobile,
+            string? CompanyAddress,short TaxpayerTypeID,short RubroID,string? CompanyCorporateEmail, string? CompanyMobile,
             string? CompanyPhone,string? CompanyLogo, StateEnum StateID,DateTime CreatedDateTime,
             int CreatedBy
             )
@@ -45,6 +45,7 @@ namespace SIGC.DomainModel.Models
                 CompanyAddress = CompanyAddress,
                 TaxpayerTypeID = TaxpayerTypeID,
                 RubroID = RubroID,
+                CompanyCorporateEmail = CompanyCorporateEmail,
                 CompanyMobile = CompanyMobile,
                 CompanyPhone = CompanyPhone,
                 CompanyLogo = CompanyLogo,
@@ -56,7 +57,7 @@ namespace SIGC.DomainModel.Models
 
        public static Company Update(int CompanyID, string CompanyTradeName,string CompanySocialReason,
             string CompanyDocumentNumber,DateTime CompanyBirthDate,int CountryID,
-            string? CompanyAddress,short TaxpayerTypeID,short RubroID, string? CompanyMobile,
+            string? CompanyAddress,short TaxpayerTypeID,short RubroID,string? CompanyCorporateEmail, string? CompanyMobile,
             string? CompanyPhone,string? CompanyLogo, StateEnum StateID,DateTime CreatedDateTime,
             int CreatedBy
             )
@@ -72,6 +73,7 @@ namespace SIGC.DomainModel.Models
                 CompanyAddress = CompanyAddress,
                 TaxpayerTypeID = TaxpayerTypeID,
                 RubroID = RubroID,
+                CompanyCorporateEmail = CompanyCorporateEmail,
                 CompanyMobile = CompanyMobile,
                 CompanyPhone = CompanyPhone,
                 CompanyLogo = CompanyLogo,

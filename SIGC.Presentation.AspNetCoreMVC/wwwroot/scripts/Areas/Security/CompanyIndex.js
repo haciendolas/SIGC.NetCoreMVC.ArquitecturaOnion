@@ -262,6 +262,7 @@
                     formData.append('CompanyAddress', $('#txtCompanyAddress').val().trim());
                     formData.append('TaxpayerTypeID', $('#cboTaxpayerTypeID').val());
                     formData.append('RubroID', $('#cboRubroID').val());
+                    formData.append('CompanyCorporateEmail', $('#txtCompanyCorporateEmail').val().trim());
                     formData.append('CompanyMobile', $('#txtCompanyMobile').val().trim());
                     formData.append('CompanyPhone', $('#txtCompanyPhone').val().trim());
                     formData.append('StateID', $('#chkStateID').is(':checked') ? Uti.Variable.StateType.Active : Uti.Variable.StateType.Inactive);
@@ -287,79 +288,3 @@
     };
     Company._Init();
 });
-/*
-            $('#span-dtpFechaInspeccion').on('click', function () {
-                $('#dtpFechaInspeccion').click();
-            });
-
-date: true ,
-date: '*Campo fecha incorrecto'
-
- email: true
- email: '*Campo formato incorrecto'
- IFormFile FormFile
-        fnOpenFile:function(){
-          $('#flLogo').on('change', function (event) {
-            const _URL = window.URL || window.webkitURL;  //window.URL para firefox  webkitURL para chrome y otros navegadores
-            const file = event.target.files[0];
-            if (file) {
-              const tmppath = _URL.createObjectURL(file);
-              if (!(file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/jpg')) {              
-                Uti.Modal.Message(Uti.Message.Type.Error,'Solo se admite archivos con extensión : ( .jpg  ,&nbsp;.png ,&nbsp;.jpeg ) <br /> por ejemplo miarchivo.png'); 
-                return;
-              }
-              if (parseInt(file.size) >= 34000 && parseInt(file.size) <= 35000) {
-                $('#imgFoto').fadeIn('fast').attr('src', tmppath);               
-              }
-              else { 
-                $('#imgLogo').fadeIn('fast').attr('src', tmppath);
-                $('#div-quitar').show(); 
-              }
-            }
-          });
-        },
-         fnCatalogGalleryCreateUpdate: function () {
-                const file = document.getElementById('flImagen').files[0];
-                const galleryTypeId = $("#cboGalleryTypeID").val();
-                if (galleryTypeId.length == 0) {
-                    alert('Debe seleccionar el tipo de galeria');
-                    return;
-                }
-                if (!file) {
-                    alert('Debe buscar la imagen del producto');
-                    return;
-                }
-                if (!(file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/jpg')) {
-                    alert('Solo se admite archivos con extensión: (.jpg,.png,.jpeg)');
-                    return;
-                }
-
-                const CatalogId = parseInt($("#hdCatalogIDGallery").val());
-                var formData = new FormData();
-                    formData.append('CatalogGalleryId', 0);
-                    formData.append('CatalogId', CatalogId);
-                formData.append('GalleryTypeId', parseInt(galleryTypeId));  
-                    formData.append('StateId', 1);                
-                    formData.append('FormFile', file); 
-
-                const options = {
-                    url: Uti.Url.Base + '/Account/CatalogGalleryCreate',
-                    data: formData,
-                  //contentType: Uti.Variable.FetchAjax.ContentType.ApplicationFormUrlencodedCharset,
-                    type: Uti.Variable.FetchAjax.Type.Post
-                };
-                Uti.Ajax.Custom(options, function (response) {
-                    Uti.Modal.Message(response.type, response.message, response.function);
-                    if (response.type === Uti.Message.Type.Session) {
-                        Uti.Modal.Process();
-                    }
-                    if (response.type === Uti.Message.Type.Success) {
-                        Uti.Modal.Process();
-                        $('#cboGalleryTypeID,#flImagen').val('');
-                        Catalog._Search.fnCatalogGalleryList(CatalogId);
-                    }
-                });
-            } 
- 
-
-*/

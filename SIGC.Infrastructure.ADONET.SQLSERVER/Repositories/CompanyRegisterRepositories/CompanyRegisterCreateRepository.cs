@@ -36,8 +36,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CompanyRegisterRepos
                 Command.Parameters.AddWithValue("@CompanyRegisterCreatedUserID", Model.CompanyRegisterCreatedUserID); 
                 Command.Connection = Connection;
                 Command.Transaction = Transaction;
-                RecordAffected = await Command.ExecuteNonQueryAsync(CancellationToken);
-                Model.CompanyID = Convert.ToInt32(Command.Parameters["@CompanyID"].Value);
+                RecordAffected = await Command.ExecuteNonQueryAsync(CancellationToken);            
             }
 
             return RecordAffected;

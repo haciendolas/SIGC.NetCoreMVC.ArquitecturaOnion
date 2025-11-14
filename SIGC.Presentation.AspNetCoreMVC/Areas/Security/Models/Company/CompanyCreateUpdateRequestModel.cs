@@ -11,6 +11,7 @@
         public string? CompanyAddress { get; set; }
         public Int16 TaxpayerTypeID { get; set; }
         public short RubroID { get; set; }
+        public string? CompanyCorporateEmail { get; set; }
         public string? CompanyMobile { get; set; }
         public string? CompanyPhone { get; set; } 
         public short StateID { get; set; }

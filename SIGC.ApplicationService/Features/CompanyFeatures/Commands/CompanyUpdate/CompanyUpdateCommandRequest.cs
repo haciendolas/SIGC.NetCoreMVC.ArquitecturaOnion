@@ -15,6 +15,7 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Commands.CompanyUpdat
       string? CompanyAddress,
       Int16 TaxpayerTypeID ,
       short RubroID,
+      string? CompanyCorporateEmail,
       string? CompanyMobile ,
       string? CompanyPhone,
       string? CompanyLogo ,
