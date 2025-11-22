@@ -51,7 +51,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CompanyRepositories
                                 CountryID = Validation.SqlDBToInt32(ref DataReader, "CountryID"),
                                 CompanyAddress = Validation.SqlDBToString(ref DataReader, "CompanyAddress"),
                                 TaxpayerTypeID = Validation.SqlDBToInt16(ref DataReader, "TaxpayerTypeID"),
-                                SectorID = Validation.SqlDBToInt16(ref DataReader, "SectorID"),
+                                RubroID = Validation.SqlDBToInt16(ref DataReader, "RubroID"),
                                 CompanyCorporateEmail = Validation.SqlDBToString(ref DataReader, "CompanyCorporateEmail"),
                                 CompanyMobile = Validation.SqlDBToString(ref DataReader, "CompanyMobile"),
                                 CompanyPhone = Validation.SqlDBToString(ref DataReader, "CompanyPhone"),

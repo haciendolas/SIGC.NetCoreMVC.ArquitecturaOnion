@@ -38,7 +38,7 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Queries.CompanyGet
                     CountryID = CompanyGet.Value.CountryID,
                     CompanyAddress = CompanyGet.Value.CompanyAddress,
                     TaxpayerTypeID = CompanyGet.Value.TaxpayerTypeID,
-                    SectorID = CompanyGet.Value.SectorID,
+                    RubroID = CompanyGet.Value.RubroID,
                     CompanyCorporateEmail = CompanyGet.Value.CompanyCorporateEmail,
                     CompanyMobile = CompanyGet.Value.CompanyMobile,
                     CompanyPhone = CompanyGet.Value.CompanyPhone,

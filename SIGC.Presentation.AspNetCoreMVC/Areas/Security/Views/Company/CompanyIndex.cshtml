@@ -2,36 +2,36 @@
     ViewBag.Title = "EMPRESA";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="card">
+<div class="card" id="company-card">
     <div class="card-body p-0">
         <ul class="nav nav-tabs nav-border-top nav-border-top-primary mb-3" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" data-bs-toggle="tab" href="#nav-border-top-home" role="tab" aria-selected="true">
+                <a class="nav-link active" data-bs-toggle="tab" href="#tab-search" role="tab" aria-selected="true">
                     <i class="ri-list-ordered align-middle me-1 fs-20"></i>
                     Busqueda Empresa
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#nav-border-top-profile" role="tab" aria-selected="false">
+                <a class="nav-link" data-bs-toggle="tab" href="#tab-register" role="tab" aria-selected="false">
                     <i class="ri-book-3-fill align-middle me-1 fs-20"></i>
                     Formulario Empresa
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#nav-border-top-info" role="tab" aria-selected="false">
+                <a class="nav-link" data-bs-toggle="tab" href="#tab-info" role="tab" aria-selected="false">
                     <i class=" ri-settings-2-fill align-middle me-1 fs-20"></i>
                     Info Adicional Empresa
                 </a>
             </li>
         </ul>
         <div class="tab-content text-muted">
-            <div class="tab-pane active" id="nav-border-top-home" role="tabpanel">
+            <div class="tab-pane active" id="tab-search" role="tabpanel">
                 <partial name="CompanySearch" />
             </div>
-            <div class="tab-pane" id="nav-border-top-profile" role="tabpanel">
+            <div class="tab-pane" id="tab-register" role="tabpanel">
                 <partial name="CompanyForm" />
             </div>
-            <div class="tab-pane" id="nav-border-top-info" role="tabpanel">
+            <div class="tab-pane" id="tab-info" role="tabpanel">
                 <div class="p-3">
                     <label class="col-sm-3 col-form-label">Estructura Pagina</label>
                     <div class="col-sm-4 border" id="div-treeview-page" style=" overflow: hidden scroll;max-height: 420px;">

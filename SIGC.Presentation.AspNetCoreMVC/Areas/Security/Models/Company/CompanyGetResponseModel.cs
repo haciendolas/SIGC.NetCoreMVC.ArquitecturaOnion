@@ -10,7 +10,7 @@
         int CountryID,
         string CompanyAddress,
         short TaxpayerTypeID,
-        short SectorID,
+        short RubroID,
         string CompanyCorporateEmail,
         string CompanyMobile,
         string CompanyPhone,

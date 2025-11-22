@@ -3,6 +3,7 @@
     const Company = {
         _Init: function () {
             Company._Validation.fnCompanyCreateUpdateValidate();
+            Company._Other.fnCompanyTabs();
             Company._Search.fnCompanyDataTable();
             Company._Search.fnPageTreeView();
             Company._Other.fnOpenFile();
@@ -33,13 +34,29 @@
                     Company._Operation.fnCompanyCreateUpdate();
                 });
             };
+            $('#btnCompanyNew').on('click', function () {
+                Company._Clear.fnCompanyGet();
+            });
             $('#dtpCompanyBirthDate').val(Uti.Date.Today());      
             $('#span-dtpCompanyBirthDate').on('click', function () {
                 $('#dtpCompanyBirthDate').click();
             });
         },
         _Clear: {
-
+            fnCompanyGet: function () {
+                $('#txtCompanyID').val('GENERADO');
+                $('#cboCountryID,#txtCompanyDocumentNumber,#cboTaxpayerTypeID,#txtCompanySocialReason').val('');
+                $('#txtCompanyTradeName,#txtCompanyAddress,#cboRubroID,#txtCompanyCorporateEmail').val('');
+                $('#txtCompanyPhone,#txtCompanyMobile,#hdCompanyLogo').val('');
+                $('#dtpCompanyBirthDate').val(Uti.Date.Today());
+                $('#chkStateID').prop('checked', true);
+                $('#div-treeview-page input:checkbox').prop('checked', false);
+                if ($('#btnCompanyUpdate').length) $('#btnCompanyUpdate').hide();
+                if ($('#btnCompanyCreate').length) $('#btnCompanyCreate').show();
+                Company._Other.fnCompanyTabs();
+                Company._Validation.fnCompanyCreateUpdateReset();
+                $('#txtCompanyDocumentNumber').focus();        
+            }
         },
         _Other: {
             fnOpenFile: function () {
@@ -62,7 +79,12 @@
                         }
                     }
                 });
-            }
+            },
+            fnCompanyTabs: function () {
+                $('#company-card ul li a[href="#tab-search"]').removeClass('disabled');
+                $('#company-card ul li a[href="#tab-search"]').attr('data-bs-toggle', 'tab');
+                //$('#role-card ul li a[href="#tab-register"]').tab('show');
+            }    
         },
         _Validation: {
             fnCompanyCreateUpdateReset: function () {
@@ -184,7 +206,7 @@
                     bSort: false,
                     rowCallback: function (row, data, dataIndex) {
                         $(row).find('a[name=slnkEdit]').on('click', function () {
-                            Role._Search.fnRoleGet(data[0]);
+                            Company._Search.fnCompanyGet(data[0]);
                         }).tooltip();
                         $(row).find('a[name=slnkInactive]').on('click', function () {
                             Company._Operation.fnCompanyChangeState(data[0], Uti.Variable.StateType.Inactive);
@@ -200,7 +222,7 @@
             },
             fnPageTreeView: function () {
                 const options = {
-                    url: Uti.Url.Base + '/Security/Page/PageList',
+                    url: Uti.Url.Base + '/Security/Page/PageTreeView',
                     type: Uti.Variable.FetchAjax.Type.Get
                 };
                 Uti.Ajax.Custom(options, function (response) {
@@ -216,6 +238,50 @@
                             persist: 'location'
                         });
                     }
+                });
+            },
+            fnCompanyGet: function (CompanyID) {
+                const options = {
+                    url: Uti.Url.Base + '/Security/Company/CompanyGet/' + CompanyID,
+                    type: Uti.Variable.FetchAjax.Type.Get
+                };
+                Uti.Ajax.Custom(options, function (response) {
+                    Uti.Modal.Message(response.type, response.message, response.function);
+                    if (response.type === Uti.Message.Type.Session) {
+                        Uti.Modal.Process();
+                    }
+                    if (response.type === Uti.Message.Type.Query) {
+                        const { data: rowData } = response;
+                        Company._Clear.fnCompanyGet();
+                        $('#txtCompanyID').val(rowData.companyID);
+                        $('#cboCountryID').val(rowData.countryID)
+                        $('#txtCompanyDocumentNumber').val(rowData.companyDocumentNumber.trim());
+                        $('#dtpCompanyBirthDate').val(rowData.companyBirthDate);
+                        $('#cboTaxpayerTypeID').val(rowData.taxpayerTypeID);
+                        $('#chkStateID').attr('checked', rowData.stateID == Uti.Variable.StateType.Active);
+                        $('#txtCompanySocialReason').val(rowData.companySocialReason.trim());
+                        $('#txtCompanyTradeName').val(rowData.companyTradeName.trim());
+                        $('#txtCompanyAddress').val(rowData.companyAddress.trim()); 
+                        $('#cboRubroID').val(rowData.rubroID)
+                        $('#txtCompanyCorporateEmail').val(rowData.companyCorporateEmail.trim());
+                        $('#txtCompanyPhone').val(rowData.companyPhone.trim());
+                        $('#txtCompanyMobile').val(rowData.companyMobile.trim());
+                        $('#hdCompanyLogo').val(rowData.companyLogo.trim());
+                        rowData.pageCompany.forEach(page => {
+                            $('#div-treeview-page input:checkbox[name=chkPageID]').each(function (pageIndex, pageElement) {
+                                if (page.pageID == $(pageElement).val()) {
+                                    $(pageElement).prop('checked', true);
+                                    return false;
+                                }
+                            });                            
+                        });
+
+                        $('#company-card ul li a[href="#tab-search"]').addClass('disabled');
+                        $('#company-card ul li a[href="#tab-search"]').removeAttr('data-bs-toggle');
+                        $('#company-card ul li a[href="#tab-register"]').tab('show');
+                        if ($('#btnCompanyUpdate').length) $('#btnCompanyUpdate').show();
+                        if ($('#btnCompanyCreate').length) $('#btnCompanyCreate').hide();
+                    };
                 });
             }
         },

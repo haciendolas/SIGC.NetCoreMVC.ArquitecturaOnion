@@ -5,7 +5,7 @@
             Role._Validation.fnRoleCreateUpdateValidate();
             Role._Other.fnRoleTabs();
             Role._Search.fnRoleDataTable();
-            Role._Search.fnPageTreeView();
+            Role._Search.fnPageTreeViewWithAction();
             $('#scboStateID').on('change', function () {
                 Role._Search.fnRoleDataTable();
             });
@@ -43,7 +43,7 @@
             fnRoleGet: function () {
                 $('#txtRoleID').val('GENERADO');
                 $('#txtRoleCode,#txtRoleName,#txtRoleDescription').val('');
-                $('#chkStateID').attr('checked', true);
+                $('#chkStateID').prop('checked', true);
                 $('#div-treeview-page input:checkbox').prop('checked', false);
                 if ($('#btnRoleUpdate').length) $('#btnRoleUpdate').hide();
                 if ($('#btnRoleCreate').length) $('#btnRoleCreate').show();              
@@ -176,10 +176,10 @@
                     }
                 });
             },
-            fnPageTreeView: function () {
+            fnPageTreeViewWithAction: function () {
                 const CompanyID = $('#cboCompanyID').val();              
                 const options = {
-                    url: Uti.Url.Base + '/Security/Page/PageList/' + CompanyID,               
+                    url: Uti.Url.Base + '/Security/Page/PageTreeViewWithAction/' + CompanyID,               
                     type: Uti.Variable.FetchAjax.Type.Get
                 };
                 Uti.Ajax.Custom(options, function (response) { 
@@ -214,6 +214,7 @@
                         $('#txtRoleCode').val(rowData.roleCode.trim());
                         $('#txtRoleName').val(rowData.roleName.trim());
                         $('#txtRoleDescription').val(rowData.roleDescription.trim());
+                        $('#chkStateID').prop('checked', rowData.stateID == Uti.Variable.StateType.Active);
                         if ($('#cboCompanyID').length)  $('#cboCompanyID').attr('disabled', 'disabled');
                         rowData.pages.forEach(page => {
                             $('#div-treeview-page input:checkbox[name=chkPageID]').each(function (pageIndex, pageElement) {

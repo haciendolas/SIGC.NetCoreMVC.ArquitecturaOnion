@@ -5,14 +5,14 @@
 -- Update:				   Joel Castillo Rojas    
 -- Exec                    Exec [Security].uspCompanyGet  @CompanyID=1
 -- ============================================================================== 
-CREATE PROCEDURE [Security].uspCompanyGet(
+ALTER PROCEDURE [Security].uspCompanyGet(
    @CompanyID INT 
 )
 AS
 BEGIN
 	SET NOCOUNT ON
 		SELECT C.CompanyID,C.CompanyTradeName,C.CompanySocialReason,C.CompanyDocumentNumber,
-		C.CompanyBirthDate,C.CountryID,C.CompanyAddress,C.TaxpayerTypeID,C.SectorID,
+		C.CompanyBirthDate,C.CountryID,C.CompanyAddress,C.TaxpayerTypeID,C.RubroID,
 		C.CompanyCorporateEmail,C.CompanyMobile,C.CompanyPhone,C.CompanyLogo,C.StateID,
 		'PageCompany'=  
 			  '[' + ISNULL(STUFF((SELECT ','  + '{'+ 			                         

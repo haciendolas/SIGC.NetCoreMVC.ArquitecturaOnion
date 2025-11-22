@@ -16,15 +16,7 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.CompanyService
         }
 
         public async Task<ApiResponse<object?>> CompanyCreate(CompanyCreateUpdateRequestModel Request)
-        {
-            /*
-            var Files = new Dictionary<string, (Stream Stream, string FileName, string ContentType)>();
-            if (Request.FormFile != null)
-            {
-                Files.Add("FormFile", (Request.FormFile.OpenReadStream(), Request.FormFile.FileName, Request.FormFile.ContentType));
-            }
-            */
-           // return await ApiService.PostFormDataAsync<CompanyCreateUpdateRequestModel, ApiResponse<object?>>($"{Controller}/CompanyCreate", Request, Files);
+        {           
             return await ApiService.PostFormDataAsync<CompanyCreateUpdateRequestModel, ApiResponse<object?>>($"{Controller}/CompanyCreate", Request);
         }
         public async Task<ApiResponse<object?>> CompanyUpdate(CompanyCreateUpdateRequestModel Request)
