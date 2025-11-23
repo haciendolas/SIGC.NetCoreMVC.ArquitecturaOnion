@@ -29,8 +29,9 @@ namespace SIGC.Presentation.WebApi.Controllers
         [SwaggerOperation(Summary = "Editar una compañia", Description = " Permite editar una compañia.")]
         [ProducesResponseType(typeof(MsgResponse<object?>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CompanyUpdate([FromBody] CompanyUpdateCommandRequest Command, CancellationToken CancellationToken)
+        public async Task<IActionResult> CompanyUpdate([FromForm] CompanyUpdateCommandRequest Command, IFormFile? FormFile, CancellationToken CancellationToken)
         {
+            if (FormFile != null) Command.File = new FormFileService(FormFile);
             return Ok(await Mediator.Send(Command, CancellationToken));
         }
 

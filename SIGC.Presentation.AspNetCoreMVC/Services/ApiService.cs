@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.WebUtilities;
 using SIGC.Presentation.AspNetCoreMVC.Helpers;
 using System.Net.Http.Headers;
-using System.Reflection;
+using System.Reflection; 
 using System.Text.Json;
 
 namespace SIGC.Presentation.AspNetCoreMVC.Services
@@ -83,12 +83,36 @@ namespace SIGC.Presentation.AspNetCoreMVC.Services
         }
 
         // ========== POST Multipart/Form-Data (genérico) ==========
-        public async Task<TResponse> PostFormDataAsync<TRequest, TResponse>(
-           string endpoint,
-           TRequest dataObject           
-       )
+        public async Task<TResponse> PostFormDataAsync<TRequest, TResponse>(string endpoint,TRequest dataObject)
         {
-            using var form = new MultipartFormDataContent();
+            var form = MultipartFormDataContent(dataObject);
+            var response = await HttpClient.PostAsync(endpoint, form);
+            response.EnsureSuccessStatusCode();
+
+            var json = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<TResponse>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            })!;
+        }
+
+        // ========== PUT Multipart/Form-Data (genérico) ==========
+        public async Task<TResponse> PutFormDataAsync<TRequest, TResponse>(string endpoint, TRequest dataObject)
+        {
+            var form = MultipartFormDataContent(dataObject);
+            var response = await HttpClient.PutAsync(endpoint, form);
+            response.EnsureSuccessStatusCode();
+
+            var json = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<TResponse>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            })!;
+        }
+
+        private MultipartFormDataContent MultipartFormDataContent<TRequest>(TRequest dataObject)
+        {
+            var form = new MultipartFormDataContent();
             var props = typeof(TRequest).GetProperties(BindingFlags.Public | BindingFlags.Instance);
             var provider = new FileExtensionContentTypeProvider();
 
@@ -151,17 +175,7 @@ namespace SIGC.Presentation.AspNetCoreMVC.Services
                 // Propiedades normales (string, int, etc.)
                 form.Add(new StringContent(value.ToString()!), prop.Name);
             }
-
-            var response = await HttpClient.PostAsync(endpoint, form);
-            response.EnsureSuccessStatusCode();
-
-            var json = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<TResponse>(json, new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            })!;
-
-
+            return form;
         }
 
         // Método auxiliar para agregar IFormFile al form

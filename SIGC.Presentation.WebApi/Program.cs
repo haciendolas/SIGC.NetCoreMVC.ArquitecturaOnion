@@ -50,8 +50,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-/*
+ 
 if (storeOptions.UsedLocal())
 { 
     var internalFolder = Path.Combine(app.Environment.ContentRootPath, storeOptions.Local.PhysicalPathBase); 
@@ -63,7 +62,7 @@ if (storeOptions.UsedLocal())
         RequestPath = storeOptions.Local.VirtualPathBase
     });
 }
-*/
+ 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

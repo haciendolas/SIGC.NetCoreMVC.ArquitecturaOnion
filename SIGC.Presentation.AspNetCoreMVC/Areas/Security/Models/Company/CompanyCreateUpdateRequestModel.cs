@@ -16,5 +16,6 @@
         public string? CompanyPhone { get; set; } 
         public short StateID { get; set; }
         public IFormFile? FormFile { get; set; }
+        public string? CompanyLogo { get; set; }
     }
 }

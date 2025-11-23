@@ -55,7 +55,8 @@
                 if ($('#btnCompanyCreate').length) $('#btnCompanyCreate').show();
                 Company._Other.fnCompanyTabs();
                 Company._Validation.fnCompanyCreateUpdateReset();
-                $('#txtCompanyDocumentNumber').focus();        
+                Uti.Image.Preview('imgCompanyLogo');  
+                $('#txtCompanyDocumentNumber').focus();              
             }
         },
         _Other: {
@@ -99,26 +100,26 @@
                         CompanyDocumentNumber: { required: true, minlength: 8, maxlength: 11 },
                         CompanyBirthDate: { required: true,date:true },
                         TaxpayerTypeID: { required: true },
-                        CompanySocialReason: { required: true, minlength: 20, maxlength: 150 },
-                        CompanyTradeName: { required: true, minlength: 20, maxlength: 100 },
+                        CompanySocialReason: { required: true, minlength: 15, maxlength: 150 },
+                        CompanyTradeName: { required: true, minlength: 10, maxlength: 100 },
                         CompanyAddress: { required: true, minlength: 20, maxlength: 200 },
                         RubroID: { required: true },
                         CompanyCorporateEmail: { required: true, email:true, minlength: 10, maxlength: 150 },
-                        CompanyPhone: { required: true, minlength: 6, maxlength: 15 },
-                        CompanyMobile: { required: true, minlength: 9, maxlength: 15 },
+                        CompanyPhone: { minlength: 6, maxlength: 15 },
+                        CompanyMobile: { minlength: 9, maxlength: 15 },
                     },
                     messages: {
                         CountryID: { required: '*Campo requerido' },
                         CompanyDocumentNumber: { required: '*Campo requerido', minlength: '*Mínimo 8 caracteres', maxlength: '*Máximo 11 caracteres' },
                         CompanyBirthDate: { required: '*Campo requerido', date: '*Campo fecha incorrecto'},
                         TaxpayerTypeID: { required: '*Campo requerido' },
-                        CompanySocialReason: { required: '*Campo requerido', minlength: '*Mínimo 20 caracteres', maxlength: '*Máximo 150 caracteres' },
-                        CompanyTradeName: { required: '*Campo requerido', minlength: '*Mínimo 20 caracteres', maxlength: '*Máximo 100 caracteres' },
+                        CompanySocialReason: { required: '*Campo requerido', minlength: '*Mínimo 15 caracteres', maxlength: '*Máximo 150 caracteres' },
+                        CompanyTradeName: { required: '*Campo requerido', minlength: '*Mínimo 10 caracteres', maxlength: '*Máximo 100 caracteres' },
                         CompanyAddress: { required: '*Campo requerido', minlength: '*Mínimo 20 caracteres', maxlength: '*Máximo 200 caracteres' },
                         RubroID: { required: '*Campo requerido' },
                         CompanyCorporateEmail: { required: '*Campo requerido', email: '*Campo formato incorrecto',minlength: '*Mínimo 10 caracteres', maxlength: '*Máximo 150 caracteres' },
-                        CompanyPhone: { required: '*Campo requerido', minlength: '*Mínimo 6 caracteres', maxlength: '*Máximo 15 caracteres' },
-                        CompanyMobile: { required: '*Campo requerido', minlength: '*Mínimo 9 caracteres', maxlength: '*Máximo 15 caracteres' }
+                        CompanyPhone: {  minlength: '*Mínimo 6 caracteres', maxlength: '*Máximo 15 caracteres' },
+                        CompanyMobile: { minlength: '*Mínimo 9 caracteres', maxlength: '*Máximo 15 caracteres' }
                     },
                     highlight: function (element) {
                         $(element).addClass('is-invalid');
@@ -257,7 +258,7 @@
                         $('#txtCompanyID').val(rowData.companyID);
                         $('#cboCountryID').val(rowData.countryID)
                         $('#txtCompanyDocumentNumber').val(rowData.companyDocumentNumber.trim());
-                        $('#dtpCompanyBirthDate').val(rowData.companyBirthDate);
+                        $('#dtpCompanyBirthDate').val(new Date(rowData.companyBirthDate).toLocaleDateString('es-PE'));
                         $('#cboTaxpayerTypeID').val(rowData.taxpayerTypeID);
                         $('#chkStateID').attr('checked', rowData.stateID == Uti.Variable.StateType.Active);
                         $('#txtCompanySocialReason').val(rowData.companySocialReason.trim());
@@ -336,6 +337,7 @@
                     formData.append('CompanyPhone', $('#txtCompanyPhone').val().trim());
                     formData.append('StateID', $('#chkStateID').is(':checked') ? Uti.Variable.StateType.Active : Uti.Variable.StateType.Inactive);
                     formData.append('FormFile', file);
+                    formData.append('CompanyLogo', $('#hdCompanyLogo').val().trim());
 
                     const options = {
                         url: Uti.Url.Base + '/Security/Company/' + (CompanyID == 0 ? 'CompanyCreate' : 'CompanyUpdate') + '',
@@ -346,10 +348,12 @@
                         Uti.Modal.Message(response.type, response.message, response.function);
                         if (response.type === Uti.Message.Type.Session) {
                             Uti.Modal.Process();
-                        }
+                        };
                         if (response.type === Uti.Message.Type.Success) {
-                            Uti.Modal.Process(); 
-                        }
+                            Uti.Modal.Process();
+                            Company._Search.fnCompanyDataTable();
+                            Company._Clear.fnCompanyGet();;
+                        };
                     }); 
                 }
             }

@@ -21,7 +21,7 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.CompanyService
         }
         public async Task<ApiResponse<object?>> CompanyUpdate(CompanyCreateUpdateRequestModel Request)
         {
-            return await ApiService.PutAsync<CompanyCreateUpdateRequestModel, ApiResponse<object?>>($"{Controller}/CompanyUpdate", Request);
+            return await ApiService.PutFormDataAsync<CompanyCreateUpdateRequestModel, ApiResponse<object?>>($"{Controller}/CompanyUpdate", Request);
         }
         public async Task<ApiResponse<object?>> CompanyChangeState(CompanyChangeStateRequestModel Request)
         {

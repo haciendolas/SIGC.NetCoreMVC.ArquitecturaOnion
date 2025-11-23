@@ -546,7 +546,7 @@
             }
         },
         Image: {        
-            Preview: function (idImg, fileUrl) {
+            Preview: function (idImg, fileUrl = '') {
                 if (fileUrl == '') {
                     fileUrl = Uti.Url.Base + '/assets/images/image-not-available.jpg';                
                 };               
