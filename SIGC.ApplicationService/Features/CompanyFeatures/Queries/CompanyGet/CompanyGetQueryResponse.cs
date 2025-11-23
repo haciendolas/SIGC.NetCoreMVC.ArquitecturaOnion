@@ -15,6 +15,7 @@
         string CompanyMobile,
         string CompanyPhone,
         string CompanyLogo,
+        string CompanyUrl,
         short StateID,
         List<CompanyPageGetQueryResponse> PageCompany
    );

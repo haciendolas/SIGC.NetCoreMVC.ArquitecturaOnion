@@ -545,16 +545,12 @@
                 ErrorException: $('#ErrorException').text()
             }
         },
-        Image: {
-            Default: function (idimg) {
-                $('#' + idimg).attr({ 'data-src': 'holder.js/200x150/blankon/text:Static image', 'src': 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDIwMCAxNTAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjE1MCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjYwLjcyNjU2MjUiIHk9Ijc1IiBzdHlsZT0iZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQ7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+U3RhdGljIGltYWdlPC90ZXh0PjwvZz48L3N2Zz4=' });
-            },
-            Preview: function (idImg, base64Img) {
-                if (base64Img == 'sin_imagen') {
-                }
-                else {
-                    $('#' + idImg).attr('src', '' + base64Img + '');
-                }
+        Image: {        
+            Preview: function (idImg, fileUrl) {
+                if (fileUrl == '') {
+                    fileUrl = Uti.Url.Base + '/assets/images/image-not-available.jpg';                
+                };               
+                $('#' + idImg).fadeIn('fast').attr('src', fileUrl);    
             },
             PersonBycPerCodigo: function (idimg, cPerCodigo) {
                 $.ajax({

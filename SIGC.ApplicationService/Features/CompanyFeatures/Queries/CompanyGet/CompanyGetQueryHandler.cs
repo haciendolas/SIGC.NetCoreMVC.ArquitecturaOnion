@@ -1,8 +1,10 @@
 ﻿using MediatR;
+using SIGC.DomainModel.Dtos;
 using SIGC.DomainService.IRepositories.ICompanyRepositories;
 using SIGC.DomainService.IServices;
 using SIGC.Infrastructure.CrossCutting.Constants;
 using SIGC.Infrastructure.CrossCutting.Wrappers;
+using System.Reflection;
 
 namespace SIGC.ApplicationService.Features.CompanyFeatures.Queries.CompanyGet
 {
@@ -10,10 +12,13 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Queries.CompanyGet
     {
         private readonly ICompanyGetRepository CompanyGetRepository;
         private readonly IMessageService MessageService;
-        public CompanyGetQueryHandler(ICompanyGetRepository CompanyGetRepository, IMessageService MessageService)
+        private readonly IFileStorageService FileStorageService;
+        private readonly string FolderCompany = "Company";
+        public CompanyGetQueryHandler(ICompanyGetRepository CompanyGetRepository, IMessageService MessageService, IFileStorageService fileStorageService)
         {
             this.CompanyGetRepository = CompanyGetRepository;
             this.MessageService = MessageService;
+            this.FileStorageService = fileStorageService;
         }
 
         public async Task<MsgResponse<CompanyGetQueryResponse?>> Handle(CompanyGetQueryRequest Request, CancellationToken CancellationToken)
@@ -28,6 +33,7 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Queries.CompanyGet
                 MsgResponse.Type = MessageTypeConst.QUERY;
                 MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.QUERY_RESULT);
 
+                FileEntryDto FileEntry = new FileEntryDto(CompanyGet.Value.CompanyLogo, $"{FolderCompany}/{CompanyGet.Value.CompanyLogo}");
                 var CompanyResponse = new CompanyGetQueryResponse()
                 {
                     CompanyID = CompanyGet.Value.CompanyID,
@@ -43,10 +49,11 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Queries.CompanyGet
                     CompanyMobile = CompanyGet.Value.CompanyMobile,
                     CompanyPhone = CompanyGet.Value.CompanyPhone,
                     CompanyLogo = CompanyGet.Value.CompanyLogo,
+                    CompanyUrl = string.IsNullOrWhiteSpace(CompanyGet.Value.CompanyLogo) ? "" :  FileStorageService.GetFileUrl(FileEntry),
                     StateID = CompanyGet.Value.StateID,
-                    PageCompany = CompanyGet.Value.PageCompany.Select(sel => new CompanyPageGetQueryResponse{
-                                  PageID = sel.PageID
-                                 }).ToList()
+                    PageCompany = CompanyGet.Value.PageCompany.Select(sel => new CompanyPageGetQueryResponse {
+                        PageID = sel.PageID
+                    }).ToList()
                 };
                 MsgResponse.Data = CompanyResponse;
             }

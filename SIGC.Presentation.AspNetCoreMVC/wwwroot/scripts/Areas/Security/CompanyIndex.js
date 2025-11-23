@@ -82,8 +82,9 @@
             },
             fnCompanyTabs: function () {
                 $('#company-card ul li a[href="#tab-search"]').removeClass('disabled');
-                $('#company-card ul li a[href="#tab-search"]').attr('data-bs-toggle', 'tab');
-                //$('#role-card ul li a[href="#tab-register"]').tab('show');
+                $('#company-card ul li a[href="#tab-search"]').attr('data-bs-toggle', 'tab');              
+                $('#company-card ul li a[href="#tab-info"]').addClass('disabled');
+                $('#company-card ul li a[href="#tab-info"]').removeAttr('data-bs-toggle');
             }    
         },
         _Validation: {
@@ -251,7 +252,7 @@
                         Uti.Modal.Process();
                     }
                     if (response.type === Uti.Message.Type.Query) {
-                        const { data: rowData } = response;
+                        let { data: rowData } = response;
                         Company._Clear.fnCompanyGet();
                         $('#txtCompanyID').val(rowData.companyID);
                         $('#cboCountryID').val(rowData.countryID)
@@ -267,6 +268,7 @@
                         $('#txtCompanyPhone').val(rowData.companyPhone.trim());
                         $('#txtCompanyMobile').val(rowData.companyMobile.trim());
                         $('#hdCompanyLogo').val(rowData.companyLogo.trim());
+                        Uti.Image.Preview('imgCompanyLogo', rowData.companyUrl.trim());                    
                         rowData.pageCompany.forEach(page => {
                             $('#div-treeview-page input:checkbox[name=chkPageID]').each(function (pageIndex, pageElement) {
                                 if (page.pageID == $(pageElement).val()) {
@@ -275,9 +277,10 @@
                                 }
                             });                            
                         });
-
                         $('#company-card ul li a[href="#tab-search"]').addClass('disabled');
                         $('#company-card ul li a[href="#tab-search"]').removeAttr('data-bs-toggle');
+                        $('#company-card ul li a[href="#tab-info"]').removeClass('disabled');
+                        $('#company-card ul li a[href="#tab-info"]').attr('data-bs-toggle','tab');
                         $('#company-card ul li a[href="#tab-register"]').tab('show');
                         if ($('#btnCompanyUpdate').length) $('#btnCompanyUpdate').show();
                         if ($('#btnCompanyCreate').length) $('#btnCompanyCreate').hide();
