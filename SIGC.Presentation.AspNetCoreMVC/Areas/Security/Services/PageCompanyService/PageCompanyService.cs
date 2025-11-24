@@ -1,4 +1,5 @@
 ﻿using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Page;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.PageCompany;
 using SIGC.Presentation.AspNetCoreMVC.Helpers;
 using SIGC.Presentation.AspNetCoreMVC.Services;
 
@@ -13,6 +14,12 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.PageCompanySer
         {
             this.ApiService = ApiServiceFactory.Create(ConstantsHelper.HttpClientNames.ApiCommerce360);
         }
+
+        public async Task<ApiResponse<object?>> PageCompanyDeleteCreate(PageCompanyDeleteCreateRequestModel Request)
+        {
+            return await ApiService.PostAsync<PageCompanyDeleteCreateRequestModel, ApiResponse<object?>>($"{Controller}/PageCompanyDeleteCreate", Request);
+        }
+
         public async Task<ApiResponse<List<PageListResponseModel>>> PageCompanyList(int CompanyID)
         {
             return await ApiService.GetAsync<ApiResponse<List<PageListResponseModel>>>($"{Controller}/PageCompanyList/{CompanyID}");

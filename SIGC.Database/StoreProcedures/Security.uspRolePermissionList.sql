@@ -17,6 +17,7 @@ BEGIN
 
 	 INSERT INTO @PermissionTemp(PageID,PageHierarchy)
 	 SELECT DISTINCT P.PageID,P.PageHierarchy FROM  [Security].[RolePermission] RP WITH(NOLOCK)
+	 INNER JOIN [Security].PageCompany PC WITH(NOLOCK) ON RP.CompanyID=PC.CompanyID AND RP.PageID=PC.PageID AND PC.StateID=1
 	 INNER JOIN Security.Page P WITH(NOLOCK) ON RP.PageID=P.PageID AND P.StateID=1
 	 INNER JOIN Security.UserRole UR WITH(NOLOCK) ON RP.CompanyID=UR.CompanyID AND RP.RoleID=UR.RoleID
 	 WHERE RP.CompanyID=@companyID AND UR.UserID=@UserID

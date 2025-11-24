@@ -16,7 +16,7 @@ namespace SIGC.Presentation.WebApi.Controllers
     public class CompanyController : BaseController
     {
         [HttpPost("CompanyCreate")]
-        [SwaggerOperation(Summary = "Crear una compañia", Description = " Permite crear una compañia.")]
+        [SwaggerOperation(Summary = "Crear una compañia", Description = "Permite crear una compañia.")]
         [ProducesResponseType(typeof(MsgResponse<object?>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CompanyCreate([FromForm] CompanyCreateCommandRequest Command, IFormFile? FormFile, CancellationToken CancellationToken)
@@ -26,7 +26,7 @@ namespace SIGC.Presentation.WebApi.Controllers
         }
 
         [HttpPut("CompanyUpdate")]
-        [SwaggerOperation(Summary = "Editar una compañia", Description = " Permite editar una compañia.")]
+        [SwaggerOperation(Summary = "Editar una compañia", Description = "Permite editar una compañia.")]
         [ProducesResponseType(typeof(MsgResponse<object?>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CompanyUpdate([FromForm] CompanyUpdateCommandRequest Command, IFormFile? FormFile, CancellationToken CancellationToken)

@@ -37,16 +37,26 @@
             $('#btnCompanyNew').on('click', function () {
                 Company._Clear.fnCompanyGet();
             });
+            $('#btnCompanyReturn').on('click', function () {
+                Company._Clear.fnCompanyGet();
+                $('#company-card ul li a[href="#tab-register"]').tab('show');
+            });
             $('#dtpCompanyBirthDate').val(Uti.Date.Today());      
             $('#span-dtpCompanyBirthDate').on('click', function () {
                 $('#dtpCompanyBirthDate').click();
             });
+            if ($('#btnCompanyAsignarPage').length) {
+                $('#btnCompanyAsignarPage').on('click', function () {
+                    Company._Operation.fnPageCompanyDeleteCreate();
+                });
+            }
         },
         _Clear: {
             fnCompanyGet: function () {
                 $('#txtCompanyID').val('GENERADO');
                 $('#cboCountryID,#txtCompanyDocumentNumber,#cboTaxpayerTypeID,#txtCompanySocialReason').val('');
                 $('#txtCompanyTradeName,#txtCompanyAddress,#cboRubroID,#txtCompanyCorporateEmail').val('');
+                $('#txtCompanySocialReasonInfo').val('');
                 $('#txtCompanyPhone,#txtCompanyMobile,#hdCompanyLogo').val('');
                 $('#dtpCompanyBirthDate').val(Uti.Date.Today());
                 $('#chkStateID').prop('checked', true);
@@ -61,8 +71,7 @@
         },
         _Other: {
             fnOpenFile: function () {
-                $('#profile-img-file-input').on('change', function (event) {
-                    debugger
+                $('#profile-img-file-input').on('change', function (event) {                 
                     const _URL = window.URL || window.webkitURL;  //window.URL para firefox  webkitURL para chrome y otros navegadores
                     const file = event.target.files[0];
                     if (file) {
@@ -253,7 +262,7 @@
                         Uti.Modal.Process();
                     }
                     if (response.type === Uti.Message.Type.Query) {
-                        let { data: rowData } = response;
+                        const { data: rowData } = response;
                         Company._Clear.fnCompanyGet();
                         $('#txtCompanyID').val(rowData.companyID);
                         $('#cboCountryID').val(rowData.countryID)
@@ -262,6 +271,7 @@
                         $('#cboTaxpayerTypeID').val(rowData.taxpayerTypeID);
                         $('#chkStateID').attr('checked', rowData.stateID == Uti.Variable.StateType.Active);
                         $('#txtCompanySocialReason').val(rowData.companySocialReason.trim());
+                        $('#txtCompanySocialReasonInfo').val(rowData.companySocialReason.trim());                        
                         $('#txtCompanyTradeName').val(rowData.companyTradeName.trim());
                         $('#txtCompanyAddress').val(rowData.companyAddress.trim()); 
                         $('#cboRubroID').val(rowData.rubroID)
@@ -310,8 +320,7 @@
                 });
             },
             fnCompanyCreateUpdate: function () {
-                if ($('#frmCompanyCreateUpdate').valid()) {
-                    debugger
+                if ($('#frmCompanyCreateUpdate').valid()) {                    
                     const file = document.getElementById('profile-img-file-input').files[0]; 
                     if (file) {
                         if (!(file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/jpg')) {
@@ -352,10 +361,33 @@
                         if (response.type === Uti.Message.Type.Success) {
                             Uti.Modal.Process();
                             Company._Search.fnCompanyDataTable();
-                            Company._Clear.fnCompanyGet();;
+                            Company._Clear.fnCompanyGet();
                         };
                     }); 
                 }
+            },
+            fnPageCompanyDeleteCreate: function () {
+                const PageIDS = new Array();
+                $('#div-treeview-page input:checkbox[name=chkPageID]:checked').each(function (pageIndex, pageElement) {
+                    PageIDS.push(parseInt($(pageElement).val()));
+                });
+                const options = {
+                    url: Uti.Url.Base + '/Security/Company/PageCompanyDeleteCreate',
+                    data: {
+                        CompanyID: parseInt($('#txtCompanyID').val()),
+                        PageIDS: PageIDS
+                    },
+                    type: Uti.Variable.FetchAjax.Type.Post
+                };
+                Uti.Ajax.Custom(options, function (response) {
+                    Uti.Modal.Message(response.type, response.message, response.function);
+                    if (response.type === Uti.Message.Type.Session) {
+                        Uti.Modal.Process();
+                    };
+                    if (response.type === Uti.Message.Type.Success) {
+                        Uti.Modal.Process();             
+                    };
+                });
             }
         }
     };

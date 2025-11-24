@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Company;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.PageCompany;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Ubigeo;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.CompanyService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.ConstantService;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.PageCompanyService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.UbigeoService;
 using SIGC.Presentation.AspNetCoreMVC.Controllers;
 using SIGC.Presentation.AspNetCoreMVC.Helpers;
@@ -16,11 +18,18 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Security.Controllers
         private readonly ICompanyService CompanyService;
         private readonly IConstantService ConstantService;
         private readonly IUbigeoService UbigeoService;
-        public CompanyController(ICompanyService CompanyService, IConstantService ConstantService, IUbigeoService UbigeoService)
+        private readonly IPageCompanyService PageCompanyService;
+        public CompanyController(
+            ICompanyService CompanyService,
+            IConstantService ConstantService,
+            IUbigeoService UbigeoService,
+            IPageCompanyService PageCompanyService
+        )
         {
             this.CompanyService = CompanyService;
             this.ConstantService = ConstantService;
             this.UbigeoService = UbigeoService;
+            this.PageCompanyService = PageCompanyService;
         }
 
         public async Task<IActionResult> Index()
@@ -42,6 +51,12 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Security.Controllers
         public async Task<IActionResult> CompanyCreate([FromForm] CompanyCreateUpdateRequestModel Request)
         { 
             return Json(await CompanyService.CompanyCreate(Request));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PageCompanyDeleteCreate([FromBody] PageCompanyDeleteCreateRequestModel Request)
+        {
+            return Json(await PageCompanyService.PageCompanyDeleteCreate(Request));
         }
 
         [HttpPut]

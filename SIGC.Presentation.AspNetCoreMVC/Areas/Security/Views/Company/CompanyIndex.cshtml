@@ -32,9 +32,25 @@
                 <partial name="CompanyForm" />
             </div>
             <div class="tab-pane" id="tab-info" role="tabpanel">
-                <div class="p-3">
-                    <label class="col-sm-3 col-form-label">Estructura Pagina</label>
-                    <div class="col-sm-4 border" id="div-treeview-page" style=" overflow: hidden scroll;max-height: 420px;">
+                <div class="row p-3">
+                    <div class="col-sm-9">
+                        <div class="row pb-2">
+                            <label class="col-sm-2 col-form-label">Razón social</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="txtCompanySocialReasonInfo" readonly />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <label class="col-sm-3 col-form-label">Estructura Pagina</label>
+                        <div class="col-sm-6 border" id="div-treeview-page" style=" overflow: hidden scroll;max-height: 420px;">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 pb-4 mt-3">
+                    <div class="text-end">
+                        <button type="button" class="btn btn-light" id="btnCompanyReturn"><i class="ri-reply-fill align-bottom me-1 fs-13"></i>&nbsp;Retornar&nbsp;</button>&nbsp;&nbsp;
+                        <button type="button" class="btn btn-primary" id="btnCompanyAsignarPage"><i class="ri-check-fill align-bottom me-1 fs-13"></i><span>Asignar</span></button>
                     </div>
                 </div>
             </div>
