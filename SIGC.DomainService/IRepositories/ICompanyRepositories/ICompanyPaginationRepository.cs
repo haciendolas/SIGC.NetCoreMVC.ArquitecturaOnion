@@ -5,6 +5,6 @@ namespace SIGC.DomainService.IRepositories.ICompanyRepositories
 {
     public interface ICompanyPaginationRepository
     {
-        Task<PaginationResponseDto<CompanyPaginationResponseDto>> PaginationAsync(CompanyPaginationResquestDto CompanyPaginationResquest, CancellationToken CancellationToken = default);
+        Task<PaginationResponseDto<CompanyPaginationResponseDto>> PaginationAsync(CompanyPaginationRequestDto CompanyPaginationResquest, CancellationToken CancellationToken = default);
     }
 }

@@ -2,35 +2,30 @@
     Layout = null;
 }
 <div class="card-body border-bottom-dashed border-bottom">
-    <form> 
-        <div class="row  g-3 pb-2">
+    <form method="dialog">
+        <div class="row pb-2">           
+             <label for="txtsUserFullName" class="col-sm-2 col-form-label">Apellidos y Nombres</label>
             <div class="col-sm-4">
-                <label for="scboEmpresaInspeccionadora">Apellidos y Nombres</label>
-                <input type="text" class="form-control" id="txtsNroInspeccion" name="txtsNroInspeccion" />
+                <input type="text" class="form-control" id="txtsUserFullName" name="sUserFullName" maxlength="50" />
             </div>
+            <label for="txtsUserName" class="col-sm-1 col-form-label">Usuario</label>
             <div class="col-sm-2">
-                <label for="scboEmpresaInspeccionadora">Usuario</label>
-                <input type="text" class="form-control" id="txtsNroInspeccion" name="txtsNroInspeccion" />
+                <input type="text" class="form-control" id="txtsUserName" name="sUserName" maxlength="20" />
             </div>
+            <label for="scboStateID" class="col-sm-1 col-form-label">Estado</label>
             <div class="col-sm-2">
-                <label for="scboAreaInspeccionadora">Estado</label>
-                <select class="form-select" id="scboAreaInspeccionadora" name="scboAreaInspeccionadora">
+                <select class="form-select" id="scboStateID" name="sStateID">
+                    <option value="10">Todos</option>
+                    <option value="1">Activo</option>
+                    <option value="0">Inactivo</option>
                 </select>
-            </div>
-            <div class="col-sm-4">
-                <label>&nbsp;</label>
-                <div class="row g-3">
-                    <div class="col-sm-6">
-                        <button type="button" class="btn btn-info w-100" id="sbtnBuscar"><i class="ri-search-line search-icon me-2 align-bottom"></i>Buscar</button>
-                    </div> 
-                </div>
-            </div>
+            </div> 
         </div>
     </form>
 </div>
 <div class="card-body">
     <div class="table-responsive table-card mb-1">
-        <table class="table align-middle">
+        <table class="table align-middle" id="dtUser">
             <thead class="table-light text-muted">
                 <tr>
                     <th class="text-center">ID</th>                    
@@ -41,7 +36,7 @@
                     <th class="text-center">Estado</th>
                     <th class="text-center">Última fecha</th>
                     <th class="text-center">Último usuario </th>        
-                    <th class="text-center" colspan="2">Opciones</th>
+                    <th class="text-center" colspan="3">Opciones</th>
                 </tr>
             </thead>
             <tbody id="details-list">

@@ -158,5 +158,13 @@ namespace SIGC.Presentation.AspNetCoreMVC.Helpers
             Active= 1,
             Delete = 2
         }
+
+        public enum RecordOrigin : byte
+        {
+            WebForm = 1,
+            WebExcel = 2,
+            MobileForm = 3,
+            MobileExcel = 4
+        }
     }
 }

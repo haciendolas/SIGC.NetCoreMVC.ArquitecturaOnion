@@ -10,7 +10,7 @@ namespace SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleCreate
       string RoleCode,
       string RoleName,
       string RoleDescription,
-      StateEnum StateID,
+      RecordStateEnum StateID,
       List<RolePermissionCreateCommandRequest> RolePermission
     ) :IRequest<MsgResponse<object?>>;    
 }

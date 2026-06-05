@@ -8,6 +8,6 @@ namespace SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleChangeState
     (
         int CompanyID,
         int RoleID,
-        StateEnum StateID
+        RecordStateEnum StateID
     ):IRequest<MsgResponse<object?>>;    
 }

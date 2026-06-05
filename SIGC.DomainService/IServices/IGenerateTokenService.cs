@@ -1,6 +1,4 @@
-﻿
-using SIGC.DomainModel;
-using SIGC.DomainModel.Dtos;
+﻿using SIGC.DomainModel.Dtos;
 
 namespace SIGC.DomainService.IServices
 {

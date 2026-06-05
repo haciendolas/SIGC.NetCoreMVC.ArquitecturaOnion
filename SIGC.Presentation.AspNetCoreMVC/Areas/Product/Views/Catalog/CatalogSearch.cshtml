@@ -1,0 +1,105 @@
+﻿@using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Constant
+@{
+    Layout = null;
+}
+<div class="card-body border-bottom-dashed border-bottom">
+    <form method="dialog">
+        <div class="row pb-2">
+            <label for="scboTaxpayerTypeID" class="col-sm-1 col-form-label">Tipo</label>
+            <div class="col-sm-3">
+                <select class="form-select" id="scboTaxpayerTypeID">
+                    @if (@ViewBag.TaxpayerTypeList != null)
+                    {
+                        <option>Todos</option>
+                        var TaxpayerTypeList = ViewBag.TaxpayerTypeList as List<ConstantListResponseModel>;
+                        @foreach (var Item in TaxpayerTypeList!)
+                        {
+                            <option value="@Item.ConstantID">@Item.ConstantName</option>
+                        }
+                    }
+                </select>
+            </div>
+            <label for="txtNroInspeccion" class="col-sm-1 col-form-label">Categoria</label>
+            <div class="col-sm-3">
+                <select class="form-select" id="scboRubroID">
+                    @if (@ViewBag.RubroList != null)
+                    {
+                        <option>Todos</option>
+                        var RubroList = ViewBag.RubroList as List<ConstantListResponseModel>;
+                        @foreach (var Item in RubroList!)
+                        {
+                            <option value="@Item.ConstantID">@Item.ConstantName</option>
+                        }
+                    }
+                </select>
+            </div>
+            <label for="txtNroInspeccion" class="col-sm-1 col-form-label">Familia</label>
+            <div class="col-sm-3">
+                <select class="form-select" id="scboRubroID">
+                    @if (@ViewBag.RubroList != null)
+                    {
+                        <option>Todos</option>
+                        var RubroList = ViewBag.RubroList as List<ConstantListResponseModel>;
+                        @foreach (var Item in RubroList!)
+                        {
+                            <option value="@Item.ConstantID">@Item.ConstantName</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="row pb-2">
+            <label for="stxtCompanyDocumentNumber" class="col-sm-1 col-form-label">Nombre</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" id="stxtCompanyDocumentNumber" maxlength="15" />
+            </div>
+            <label for="txtNroInspeccion" class="col-sm-1 col-form-label">Marca</label>
+            <div class="col-sm-2">
+                <select class="form-select" id="scboRubroID">
+                    @if (@ViewBag.RubroList != null)
+                    {
+                        <option>Todos</option>
+                        var RubroList = ViewBag.RubroList as List<ConstantListResponseModel>;
+                        @foreach (var Item in RubroList!)
+                        {
+                            <option value="@Item.ConstantID">@Item.ConstantName</option>
+                        }
+                    }
+                </select>
+            </div>
+            <label for="scboStateID" class="col-sm-1 col-form-label">Estado</label>
+            <div class="col-sm-2">
+                <select class="form-select" id="scboStateID" name="sStateID">
+                    <option value="10">Todos</option>
+                    <option value="1">Activo</option>
+                    <option value="0">Inactivo</option>
+                </select>
+            </div>
+        </div> 
+    </form>
+</div>
+<div class="card-body">
+    <div class="table-responsive table-card p-1">
+        <table class="table align-middle" id="dtCompany">
+            <thead class="table-light text-muted">
+                <tr>
+                    <th class="text-center">ID</th>                    
+                    <th class="text-center">Tipo </th>
+                    <th class="text-center">Imagen</th>
+                    <th class="text-center">Nombre</th>
+                    <th class="text-center">Unid.Medida</th>                
+                    <th class="text-center">Presentación</th>
+                    <th class="text-center">Clasificación</th>
+                    <th class="text-center">Precio</th>
+                    <th class="text-center">Estado</th>
+                    <th class="text-center">Última fecha</th>
+                    <th class="text-center">Último usuario </th>        
+                    <th class="text-center" colspan="2">Opciones</th>
+                </tr>
+            </thead>
+            <tbody id="details-list">
+            </tbody>
+        </table>
+    </div>
+</div>

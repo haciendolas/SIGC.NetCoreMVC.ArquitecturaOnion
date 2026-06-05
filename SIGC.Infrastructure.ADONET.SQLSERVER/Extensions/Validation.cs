@@ -52,7 +52,10 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Extensions
         {
             return reader.IsDBNull(reader.GetOrdinal(ColumnName)) ? TimeSpan.MinValue : reader.GetTimeSpan(reader.GetOrdinal(ColumnName));
         }
-
+        public static byte SqlDBToTinyint(ref SqlDataReader reader, string ColumnName)
+        {
+            return reader.IsDBNull(reader.GetOrdinal(ColumnName)) ? (byte)0 : (byte)reader[ColumnName];
+        }
         #endregion  "INICIO VALIDACION PARA MSSQL"     
 
         #endregion "Validaciones para Tipo de dato

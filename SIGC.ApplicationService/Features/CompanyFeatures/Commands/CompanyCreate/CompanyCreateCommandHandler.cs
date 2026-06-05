@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using SIGC.ApplicationService.Commons;
 using SIGC.DomainModel.Dtos;
 using SIGC.DomainModel.Models;
 using SIGC.DomainModel.ValueObjects;
@@ -20,8 +21,10 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Commands.CompanyCreat
         private readonly IUnitOfWork UnitOfWork;
         private readonly IFileStorageService FileStorageService;
         private readonly ICompanyRegisterCreateRepository CompanyRegisterCreateRepository;
-        private readonly string FolderCompany = "Company";
+        private readonly FileUploadSettings FileUploadSettings;
+
         public CompanyCreateCommandHandler(
+            FileUploadSettings FileUploadSettings,
             ICurrentSessionService CurrentSessionService,
             IMessageService MessageService,
             ICompanyCreateRepository CompanyCreateRepository,
@@ -31,6 +34,7 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Commands.CompanyCreat
             ICompanyRegisterCreateRepository CompanyRegisterCreateRepository
             )
         {
+            this.FileUploadSettings = FileUploadSettings;
             this.CurrentSessionService = CurrentSessionService;
             this.MessageService = MessageService;
             this.CompanyCreateRepository = CompanyCreateRepository;
@@ -81,7 +85,7 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Commands.CompanyCreat
                         if (Request.File is not null)
                         {
                             FileEntry.FileName = Model.CompanyLogo;
-                            FileEntry.FileLocation = $"{FolderCompany}/{Model.CompanyLogo}";
+                            FileEntry.FileLocation = $"{FileUploadSettings.CompanyLogoLocation}/{Model.CompanyLogo}";
                             await FileStorageService.CreateAsync(FileEntry, Request.File.OpenReadStream(), CancellationToken);
                         }
                         MsgResponse.Type = MessageTypeConst.SUCCESS;
@@ -91,6 +95,7 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Commands.CompanyCreat
                     }
                     else
                     {
+                        await UnitOfWork.RollbackTransactionAsync(CancellationToken);
                         MsgResponse.Type = MessageTypeConst.ERROR;
                         MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.ERROR_INSERT);
                     }

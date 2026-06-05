@@ -16,8 +16,11 @@ namespace SIGC.ApplicationService.Features.AuthFeatures.Queries.AuthLoginToken
          IAuthLoginRepository AuthLoginRepository,        
          IGenerateTokenService GenerateTokenService,
          ITokenCreateRepository TokenCreateRepository,
-         IAuthMapper AuthMapper
+         IAuthMapper AuthMapper,
+         IFileStorageService FileStorageService 
     ) : IRequestHandler<AuthLoginTokenQueryRequest, MsgResponse<AuthTokenResponseDto?>>{
+
+        private string FolderUser = "User";
         public async Task<MsgResponse<AuthTokenResponseDto?>> Handle(AuthLoginTokenQueryRequest Request, CancellationToken CancellationToken)
         {
             var UserLoginRequest = new AuthLoginRequestDto()
@@ -37,11 +40,20 @@ namespace SIGC.ApplicationService.Features.AuthFeatures.Queries.AuthLoginToken
             }
             else{
                 MsgResponse.Message = MessageDescriptionConst.VALID_CREDENTIAL_DESCRIPTION;
-                AppUserDto AppUser = AuthMapper.AuthLoginResponseToAppUser(AuthLoginResponse.Value); 
+                AppUserDto AppUser = AuthMapper.AuthLoginResponseToAppUser(AuthLoginResponse.Value);
+
+                FileEntryDto FileEntry = new FileEntryDto(AuthLoginResponse.Value.UserPhoto, $"{FolderUser}/{AuthLoginResponse.Value.UserPhoto}");
+
                 var AuthTokenResponse = new AuthTokenResponseDto()
                 {
                     AccessToken = await GenerateTokenService.GenerateJWTToken(AppUser),
-                    RefreshToken = await GenerateTokenService.GenerateRandomToken()
+                    RefreshToken = await GenerateTokenService.GenerateRandomToken(),
+                    AccountInfo = new AccountInfo
+                    {
+                        UserPhotoUrl = string.IsNullOrWhiteSpace(AuthLoginResponse.Value.UserPhoto) ? "" : FileStorageService.GetFileUrl(FileEntry),
+                        UserFirstName = AuthLoginResponse.Value.UserFirstName,
+                        UserLastName = AuthLoginResponse.Value.UserLastName,
+                    }
                 };
                 var Model = new Token()
                 {

@@ -5,12 +5,18 @@ using SIGC.DomainService.IRepositories.ICategoryRepositories;
 using SIGC.DomainService.IRepositories.ICompanyRegisterRepositories;
 using SIGC.DomainService.IRepositories.ICompanyRepositories;
 using SIGC.DomainService.IRepositories.IConstantRepositories;
+using SIGC.DomainService.IRepositories.IEstablishmentRepositories;
 using SIGC.DomainService.IRepositories.IPageCompanyRepositories;
 using SIGC.DomainService.IRepositories.IPageRepositories;
 using SIGC.DomainService.IRepositories.IRolePermissionRepositories;
 using SIGC.DomainService.IRepositories.IRoleRepositories;
 using SIGC.DomainService.IRepositories.ITokenRepositories;
 using SIGC.DomainService.IRepositories.IUbigeoRepositories;
+using SIGC.DomainService.IRepositories.IUserCompanyRepositories;
+using SIGC.DomainService.IRepositories.IUserRepositories;
+using SIGC.DomainService.IRepositories.IUserRoleRepositories;
+using SIGC.DomainService.IRepositories.IWarehouseRepositories;
+using SIGC.DomainService.IRepositories.UserRoleRepositories;
 using SIGC.DomainService.Transactions;
 using SIGC.Infrastructure.ADONET.SQLSERVER.AppDBContext;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.AuthRepositories;
@@ -18,12 +24,17 @@ using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CategoryRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CompanyRegisterRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CompanyRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.ConstantRepositories;
+using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.EstablishmentRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.PageCompanyRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.PageRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RolePermissionRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RoleRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.TokenRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.UbigeoRepositories;
+using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.UserCompanyRepositories;
+using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.UserRepositories;
+using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.UserRoleRepositories;
+using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.WarehouseRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Transactions;
 
 namespace SIGC.Infrastructure.ADONET.SQLSERVER
@@ -53,7 +64,8 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
             services.AddScoped<ICategoryCreateRepository, CategoryCreateRepository>();
             services.AddScoped<ICategoryGetRepository, CategoryGetRepository>();
             services.AddScoped<ICategoryUpdateRepository, CategoryUpdateRepository>();
-            services.AddScoped<ICategoryValidateRepository, CategoryValidateRepository>();
+            services.AddScoped<ICategoryVerifyNameRepository, CategoryVerifyNameRepository>();
+            services.AddScoped<ICategoryPaginationRepository, CategoryPaginationRepository>();
 
             services.AddScoped<IRolePermissionListRepository, RolePermissionListRepository>();
             services.AddScoped<IRolePermissionCreateRepository, RolePermissionCreateRepository>();
@@ -65,6 +77,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
             services.AddScoped<IRoleUpdateRepository, RoleUpdateRepository>();
             services.AddScoped<IRoleVerifyCodeAndNameRepository, RoleVerifyCodeAndNameRepository>();
             services.AddScoped<IRoleGetRepository, RoleGetRepository>();
+            services.AddScoped<IRoleListRepository, RoleListRepository>();
 
             services.AddScoped<IPageListRepository, PageListRepository>();
 
@@ -88,7 +101,29 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
             services.AddScoped<IUbigeoListByClassAndCodeAndLenCodeRepository, UbigeoListByClassAndCodeAndLenCodeRepository>();
 
             services.AddScoped<IConstantListRepository, ConstantListRepository>();
-            
+
+            services.AddScoped<IUserCreateRepository, UserCreateRepository>();
+            services.AddScoped<IUserVerifyNameAndMailRepository, UserVerifyNameAndMailRepository>();
+            services.AddScoped<IUserPaginationRepository, UserPaginationRepository>();
+            services.AddScoped<IUserUpdateRepository, UserUpdateRepository>();
+
+            services.AddScoped<IUserCompanyCreateRepository, UserCompanyCreateRepository>();
+            services.AddScoped<IUserCompanyChangeStateRepository, UserCompanyChangeStateRepository>();
+            services.AddScoped<IUserCompanyGetRepository, UserCompanyGetRepository>();
+            services.AddScoped<IUserCompanyUpdateRepository, UserCompanyUpdateRepository>();
+
+            services.AddScoped<IUserRoleCreateRepository, UserRoleCreateRepository>();
+            services.AddScoped<IUserRoleDeleteRepository, UserRoleDeleteRepository>();
+
+            services.AddScoped<IEstablishmentListRepository,EstablishmentListRepository>();
+            services.AddScoped<IEstablishmentPaginationRepository, EstablishmentPaginationRepository>();
+            services.AddScoped<IEstablishmentCreateRepository, EstablishmentCreateRepository>();
+            services.AddScoped<IEstablishmentGetRepository, EstablishmentGetRepository>();
+            services.AddScoped<IEstablishmentChangeStateRepository, EstablishmentChangeStateRepository>();
+            services.AddScoped<IEstablishmentUpdateRepository, EstablishmentUpdateRepository>();
+
+            services.AddScoped<IWarehousePaginationRepository, WarehousePaginationRepository>();
+            services.AddScoped<IWarehouseCreateRepository, WarehouseCreateRepository>();
             return services;
         }
     }

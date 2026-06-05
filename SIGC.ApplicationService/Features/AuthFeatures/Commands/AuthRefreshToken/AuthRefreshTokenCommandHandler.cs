@@ -40,7 +40,7 @@ namespace SIGC.ApplicationService.Features.AuthFeatures.Commands.AuthRefreshToke
                 }
                 else{                    
                     var TokenGetResponse = await TokenGetRepository.GetExpirationAsync(new 
-                                     TokenGetExpirationResquestDto(
+                                     TokenGetExpirationRequestDto(
                                         UserID: ClaimsPrincipal.UserID.Value,
                                         TokenRefreshRandom: Request.RefreshToken,
                                         TokenExpirationDateTime: DateTime.Now

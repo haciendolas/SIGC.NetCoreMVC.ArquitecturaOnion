@@ -19,10 +19,13 @@ namespace SIGC.ApplicationService.Features.CategoryFeatures.Commands.CategoryCha
             try
             {
                 var Model = Category.ChangeState(
+                    CurrentSessionService.CompanyID,
                     Request.CategoryId,
-                    Request.StateId,
+                    Request.RecordStateId,
                     DateTime.Now,
-                    CurrentSessionService.UserID
+                    CurrentSessionService.UserID,
+                    CurrentSessionService.UserName,
+                    CurrentSessionService.UserFullName
                     );
 
                 var RecordAffected = await CategoryChangeStateRepository.ChangeStateAsync(Model, CancellationToken);

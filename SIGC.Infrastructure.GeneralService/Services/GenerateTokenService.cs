@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using SIGC.DomainModel;
 using SIGC.DomainModel.Dtos;
 using SIGC.DomainService.IServices;
 using SIGC.Infrastructure.CrossCutting.Constants;
@@ -60,6 +59,7 @@ namespace SIGC.Infrastructure.GeneralService.Services
                 new Claim(ClaimTypes.Sid, AppUser.UserID.ToString()),
                 new Claim(ClaimTypes.Name, AppUser.UserName),
                 new Claim(ClaimTypes.Role, AppUser.RoleCodes),
+                new Claim(CustomClaimTypes.USER_FULLNAME, $"{AppUser.UserFirstName} {AppUser.UserLastName}"),
                 new Claim(CustomClaimTypes.COMPANY_ID, AppUser.CompanyID.ToString()),
                 new Claim(CustomClaimTypes.IDIOM_ID, AppUser.IdiomID.ToString()),
                 new Claim(CustomClaimTypes.COMPANY_DOCUMENTNUMBER, AppUser.CompanyDocumentNumber),

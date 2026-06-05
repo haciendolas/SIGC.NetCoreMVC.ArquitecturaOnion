@@ -41,7 +41,7 @@ namespace SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleChangeState
                 if (RecordAffected > 0)
                 {
                     MsgResponse.Type = MessageTypeConst.SUCCESS;
-                    if (Request.StateID == StateEnum.Deleted)                    
+                    if (Request.StateID == RecordStateEnum.Deleted)                    
                         MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.SATISFACTORY_DELETE);                  
                     else
                         MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.SATISFACTORY_CHANGE);

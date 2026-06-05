@@ -10,6 +10,7 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.RoleService
         Task<ApiResponse<object?>> RoleUpdate(RoleCreateUpdateRequestModel Request);
         Task<ApiResponse<object?>> RoleChangeState(RoleChangeStateRequestModel Request);
         Task<ApiResponse<RoleGetResponseModel?>> RoleGet(int RoleID);
+        Task<ApiResponse<List<RoleListResponseModel>>> RoleList(int CompanyID);
         Task<ApiResponse<PaginationResultModel<RolePaginationResponseModel>>> RolePagination(RolePaginationRequestModel Request);   
     }
 }

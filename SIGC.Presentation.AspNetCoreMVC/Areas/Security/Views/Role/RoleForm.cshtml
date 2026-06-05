@@ -2,9 +2,9 @@
     Layout = null;
 }
 <form id="frmRoleCreateUpdate" class="needs-validation" novalidate method="dialog">
-    <h6 class="pt-2">&nbsp;&nbsp;Todos los campos(<i class=" ri-asterisk align-middle text-danger"></i>) son obligatorios</h6>
+    <h6 class="pt-2">&nbsp;&nbsp;Todos los campos(<i class="ri-asterisk align-middle text-danger"></i>) son obligatorios</h6>
     <div class="card-body">
-        <div class="row align-items-center g-3">
+        <div class="row g-3">
             <div class="row pb-2">
                 <label for="txtRoleID" class="col-sm-3 col-form-label">ID</label>
                     <div class="col-sm-4">
@@ -12,21 +12,21 @@
                     </div>
                 </div>
             <div class="row pb-2">
-                <label for="txtRoleCode" class="col-sm-3 col-form-label">Código<i class=" ri-asterisk align-middle text-danger"></i></label>
+                <label for="txtRoleCode" class="col-sm-3 col-form-label">Código<i class="ri-asterisk align-middle text-danger"></i></label>
                     <div class="col-sm-4">
                     <input type="text" class="form-control" id="txtRoleCode" name="RoleCode" />
                     </div>
                 </div>
             <div class="row pb-2">
-                <label for="txtRoleName" class="col-sm-2 col-form-label">Nombre<i class=" ri-asterisk align-middle text-danger"></i></label>
+                <label for="txtRoleName" class="col-sm-2 col-form-label">Nombre<i class="ri-asterisk align-middle text-danger"></i></label>
                     <div class="col-sm-5">
                     <input type="text" class="form-control" id="txtRoleName" name="RoleName" />
                     </div>
                 </div>
             <div class="row pb-2">
-                <label for="txtRoleDescription" class="col-sm-2 col-form-label">Descripción<i class=" ri-asterisk align-middle text-danger"></i></label>
+                <label for="txtRoleDescription" class="col-sm-2 col-form-label">Descripción<i class="ri-asterisk align-middle text-danger"></i></label>
                 <div class="col-sm-5">
-                    <textarea type="text" class="form-control" id="txtRoleDescription" name="RoleDescription"></textarea>
+                    <textarea class="form-control" id="txtRoleDescription" name="RoleDescription"></textarea>
                 </div>
             </div>
             <div class="row pb-2">
@@ -43,13 +43,15 @@
                 <div class="col-sm-4 border" id="div-treeview-page" style=" overflow: hidden scroll;max-height: 420px;">
                 </div>
             </div> 
-            <div class="row col-sm-12 pb-2 mt-3">
-                <div class="text-center">
-                    <button type="button" class="btn btn-light" id="btnRoleNew"><i class="ri-file-text-fill align-bottom me-1 fs-13"></i>&nbsp;Nuevo&nbsp;</button>&nbsp;&nbsp;
-                    <button type="button" class="btn btn-primary" id="btnRoleCreate"><i class="ri-save-3-line align-bottom me-1 fs-13"></i><span>Guardar</span></button>
-                    <button type="button" class="btn btn-primary" id="btnRoleUpdate"><i class="ri-pencil-fill align-bottom me-1 fs-13"></i>Editar&nbsp;</button>
+            <div class="row pb-2">
+                <div class="col-sm-12 mt-3">
+                    <div class="text-center">
+                        <button type="button" class="btn btn-light" id="btnRoleNew"><i class="ri-file-text-fill align-bottom me-1 fs-13"></i>&nbsp;Nuevo&nbsp;</button>&nbsp;&nbsp;
+                        <button type="button" class="btn btn-primary" id="btnRoleCreate"><i class="ri-save-3-line align-bottom me-1 fs-13"></i><span>Guardar</span></button>
+                        <button type="button" class="btn btn-primary" id="btnRoleUpdate"><i class="ri-pencil-fill align-bottom me-1 fs-13"></i>Editar&nbsp;</button>
+                    </div>
                 </div>
-            </div>
-        </div> 
+        </div>
+        </div>
     </div>
 </form> 

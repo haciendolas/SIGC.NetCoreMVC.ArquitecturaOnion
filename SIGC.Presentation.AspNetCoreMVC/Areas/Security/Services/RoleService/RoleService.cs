@@ -31,6 +31,10 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.RoleService
         {
             return await ApiService.GetAsync<ApiResponse<RoleGetResponseModel?>>($"{Controller}/RoleGet/{RoleID}");
         }
+        public async Task<ApiResponse<List<RoleListResponseModel>>> RoleList(int CompanyID)
+        {
+            return await ApiService.GetAsync<ApiResponse<List<RoleListResponseModel>>>($"{Controller}/RoleList/{CompanyID}");
+        }
         public async Task<ApiResponse<PaginationResultModel<RolePaginationResponseModel>>> RolePagination(RolePaginationRequestModel Request)
         {
             return await ApiService.PostAsync<string, ApiResponse<PaginationResultModel<RolePaginationResponseModel>>>($"{Controller}/RolePagination", null ,Request);

@@ -6,6 +6,7 @@
         int UserID { get; }
         int CompanyID { get; }
         string UserName { get; }
+        string UserFullName { get; }
         string CompanyDocumentNumber { get; }
         string CompanySocialReason { get; }
         string CompanyTradeName { get; }

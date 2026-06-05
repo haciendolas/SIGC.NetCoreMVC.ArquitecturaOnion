@@ -3,6 +3,9 @@
     public record struct CategoryGetResponseDto(
          int CategoryId,
          string CategoryName,
-         short StateId
+         string CategorySlug,
+         string CategoryImage,
+         byte RecordStateID,
+         string CategoryUrl
     );    
 }

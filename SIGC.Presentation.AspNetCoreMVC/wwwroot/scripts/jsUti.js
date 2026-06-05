@@ -372,7 +372,7 @@
                     case Uti.Message.Type.ConfirmDelete:// 'Confirm Delete':
                         $('#message-modal-generic').modal('show');
                         $('#message-title-generic').html('¿Estas seguro de eliminar?');
-                        $('#message-description-generic').html(message ?? 'Realmente desea eliminar estos registros,Este proceso no se puede deshacer');
+                        $('#message-description-generic').html(message ?? 'Realmente desea eliminar este registro,Este proceso no se puede deshacer');
                         $('#message-modal-generic #btn-modal-not').show().prop({ 'class': 'btn w-sm btn-light' });
                         $('#message-modal-generic #btn-modal-yes').show().prop({ 'class': 'btn w-sm btn-danger' });
                         $('#message-loard-icon-generic').prop({

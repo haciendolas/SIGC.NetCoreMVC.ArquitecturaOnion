@@ -18,7 +18,7 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Commands.CompanyCreat
         public string? CompanyCorporateEmail { get; set; }
         public string? CompanyMobile { get; set; }
         public string? CompanyPhone { get; set; }    
-        public StateEnum StateID { get; set; }
+        public RecordStateEnum StateID { get; set; }
         public IFileDataService? File { get; set; }
        //public List<IFileDataService>? Files { get; set; } 
     }

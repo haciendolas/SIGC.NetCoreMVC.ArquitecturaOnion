@@ -5,6 +5,7 @@ using SIGC.Presentation.AspNetCoreMVC.Filters;
 using SIGC.Presentation.AspNetCoreMVC.Helpers;
 using SIGC.Presentation.AspNetCoreMVC.Models.Auth;
 using SIGC.Presentation.AspNetCoreMVC.Services.AuthService;
+using SIGC.Presentation.AspNetCoreMVC.Services.EstablishmentService;
 using SIGC.Presentation.AspNetCoreMVC.Services.RolePermissionService;
 
 namespace SIGC.Presentation.AspNetCoreMVC.Controllers
@@ -13,11 +14,14 @@ namespace SIGC.Presentation.AspNetCoreMVC.Controllers
     {       
         private readonly IAuthService AuthService;
         private readonly IRolePermissionService RolePermissionService;
+        private readonly IEstablishmentService EstablishmentService;
         public AuthenticateController(IAuthService AuthService,
-            IRolePermissionService RolePermissionService)
+            IRolePermissionService RolePermissionService,
+            IEstablishmentService EstablishmentService)
         {
             this.AuthService = AuthService;
             this.RolePermissionService = RolePermissionService;
+            this.EstablishmentService = EstablishmentService;
         }
        
         [HttpPost]
@@ -29,8 +33,11 @@ namespace SIGC.Presentation.AspNetCoreMVC.Controllers
             if (ApiResponse.Data is not null)        {
                 Url = "Dashboard";
 
-                var AuthenticationIdentity = ConvertsHelper.ExtractUserInfo(ApiResponse.Data.Value.AccessToken); 
-
+                var AuthenticationIdentity = ConvertsHelper.ExtractUserInfo(ApiResponse.Data.Value.AccessToken);
+                    AuthenticationIdentity.UserImage = ApiResponse.Data.Value.AccountInfo.UserPhotoUrl;
+                    AuthenticationIdentity.UserLastName = ApiResponse.Data.Value.AccountInfo.UserLastName;
+                    AuthenticationIdentity.UserFirstName = ApiResponse.Data.Value.AccountInfo.UserFirstName;
+                    AuthenticationIdentity.UserFullName = $"{ApiResponse.Data.Value.AccountInfo.UserFirstName} {ApiResponse.Data.Value.AccountInfo.UserLastName}";
                 if (HttpContext.Session != null)
                 {
                     if (HttpContext.Session.GetObject<AuthenticationIdentity>(ConstantsHelper.SessionKeys.AuthenticationIdentity) == null)
@@ -53,6 +60,11 @@ namespace SIGC.Presentation.AspNetCoreMVC.Controllers
                             CompanyID = AuthenticationIdentity.CompanyID
                         });
                         HttpContext.Session.SetObject(ConstantsHelper.SessionKeys.MenuSidebar, ApiResponseRolePermission.Data!);
+                    }
+                    if (string.IsNullOrWhiteSpace(HttpContext.Session.GetString(ConstantsHelper.SessionKeys.Establishment)))
+                    {
+                        var ApiResponseEstablishment = await EstablishmentService.EstablishmentList(AuthenticationIdentity.CompanyID);
+                        HttpContext.Session.SetObject(ConstantsHelper.SessionKeys.Establishment, ApiResponseEstablishment.Data!);
                     }
                 }               
             }       

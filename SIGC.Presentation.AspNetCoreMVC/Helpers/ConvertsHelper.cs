@@ -66,6 +66,8 @@ namespace SIGC.Presentation.AspNetCoreMVC.Helpers
             AuthenticationIdentity.CompanySocialReason = JwtSecurityToken.Claims.FirstOrDefault(c => c.Type == ConstantsHelper.CustomClaimTypes.COMPANY_SOCIALREASON)?.Value ?? "";
             AuthenticationIdentity.CompanyTradeName = JwtSecurityToken.Claims.FirstOrDefault(c => c.Type == ConstantsHelper.CustomClaimTypes.COMPANY_TRADENAME)?.Value ?? "";
 
+            AuthenticationIdentity.UserFirstName = JwtSecurityToken.Claims.FirstOrDefault(c => c.Type == ConstantsHelper.CustomClaimTypes.COMPANY_DOCUMENTNUMBER)?.Value ?? "";
+
             var RoleCodes = JwtSecurityToken.Claims.First(f => f.Type == ClaimTypes.Role).Value;
             var RoleList = RoleCodes.Contains(',') ? RoleCodes.Split(",").ToList() : new List<string> { RoleCodes };
 

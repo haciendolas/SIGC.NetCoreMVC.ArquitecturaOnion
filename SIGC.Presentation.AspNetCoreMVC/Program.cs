@@ -1,14 +1,21 @@
+using Microsoft.Extensions.FileProviders;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Organization.Services.EstablishmentService;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Organization.Services.WarehouseService;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CategoryService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.CompanyService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.ConstantService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.PageCompanyService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.PageService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.RoleService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.UbigeoService;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.UserCompanyService;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.UserService;
 using SIGC.Presentation.AspNetCoreMVC.Filters;
 using SIGC.Presentation.AspNetCoreMVC.Helpers;
 using SIGC.Presentation.AspNetCoreMVC.Services;
-using SIGC.Presentation.AspNetCoreMVC.Services.AuthService;
+using SIGC.Presentation.AspNetCoreMVC.Services.AuthService; 
 using SIGC.Presentation.AspNetCoreMVC.Services.RolePermissionService;
+ 
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,6 +53,12 @@ builder.Services.AddScoped<IPageCompanyService, PageCompanyService>();
 builder.Services.AddScoped<ICompanyService,CompanyService>();
 builder.Services.AddScoped<IUbigeoService,UbigeoService>();
 builder.Services.AddScoped<IConstantService,ConstantService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserCompanyService, UserCompanyService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<SIGC.Presentation.AspNetCoreMVC.Services.EstablishmentService.IEstablishmentService, SIGC.Presentation.AspNetCoreMVC.Services.EstablishmentService.EstablishmentService>();
+builder.Services.AddScoped<IEstablishmentService, EstablishmentService>();
+builder.Services.AddScoped<IWarehouseService, WarehouseService>();
 
 var app = builder.Build();
 
@@ -59,6 +72,27 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+// Sirve todos los Scripts dentro de todas las Areas
+var areasPath = Path.Combine(Directory.GetCurrentDirectory(), "Areas");
+if (Directory.Exists(areasPath))
+{
+    foreach (var areaDir in Directory.GetDirectories(areasPath))
+    {
+        var areaName = Path.GetFileName(areaDir);
+        var scriptsDir = Path.Combine(areaDir, "Scripts");
+
+        if (Directory.Exists(scriptsDir))
+        {
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(scriptsDir),
+                //RequestPath = $"/Areas/{areaName}/Scripts"   //En la vista debe agregarse asi <script type="text/javascript" src="~/Areas/Product/Scripts/ProductIndex.js?v=1.0"></script>
+                RequestPath = "/" + areaName + "/Scripts"  //En la vista debe agregarse asi <script type="text/javascript" src="~/Product/Scripts/ProductIndex.js?v=1.0"></script>
+            });
+        }
+    }
+}
 
 app.UseRouting();
 
@@ -77,7 +111,8 @@ app.Use(async (context, next) =>
         context.Response.Redirect("/Login");
     }
 });
-*/
+*/ 
+
 app.MapControllerRoute(
     name: "areas",
    // pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"

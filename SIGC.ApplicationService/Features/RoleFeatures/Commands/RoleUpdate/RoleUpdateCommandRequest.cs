@@ -11,7 +11,7 @@ namespace SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleUpdate
       string RoleCode,
       string RoleName,
       string RoleDescription,
-      StateEnum StateID,
+      RecordStateEnum StateID,
       List<RolePermissionUpdateCommandRequest> RolePermission
     ): IRequest<MsgResponse<object?>>;
 }

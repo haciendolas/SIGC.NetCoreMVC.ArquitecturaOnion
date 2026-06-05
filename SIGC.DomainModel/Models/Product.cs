@@ -8,13 +8,13 @@ namespace SIGC.DomainModel.Models
         public int CategoryId { get; private set; }
         public string ProductCode { get; private set; } = null!;
         public string ProductName { get; private set; } = null!;
-        public StateEnum StateId { get; private set; }
+        public RecordStateEnum StateId { get; private set; }
         public DateTime CreatedDate { get; private set; }
         public int CreatedBy { get; private set; }
 
         protected Product() { }
 
-        public static Product Create(int CategoryId,string ProductCode,string ProductName, StateEnum StateId, DateTime CreatedDate,int CreatedBy) {
+        public static Product Create(int CategoryId,string ProductCode,string ProductName, RecordStateEnum StateId, DateTime CreatedDate,int CreatedBy) {
 
             Validate(CategoryId, ProductCode, ProductName, CreatedDate, CreatedBy);
             return new Product {
@@ -27,7 +27,7 @@ namespace SIGC.DomainModel.Models
             };
         }
 
-        public static Product Update(int ProductId, int CategoryId, string ProductCode, string ProductName, StateEnum StateId, DateTime UpdatedDate, int UpdatedBy)
+        public static Product Update(int ProductId, int CategoryId, string ProductCode, string ProductName, RecordStateEnum StateId, DateTime UpdatedDate, int UpdatedBy)
         {
             Validate(CategoryId, ProductCode, ProductName, UpdatedDate, UpdatedBy);
             return new Product

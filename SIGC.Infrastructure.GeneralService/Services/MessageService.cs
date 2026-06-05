@@ -55,7 +55,12 @@ public class MessageService(IServiceProvider ServiceProvider) : IMessageService
                 { MessageDescriptionConst.VALID_JWT_TOKEN, "The token is valid but not expired." },
                 { MessageDescriptionConst.INVALID_RANDOM_TOKEN, "The refresh token is invalid or has expired." },
                 { MessageDescriptionConst.EXIST_ROLE_ROLECODE, "The role code already exists." },
-                { MessageDescriptionConst.EXIST_ROLE_ROLENAME, "The role name already exists." }
+                { MessageDescriptionConst.EXIST_ROLE_ROLENAME, "The role name already exists." },
+                { MessageDescriptionConst.EXIST_USER_USERNAME, "The user name already exists." },
+                { MessageDescriptionConst.EXIST_USER_USERMAIL, "The user's email address already exists." },
+                { MessageDescriptionConst.EXIST_USER_NAME_AND_MAIL, "The user and email already exist." },
+                { MessageDescriptionConst.EXIST_ESTABLISHMENT_ESTABLISHMENTNAME, "The establishment name already exists." },
+                { MessageDescriptionConst.EXIST_WAREHOUSE_WAREHOUSENAME, "The warehouse name already exists." }
             },
 
             [(short)IdiomEnum.Spanish] = new()
@@ -90,7 +95,11 @@ public class MessageService(IServiceProvider ServiceProvider) : IMessageService
                 { MessageDescriptionConst.INVALID_RANDOM_TOKEN, "El refresh token es inválido o ha expirado." },
                 { MessageDescriptionConst.EXIST_ROLE_ROLECODE, "El código del rol ya existe." },
                 { MessageDescriptionConst.EXIST_ROLE_ROLENAME, "El nombre de role ya existe." },
-
+                { MessageDescriptionConst.EXIST_USER_USERNAME, "El nombre de usuario ya existe." },
+                { MessageDescriptionConst.EXIST_USER_USERMAIL, "El correo del usuario ya existe." },
+                { MessageDescriptionConst.EXIST_USER_NAME_AND_MAIL, "El usuario y el correo ya existe." },
+                { MessageDescriptionConst.EXIST_ESTABLISHMENT_ESTABLISHMENTNAME, "El nombre del establecimiento ya existe." },
+                { MessageDescriptionConst.EXIST_WAREHOUSE_WAREHOUSENAME, "El nombre del almacen ya existe." }
             }
         };
     }

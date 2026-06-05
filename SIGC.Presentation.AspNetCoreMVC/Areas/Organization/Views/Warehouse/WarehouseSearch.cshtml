@@ -1,0 +1,41 @@
+﻿@{
+    Layout = null;
+}
+<div class="card-body border-bottom-dashed border-bottom">
+    <form method="dialog">
+        <div class="row pb-2">
+            <label for="stxtWarehouseName" class="col-sm-2 col-form-label">Nombre Almacen</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="stxtWarehouseName" name="sWarehouseName" maxlength="50" />
+            </div>
+            <label for="scboStateID" class="col-sm-2 col-form-label">Estado</label>
+            <div class="col-sm-2">
+                <select class="form-select" id="scboStateID" name="sStateID">
+                    <option value="10">Todos</option>
+                    <option value="1">Activo</option>
+                    <option value="0">Inactivo</option>
+                </select>
+            </div> 
+        </div>
+    </form>
+</div>
+<div class="card-body">
+    <div class="table-responsive table-card p-1">
+        <table class="table align-middle" id="dtWarehouse">
+            <thead class="table-light text-muted">
+                <tr>
+                    <td class="text-center">Establecimiento</td>
+                    <td class="text-center">ID</td>               
+                    <td class="text-center">Código</td>
+                    <td class="text-center">Nombre</td>                  
+                    <td class="text-center">Estado</td>
+                    <td class="text-center">Última fecha</td>
+                    <td class="text-center">Último usuario </td>
+                    <td class="text-center" colspan="2" style="width:8%">Opciones</td>
+                </tr>
+            </thead>
+            <tbody id="details-list">
+            </tbody>
+        </table>
+    </div>
+</div>

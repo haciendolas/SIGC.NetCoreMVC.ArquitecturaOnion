@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.AspNetCore.WebUtilities;
 using SIGC.Presentation.AspNetCoreMVC.Helpers;
+using System.Collections;
 using System.Net.Http.Headers;
 using System.Reflection; 
 using System.Text.Json;
@@ -171,6 +172,54 @@ namespace SIGC.Presentation.AspNetCoreMVC.Services
                     form.Add(fileContent, prop.Name, prop.Name + ".bin");
                     continue;
                 }
+
+                // Soporte para listas (string, int, objetos, etc.)
+                if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>))
+                {
+                    var itemType = type.GetGenericArguments()[0];
+                    var enumerable = (IEnumerable)value;
+
+                    // ✔ Lista de tipos simples (int, string, decimal, bool, Guid, etc.)
+                    if (itemType.IsPrimitive ||
+                        itemType == typeof(string) ||
+                        itemType == typeof(decimal) ||
+                        itemType == typeof(Guid) ||
+                        itemType == typeof(DateTime))
+                    {
+                        foreach (var item in enumerable)
+                        {
+                            if (item != null)
+                                form.Add(new StringContent(item.ToString()!), prop.Name);
+                        }
+
+                        continue;
+                    }
+
+                    // ✔ Lista de objetos complejos
+                    int index = 0;
+                    foreach (var item in enumerable)
+                    {
+                        if (item == null) { index++; continue; }
+
+                        var subProps = itemType.GetProperties();
+                        foreach (var subProp in subProps)
+                        {
+                            var subValue = subProp.GetValue(item);
+                            if (subValue == null) continue;
+
+                            // Formato requerido por ASP.NET Core:
+                            // Ej: Roles[0].Id   Roles[0].Name
+                            string fieldName = $"{prop.Name}[{index}].{subProp.Name}";
+
+                            form.Add(new StringContent(subValue.ToString()!), fieldName);
+                        }
+
+                        index++;
+                    }
+
+                    continue;
+                }
+
 
                 // Propiedades normales (string, int, etc.)
                 form.Add(new StringContent(value.ToString()!), prop.Name);

@@ -1,30 +1,46 @@
-﻿@{
+﻿@using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Company
+@{
     ViewBag.Title = "USUARIO";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="card" id="user-card">
+    @if (@ViewBag.CompanyList != null)
+    {
+        var CompanyList = ViewBag.CompanyList as List<CompanyListResponseModel>;
+        <div class="card-header p-2">
+            <select id="cboCompanyID" name="CompanyID" class="form-select">
+                @foreach (var Item in CompanyList!)
+                {
+                    <option value="@Item.CompanyID">@Item.CompanyDocumentNumber - @Item.CompanySocialReason</option>
+                }
+            </select>
+        </div>
+    }
     <div class="card-body p-0">
         <ul class="nav nav-tabs nav-border-top nav-border-top-primary mb-3" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" data-bs-toggle="tab" href="#nav-border-top-home" role="tab" aria-selected="true">
+                <a class="nav-link active" data-bs-toggle="tab" href="#tab-search" role="tab" aria-selected="true">
                     <i class="ri-list-ordered align-middle me-1 fs-20"></i>
                     Busqueda Usuario
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#nav-border-top-profile" role="tab" aria-selected="false">
+                <a class="nav-link" data-bs-toggle="tab" href="#tab-register" role="tab" aria-selected="false">
                     <i class="ri-book-3-fill align-middle me-1 fs-20"></i>
                     Formulario Usuario
                 </a>
             </li>
         </ul>
         <div class="tab-content text-muted">
-            <div class="tab-pane active" id="nav-border-top-home" role="tabpanel">
+            <div class="tab-pane active" id="tab-search" role="tabpanel">
                 <partial name="UserSearch" />
             </div>
-            <div class="tab-pane" id="nav-border-top-profile" role="tabpanel">
+            <div class="tab-pane" id="tab-register" role="tabpanel">
                 <partial name="UserForm" />
             </div>
         </div>
     </div>
 </div>
+@section Scripts {
+    <script type="text/javascript" src="~/Security/Scripts/UserIndex.js?v=1.0"></script>
+}

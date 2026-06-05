@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using SIGC.ApplicationService.Commons;
 using SIGC.DomainModel.Dtos;
 using SIGC.DomainModel.Models;
 using SIGC.DomainService.IRepositories.ICompanyRepositories;
@@ -15,8 +16,10 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Commands.CompanyUpdat
         private readonly ICompanyUpdateRepository CompanyUpdateRepository;
         private readonly ICompanyVerifyDocumentNumberAndSocialReasonRepository CompanyVerifyDocumentNumberAndSocialReasonRepository;
         private readonly IFileStorageService FileStorageService;
-        private readonly string FolderCompany = "Company";
+        private readonly FileUploadSettings FileUploadSettings;
+
         public CompanyUpdateCommandHandler(
+            FileUploadSettings FileUploadSettings,
             ICurrentSessionService CurrentSessionService,
             IMessageService MessageService,
             ICompanyUpdateRepository CompanyUpdateRepository,
@@ -24,6 +27,7 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Commands.CompanyUpdat
             IFileStorageService FileStorageService
             )
         {
+            this.FileUploadSettings = FileUploadSettings;
             this.CurrentSessionService = CurrentSessionService;
             this.MessageService = MessageService;
             this.CompanyUpdateRepository = CompanyUpdateRepository;
@@ -50,7 +54,7 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Commands.CompanyUpdat
                         Request.CompanyCorporateEmail,
                         Request.CompanyMobile,
                         Request.CompanyPhone,
-                        Request.File == null ? Request.CompanyLogo : $"{Request.CompanyDocumentNumber}{Path.GetExtension(Request.File.FileName)}",
+                        Request.CompanyLogoBandera == "DELETE" ? null :  Request.File == null ? Request.CompanyLogo : $"{Request.CompanyDocumentNumber}{Path.GetExtension(Request.File.FileName)}",
                         Request.StateID,
                         DateTime.Now,
                        CurrentSessionService.UserID
@@ -67,13 +71,20 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Commands.CompanyUpdat
                             if (!string.IsNullOrWhiteSpace(Request.CompanyLogo))
                             {
                                 FileEntry.FileName = Request.CompanyLogo;
-                                FileEntry.FileLocation = $"{FolderCompany}/{Request.CompanyLogo}";
+                                FileEntry.FileLocation = $"{FileUploadSettings.CompanyLogoLocation}/{Request.CompanyLogo}";
                                 await FileStorageService.DeleteAsync(FileEntry, CancellationToken);
                             }
 
                             FileEntry.FileName = Model.CompanyLogo;
-                            FileEntry.FileLocation = $"{FolderCompany}/{Model.CompanyLogo}";
+                            FileEntry.FileLocation = $"{FileUploadSettings.CompanyLogoLocation}/{Model.CompanyLogo}";
                             await FileStorageService.CreateAsync(FileEntry, Request.File.OpenReadStream(), CancellationToken);
+                        }
+
+                        if(Request.CompanyLogoBandera == "DELETE")
+                        {  
+                             FileEntry.FileName = Request.CompanyLogo;
+                             FileEntry.FileLocation = $"{FileUploadSettings.CompanyLogoLocation}/{Request.CompanyLogo}";
+                             await FileStorageService.DeleteAsync(FileEntry, CancellationToken);                            
                         }
 
                         MsgResponse.Type = MessageTypeConst.SUCCESS;

@@ -26,6 +26,7 @@
             public const string AccessToken = "accessToken";
             public const string RefreshToken = "refreshToken";
             public const string MenuSidebar = "menuSidebar";
+            public const string Establishment = "establishment";
         }
 
         public static class UbigeoKeys

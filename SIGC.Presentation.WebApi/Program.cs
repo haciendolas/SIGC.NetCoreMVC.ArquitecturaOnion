@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using SIGC.ApplicationService;
+using SIGC.ApplicationService.Commons;
 using SIGC.DomainModel.Dtos;
 using SIGC.Infrastructure.ADONET.SQLSERVER;
 using SIGC.Infrastructure.GeneralService;
@@ -36,7 +37,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 var storeOptions = builder.Configuration.GetSection("Storage").Get<StorageOptions>();
 builder.Services.Configure<LocalOptions>(builder.Configuration.GetSection("Storage:Local"));
-
+builder.Services.AddSingleton<FileUploadSettings>(sp =>
+{
+    var config = sp.GetRequiredService<IConfiguration>();
+    return config.GetSection("FileUploadSettings").Get<FileUploadSettings>();
+});
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSIGCCoreApplicationService();
 builder.Services.AddSIGCInfrastructureGeneralService();

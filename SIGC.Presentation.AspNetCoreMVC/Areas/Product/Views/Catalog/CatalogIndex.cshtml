@@ -1,0 +1,52 @@
+﻿@using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Company
+@{
+    ViewBag.Title = "PRODUCTO";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card" id="product-card">    
+    <div class="card-body p-0">
+        <ul class="nav nav-tabs nav-border-top nav-border-top-primary mb-3" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#tab-search" role="tab" aria-selected="true">
+                    <i class="ri-list-ordered align-middle me-1 fs-20"></i>
+                    Busqueda Producto
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#tab-register" role="tab" aria-selected="false">
+                    <i class="ri-book-3-fill align-middle me-1 fs-20"></i>
+                    Formulario Producto
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#tab-presentation" role="tab" aria-selected="false">
+                    <i class="ri-shield-cross-fill align-middle me-1 fs-20"></i>
+                    Presentación Producto
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#tab-price" role="tab" aria-selected="false">
+                    <i class="ri-money-dollar-circle-fill align-middle me-1 fs-22"></i>
+                    Precio Producto
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content text-muted">
+            <div class="tab-pane active" id="tab-search" role="tabpanel">
+                <partial name="CatalogSearch" />
+            </div>
+            <div class="tab-pane" id="tab-register" role="tabpanel">
+                <partial name="CatalogForm" />
+            </div>
+            <div class="tab-pane" id="tab-presentation" role="tabpanel">
+                <partial name="PresentationForm" />
+            </div>
+            <div class="tab-pane" id="tab-price" role="tabpanel">
+                <partial name="PriceForm" />
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {   
+    <script type="text/javascript" src="~/Product/Scripts/ProductIndex.js?v=1.0"></script>
+}

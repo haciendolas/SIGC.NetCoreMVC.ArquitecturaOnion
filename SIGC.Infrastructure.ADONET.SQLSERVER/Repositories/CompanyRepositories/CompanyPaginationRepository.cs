@@ -21,7 +21,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CompanyRepositories
             this.TransactionAccessor = TransactionAccessor;
         }
 
-        public async Task<PaginationResponseDto<CompanyPaginationResponseDto>> PaginationAsync(CompanyPaginationResquestDto CompanyPaginationResquest, CancellationToken CancellationToken = default)
+        public async Task<PaginationResponseDto<CompanyPaginationResponseDto>> PaginationAsync(CompanyPaginationRequestDto CompanyPaginationRequest, CancellationToken CancellationToken = default)
         {
             var Pagination = new PaginationResponseDto<CompanyPaginationResponseDto>(); 
 
@@ -30,14 +30,14 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CompanyRepositories
                     Command.CommandText = "[Security].uspCompanyPagination";
                     Command.CommandType = CommandType.StoredProcedure;
                     Command.Parameters.Add("@RecordsTotal", SqlDbType.Int).Direction = ParameterDirection.Output;
-                    Command.Parameters.AddWithValue("@CompanyIDRegister", CompanyPaginationResquest.CompanyIDRegister);
-                    Command.Parameters.AddWithValue("@TaxpayerTypeID", CompanyPaginationResquest.TaxpayerTypeID.HasValue ? CompanyPaginationResquest.TaxpayerTypeID.Value: DBNull.Value);
-                    Command.Parameters.AddWithValue("@RubroID", CompanyPaginationResquest.RubroID.HasValue ? CompanyPaginationResquest.RubroID.Value:DBNull.Value );
-                    Command.Parameters.AddWithValue("@CompanyDocumentNumber", CompanyPaginationResquest.CompanyDocumentNumber ?? "");
-                    Command.Parameters.AddWithValue("@CompanySocialReason", CompanyPaginationResquest.CompanySocialReason ?? "");
-                    Command.Parameters.AddWithValue("@StateID", CompanyPaginationResquest.StateID);
-                    Command.Parameters.AddWithValue("@PageNumber", CompanyPaginationResquest.Parameters.PageNumber);
-                    Command.Parameters.AddWithValue("@PageSize", CompanyPaginationResquest.Parameters.PageSize);
+                    Command.Parameters.AddWithValue("@CompanyIDRegister", CompanyPaginationRequest.CompanyIDRegister);
+                    Command.Parameters.AddWithValue("@TaxpayerTypeID", CompanyPaginationRequest.TaxpayerTypeID.HasValue ? CompanyPaginationRequest.TaxpayerTypeID.Value: DBNull.Value);
+                    Command.Parameters.AddWithValue("@RubroID", CompanyPaginationRequest.RubroID.HasValue ? CompanyPaginationRequest.RubroID.Value:DBNull.Value );
+                    Command.Parameters.AddWithValue("@CompanyDocumentNumber", CompanyPaginationRequest.CompanyDocumentNumber ?? "");
+                    Command.Parameters.AddWithValue("@CompanySocialReason", CompanyPaginationRequest.CompanySocialReason ?? "");
+                    Command.Parameters.AddWithValue("@StateID", CompanyPaginationRequest.StateID);
+                    Command.Parameters.AddWithValue("@PageNumber", CompanyPaginationRequest.Parameters.PageNumber);
+                    Command.Parameters.AddWithValue("@PageSize", CompanyPaginationRequest.Parameters.PageSize);
                     Command.Connection = Connection;
 
                     SqlDataReader DataReader;

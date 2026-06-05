@@ -1,9 +1,4 @@
 ﻿using SIGC.DomainModel.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SIGC.DomainModel.Models
 {
@@ -22,7 +17,7 @@ namespace SIGC.DomainModel.Models
         public string? CompanyMobile { get; private set; }
         public string? CompanyPhone { get; private set; }
         public string? CompanyLogo { get; private set; }
-        public StateEnum StateID { get; private set; }
+        public RecordStateEnum StateID { get; private set; }
         public DateTime CreatedDateTime { get; private set; }
         public int CreatedBy { get; private set; }
 
@@ -31,7 +26,7 @@ namespace SIGC.DomainModel.Models
         public static Company Create(string CompanyTradeName,string CompanySocialReason,
             string CompanyDocumentNumber,DateTime CompanyBirthDate,int CountryID,
             string? CompanyAddress,short TaxpayerTypeID,short RubroID,string? CompanyCorporateEmail, string? CompanyMobile,
-            string? CompanyPhone,string? CompanyLogo, StateEnum StateID,DateTime CreatedDateTime,
+            string? CompanyPhone,string? CompanyLogo, RecordStateEnum StateID,DateTime CreatedDateTime,
             int CreatedBy
             )
         {
@@ -58,7 +53,7 @@ namespace SIGC.DomainModel.Models
        public static Company Update(int CompanyID, string CompanyTradeName,string CompanySocialReason,
             string CompanyDocumentNumber,DateTime CompanyBirthDate,int CountryID,
             string? CompanyAddress,short TaxpayerTypeID,short RubroID,string? CompanyCorporateEmail, string? CompanyMobile,
-            string? CompanyPhone,string? CompanyLogo, StateEnum StateID,DateTime CreatedDateTime,
+            string? CompanyPhone,string? CompanyLogo, RecordStateEnum StateID,DateTime CreatedDateTime,
             int CreatedBy
             )
         {
@@ -83,7 +78,7 @@ namespace SIGC.DomainModel.Models
             };
         }
 
-        public static Company ChangeState(int CompanyID,  StateEnum StateID, DateTime CreatedDateTime, int CreatedBy)
+        public static Company ChangeState(int CompanyID,  RecordStateEnum StateID, DateTime CreatedDateTime, int CreatedBy)
         {
             return new Company()
             {

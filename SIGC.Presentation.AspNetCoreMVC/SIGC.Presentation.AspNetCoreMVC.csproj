@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -7,10 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Areas\Security\Scripts\CompanyIndex.js" CopyToPublishDirectory="Always" />
+    <Content Include="Areas\Security\Scripts\RoleIndex.js" CopyToPublishDirectory="Always" /> 
+    <Content Include="Areas\Security\Scripts\UserIndex.js" CopyToPublishDirectory="Always" />
+	<Content Include="Areas\Product\Scripts\CategoryIndex.js" CopyToPublishDirectory="Always" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Areas\Inventory\Controllers\" />
     <Folder Include="Areas\Inventory\Data\" />
     <Folder Include="Areas\Inventory\Models\" />
     <Folder Include="Areas\Inventory\Views\" />
+    <Folder Include="Areas\Organization\Data\" />
+    <Folder Include="Areas\Product\Data\" />
     <Folder Include="Areas\Purchase\Data\" />
     <Folder Include="Areas\Purchase\Models\" />
     <Folder Include="Areas\Sale\Controllers\" />
@@ -21,8 +30,26 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.23" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Areas\Security\Scripts\CompanyIndex.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Areas\Security\Scripts\UserIndex.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Areas\Product\Scripts\CategoryIndex.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Areas\Product\Scripts\ProductIndex.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

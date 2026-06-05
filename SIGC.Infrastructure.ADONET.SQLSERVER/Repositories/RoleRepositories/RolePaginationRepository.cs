@@ -17,7 +17,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RoleRepositories
             ConnectionString = Options.Value.ConnectionDBCommerce360;
         }
 
-        public async Task<PaginationResponseDto<RolePaginationResponseDto>> PaginationAsync(RolePaginationResquestDto RolePaginationResquest, CancellationToken CancellationToken = default)
+        public async Task<PaginationResponseDto<RolePaginationResponseDto>> PaginationAsync(RolePaginationRequestDto RolePaginationRequest, CancellationToken CancellationToken = default)
         {
             var Pagination = new PaginationResponseDto<RolePaginationResponseDto>();          
             using (SqlConnection Connection = new SqlConnection(ConnectionString))
@@ -28,11 +28,11 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RoleRepositories
                     Command.CommandText = "Security.uspRolePagination";
                     Command.CommandType = CommandType.StoredProcedure;
                     Command.Parameters.Add("@RecordsTotal", SqlDbType.Int).Direction = ParameterDirection.Output;            
-                    Command.Parameters.AddWithValue("@CompanyID", RolePaginationResquest.CompanyID);
-                    Command.Parameters.AddWithValue("@RoleName", RolePaginationResquest.Parameters.Search);
-                    Command.Parameters.AddWithValue("@StateID", RolePaginationResquest.StateID);
-                    Command.Parameters.AddWithValue("@PageNumber", RolePaginationResquest.Parameters.PageNumber);
-                    Command.Parameters.AddWithValue("@PageSize", RolePaginationResquest.Parameters.PageSize);
+                    Command.Parameters.AddWithValue("@CompanyID", RolePaginationRequest.CompanyID);
+                    Command.Parameters.AddWithValue("@RoleName", RolePaginationRequest.Parameters.Search);
+                    Command.Parameters.AddWithValue("@StateID", RolePaginationRequest.StateID);
+                    Command.Parameters.AddWithValue("@PageNumber", RolePaginationRequest.Parameters.PageNumber);
+                    Command.Parameters.AddWithValue("@PageSize", RolePaginationRequest.Parameters.PageSize);
                     Command.Connection = Connection;
 
                     SqlDataReader DataReader;
@@ -57,8 +57,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RoleRepositories
                             }                          
                         }
                     }
-                    Pagination.Total = Convert.ToInt32(Command.Parameters["@RecordsTotal"].Value); ;
-                   
+                    Pagination.Total = Convert.ToInt32(Command.Parameters["@RecordsTotal"].Value);                   
                 }
             }
             return Pagination;

@@ -22,7 +22,7 @@ namespace SIGC.Presentation.AspNetCoreMVC.Controllers
                     control = "<a href=\"javascript:void(0)\" name=\"slnkEdit\" data-bs-toggle=\"tooltip\" data-bs-placement=\"top\" data-title=\"Editar\" title=\"Editar\" class=\"link-primary\" " +( Control.Property ?? "" )+ "><i class=\"ri-pencil-fill fs-24\"></i></a>";
                     break;
                 case PermissionModel.AccDelete:
-                    control = "<a href=\"javascript:void(0)\" name=\"slnkDelete\" data-bs-toggle=\"tooltip\" data-bs-placement=\"top\" data-title=\"Eliminar\" title=\"Eliminar\" class=\"link-danger\" " + (Control.Property ?? "" )+ "><i class=\"ri-close-line fs-1\"></i></a>";
+                    control = "<a href=\"javascript:void(0)\" name=\"slnkDelete\" data-bs-toggle=\"tooltip\" data-bs-placement=\"top\" data-title=\"Eliminar\" title=\"Eliminar\" class=\"link-danger\" " + (Control.Property ?? "" )+ "><i class=\"ri-close-line fs-24\"></i></a>";
                     break;
                 case PermissionModel.AccChange:
                     control = "<a href=\"javascript:void(0)\" name=\"slnkActive\" data-bs-toggle=\"tooltip\" data-bs-placement=\"top\" data-title=\"Activar\" title=\"Activar\" class=\"link-success\" " + (Control.Property ?? "") + "><i class=\"ri-refresh-line fs-24\"></i></a>";

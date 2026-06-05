@@ -26,7 +26,7 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Queries.CompanyPagina
             var MsgResponse = new MsgResponse<PaginationResultDto<CompanyPaginationQueryResponse>>();
                 MsgResponse.Type = MessageTypeConst.QUERY;
                 MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.QUERY_RESULT);
-               var Response = await CompanyPaginationRepository.PaginationAsync(new CompanyPaginationResquestDto{
+               var Response = await CompanyPaginationRepository.PaginationAsync(new CompanyPaginationRequestDto{
                                         CompanyIDRegister = Request.CompanyIDRegister,
                                        TaxpayerTypeID = Request.TaxpayerTypeID,
                                        RubroID = Request.RubroID,

@@ -1,0 +1,147 @@
+﻿@using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Constant
+@using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Ubigeo
+@{
+    Layout = null;
+}
+<form id="frmCompanyCreateUpdate" class="needs-validation" novalidate method="dialog">
+    <h6 class="pt-2">&nbsp;&nbsp;Todos los campos(<i class="ri-asterisk align-middle text-danger"></i>) son obligatorios</h6>
+    <div class="card-body">
+        <div class="row g-3">
+            <div class="col-sm-9">
+                <div class="row g-3 pb-2">
+                    <div class="col-sm-3">
+                        <label for="txtCompanyID">ID</label>
+                        <input type="text" class="form-control" id="txtCompanyID" name="CompanyID" value="GENERADO" readonly />
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="cboCountryID">Tipo<i class="ri-asterisk align-middle text-danger"></i></label>
+                        <select class="form-select" id="cboCountryID" name="CountryID">
+                            @if (@ViewBag.CountryList != null)
+                            {
+                                <option value="">Seleccionar</option>
+                                var CountryList = ViewBag.CountryList as List<UbigeoListByClassAndCodeAndLenCodeResponseModel>;
+                                @foreach (var Item in CountryList!)
+                                {
+                                    <option value="@Item.UbigeoID">@Item.UbigeoName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <label for="txtCompanyDocumentNumber">Código Interno<i class="ri-asterisk align-middle text-danger"></i></label>
+                        <input type="text" class="form-control" id="txtCompanyDocumentNumber" name="CompanyDocumentNumber" />
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="chkStateID" class="col-sm-4 col-form-label">Estado</label>
+                        <div class="col-sm-8">
+                            <div class="form-check form-switch form-switch-md form-switch-secondary" dir="ltr">
+                                <input type="checkbox" class="form-check-input" checked id="chkStateID">
+                                <label class="form-check-label" for="chkStateID">Activo</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row pb-2">
+                    <label for="txtCompanySocialReason" class="col-sm-2 col-form-label">Nombre<i class="ri-asterisk align-middle text-danger"></i></label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="txtCompanySocialReason" name="CompanySocialReason" />
+                    </div>
+                </div>
+                <div class="row pb-2">
+                    <label for="cboRubroID" class="col-sm-2 col-form-label">Categoría<i class="ri-asterisk align-middle text-danger"></i></label>
+                    <div class="col-sm-4">
+                        <select class="form-select" id="cboRubroID" name="RubroID">
+                            @if (@ViewBag.RubroList != null)
+                            {
+                                <option value="">Seleccionar</option>
+                                var RubroList = ViewBag.RubroList as List<ConstantListResponseModel>;
+                                @foreach (var Item in RubroList!)
+                                {
+                                    <option value="@Item.ConstantID">@Item.ConstantName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <label for="cboRubroID" class="col-sm-2 col-form-label">Familia<i class="ri-asterisk align-middle text-danger"></i></label>
+                    <div class="col-sm-4">
+                        <select class="form-select" id="cboRubroID" name="RubroID">
+                            @if (@ViewBag.RubroList != null)
+                            {
+                                <option value="">Seleccionar</option>
+                                var RubroList = ViewBag.RubroList as List<ConstantListResponseModel>;
+                                @foreach (var Item in RubroList!)
+                                {
+                                    <option value="@Item.ConstantID">@Item.ConstantName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="row pb-2">
+                    <label for="cboRubroID" class="col-sm-2 col-form-label">Marca<i class="ri-asterisk align-middle text-danger"></i></label>
+                    <div class="col-sm-5">
+                        <select class="form-select" id="cboRubroID" name="RubroID">
+                            @if (@ViewBag.RubroList != null)
+                            {
+                                <option value="">Seleccionar</option>
+                                var RubroList = ViewBag.RubroList as List<ConstantListResponseModel>;
+                                @foreach (var Item in RubroList!)
+                                {
+                                    <option value="@Item.ConstantID">@Item.ConstantName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <label for="cboRubroID" class="col-sm-2 col-form-label">COD.UNSPSC</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="txtCompanySocialReason" name="CompanySocialReason" />
+                    </div>
+                </div>
+                <div class="row pb-2">
+                    <label for="txtCompanyTradeName" class="col-sm-2 col-form-label">DESC.UNSPSC</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" rows="3" id="txtCompanyTradeName" name="CompanyTradeName" />
+                    </div>
+                </div>
+                <div class="row pb-2">
+                    <label for="txtCompanyTradeName" class="col-sm-2 col-form-label">Descripción</label>
+                    <div class="col-sm-10">
+                        <textarea type="text" class="form-control" rows="6" id="txtCompanyTradeName" name="CompanyTradeName"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card border card-border-light">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <h4>IMAGEN</h4>
+                            <div class="profile-user position-relative d-inline-block mx-auto mb-4">
+                                <input type="hidden" id="hdCompanyLogo" name="CompanyLogo" />
+                                <input type="hidden" id="hdCompanyLogoBandera" name="CompanyLogoBandera" />
+                                <img style="width:300px;height:300px" src="~/assets/images/image-not-available.jpg" id="imgCompanyLogo" class="img-thumbnail user-profile-image" alt="Logo empresa">
+                                <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
+                                    <input id="profile-img-file-input" type="file" class="profile-img-file-input">
+                                    <label for="profile-img-file-input" class="profile-photo-edit avatar-xs">
+                                        <span class="avatar-title rounded-circle bg-light text-body" style="border:solid 2px;border-color:green;">
+                                            <i class="ri-camera-fill align-bottom fs-16 text-success"></i>
+                                        </span>
+                                        <button id="btnQuitar" type="button" class="avatar-title rounded-circle bg-light text-danger mt-1" style="border-color:red;"><i class="ri-delete-bin-5-fill fs-16 align-bottom fs-16"></i></button>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col-sm-9 pb-2 mt-3">
+                <div class="text-end">
+                    <button type="button" class="btn btn-light" id="btnCompanyNew"><i class="ri-file-text-fill align-bottom me-1 fs-13"></i>&nbsp;Nuevo&nbsp;</button>&nbsp;&nbsp;
+                    <button type="button" class="btn btn-primary" id="btnCompanyCreate"><i class="ri-save-3-line align-bottom me-1 fs-13"></i><span>Guardar</span></button>
+                    <button type="button" class="btn btn-primary" id="btnCompanyUpdate"><i class="ri-pencil-fill align-bottom me-1 fs-13"></i>Editar&nbsp;</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form> 

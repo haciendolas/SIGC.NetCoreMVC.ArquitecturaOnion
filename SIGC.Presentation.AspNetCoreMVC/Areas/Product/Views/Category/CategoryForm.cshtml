@@ -1,0 +1,71 @@
+﻿@{
+    Layout = null;
+}
+<form id="frmCategoryCreateUpdate" class="needs-validation" novalidate method="dialog">
+    <h6 class="pt-2">&nbsp;&nbsp;Todos los campos(<i class="ri-asterisk align-middle text-danger"></i>) son obligatorios</h6>
+    <div class="card-body">
+        <div class="row g-3">
+            <div class="col-sm-9">
+                <div class="row g-3 pb-2">
+                    <label for="txtCategoryID" class="col-sm-3 col-form-label">ID</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="txtCategoryID" name="CategoryID" readonly value="GENERADO" />
+                    </div>
+                </div>
+                <div class="row pb-2">
+                    <label for="txtCategoryName" class="col-sm-3 col-form-label">Nombre<i class="ri-asterisk align-middle text-danger"></i></label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="txtCategoryName" name="CategoryName" maxlength="100" />
+                    </div>
+                </div>
+                <div class="row pb-2">
+                    <label for="txtCategorySlug" class="col-sm-3 col-form-label">Slug<i class="ri-asterisk align-middle text-danger"></i></label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="txtCategorySlug" name="CategorySlug" maxlength="100" disabled="disabled" />
+                    </div>
+                </div>
+                <div class="row pb-2">
+                    <label for="chkStateID" class="col-sm-3 col-form-label">Estado</label>
+                    <div class="col-sm-4 pt-2">
+                        <div class="form-check form-switch form-switch-md form-switch-secondary" dir="ltr">
+                            <input type="checkbox" class="form-check-input" checked id="chkStateID">
+                            <label class="form-check-label" for="chkStateID">Activo</label>
+                        </div>
+                    </div>
+                </div>              
+            </div>
+            <div class="col-sm-3">
+                <div class="card border card-border-light">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <h4>IMAGEN</h4>
+                            <div class="profile-user position-relative d-inline-block mx-auto mb-4">
+                                <input type="hidden" id="hdCategoryImage" name="CategoryImage" />
+                                <input type="hidden" id="hdCategoryImageBandera" name="CategoryImageBandera" />
+                                <img style="width:250px;height:250px" src="~/assets/images/image-not-available.jpg" id="imgCategoryImage" class="img-thumbnail user-profile-image" alt="Imagen Categoría">
+                                <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
+                                    <input id="profile-img-file-input" type="file" class="profile-img-file-input">
+                                    <label for="profile-img-file-input" class="profile-photo-edit avatar-xs">
+                                        <span class="avatar-title rounded-circle bg-light text-body" style="border:solid 2px;border-color:green;">
+                                            <i class="ri-camera-fill align-bottom fs-16 text-success"></i>
+                                        </span>
+                                        <button id="btnQuitar" type="button" class="avatar-title rounded-circle bg-light text-danger mt-1" style="border-color:red;"><i class="ri-delete-bin-5-fill fs-16 align-bottom fs-16"></i></button>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col-sm-9 pb-2 mt-3">                
+                    <div class="text-end">
+                        <button type="button" class="btn btn-light" id="btnCategoryNew"><i class="ri-file-text-fill align-bottom me-1 fs-13"></i>&nbsp;Nuevo&nbsp;</button>&nbsp;&nbsp;
+                        <button type="button" class="btn btn-primary" id="btnCategoryCreate"><i class="ri-save-3-line align-bottom me-1 fs-13"></i><span>Guardar</span></button>
+                        <button type="button" class="btn btn-primary" id="btnCategoryUpdate"><i class="ri-pencil-fill align-bottom me-1 fs-13"></i>Editar&nbsp;</button>
+                    </div>                
+            </div>
+        </div>
+    </div>
+</form> 

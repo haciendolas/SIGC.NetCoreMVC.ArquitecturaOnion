@@ -46,7 +46,7 @@ namespace SIGC.Presentation.WebApi.Controllers
 
         [HttpGet("CompanyGet/{CompanyID}")]
         [SwaggerOperation(Summary = "Obtener una compañia por Id", Description = "Permite obtener una compañia por id.")]
-        [ProducesResponseType(typeof(MsgResponse<CompanyGetQueryResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(MsgResponse<CompanyGetQueryResponse?>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CompanyGet([FromRoute] int CompanyID, CancellationToken CancellationToken)
         {

@@ -13,7 +13,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.TokenRepositories
     {
         private readonly string ConnectionString = ServiceProvider.GetRequiredService<IOptions<AppDbContext>>().Value.ConnectionDBCommerce360;
 
-        public async Task<TokenGetExpirationResponseDto?> GetExpirationAsync(TokenGetExpirationResquestDto TokenGetExpirationResquest, CancellationToken CancellationToken = default)
+        public async Task<TokenGetExpirationResponseDto?> GetExpirationAsync(TokenGetExpirationRequestDto TokenGetExpirationRequest, CancellationToken CancellationToken = default)
         {
             TokenGetExpirationResponseDto? Get = null;
             using (SqlConnection Connection = new SqlConnection(ConnectionString))
@@ -23,9 +23,9 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.TokenRepositories
                 {
                     Command.CommandText = "Security.uspTokenGetExpiration";
                     Command.CommandType = CommandType.StoredProcedure;
-                    Command.Parameters.AddWithValue("@UserID", TokenGetExpirationResquest.UserID);
-                    Command.Parameters.AddWithValue("@TokenRefreshRandom", TokenGetExpirationResquest.TokenRefreshRandom);
-                    Command.Parameters.AddWithValue("@TokenExpirationDateTime", TokenGetExpirationResquest.TokenExpirationDateTime);
+                    Command.Parameters.AddWithValue("@UserID", TokenGetExpirationRequest.UserID);
+                    Command.Parameters.AddWithValue("@TokenRefreshRandom", TokenGetExpirationRequest.TokenRefreshRandom);
+                    Command.Parameters.AddWithValue("@TokenExpirationDateTime", TokenGetExpirationRequest.TokenExpirationDateTime);
                     Command.Connection = Connection;
                     SqlDataReader DataReader;
                     using (DataReader = await Command.ExecuteReaderAsync(CancellationToken))
@@ -37,8 +37,8 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.TokenRepositories
                                 Get = new TokenGetExpirationResponseDto()
                                 {
                                     TokenID = Validation.SqlDBToInt32(ref DataReader, "TokenID"),
-                                    UserID = TokenGetExpirationResquest.UserID,
-                                    TokenExpirationDateTime = TokenGetExpirationResquest.TokenExpirationDateTime
+                                    UserID = TokenGetExpirationRequest.UserID,
+                                    TokenExpirationDateTime = TokenGetExpirationRequest.TokenExpirationDateTime
                                 };
                             }
                         }

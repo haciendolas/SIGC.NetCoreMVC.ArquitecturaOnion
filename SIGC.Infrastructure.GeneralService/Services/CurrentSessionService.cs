@@ -17,6 +17,9 @@ namespace SIGC.Infrastructure.GeneralService.Services
            Context.HttpContext.User.Identity!.IsAuthenticated;
         public string UserName =>
             Context.HttpContext.User.Identity?.Name!; //Context.HttpContext.User!.Identity!.Name ?? "Unknown";
+ 
+        public string UserFullName =>  Context.HttpContext.User.Claims
+            .First(q => q.Type == CustomClaimTypes.USER_FULLNAME).Value;
 
         public int UserID =>
             Convert.ToInt32(Context.HttpContext.User?

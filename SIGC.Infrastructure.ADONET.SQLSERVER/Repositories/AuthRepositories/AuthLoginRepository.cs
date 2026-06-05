@@ -44,7 +44,8 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.AuthRepositories
                                     CompanyDocumentNumber = UserCredentials.CompanyDocumentNumber,
                                     CompanyTradeName = Validation.SqlDBToString(ref DataReader, "CompanyTradeName"),
                                     CompanySocialReason = Validation.SqlDBToString(ref DataReader, "CompanySocialReason"),
-                                    StateID = Validation.SqlDBToInt16(ref DataReader, "StateID")
+                                    StateID = Validation.SqlDBToInt16(ref DataReader, "StateID"),
+                                    UserPhoto = Validation.SqlDBToString(ref DataReader, "UserPhoto"),
                                 };
                             }
                         }

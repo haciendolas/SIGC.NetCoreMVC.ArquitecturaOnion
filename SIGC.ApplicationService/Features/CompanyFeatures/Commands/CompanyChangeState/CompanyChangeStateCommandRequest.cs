@@ -7,6 +7,6 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Commands.CompanyChang
     public record struct CompanyChangeStateCommandRequest
     (
         int CompanyID,        
-        StateEnum StateID
+        RecordStateEnum StateID
     ):IRequest<MsgResponse<object?>>;    
 }

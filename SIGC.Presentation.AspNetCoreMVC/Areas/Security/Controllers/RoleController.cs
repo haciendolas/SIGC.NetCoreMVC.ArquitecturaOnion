@@ -56,6 +56,13 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Security.Controllers
             return Json(await RoleService.RoleGet(RoleID));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> RoleList([FromRoute(Name = "id")] int? CompanyID)
+        {
+            if(CompanyID.HasValue==false) CompanyID= GetSession().CompanyID;
+            return Json(await RoleService.RoleList(CompanyID.Value));
+        }
+
         [HttpPost(Name = "RoleDataTable")]
         public async Task<IActionResult> RoleDataTable(DataTableHelper DataTable)
         {
@@ -78,7 +85,7 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Security.Controllers
                                  SpanStateType(sql.StateID),
                                  sql.RoleLastUpdatedDateTime.ToString("dd/MM/yyyy hh:mm:ss"),
                                  sql.RoleLastUpdatedUserName,
-                                 sql.StateID==(short)EnumsHelper.StateType.Active ? LinkHRef(new ControlModel{Value=PermissionModel.AccUpdate}):"&nbsp:",
+                                 sql.StateID==(short)EnumsHelper.StateType.Active ? LinkHRef(new ControlModel{Value=PermissionModel.AccUpdate}):"&nbsp",
                                  sql.StateID==(short)EnumsHelper.StateType.Active ? LinkHRef(new ControlModel{Value=PermissionModel.AccUnchange}):LinkHRef(new ControlModel{Value=PermissionModel.AccChange}),
                                  LinkHRef(new ControlModel{Value=PermissionModel.AccDelete})
 

@@ -5,6 +5,6 @@ namespace SIGC.DomainService.IRepositories.IRoleRepositories
 {
     public interface IRolePaginationRepository
     {
-        Task<PaginationResponseDto<RolePaginationResponseDto>> PaginationAsync(RolePaginationResquestDto RolePaginationResquest, CancellationToken CancellationToken = default);
+        Task<PaginationResponseDto<RolePaginationResponseDto>> PaginationAsync(RolePaginationRequestDto RolePaginationResquest, CancellationToken CancellationToken = default);
     }
 }

@@ -107,6 +107,7 @@ namespace SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleUpdate
                     }
                     else
                     {
+                        await UnitOfWork.RollbackTransactionAsync(CancellationToken);
                         MsgResponse.Type = MessageTypeConst.ERROR;
                         MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.ERROR_UPDATE);
                     }

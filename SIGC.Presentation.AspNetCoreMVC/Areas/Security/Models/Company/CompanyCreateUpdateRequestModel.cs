@@ -17,5 +17,6 @@
         public short StateID { get; set; }
         public IFormFile? FormFile { get; set; }
         public string? CompanyLogo { get; set; }
+        public string? CompanyLogoBandera { get; set; }
     }
 }

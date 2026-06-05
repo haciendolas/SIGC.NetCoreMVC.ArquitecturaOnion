@@ -9,13 +9,13 @@ namespace SIGC.DomainModel.Models
         public string RoleCode { get; private set; } = null!;
         public string RoleName { get; private set; } = null!;
         public string? RoleDescription { get; private set; }
-        public StateEnum StateID { get; private set; }
+        public RecordStateEnum StateID { get; private set; }
         public DateTime CreatedDateTime { get; private set; }
         public int CreatedBy { get; private set; }
 
         protected Role() { }
 
-        public static Role Create(int CompanyID,string RoleCode, string RoleName,string RoleDescription, StateEnum StateID, DateTime CreatedDateTime, int CreatedBy)
+        public static Role Create(int CompanyID,string RoleCode, string RoleName,string RoleDescription, RecordStateEnum StateID, DateTime CreatedDateTime, int CreatedBy)
         {
             //Validate(CategoryName, CreatedDate, CreatedBy);
             return new Role()
@@ -30,7 +30,7 @@ namespace SIGC.DomainModel.Models
             };
         }
 
-        public static Role Update(int RoleID, int CompanyID, string RoleCode, string RoleName, string RoleDescription, StateEnum StateID, DateTime CreatedDateTime, int CreatedBy)
+        public static Role Update(int RoleID, int CompanyID, string RoleCode, string RoleName, string RoleDescription, RecordStateEnum StateID, DateTime CreatedDateTime, int CreatedBy)
         {
             //Validate(CategoryName, CreatedDate, CreatedBy);
             return new Role()
@@ -45,7 +45,7 @@ namespace SIGC.DomainModel.Models
                 CreatedBy = CreatedBy
             };
         }
-        public static Role ChangeState(int CompanyID,int RoleID, StateEnum StateID, DateTime CreatedDateTime, int CreatedBy)
+        public static Role ChangeState(int CompanyID,int RoleID, RecordStateEnum StateID, DateTime CreatedDateTime, int CreatedBy)
         {           
             return new Role()
             {

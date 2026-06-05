@@ -20,7 +20,8 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Commands.CompanyUpdat
         public  string? CompanyMobile { get; set; }
         public string? CompanyPhone { get; set; }
         public string? CompanyLogo { get; set; }
-        public StateEnum StateID { get; set; }
+        public RecordStateEnum StateID { get; set; }
         public IFileDataService? File { get; set; }
+        public string? CompanyLogoBandera { get; set; }
     }   
 }

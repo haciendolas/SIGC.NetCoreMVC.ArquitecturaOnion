@@ -4,6 +4,6 @@ namespace SIGC.DomainService.IRepositories.ITokenRepositories
 {
    public interface ITokenGetExpirationRepository
    {
-       Task<TokenGetExpirationResponseDto?> GetExpirationAsync(TokenGetExpirationResquestDto TokenGetExpirationResquest, CancellationToken CancellationToken = default);
+       Task<TokenGetExpirationResponseDto?> GetExpirationAsync(TokenGetExpirationRequestDto TokenGetExpirationResquest, CancellationToken CancellationToken = default);
    }
 }

@@ -4,7 +4,9 @@ using SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleChangeState;
 using SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleCreate;
 using SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleUpdate;
 using SIGC.ApplicationService.Features.RoleFeatures.Queries.RoleGet;
+using SIGC.ApplicationService.Features.RoleFeatures.Queries.RoleList;
 using SIGC.ApplicationService.Features.RoleFeatures.Queries.RolePagination;
+using SIGC.DomainModel.Dtos.Role;
 using SIGC.Infrastructure.CrossCutting.Wrappers;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -12,9 +14,8 @@ namespace SIGC.Presentation.WebApi.Controllers
 { 
     public class RoleController : BaseController
     {
-
         [HttpPost("RoleCreate")]
-        [SwaggerOperation(Summary = "Crear un rol", Description = " Permite crear un rol.")]
+        [SwaggerOperation(Summary = "Crear un rol", Description = "Permite crear un rol.")]
         [ProducesResponseType(typeof(MsgResponse<object?>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RoleCreate([FromBody] RoleCreateCommandRequest Command, CancellationToken CancellationToken)
@@ -23,7 +24,7 @@ namespace SIGC.Presentation.WebApi.Controllers
         }
 
         [HttpPut("RoleUpdate")]
-        [SwaggerOperation(Summary = "Editar un rol", Description = " Permite editar un rol.")]
+        [SwaggerOperation(Summary = "Editar un rol", Description = "Permite editar un rol.")]
         [ProducesResponseType(typeof(MsgResponse<object?>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RoleUpdate([FromBody] RoleUpdateCommandRequest Command, CancellationToken CancellationToken)
@@ -42,11 +43,20 @@ namespace SIGC.Presentation.WebApi.Controllers
 
         [HttpGet("RoleGet/{RoleID}")]
         [SwaggerOperation(Summary = "Obtener un rol por Id", Description = "Permite obtener un rol por id.")]
-        [ProducesResponseType(typeof(MsgResponse<RoleGetQueryResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(MsgResponse<RoleGetQueryResponse?>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RoleGet([FromRoute] int RoleID, CancellationToken CancellationToken)
         {
             return Ok(await Mediator.Send(new RoleGetQueryRequest(RoleID), CancellationToken));
+        }
+
+        [HttpGet("RoleList/{CompanyID}")]
+        [SwaggerOperation(Summary = "Listar los roles", Description = "Permite listar los roles.")]
+        [ProducesResponseType(typeof(MsgResponse<List<RoleListResponseDto>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> RoleList([FromRoute] int CompanyID, CancellationToken CancellationToken)
+        {
+            return Ok(await Mediator.Send(new RoleListQueryRequest(CompanyID), CancellationToken));
         }
 
         [HttpPost("RolePagination")]

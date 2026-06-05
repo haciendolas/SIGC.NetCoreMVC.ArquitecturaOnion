@@ -10,6 +10,7 @@
         string CompanyDocumentNumber,
         string CompanyTradeName,
         string CompanySocialReason,
-        short StateID
+        short StateID,
+        string UserPhoto
    );
 }

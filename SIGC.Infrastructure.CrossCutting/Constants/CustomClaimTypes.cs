@@ -4,6 +4,7 @@
     {
         public const string USER_ID = "userID";
         public const string USER_NAME = "userName";
+        public const string USER_FULLNAME = "userFullName";
         public const string COMPANY_ID = "companyID";
         public const string IDIOM_ID = "idiomID";
         public const string COMPANY_DOCUMENTNUMBER = "companyDocumentNumber";

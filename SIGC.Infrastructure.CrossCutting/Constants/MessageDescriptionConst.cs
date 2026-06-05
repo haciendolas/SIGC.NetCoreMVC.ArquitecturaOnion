@@ -21,6 +21,11 @@
         public const string EXIST_CATEGORY_CATEGORYNAME = "ExistCategoryCategoryName";
         public const string EXIST_ROLE_ROLENAME = "ExistRoleRoleName";
         public const string EXIST_ROLE_ROLECODE = "ExistRoleRoleCode";
+        public const string EXIST_USER_USERNAME = "ExistUserUserName";
+        public const string EXIST_USER_USERMAIL = "ExistUserUserMail";
+        public const string EXIST_USER_NAME_AND_MAIL = "ExistUserNameAndMail";
+        public const string EXIST_ESTABLISHMENT_ESTABLISHMENTNAME = "ExistEstablishmentEstablishmentName";
+        public const string EXIST_WAREHOUSE_WAREHOUSENAME = "ExistWarehouseWarehouseName";
         //ERRORES DE DE REGISTROS
         public const string ERROR_OBJECT = "ErrorObject";
         public const string ERROR_OPERATION = "ErrorOperation";

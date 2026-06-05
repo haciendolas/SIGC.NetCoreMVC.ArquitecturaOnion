@@ -43,6 +43,7 @@
     @using SIGC.Presentation.AspNetCoreMVC.Filters;
     @using SIGC.Presentation.AspNetCoreMVC.Extensions;
     @using SIGC.Presentation.AspNetCoreMVC.Helpers
+@using SIGC.Presentation.AspNetCoreMVC.Models.Establishment
     @{
 
         if (Context.Session.GetObject<AuthenticationIdentity>(ConstantsHelper.SessionKeys.AuthenticationIdentity) != null)
@@ -50,12 +51,13 @@
             var authenticationIdentity = Context.Session.GetObject<AuthenticationIdentity>(ConstantsHelper.SessionKeys.AuthenticationIdentity);
             ViewBag.UserID = authenticationIdentity!.UserID;
             ViewBag.UserName = authenticationIdentity.UserName;
-            ViewBag.UserFullName = authenticationIdentity.UserFullName;         
-            ViewBag.UserImage = authenticationIdentity.UserImage ?? Url.Content("~/assets/images/users/user-dummy-img.jpg");
+            ViewBag.UserFullName = authenticationIdentity.UserFullName;
+            ViewBag.UserImage = string.IsNullOrWhiteSpace(authenticationIdentity.UserImage) ? Url.Content("~/assets/images/users/user-dummy-img.jpg") : authenticationIdentity.UserImage;
         }
         
         String UrlBase = System.Web.HttpUtility.JavaScriptStringEncode(new Uri(new Uri(String.Format("{0}://{1}{2}", Context.Request.Scheme, Context.Request.Host, Context.Request.Path)), Url.Content("~/")).ToString());
         UrlBase = UrlBase.Substring(0, UrlBase.Length - 1);
+        var EstablishmentList = Context.Session.GetObject<List<EstablishmentListResponseModel>>(ConstantsHelper.SessionKeys.Establishment)!;
     }
     <div id="layout-wrapper">  
         <input type="hidden" value="@UrlBase" id="UrlBase" />
@@ -73,7 +75,14 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                <h4 class="mb-sm-0">Analytics</h4>
+                                <h4 class="mb-sm-0">                                 
+                                    <select class="form-select" id="cboGlobalEstablishmentID">
+                                        @foreach (var item in EstablishmentList)
+                                        {                                         
+                                         <option value="@item.EstablishmentID">@item.EstablishmentName" - "@item.EstablishmentAddress</option>
+                                        }
+                                    </select>
+                                </h4>
 
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
@@ -130,11 +139,12 @@
     <script src="~/assets/libs/dataTables/pdfmake.min.js"></script>
     <script src="~/assets/libs/dataTables/jszip.min.js"></script>
     <script src="~/assets/js/app.js"></script>
-    <script src="assets/libs/prismjs/prism.js"></script>
+    <script src="~/assets/libs/prismjs/prism.js"></script>
     <script src="~/assets/libs/validation/jquery.validate.min.js"></script>
     <script src="~/assets/libs/validation/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/assets/libs/treeview/jquery.cookie.js"></script>
     <script src="~/assets/libs/treeview/jquery.treeview.js"></script>
+    <script src="~/assets/libs/jQuery-Plugin-stringToSlug-1.3/jquery.stringToSlug.min.js"></script>
     <script src="~/scripts/jsUti.js"></script>
     <script type="text/javascript">javascript: window.history.forward(1);</script>
     <script>

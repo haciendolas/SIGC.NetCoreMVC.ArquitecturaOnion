@@ -2,6 +2,13 @@
 {
    public record struct AuthTokenResponseDto(
       string AccessToken,
-      string RefreshToken  
+      string RefreshToken,
+      AccountInfo AccountInfo
    );
+
+    public record struct AccountInfo(
+       string UserPhotoUrl,
+       string UserFirstName,
+       string UserLastName
+    );
 }

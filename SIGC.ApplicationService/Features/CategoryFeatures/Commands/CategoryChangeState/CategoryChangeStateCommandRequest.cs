@@ -7,6 +7,6 @@ namespace SIGC.ApplicationService.Features.CategoryFeatures.Commands.CategoryCha
     public record struct CategoryChangeStateCommandRequest
     (
       int CategoryId,
-      StateEnum StateId
-    ):IRequest<MsgResponse<object?>>;    
+      RecordStateEnum RecordStateId
+    ) :IRequest<MsgResponse<object?>>;    
 }

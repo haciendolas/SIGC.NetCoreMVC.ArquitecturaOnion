@@ -1,10 +1,10 @@
 ﻿using MediatR;
+using SIGC.ApplicationService.Commons;
 using SIGC.DomainModel.Dtos;
 using SIGC.DomainService.IRepositories.ICompanyRepositories;
 using SIGC.DomainService.IServices;
 using SIGC.Infrastructure.CrossCutting.Constants;
 using SIGC.Infrastructure.CrossCutting.Wrappers;
-using System.Reflection;
 
 namespace SIGC.ApplicationService.Features.CompanyFeatures.Queries.CompanyGet
 {
@@ -13,12 +13,17 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Queries.CompanyGet
         private readonly ICompanyGetRepository CompanyGetRepository;
         private readonly IMessageService MessageService;
         private readonly IFileStorageService FileStorageService;
-        private readonly string FolderCompany = "Company";
-        public CompanyGetQueryHandler(ICompanyGetRepository CompanyGetRepository, IMessageService MessageService, IFileStorageService fileStorageService)
+        private readonly FileUploadSettings FileUploadSettings; 
+    
+        public CompanyGetQueryHandler(FileUploadSettings FileUploadSettings, 
+            ICompanyGetRepository CompanyGetRepository,
+            IMessageService MessageService, 
+            IFileStorageService FileStorageService)
         {
+            this.FileUploadSettings = FileUploadSettings;
             this.CompanyGetRepository = CompanyGetRepository;
             this.MessageService = MessageService;
-            this.FileStorageService = fileStorageService;
+            this.FileStorageService = FileStorageService;
         }
 
         public async Task<MsgResponse<CompanyGetQueryResponse?>> Handle(CompanyGetQueryRequest Request, CancellationToken CancellationToken)
@@ -33,7 +38,7 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Queries.CompanyGet
                 MsgResponse.Type = MessageTypeConst.QUERY;
                 MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.QUERY_RESULT);
 
-                FileEntryDto FileEntry = new FileEntryDto(CompanyGet.Value.CompanyLogo, $"{FolderCompany}/{CompanyGet.Value.CompanyLogo}");
+                FileEntryDto FileEntry = new FileEntryDto(CompanyGet.Value.CompanyLogo, $"{FileUploadSettings.CompanyLogoLocation}/{CompanyGet.Value.CompanyLogo}");
                 var CompanyResponse = new CompanyGetQueryResponse()
                 {
                     CompanyID = CompanyGet.Value.CompanyID,

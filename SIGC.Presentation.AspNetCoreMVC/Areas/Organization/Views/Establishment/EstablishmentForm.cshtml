@@ -1,0 +1,86 @@
+﻿@{
+    Layout = null;
+}
+<form id="frmEstablishmentCreateUpdate" class="needs-validation" novalidate method="dialog">
+    <h6 class="pt-2">&nbsp;&nbsp;Todos los campos(<i class="ri-asterisk align-middle text-danger"></i>) son obligatorios</h6>
+    <div class="card-body">
+        <div class="row g-3">
+            <div class="col-sm-9">
+                <div class="row g-3 pb-2">
+                    <label for="txtEstablishmentID" class="col-sm-3 col-form-label">ID</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="txtEstablishmentID" name="EstablishmentID" readonly value="GENERADO" />
+                    </div>
+                </div>
+                <div class="row pb-2">
+                    <label for="cboTypeID" class="col-sm-3 col-form-label">Tipo<i class="ri-asterisk align-middle text-danger"></i></label>
+                    <div class="col-sm-3">                       
+                        <select class="form-select" id="cboTypeID" name="TypeID">
+                            <option value="">Seleccionar</option>
+                            <option value="1">Casa Matriz</option>
+                            <option value="2">Sucursal</option>
+                            <option value="3">Agencia</option>
+                        </select>
+                    </div>
+                    <label for="txtEstablishmentCode" class="col-sm-1 col-form-label">Código<i class="ri-asterisk align-middle text-danger"></i></label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="txtEstablishmentCode" name="EstablishmentCode" maxlength="10" />
+                    </div>
+                </div> 
+                <div class="row pb-2">
+                    <label for="txtEstablishmentName" class="col-sm-3 col-form-label">Nombre<i class="ri-asterisk align-middle text-danger"></i></label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="txtEstablishmentName" name="EstablishmentName" maxlength="100" />
+                    </div>
+                </div>
+                <div class="row pb-2">
+                    <label for="txtEstablishmentAddress" class="col-sm-3 col-form-label">Dirección<i class="ri-asterisk align-middle text-danger"></i></label>
+                    <div class="col-sm-7">
+                        <textarea class="form-control" id="txtEstablishmentAddress" name="EstablishmentAddress" maxlength="150"></textarea>
+                    </div>
+                </div>
+                <div class="row pb-2">
+                    <label for="chkStateID" class="col-sm-3 col-form-label">Estado</label>
+                    <div class="col-sm-4 pt-2">
+                        <div class="form-check form-switch form-switch-md form-switch-secondary" dir="ltr">
+                            <input type="checkbox" class="form-check-input" checked id="chkStateID">
+                            <label class="form-check-label" for="chkStateID">Activo</label>
+                        </div>
+                    </div>
+                </div>              
+            </div>
+            <div class="col-sm-3">
+                <div class="card border card-border-light">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <h4>IMAGEN</h4>
+                            <div class="profile-user position-relative d-inline-block mx-auto mb-4">
+                                <input type="hidden" id="hdEstablishmentLogo" name="EstablishmentLogo" />
+                                <input type="hidden" id="hdEstablishmentLogoBandera" name="EstablishmentLogoBandera" />
+                                <img style="width:250px;height:250px" src="~/assets/images/image-not-available.jpg" id="imgEstablishmentLogo" class="img-thumbnail user-profile-image" alt="Logo Establecimiento">
+                                <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
+                                    <input id="profile-img-file-input" type="file" class="profile-img-file-input">
+                                    <label for="profile-img-file-input" class="profile-photo-edit avatar-xs">
+                                        <span class="avatar-title rounded-circle bg-light text-body" style="border:solid 2px;border-color:green;">
+                                            <i class="ri-camera-fill align-bottom fs-16 text-success"></i>
+                                        </span>
+                                        <button id="btnQuitar" type="button" class="avatar-title rounded-circle bg-light text-danger mt-1" style="border-color:red;"><i class="ri-delete-bin-5-fill fs-16 align-bottom fs-16"></i></button>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col-sm-9 pb-2 mt-3">                
+                    <div class="text-end">
+                        <button type="button" class="btn btn-light" id="btnEstablishmentNew"><i class="ri-file-text-fill align-bottom me-1 fs-13"></i>&nbsp;Nuevo&nbsp;</button>&nbsp;&nbsp;
+                        <button type="button" class="btn btn-primary" id="btnEstablishmentCreate"><i class="ri-save-3-line align-bottom me-1 fs-13"></i><span>Guardar</span></button>
+                        <button type="button" class="btn btn-primary" id="btnEstablishmentUpdate"><i class="ri-pencil-fill align-bottom me-1 fs-13"></i>Editar&nbsp;</button>
+                    </div>                
+            </div>
+        </div>
+    </div>
+</form> 
