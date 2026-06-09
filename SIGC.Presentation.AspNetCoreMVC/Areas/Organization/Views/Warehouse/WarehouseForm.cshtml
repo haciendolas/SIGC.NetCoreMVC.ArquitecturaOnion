@@ -12,9 +12,9 @@
                     </div>
                 </div>
                 <div class="row pb-2">
-                    <label for="cboTypeID" class="col-sm-3 col-form-label">Tipo<i class="ri-asterisk align-middle text-danger"></i></label>
-                    <div class="col-sm-3">                       
-                        <select class="form-select" id="cboTypeID" name="TypeID">
+                <label for="cboWarehouseTypeID" class="col-sm-3 col-form-label">Tipo<i class="ri-asterisk align-middle text-danger"></i></label>
+                    <div class="col-sm-3">
+                    <select class="form-select" id="cboWarehouseTypeID" name="WarehouseTypeID">
                             <option value="">Seleccionar</option>
                             <option value="1">Interno</option>
                             <option value="2">Externo</option>                          
@@ -28,17 +28,15 @@
                 <div class="row pb-2">
                     <label for="txtWarehouseName" class="col-sm-3 col-form-label">Nombre<i class="ri-asterisk align-middle text-danger"></i></label>
                     <div class="col-sm-7">
-                        <input type="text" class="form-control" id="txtWarehouseName" name="WarehouseName" maxlength="100" />
+                        <input type="text" class="form-control" id="txtWarehouseName" name="WarehouseName" maxlength="50" />
                     </div>
                 </div>
-               @*
-                <div class="row pb-2">
+            <div class="row pb-2" id="divWarehouseAddress">
                     <label for="txtWarehouseAddress" class="col-sm-3 col-form-label">Dirección<i class="ri-asterisk align-middle text-danger"></i></label>
                     <div class="col-sm-7">
                         <textarea class="form-control" id="txtWarehouseAddress" name="WarehouseAddress" maxlength="150"></textarea>
                     </div>
-                </div>
-                *@
+                </div>             
                 <div class="row pb-2">
                     <label for="chkStateID" class="col-sm-3 col-form-label">Estado</label>
                     <div class="col-sm-4 pt-2">

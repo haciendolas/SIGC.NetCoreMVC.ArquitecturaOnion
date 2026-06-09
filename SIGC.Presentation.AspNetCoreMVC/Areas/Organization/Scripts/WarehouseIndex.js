@@ -2,8 +2,7 @@
     let WarehouseValidate = null;
     const Warehouse = {
         _Init: function () {           
-            Warehouse._Validation.fnWarehouseCreateUpdateValidate();
-            Warehouse._Other.fnOpenFile();
+            Warehouse._Validation.fnWarehouseCreateUpdateValidate();           
             Warehouse._Search.fnWarehouseDataTable();
             $('#stxtWarehouseName,#txtWarehouseName').keypress(function (event) {
                 return Uti.KeyBoard.LettersAndNumbers(event);
@@ -41,6 +40,17 @@
             $('#cboGlobalEstablishmentID').on('change', function () {
                 Warehouse._Search.fnWarehouseDataTable();
             });
+            $('#divWarehouseAddress').hide();
+            $('#cboWarehouseTypeID').on('change', function () {              
+                if ($(this).val() == 1 || $(this).val() == '') {
+                    $('#txtWarehouseAddress').val('');
+                    $('#divWarehouseAddress').hide();
+                }
+                else {                  
+                    $('#divWarehouseAddress').show();
+                    $('#frmWarehouseCreateUpdate').valid();
+                }
+            });
         },
         _Clear: {
             fnWarehouseGet: function () {
@@ -58,24 +68,7 @@
                 $('#btnQuitar').hide();
             }
         },
-        _Other: {
-            fnOpenFile: function () {
-                $('#profile-img-file-input').on('change', function (event) {
-                    const _URL = window.URL || window.webkitURL;  //window.URL para firefox  webkitURL para chrome y otros navegadores
-                    const file = event.target.files[0];
-                    if (file) {
-                        const tmppath = _URL.createObjectURL(file);
-                        if (!(file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/jpg')) {
-                            Uti.Modal.Message(Uti.Message.Type.Warning, 'Solo se admite archivos con extensión: (jpg,png,jpeg)');
-                            $('#profile-img-file-input').val('');
-                            return;
-                        };
-                        $('#imgWarehouseLogo').fadeIn('fast').attr('src', tmppath);
-                        $('#btnQuitar').show();
-                        $('#hdWarehouseLogoBandera').val('');
-                    }
-                });
-            },
+        _Other: {        
             fnWarehouseTabs: function () {
                 $('#warehouse-card ul li a[href="#tab-search"]').removeClass('disabled');
                 $('#warehouse-card ul li a[href="#tab-search"]').attr('data-bs-toggle', 'tab');
@@ -89,16 +82,22 @@
             fnWarehouseCreateUpdateValidate: function () {
                 WarehouseValidate = $('#frmWarehouseCreateUpdate').validate({
                     rules: {
-                        TypeID: { required: true},
+                        WarehouseTypeID: { required: true},
                         WarehouseCode: { required: true, minlength: 4, maxlength: 10 },
                         WarehouseName: { required: true, minlength: 3, maxlength: 50 },
-                        WarehouseAddress: { required: true, minlength: 10, maxlength: 150 },
+                        WarehouseAddress: {
+                            required: function() { return $('#cboWarehouseTypeID').val() == 2; },
+                             minlength: 10, maxlength: 150
+                        }
                     },
                     messages: {
-                        TypeID: { required: '*Campo requerido'},
+                        WarehouseTypeID: { required: '*Campo requerido'},
                         WarehouseCode: { required: '*Campo requerido', minlength: '*Mínimo 4 caracteres', maxlength: '*Máximo 10 caracteres' },
                         WarehouseName: { required: '*Campo requerido', minlength: '*Mínimo 3 caracteres', maxlength: '*Máximo 50 caracteres' },
-                        WarehouseAddress: { required: '*Campo requerido', minlength: '*Mínimo 10 caracteres', maxlength: '*Máximo 150 caracteres' }
+                        WarehouseAddress: {
+                            required: function () {
+                                return '*Campo requerido';
+                           }, minlength: '*Mínimo 10 caracteres', maxlength: '*Máximo 150 caracteres' }
                     },
                     highlight: function (element) {
                         $(element).addClass('is-invalid');
@@ -250,29 +249,18 @@
             },
             fnWarehouseCreateUpdate: function () {
                 if ($('#frmWarehouseCreateUpdate').valid()) {
-                    const file = document.getElementById('profile-img-file-input').files[0];
-                    if (file) {
-                        if (!(file.type == 'image/png' || file.type == 'image/jpeg' || file.type == 'image/jpg')) {
-                            Uti.Modal.Message(Uti.Message.Type.Warning, 'Solo se admite archivos con extensión: (jpg,png,jpeg)');
-                            return;
-                        };
-                    };
-                    const WarehouseID = $('#txtWarehouseID').val() == 'GENERADO' ? 0 : $('#txtWarehouseID').val();
-
-                    var formData = new FormData();
-                    formData.append('WarehouseID', WarehouseID);
-                    formData.append('TypeID', $('#cboTypeID').val());
-                    formData.append('WarehouseCode', $('#txtWarehouseCode').val().trim());
-                    formData.append('WarehouseName', $('#txtWarehouseName').val().trim());
-                    formData.append('WarehouseAddress', $('#txtWarehouseAddress').val().trim());
-                    formData.append('RecordStateId', $('#chkStateID').is(':checked') ? Uti.Variable.StateType.Active : Uti.Variable.StateType.Inactive);
-                    formData.append('FormFile', file);
-                    formData.append('WarehouseLogo', $('#hdWarehouseLogo').val().trim());
-                    formData.append('WarehouseLogoBandera', $('#hdWarehouseLogoBandera').val().trim());
-
+                    const WarehouseID = $('#txtWarehouseID').val() == 'GENERADO' ? 0 : $('#txtWarehouseID').val();               
                     const options = {
                         url: Uti.Url.Base + '/Organization/Warehouse/' + (WarehouseID == 0 ? 'WarehouseCreate' : 'WarehouseUpdate') + '',
-                        data: formData,
+                        data: {
+                            WarehouseID: WarehouseID,
+                            EstablishmentID: $('#cboGlobalEstablishmentID').val(),
+                            WarehouseTypeID: $('#cboWarehouseTypeID').val(),
+                            WarehouseCode: $('#txtWarehouseCode').val().trim(),
+                            WarehouseName: $('#txtWarehouseName').val().trim(),
+                            WarehouseAddress: $('#txtWarehouseAddress').val().trim(),
+                            RecordStateID: $('#chkStateID').is(':checked') ? Uti.Variable.StateType.Active : Uti.Variable.StateType.Inactive
+                        },
                         type: WarehouseID == 0 ? Uti.Variable.FetchAjax.Type.Post : Uti.Variable.FetchAjax.Type.Put
                     };
                     Uti.Ajax.Custom(options, function (response) {

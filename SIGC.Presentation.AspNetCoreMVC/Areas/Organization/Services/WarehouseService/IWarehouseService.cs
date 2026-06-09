@@ -6,6 +6,7 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Organization.Services.WarehouseS
 {
     public interface IWarehouseService
     {
+        Task<ApiResponse<object?>> WarehouseCreate(WarehouseCreateUpdateRequestModel Request);
         Task<ApiResponse<PaginationResultModel<WarehousePaginationResponseModel>>> WarehousePagination(WarehousePaginationRequestModel Request);
     }
 }

@@ -23,6 +23,13 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Organization.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> WarehouseCreate([FromBody] WarehouseCreateUpdateRequestModel Request)
+        {
+            Request.RecordOriginID = (byte)EnumsHelper.RecordOrigin.WebForm;
+            return Json(await WarehouseService.WarehouseCreate(Request));
+        }
+
+        [HttpPost]
         public async Task<IActionResult> WarehouseDataTable(WarehousePaginationRequestModel DataTable)
         {
             DataTable.PageNumber = (DataTable.iDisplayStart / DataTable.iDisplayLength) + 1;
