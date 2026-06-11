@@ -24,15 +24,14 @@
    Identifcador:		   Date Update  |   User Update   |  Description Update  
      @1
 ==============================================================================*/
-CREATE PROCEDURE Organization.uspWarehouseUpdate
+ALTER PROCEDURE Organization.uspWarehouseUpdate
 (  @WarehouseID INT,
    @CompanyID INT,
    @EstablishmentID INT,
    @WarehouseTypeID TINYINT,
    @WarehouseCode VARCHAR(10),  
    @WarehouseName NVARCHAR(50),
-   @WarehouseAddress NVARCHAR(150), 
-   @RecordOriginID TINYINT,
+   @WarehouseAddress NVARCHAR(150),   
    @RecordStateID TINYINT,
    @WarehouseUpdatedUserID INT,
    @WarehouseUpdatedUserName NVARCHAR(20),

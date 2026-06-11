@@ -28,6 +28,12 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Organization.Controllers
             return Json(await WarehouseService.WarehouseCreate(Request));
         }
 
+        [HttpPut]
+        public async Task<IActionResult> WarehouseUpdate([FromBody] WarehouseCreateUpdateRequestModel Request)
+        {      
+            return Json(await WarehouseService.WarehouseUpdate(Request));
+        }
+
         [HttpGet]
         public async Task<IActionResult> WarehouseGet([FromRoute(Name = "id")] int WarehouseID)
         {

@@ -33,7 +33,7 @@ namespace SIGC.Presentation.WebApi.Controllers
        [SwaggerOperation(Summary = "Editar un almacén", Description = "Permite editar un almacén.")]
        [ProducesResponseType(typeof(MsgResponse<object?>), StatusCodes.Status200OK)]
        [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
-       public async Task<IActionResult> WarehouseUpdate([FromForm] WarehouseUpdateCommandRequest Command, CancellationToken CancellationToken)
+       public async Task<IActionResult> WarehouseUpdate([FromBody] WarehouseUpdateCommandRequest Command, CancellationToken CancellationToken)
        {        
            return Ok(await Mediator.Send(Command, CancellationToken));
        }
