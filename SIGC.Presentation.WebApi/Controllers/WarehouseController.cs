@@ -7,6 +7,7 @@ using SIGC.ApplicationService.Features.EstablishmentFeatures.Queries.Establishme
 using SIGC.ApplicationService.Features.EstablishmentFeatures.Queries.EstablishmentList;
 using SIGC.ApplicationService.Features.EstablishmentFeatures.Queries.EstablishmentPagination;
 using SIGC.ApplicationService.Features.WarehouseFeatures.Commands.WarehouseCreate;
+using SIGC.ApplicationService.Features.WarehouseFeatures.Commands.WarehouseUpdate;
 using SIGC.ApplicationService.Features.WarehouseFeatures.Queries.WarehouseGet;
 using SIGC.ApplicationService.Features.WarehouseFeatures.Queries.WarehousePagination;
 using SIGC.DomainModel.Dtos.Establishment;
@@ -27,17 +28,16 @@ namespace SIGC.Presentation.WebApi.Controllers
         {          
             return Ok(await Mediator.Send(Command, CancellationToken));
         }
-        /*
-       [HttpPut("EstablishmentUpdate")]
-       [SwaggerOperation(Summary = "Editar un establecimiento", Description = "Permite editar un establecimiento.")]
+   
+       [HttpPut("WarehouseUpdate")]
+       [SwaggerOperation(Summary = "Editar un almacén", Description = "Permite editar un almacén.")]
        [ProducesResponseType(typeof(MsgResponse<object?>), StatusCodes.Status200OK)]
        [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
-       public async Task<IActionResult> EstablishmentUpdate([FromForm] EstablishmentUpdateCommandRequest Command, IFormFile? FormFile, CancellationToken CancellationToken)
-       {
-           if (FormFile != null) Command.File = new FormFileService(FormFile); 
+       public async Task<IActionResult> WarehouseUpdate([FromForm] WarehouseUpdateCommandRequest Command, CancellationToken CancellationToken)
+       {        
            return Ok(await Mediator.Send(Command, CancellationToken));
        }
-
+      /*
        [HttpPut("EstablishmentChangeState")]
        [SwaggerOperation(Summary = "Cambiar el estado del establecimiento", Description = "Permite cambiar el estado del establecimiento.")]
        [ProducesResponseType(typeof(MsgResponse<object?>), StatusCodes.Status200OK)]

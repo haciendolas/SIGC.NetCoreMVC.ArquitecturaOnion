@@ -5,7 +5,7 @@ using SIGC.Infrastructure.CrossCutting.Wrappers;
 
 namespace SIGC.ApplicationService.Features.EstablishmentFeatures.Commands.EstablishmentUpdate
 {
-    public class EstablishmentUpdateCommandRequest : IRequest<MsgResponse<object?>>
+    public sealed class EstablishmentUpdateCommandRequest : IRequest<MsgResponse<object?>>
     {
         public int EstablishmentID { get; set; }
         public int? PersonID { get; set; }
