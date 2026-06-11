@@ -29,14 +29,7 @@
             };
             $('#btnWarehouseNew').on('click', function () {
                 Warehouse._Clear.fnWarehouseGet();
-            });
-            $('#btnQuitar').hide();
-            $('#btnQuitar').on('click', function () {
-                Uti.Image.Preview('imgWarehouseLogo');
-                $('#profile-img-file-input').val('');
-                $(this).hide();
-                $('#hdWarehouseLogoBandera').val('DELETE');
-            });
+            });            
             $('#cboGlobalEstablishmentID').on('change', function () {
                 Warehouse._Search.fnWarehouseDataTable();
             });
@@ -55,17 +48,14 @@
         _Clear: {
             fnWarehouseGet: function () {
                 $('#txtWarehouseID').val('GENERADO');
-                $('#cboTypeID,#txtWarehouseName,#txtWarehouseCode,#txtWarehouseAddress').val('');
+                $('#cboGlobalEstablishmentID').attr('disabled', false);
+                $('#cboWarehouseTypeID,#txtWarehouseName,#txtWarehouseCode,#txtWarehouseAddress').val('');
                 $('#chkStateID').prop('checked', true);
                 if ($('#btnWarehouseUpdate').length > 0) $('#btnWarehouseUpdate').hide();
                 if ($('#btnWarehouseCreate').length > 0) $('#btnWarehouseCreate').show();
                 Warehouse._Other.fnWarehouseTabs();
-                Warehouse._Validation.fnWarehouseCreateUpdateReset();
-                Uti.Image.Preview('imgWarehouseLogo');
-                $('#txtWarehouseCode').focus();
-                $('#hdWarehouseLogo,#hdWarehouseLogoBandera').val('');
-                $('#profile-img-file-input').val('');
-                $('#btnQuitar').hide();
+                Warehouse._Validation.fnWarehouseCreateUpdateReset();                
+                $('#txtWarehouseCode').focus(); 
             }
         },
         _Other: {        
@@ -182,13 +172,13 @@
                     bSort: false,
                     rowCallback: function (row, data, dataIndex) {
                         $(row).find('a[name=slnkEdit]').on('click', function () {
-                            Warehouse._Search.fnWarehouseGet(data[0]);
+                            Warehouse._Search.fnWarehouseGet(data[1]);
                         }).tooltip();
                         $(row).find('a[name=slnkInactive]').on('click', function () {
-                            Warehouse._Operation.fnWarehouseChangeState(data[0], Uti.Variable.StateType.Inactive);
+                            Warehouse._Operation.fnWarehouseChangeState(data[1], Uti.Variable.StateType.Inactive);
                         }).tooltip();
                         $(row).find('a[name=slnkActive]').on('click', function () {
-                            Warehouse._Operation.fnWarehouseChangeState(data[0], Uti.Variable.StateType.Active);
+                            Warehouse._Operation.fnWarehouseChangeState(data[1], Uti.Variable.StateType.Active);
                         }).tooltip();
                     },
                     drawCallback: function (data) {
@@ -209,15 +199,15 @@
                     if (response.type === Uti.Message.Type.Query) {
                         const { data: rowData } = response;
                         Warehouse._Clear.fnWarehouseGet();
-                        $('#txtWarehouseID').val(rowData.WarehouseID);
-                        $('#cboTypeID').val(rowData.typeID);
-                        $('#txtWarehouseCode').val(rowData.WarehouseCode.trim());
-                        $('#txtWarehouseName').val(rowData.WarehouseName.trim());
-                        $('#txtWarehouseAddress').val(rowData.WarehouseAddress.trim());
+                        $('#txtWarehouseID').val(rowData.warehouseID);
+                        $('#cboGlobalEstablishmentID').prop({ 'value': rowData.establishmentID, 'disabled': true });
+                        $('#cboWarehouseTypeID').val(rowData.warehouseTypeID);
+                        $('#txtWarehouseCode').val(rowData.warehouseCode.trim());
+                        $('#txtWarehouseName').val(rowData.warehouseName.trim());
+                        $('#txtWarehouseAddress').val(rowData.warehouseAddress.trim());
                         $('#chkStateID').attr('checked', rowData.recordStateID == Uti.Variable.StateType.Active);
-                        $('#hdWarehouseLogo').val(rowData.WarehouseLogo.trim());
-                        Uti.Image.Preview('imgWarehouseLogo', rowData.WarehouseUrl.trim());
-                        if (rowData.WarehouseLogo.trim() != '') $('#btnQuitar').show();
+                        if (rowData.warehouseTypeID == 1) $('#divWarehouseAddress').hide();
+                        else $('#divWarehouseAddress').show();
                         $('#warehouse-card ul li a[href="#tab-search"]').addClass('disabled');
                         $('#warehouse-card ul li a[href="#tab-search"]').removeAttr('data-bs-toggle');
                         $('#warehouse-card ul li a[href="#tab-register"]').tab('show');

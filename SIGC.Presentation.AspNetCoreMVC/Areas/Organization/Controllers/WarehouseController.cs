@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SIGC.Presentation.AspNetCoreMVC.Areas.Organization.Models.Establishment;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Organization.Models.Warehouse;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Organization.Services.WarehouseService;
 using SIGC.Presentation.AspNetCoreMVC.Controllers;
@@ -27,6 +26,12 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Organization.Controllers
         {
             Request.RecordOriginID = (byte)EnumsHelper.RecordOrigin.WebForm;
             return Json(await WarehouseService.WarehouseCreate(Request));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> WarehouseGet([FromRoute(Name = "id")] int WarehouseID)
+        {
+            return Json(await WarehouseService.WarehouseGet(WarehouseID));
         }
 
         [HttpPost]
