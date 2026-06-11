@@ -7,6 +7,7 @@ using SIGC.ApplicationService.Features.EstablishmentFeatures.Queries.Establishme
 using SIGC.ApplicationService.Features.EstablishmentFeatures.Queries.EstablishmentList;
 using SIGC.ApplicationService.Features.EstablishmentFeatures.Queries.EstablishmentPagination;
 using SIGC.ApplicationService.Features.WarehouseFeatures.Commands.WarehouseCreate;
+using SIGC.ApplicationService.Features.WarehouseFeatures.Queries.WarehouseGet;
 using SIGC.ApplicationService.Features.WarehouseFeatures.Queries.WarehousePagination;
 using SIGC.DomainModel.Dtos.Establishment;
 using SIGC.Infrastructure.CrossCutting.Wrappers;
@@ -45,16 +46,16 @@ namespace SIGC.Presentation.WebApi.Controllers
        {
            return Ok(await Mediator.Send(Command, CancellationToken));
        }
-
-       [HttpGet("EstablishmentGet/{EstablishmentID}")]
-       [SwaggerOperation(Summary = "Obtener un establecimiento por Id", Description = "Permite obtener un establecimiento por id.")]
+    */
+       [HttpGet("WarehouseGet/{WarehouseID}")]
+       [SwaggerOperation(Summary = "Obtener un almacén por Id", Description = "Permite obtener un almacén por id.")]
        [ProducesResponseType(typeof(MsgResponse<EstablishmentGetResponseDto?>), StatusCodes.Status200OK)]
        [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
-       public async Task<IActionResult> EstablishmentGet([FromRoute] int EstablishmentID, CancellationToken CancellationToken)
+       public async Task<IActionResult> WarehouseGet([FromRoute] int WarehouseID, CancellationToken CancellationToken)
        {
-           return Ok(await Mediator.Send(new EstablishmentGetQueryRequest(EstablishmentID), CancellationToken));
+           return Ok(await Mediator.Send(new WarehouseGetQueryRequest(WarehouseID), CancellationToken));
        }
-
+        /*
        [HttpGet("EstablishmentList/{PersonID}")]
        [SwaggerOperation(Summary = "Listar los establecimiento de la empresa", Description = "Permite listar los establecimientos de la empresa.")]
        [ProducesResponseType(typeof(MsgResponse<List<EstablishmentListResponseDto>>), StatusCodes.Status200OK)]

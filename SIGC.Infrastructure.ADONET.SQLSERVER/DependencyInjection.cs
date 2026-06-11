@@ -124,6 +124,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
 
             services.AddScoped<IWarehousePaginationRepository, WarehousePaginationRepository>();
             services.AddScoped<IWarehouseCreateRepository, WarehouseCreateRepository>();
+            services.AddScoped<IWarehouseGetRepository, WarehouseGetRepository>();
             return services;
         }
     }
