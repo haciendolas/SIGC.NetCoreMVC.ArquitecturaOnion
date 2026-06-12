@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Organization.Models.Establishment;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Organization.Models.Warehouse;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Organization.Services.WarehouseService;
 using SIGC.Presentation.AspNetCoreMVC.Controllers;
@@ -32,6 +33,12 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Organization.Controllers
         public async Task<IActionResult> WarehouseUpdate([FromBody] WarehouseCreateUpdateRequestModel Request)
         {      
             return Json(await WarehouseService.WarehouseUpdate(Request));
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> WarehouseChangeState([FromBody] WarehouseChangeStateRequestModel Request)
+        {
+            return Json(await WarehouseService.WarehouseChangeState(Request));
         }
 
         [HttpGet]

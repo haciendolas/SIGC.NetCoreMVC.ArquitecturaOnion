@@ -22,6 +22,10 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Organization.Services.WarehouseS
         {
             return await ApiService.PutAsync<WarehouseCreateUpdateRequestModel, ApiResponse<object?>>($"{Controller}/WarehouseUpdate", Request);
         }
+        public async Task<ApiResponse<object?>> WarehouseChangeState(WarehouseChangeStateRequestModel Request)
+        {
+            return await ApiService.PutAsync<WarehouseChangeStateRequestModel, ApiResponse<object?>>($"{Controller}/WarehouseChangeState", Request);
+        }
         public async Task<ApiResponse<WarehouseGetResponseModel?>> WarehouseGet(int WarehouseID)
         {
             return await ApiService.GetAsync<ApiResponse<WarehouseGetResponseModel?>>($"{Controller}/WarehouseGet/{WarehouseID}");

@@ -8,6 +8,7 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Organization.Services.WarehouseS
     {
         Task<ApiResponse<object?>> WarehouseCreate(WarehouseCreateUpdateRequestModel Request);
         Task<ApiResponse<object?>> WarehouseUpdate(WarehouseCreateUpdateRequestModel Request);
+        Task<ApiResponse<object?>> WarehouseChangeState(WarehouseChangeStateRequestModel Request);
         Task<ApiResponse<WarehouseGetResponseModel?>> WarehouseGet(int WarehouseID);
         Task<ApiResponse<PaginationResultModel<WarehousePaginationResponseModel>>> WarehousePagination(WarehousePaginationRequestModel Request);
     }
