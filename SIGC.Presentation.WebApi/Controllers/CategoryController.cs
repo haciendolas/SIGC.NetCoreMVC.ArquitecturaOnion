@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SIGC.ApplicationService.Commons.Dtos;
 using SIGC.ApplicationService.Features.CategoryFeatures.Commands.CategoryChangeState;
 using SIGC.ApplicationService.Features.CategoryFeatures.Commands.CategoryCreate;
 using SIGC.ApplicationService.Features.CategoryFeatures.Commands.CategoryUpdate;
 using SIGC.ApplicationService.Features.CategoryFeatures.Queries.CategoryGet;
+using SIGC.ApplicationService.Features.CategoryFeatures.Queries.CategoryList;
 using SIGC.ApplicationService.Features.CategoryFeatures.Queries.CategoryPagination;
 using SIGC.DomainModel.Dtos.Category;
 using SIGC.Infrastructure.CrossCutting.Wrappers;
@@ -50,6 +52,15 @@ namespace SIGC.Presentation.WebApi.Controllers
         public async Task<IActionResult> CategoryGet([FromRoute] int CategoryID, CancellationToken CancellationToken)
         {
             return Ok(await Mediator.Send(new CategoryGetQueryRequest(CategoryID), CancellationToken));
+        }
+      
+        [HttpGet("CategoryList")]
+        [SwaggerOperation(Summary = "Listar las categorias", Description = "Permite listar las categorias.")]
+        [ProducesResponseType(typeof(MsgResponse<List<CategoryListResponseDto>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CategoryList(CancellationToken CancellationToken)
+        {
+            return Ok(await Mediator.Send(new CategoryListQueryRequest(), CancellationToken));
         }
 
         [HttpPost("CategoryPagination")]

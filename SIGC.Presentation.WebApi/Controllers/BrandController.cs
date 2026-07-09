@@ -9,7 +9,7 @@ namespace SIGC.Presentation.WebApi.Controllers
     public class BrandController : BaseController
     {   
         [HttpGet("BrandList")]
-        [SwaggerOperation(Summary = "Listar los marcar", Description = "Permite listar las marcas.")]
+        [SwaggerOperation(Summary = "Listar las marcas", Description = "Permite listar las marcas.")]
         [ProducesResponseType(typeof(MsgResponse<List<BrandListResponseDto>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> BrandList(CancellationToken CancellationToken)

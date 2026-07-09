@@ -70,6 +70,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
             services.AddScoped<ICategoryUpdateRepository, CategoryUpdateRepository>();
             services.AddScoped<ICategoryVerifyNameRepository, CategoryVerifyNameRepository>();
             services.AddScoped<ICategoryPaginationRepository, CategoryPaginationRepository>();
+            services.AddScoped<ICategoryListRepository, CategoryListRepository>();
 
             services.AddScoped<IRolePermissionListRepository, RolePermissionListRepository>();
             services.AddScoped<IRolePermissionCreateRepository, RolePermissionCreateRepository>();
