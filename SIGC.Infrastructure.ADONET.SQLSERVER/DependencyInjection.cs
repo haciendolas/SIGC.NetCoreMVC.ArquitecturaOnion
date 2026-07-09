@@ -7,6 +7,7 @@ using SIGC.DomainService.IRepositories.ICompanyRegisterRepositories;
 using SIGC.DomainService.IRepositories.ICompanyRepositories;
 using SIGC.DomainService.IRepositories.IConstantRepositories;
 using SIGC.DomainService.IRepositories.IEstablishmentRepositories;
+using SIGC.DomainService.IRepositories.IManufacturerRepositories;
 using SIGC.DomainService.IRepositories.IPageCompanyRepositories;
 using SIGC.DomainService.IRepositories.IPageRepositories;
 using SIGC.DomainService.IRepositories.IRolePermissionRepositories;
@@ -27,6 +28,7 @@ using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CompanyRegisterRepositor
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CompanyRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.ConstantRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.EstablishmentRepositories;
+using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.ManufacturerRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.PageCompanyRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.PageRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RolePermissionRepositories;
@@ -131,6 +133,9 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
             services.AddScoped<IWarehouseChangeStateRepository, WarehouseChangeStateRepository>();
 
             services.AddScoped<IBrandListRepository, BrandListRepository>();
+
+            services.AddScoped<IManufacturerListRepository, ManufacturerListRepository>();
+
             return services;
         }
     }
