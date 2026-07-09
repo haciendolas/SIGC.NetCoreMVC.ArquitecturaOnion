@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SIGC.DomainService.IRepositories.IAuthRepositories;
+using SIGC.DomainService.IRepositories.IBrandRepositories;
 using SIGC.DomainService.IRepositories.ICategoryRepositories;
 using SIGC.DomainService.IRepositories.ICompanyRegisterRepositories;
 using SIGC.DomainService.IRepositories.ICompanyRepositories;
@@ -20,6 +21,7 @@ using SIGC.DomainService.IRepositories.UserRoleRepositories;
 using SIGC.DomainService.Transactions;
 using SIGC.Infrastructure.ADONET.SQLSERVER.AppDBContext;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.AuthRepositories;
+using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.BrandRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CategoryRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CompanyRegisterRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CompanyRepositories;
@@ -127,6 +129,8 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
             services.AddScoped<IWarehouseGetRepository, WarehouseGetRepository>();
             services.AddScoped<IWarehouseUpdateRepository, WarehouseUpdateRepository>();
             services.AddScoped<IWarehouseChangeStateRepository, WarehouseChangeStateRepository>();
+
+            services.AddScoped<IBrandListRepository, BrandListRepository>();
             return services;
         }
     }

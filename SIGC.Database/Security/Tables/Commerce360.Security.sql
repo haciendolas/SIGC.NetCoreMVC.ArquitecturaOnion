@@ -225,3 +225,23 @@ ON [Security].TokenResetPassword(UserID, CompanyID, TokenResetPasswordHash);
 
 
 */
+
+GO
+CREATE TABLE [Security].Audit(
+	AuditID BIGINT NOT NULL IDENTITY(1,1),
+	CompanyID INT NOT NULL,	
+	OperationType VARCHAR(20) NOT NULL,
+	PrimaryKey NVARCHAR(MAX) NOT NULL,
+	TableName VARCHAR(100) NOT NULL,
+    RecordOriginID TINYINT NOT NULL,	
+	OldValues NVARCHAR(MAX) NULL,
+	NewValues NVARCHAR(MAX) NULL,
+	AffectedColumns NVARCHAR(max) NULL,
+	[DateTime] [datetime2](7) NOT NULL,
+	UserID INT NOT NULL,
+	UserName NVARCHAR(20) NOT NULL,
+	UserFullName NVARCHAR(80) NOT NULL,
+	CONSTRAINT Audit_PK_AuditID PRIMARY KEY CLUSTERED(AuditID),
+ 	CONSTRAINT Audit_FK_CompanyID FOREIGN KEY(CompanyID) REFERENCES [Security].Company(CompanyID),   
+    CONSTRAINT Audit_CHK_OperationType CHECK(OperationType IN('Create','Update','Delete','SoftDelete'))
+)

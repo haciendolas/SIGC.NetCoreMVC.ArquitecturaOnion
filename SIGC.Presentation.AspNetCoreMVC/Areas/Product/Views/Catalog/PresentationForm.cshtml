@@ -7,129 +7,193 @@
     <div class="card-body">
         <div class="row pb-2">
             <label for="txtCompanyCorporateEmail" class="col-sm-1 col-form-label">Producto</label>
-            <div class="col-sm-8">
+            <div class="col-sm-11">
                 <input type="text" class="form-control" id="txtCompanyCorporateEmail" name="CompanyCorporateEmail" readonly />
             </div>
-            <label for="chkStateID" class="col-sm-1 col-form-label">Estado</label>
-            <div class="col-sm-2 pt-2">
-                <div class="form-check form-switch form-switch-md form-switch-secondary" dir="ltr">
-                    <input type="checkbox" class="form-check-input" checked id="chkStateID">
-                    <label class="form-check-label" for="chkStateID">Activo</label>
+        </div>
+        <div class="card" id="div-variant">
+            <div class="card-header p-2" style="background:#f3f3f9">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1">
+                        <h6 class="card-title mb-0">Variante</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="row pb-2">
+                            <label for="txtCompanyAddress" class="col-sm-2 col-form-label">Nombre<i class="ri-asterisk align-middle text-danger"></i></label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" id="txtCompanyAddress" name="CompanyAddress" placeholder="Talla - Color, 32 - R" />
+                            </div>
+                            <label for="txtCompanyAddress" class="col-sm-2 col-form-label">SKU<i class="ri-asterisk align-middle text-danger"></i></label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="txtCompanyAddress" name="CompanyAddress" />
+                            </div>
+                        </div>
+                        <div class="row pt-2">
+                            <div class="col-sm-12">
+                                <div class="text-end">
+                                    <button type="button" class="btn btn-light" id="btnCompanyNew"><i class="ri-file-text-fill align-bottom me-1 fs-13"></i>&nbsp;Nuevo&nbsp;</button>&nbsp;&nbsp;
+                                    <button type="button" class="btn btn-primary" id="btnCompanyCreate"><i class="ri-save-3-line align-bottom me-1 fs-13"></i><span>Guardar</span></button>
+                                    <button type="button" class="btn btn-primary" id="btnCompanyUpdate"><i class="ri-pencil-fill align-bottom me-1 fs-13"></i>Editar&nbsp;</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="table-responsive table-card p-3">
+                            <table class="table align-middle" id="dtCompany">
+                                <thead class="table-light text-muted">
+                                    <tr>
+                                        <th class="text-center">Nombre Variante</th>
+                                        <th class="text-center">Valor Variante</th>
+                                        <th class="text-center">Opción</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="details-list">
+                                    <tr>
+                                        <td><input type="checkbox" name="optTalla" />Talla</td>
+                                        <td>
+                                            <input type="radio" name="optVaianteTalla"/> S
+                                            <input type="radio" name="optVaianteTalla" /> L
+                                         </td>
+                                         <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox" name="optColor" />Color</td>
+                                        <td>
+                                            <input type="radio" name="optVaianteColor" /> Rojo
+                                            <input type="radio" name="optVaianteColor" /> Azul
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </div>
+        <div class="card" id="div-presentation">
+            <div class="card-header p-2" style="background:#f3f3f9">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1">
+                        <h6 class="card-title mb-0">Presentacions por Variante</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row pb-2">
+                    <label for="cboRubroID" class="col-sm-1 col-form-label">Uni.Medida<i class="ri-asterisk align-middle text-danger"></i></label>
+                    <div class="col-sm-2">
+                        <select class="form-select" id="cboRubroID" name="RubroID">
+                            @if (@ViewBag.RubroList != null)
+                            {
+                                <option value="">Seleccionar</option>
+                                var RubroList = ViewBag.RubroList as List<ConstantListResponseModel>;
+                                @foreach (var Item in RubroList!)
+                                {
+                                    <option value="@Item.ConstantID">@Item.ConstantName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <label for="cboRubroID" class="col-sm-2 col-form-label">Presentación<i class="ri-asterisk align-middle text-danger"></i></label>
+                    <div class="col-sm-4">
+                        <select class="form-select" id="cboRubroID" name="RubroID">
+                            @if (@ViewBag.RubroList != null)
+                            {
+                                <option value="">Seleccionar</option>
+                                var RubroList = ViewBag.RubroList as List<ConstantListResponseModel>;
+                                @foreach (var Item in RubroList!)
+                                {
+                                    <option value="@Item.ConstantID">@Item.ConstantName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <label for="txtCompanyAddress" class="col-sm-1 col-form-label">Equivalente<i class="ri-asterisk align-middle text-danger"></i></label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="txtCompanyAddress" name="CompanyAddress" />
+                    </div>
+                </div>
+                <div class="row pb-2">
+                    <label for="txtCompanyCorporateEmail" class="col-sm-1 col-form-label">SKU<i class="ri-asterisk align-middle text-danger"></i></label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="txtCompanyCorporateEmail" name="CompanyCorporateEmail" />
+                    </div>
+                    <label for="txtCompanyMobile" class="col-sm-1 col-form-label">COD.QR</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="txtCompanyMobile" name="CompanyMobile" />
+                    </div>
+                    <label for="chkStateID" class="col-sm-1 col-form-label">Estado</label>
+                    <div class="col-sm-2 pt-2">
+                        <div class="form-check form-switch form-switch-md form-switch-secondary" dir="ltr">
+                            <input type="checkbox" class="form-check-input" checked id="chkStateID">
+                            <label class="form-check-label" for="chkStateID">Activo</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row pt-2">
+                    <div class="col-sm-12">
+                        <div class="text-end">
+                            <button type="button" class="btn btn-light" id="btnCompanyNew"><i class="ri-file-text-fill align-bottom me-1 fs-13"></i>&nbsp;Nuevo&nbsp;</button>&nbsp;&nbsp;
+                            <button type="button" class="btn btn-primary" id="btnCompanyCreate"><i class="ri-save-3-line align-bottom me-1 fs-13"></i><span>Guardar</span></button>
+                            <button type="button" class="btn btn-primary" id="btnCompanyUpdate"><i class="ri-pencil-fill align-bottom me-1 fs-13"></i>Editar&nbsp;</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="row pb-2">
-            <label for="cboRubroID" class="col-sm-1 col-form-label">Uni.Medida<i class="ri-asterisk align-middle text-danger"></i></label>
-            <div class="col-sm-2">
-                <select class="form-select" id="cboRubroID" name="RubroID">
-                    @if (@ViewBag.RubroList != null)
-                    {
-                        <option value="">Seleccionar</option>
-                        var RubroList = ViewBag.RubroList as List<ConstantListResponseModel>;
-                        @foreach (var Item in RubroList!)
-                        {
-                            <option value="@Item.ConstantID">@Item.ConstantName</option>
-                        }
-                    }
-                </select>
-            </div>
-            <label for="cboRubroID" class="col-sm-2 col-form-label">Presentación<i class="ri-asterisk align-middle text-danger"></i></label>
-            <div class="col-sm-4">
-                <select class="form-select" id="cboRubroID" name="RubroID">
-                    @if (@ViewBag.RubroList != null)
-                    {
-                        <option value="">Seleccionar</option>
-                        var RubroList = ViewBag.RubroList as List<ConstantListResponseModel>;
-                        @foreach (var Item in RubroList!)
-                        {
-                            <option value="@Item.ConstantID">@Item.ConstantName</option>
-                        }
-                    }
-                </select>
-            </div>
-            <label for="txtCompanyAddress" class="col-sm-1 col-form-label">Equivalente<i class="ri-asterisk align-middle text-danger"></i></label>
-            <div class="col-sm-2">
-                <input type="text" class="form-control" id="txtCompanyAddress" name="CompanyAddress" />
-            </div>
-        </div>
-        <div class="row pb-2">
-            <label for="txtCompanyAddress" class="col-sm-1 col-form-label">Variante<i class="ri-asterisk align-middle text-danger"></i></label>
-            <div class="col-sm-3">
-                <input type="text" class="form-control" id="txtCompanyAddress" name="CompanyAddress" placeholder="Color,Tiempo,Tamaño,Otros" />
-            </div>
-            <label for="txtCompanyCorporateEmail" class="col-sm-1 col-form-label">SKU<i class="ri-asterisk align-middle text-danger"></i></label>
-            <div class="col-sm-3">
-                <input type="text" class="form-control" id="txtCompanyCorporateEmail" name="CompanyCorporateEmail" />
-            </div>
-            <label for="txtCompanyMobile" class="col-sm-1 col-form-label">COD.QR</label>
-            <div class="col-sm-3">
-                <input type="text" class="form-control" id="txtCompanyMobile" name="CompanyMobile" />
-            </div>
-        </div>
-        <div class="row pb-2">
-            <label for="txtCompanyMobile" class="col-sm-1 col-form-label">Stock Inicial</label>
-            <div class="col-sm-2">
-                <input type="number" class="form-control" id="txtCompanyMobile" name="CompanyMobile" />
-            </div>
-            <label for="txtCompanyMobile" class="col-sm-1 col-form-label">Stock Min</label>
-            <div class="col-sm-2">
-                <input type="number" class="form-control" id="txtCompanyMobile" name="CompanyMobile" />
-            </div>
-            <label for="txtCompanyMobile" class="col-sm-1 col-form-label">Stock Max</label>
-            <div class="col-sm-2">
-                <input type="number" class="form-control" id="txtCompanyMobile" name="CompanyMobile" />
-            </div>
-            <label for="txtCompanyMobile" class="col-sm-1 col-form-label">Stock Actual</label>
-            <div class="col-sm-2">
-                <input type="number" class="form-control" id="txtCompanyMobile" name="CompanyMobile" />
-            </div>
-        </div>
-        <div class="row pb-2">
-            <div class="col-sm-1">&ensp;</div>
-            <div class="col-sm-2">
-                <div class="form-check form-switch form-switch-md form-switch-secondary">
-                    <input type="checkbox" class="form-check-input" checked id="chkStateID">
-                    <label class="form-check-label" for="chkStateID">Controla Inventario</label>
+        <div class="card">
+            <div class="card-header p-2" style="background:#f3f3f9">
+                <div class="d-flex align-items-center">
+                    <div class="flex-grow-1">
+                        <h6 class="card-title mb-0">C M  - Talla C , Color Negro</h6>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <ul class="list-inline card-toolbar-menu d-flex align-items-center mb-0">
+                            <li class="list-inline-item">
+                                <a class="align-middle" data-toggle="reload" href="javascript:void(0);">
+                                    <i class="mdi mdi-refresh align-middle"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="align-middle minimize-card" data-bs-toggle="collapse" href="#collapseexample1" role="button" aria-expanded="false" aria-controls="collapseExample2">
+                                    <i class="mdi mdi-plus align-middle plus"></i>
+                                    <i class="mdi mdi-minus align-middle minus"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <button type="button" onclick="delthis('card-none1')" class="btn-close fs-10 align-middle"></button>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-2">
-                <div class="form-check form-switch form-switch-md form-switch-secondary">
-                    <input type="checkbox" class="form-check-input" checked id="chkStateID">
-                    <label class="form-check-label" for="chkStateID">Afecto a Stock</label>
-                </div>
-            </div>
-        </div>
-        <div class="row pb-2">
-            <div class="col-sm-7 mt-3">
-                <div class="text-end">
-                    <button type="button" class="btn btn-light" id="btnCompanyNew"><i class="ri-file-text-fill align-bottom me-1 fs-13"></i>&nbsp;Nuevo&nbsp;</button>&nbsp;&nbsp;
-                    <button type="button" class="btn btn-primary" id="btnCompanyCreate"><i class="ri-save-3-line align-bottom me-1 fs-13"></i><span>Guardar</span></button>
-                    <button type="button" class="btn btn-primary" id="btnCompanyUpdate"><i class="ri-pencil-fill align-bottom me-1 fs-13"></i>Editar&nbsp;</button>
+            <div class="card-body pb-2 collapse show" id="collapseexample1">
+                <div class="table-responsive table-card p-1">
+                    <table class="table align-middle" id="dtCompany">
+                        <thead class="table-light text-muted">
+                            <tr>                              
+                                <th class="text-center">ID</th>
+                                <th class="text-center">Unid.Medida </th>
+                                <th class="text-center">Presentación</th>
+                                <th class="text-center">Equivalencia</th>                             
+                                <th class="text-center">SKU</th>
+                                <th class="text-center">COD.QR</th>
+                                <th class="text-center">Unidad por Default</th>
+                                <th class="text-center">Estado</th>
+                                <th class="text-center" colspan="2">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="details-list">
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 </form>
-<div class="card-body">
-    <div class="table-responsive table-card p-1">
-        <table class="table align-middle" id="dtCompany">
-            <thead class="table-light text-muted">
-                <tr>
-                    <th class="text-center">Establecimiento</th>
-                    <th class="text-center">ID</th>
-                    <th class="text-center">Unid.Medida </th>
-                    <th class="text-center">Presentación</th>
-                    <th class="text-center">Equivalencia</th>
-                    <th class="text-center">Variante</th>
-                    <th class="text-center">SKU</th>
-                    <th class="text-center">COD.QR</th>
-                    <th class="text-center">Stock</th>
-                    <th class="text-center">Estado</th>
-                    <th class="text-center" colspan="2">Opciones</th>
-                </tr>
-            </thead>
-            <tbody id="details-list">
-            </tbody>
-        </table>
-    </div>
-</div>

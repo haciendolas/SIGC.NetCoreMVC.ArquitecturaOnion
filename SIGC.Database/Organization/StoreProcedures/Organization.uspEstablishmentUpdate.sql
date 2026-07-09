@@ -25,14 +25,14 @@
    Identifcador:		   Date Update  |   User Update   |  Description Update  
      @1
 ==============================================================================*/
-CREATE PROCEDURE Organization.uspEstablishmentUpdate
+ALTER PROCEDURE Organization.uspEstablishmentUpdate
 (  @EstablishmentID INT,
    @CompanyID INT,
    @PersonID INT,
    @TypeID TINYINT,
    @EstablishmentCode VARCHAR(10),  
    @EstablishmentName NVARCHAR(50),
-   @EstablishmentAddress NVARCHAR(50),
+   @EstablishmentAddress NVARCHAR(150),
    @EstablishmentLogo VARCHAR(100) = NULL,
    @RecordStateID TINYINT,
    @EstablishmentUpdatedUserID INT,

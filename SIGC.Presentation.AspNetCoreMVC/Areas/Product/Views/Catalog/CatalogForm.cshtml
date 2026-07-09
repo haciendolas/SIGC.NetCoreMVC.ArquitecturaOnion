@@ -16,9 +16,12 @@
                     <div class="col-sm-4">
                         <label for="cboCountryID">Tipo<i class="ri-asterisk align-middle text-danger"></i></label>
                         <select class="form-select" id="cboCountryID" name="CountryID">
+                            <option value="">Seleccionar</option>
+                            <option value="">Articulo</option>
+                            <option value="">Servicio</option>
                             @if (@ViewBag.CountryList != null)
                             {
-                                <option value="">Seleccionar</option>
+
                                 var CountryList = ViewBag.CountryList as List<UbigeoListByClassAndCodeAndLenCodeResponseModel>;
                                 @foreach (var Item in CountryList!)
                                 {
@@ -51,6 +54,13 @@
                     <label for="cboRubroID" class="col-sm-2 col-form-label">Categoría<i class="ri-asterisk align-middle text-danger"></i></label>
                     <div class="col-sm-4">
                         <select class="form-select" id="cboRubroID" name="RubroID">
+                            <option value="">Seleccionar</option>
+                            <option value="">Alimentos y Bebidas</option>
+                            <option value="">Limpieza y Hogar</option>
+                            <option value="">Ropa y Calzado</option>
+                            <option value="">Papelería</option>
+                            <option value="">Muebles</option>
+                            <option value="">Agroquímicos</option>
                             @if (@ViewBag.RubroList != null)
                             {
                                 <option value="">Seleccionar</option>
@@ -62,12 +72,21 @@
                             }
                         </select>
                     </div>
-                    <label for="cboRubroID" class="col-sm-2 col-form-label">Familia<i class="ri-asterisk align-middle text-danger"></i></label>
+                    <label for="cboRubroID" class="col-sm-2 col-form-label">Fabricante<i class="ri-asterisk align-middle text-danger"></i></label>
                     <div class="col-sm-4">
                         <select class="form-select" id="cboRubroID" name="RubroID">
+                            <option value="">Seleccionar</option>
+                            <option value="">Ninguno</option>
+                            <option value="">Nestlé</option>
+                            <option value="">Unilever</option>
+                            <option value="">Kraft Heinz</option>
+                            <option value="">Alicorp</option>
+                            <option value="">Gloria</option>
+                            <option value="">Backus</option>
+                            <option value="">Inca Kola / Coca Cola</option>
                             @if (@ViewBag.RubroList != null)
                             {
-                                <option value="">Seleccionar</option>
+                                <option value="">Seleccionar</option> 
                                 var RubroList = ViewBag.RubroList as List<ConstantListResponseModel>;
                                 @foreach (var Item in RubroList!)
                                 {
@@ -81,6 +100,12 @@
                     <label for="cboRubroID" class="col-sm-2 col-form-label">Marca<i class="ri-asterisk align-middle text-danger"></i></label>
                     <div class="col-sm-5">
                         <select class="form-select" id="cboRubroID" name="RubroID">
+                            <option value="">Seleccionar</option>
+                            <option value="">Ninguno</option>
+                            <option value="">Maggi</option>
+                            <option value="">Nestlé</option>
+                            <option value="">Gloria</option>
+                            <option value="">Alicorp</option>
                             @if (@ViewBag.RubroList != null)
                             {
                                 <option value="">Seleccionar</option>
@@ -92,21 +117,71 @@
                             }
                         </select>
                     </div>
-                    <label for="cboRubroID" class="col-sm-2 col-form-label">COD.UNSPSC</label>
+                    <label for="cboRubroID" class="col-sm-2 col-form-label">Venta Con<i class="ri-asterisk align-middle text-danger"></i></label>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" id="txtCompanySocialReason" name="CompanySocialReason" />
+                        <select class="form-select" id="cboRubroID" name="RubroID">
+                            <option value="">Seleccionar</option>
+                            <option value="">Receta</option>
+                            <option value="">Sin Receta</option>                        
+                            @if (@ViewBag.RubroList != null)
+                            {
+                                <option value="">Seleccionar</option>
+                                var RubroList = ViewBag.RubroList as List<ConstantListResponseModel>;
+                                @foreach (var Item in RubroList!)
+                                {
+                                    <option value="@Item.ConstantID">@Item.ConstantName</option>
+                                }
+                            }
+                        </select>
                     </div>
                 </div>
                 <div class="row pb-2">
+                    <label for="cboRubroID" class="col-sm-2 col-form-label">Atributos</label>
+                    <div class="col-sm-10">                         
+                            <div class="table-responsive table-card p-3">
+                                <table class="table align-middle" id="dtCompany">
+                                    <thead class="table-light text-muted">
+                                        <tr>
+                                            <th class="text-center">Nombre Atribto</th>
+                                            <th class="text-center">Valor Atributo</th>
+                                            <th class="text-center">Opción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="details-list">
+                                        <tr>
+                                            <td><input type="checkbox" name="optTalla" />Concentración</td>
+                                            <td>
+                                                <input type="radio" name="optValorC"  /> 500 mg
+                                                <input type="radio" name="optValorC" /> 600 mg
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox" name="optColor" />Tamaño</td>
+                                            <td>
+                                                <input type="radio" name="optValorP" /> Pequeño
+                                                <input type="radio" name="optValorP" /> Mediano
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                       
+                    </div>
+                </div>
+                <div class="row pb-2">
+                    <label for="cboRubroID" class="col-sm-2 col-form-label">COD.UNSPSC</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="txtCompanySocialReason" name="CompanySocialReason" />
+                    </div>
                     <label for="txtCompanyTradeName" class="col-sm-2 col-form-label">DESC.UNSPSC</label>
-                    <div class="col-sm-10">
+                    <div class="col-sm-6">
                         <input type="text" class="form-control" rows="3" id="txtCompanyTradeName" name="CompanyTradeName" />
                     </div>
                 </div>
                 <div class="row pb-2">
                     <label for="txtCompanyTradeName" class="col-sm-2 col-form-label">Descripción</label>
                     <div class="col-sm-10">
-                        <textarea type="text" class="form-control" rows="6" id="txtCompanyTradeName" name="CompanyTradeName"></textarea>
+                        <textarea type="text" class="form-control" rows="3" id="txtCompanyTradeName" name="CompanyTradeName"></textarea>
                     </div>
                 </div>
             </div>
@@ -134,7 +209,7 @@
                 </div>
             </div>
         </div>
-        <div class="row g-3">
+        <div class="row">
             <div class="col-sm-9 pb-2 mt-3">
                 <div class="text-end">
                     <button type="button" class="btn btn-light" id="btnCompanyNew"><i class="ri-file-text-fill align-bottom me-1 fs-13"></i>&nbsp;Nuevo&nbsp;</button>&nbsp;&nbsp;

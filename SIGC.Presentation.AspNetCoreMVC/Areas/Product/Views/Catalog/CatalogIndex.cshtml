@@ -21,7 +21,7 @@
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="tab" href="#tab-presentation" role="tab" aria-selected="false">
                     <i class="ri-shield-cross-fill align-middle me-1 fs-20"></i>
-                    Presentación Producto
+                    Variante Producto
                 </a>
             </li>
             <li class="nav-item">
@@ -30,6 +30,18 @@
                     Precio Producto
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#tab-tax" role="tab" aria-selected="false">
+                    <i class="ri-coins-fill align-middle me-1 fs-22"></i>
+                    Impuesto Producto
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#tab-configuration" role="tab" aria-selected="false">
+                    <i class="ri-settings-2-fill align-middle me-1 fs-22"></i>
+                    Configuración Producto
+                </a>
+            </li> 
         </ul>
         <div class="tab-content text-muted">
             <div class="tab-pane active" id="tab-search" role="tabpanel">
@@ -44,6 +56,12 @@
             <div class="tab-pane" id="tab-price" role="tabpanel">
                 <partial name="PriceForm" />
             </div>
+            <div class="tab-pane" id="tab-tax" role="tabpanel">
+                <partial name="TaxForm" />
+            </div>
+            <div class="tab-pane" id="tab-configuration" role="tabpanel">
+                <partial name="ConfigurationForm" />
+            </div> 
         </div>
     </div>
 </div>

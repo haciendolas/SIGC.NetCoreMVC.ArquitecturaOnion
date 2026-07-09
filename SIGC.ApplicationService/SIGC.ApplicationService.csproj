@@ -15,4 +15,8 @@
     <ProjectReference Include="..\SIGC.Infrastructure.CrossCutting\SIGC.Infrastructure.CrossCutting.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\BrandFeatures\Commands\" />
+  </ItemGroup>
+
 </Project>

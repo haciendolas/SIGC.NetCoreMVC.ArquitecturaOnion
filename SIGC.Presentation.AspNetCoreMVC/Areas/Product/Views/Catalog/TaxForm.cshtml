@@ -12,8 +12,8 @@
             </div>
         </div>
         <div class="row pb-2">
-            <label for="txtCompanyPhone" class="col-sm-1 col-form-label" style="padding-right:0px">Presentación<i class="ri-asterisk align-middle text-danger"></i></label>
-            <div class="col-sm-7">
+            <label for="txtCompanyPhone" class="col-sm-1 col-form-label" style="padding-right:0px">Impuesto<i class="ri-asterisk align-middle text-danger"></i></label>
+            <div class="col-sm-3">
                 <select class="form-select" id="cboTaxpayerTypeID" name="TaxpayerTypeID">
                     @if (@ViewBag.TaxpayerTypeList != null)
                     {
@@ -27,7 +27,21 @@
                     }
                 </select>
             </div>
-            <label for="txtCompanyMobile" class="col-sm-2 col-form-label">Tipo Precio<i class="ri-asterisk align-middle text-danger"></i></label>
+            <label for="txtCompanyMobile" class="col-sm-2 col-form-label">Tipo Calculo<i class="ri-asterisk align-middle text-danger"></i></label>
+            <div class="col-sm-2">
+                <select class="form-select" id="cboTaxpayerTypeID" name="TaxpayerTypeID">
+                    @if (@ViewBag.TaxpayerTypeList != null)
+                    {
+                        <option value="">Seleccionar</option>
+                        var TaxpayerTypeList = ViewBag.TaxpayerTypeList as List<ConstantListResponseModel>;
+                        @foreach (var Item in TaxpayerTypeList!)
+                        {
+                            <option value="@Item.ConstantID">@Item.ConstantName</option>
+                        }
+                    }
+                </select>
+            </div>
+            <label for="txtCompanyPhone" class="col-sm-2 col-form-label">Tipo Dirección<i class="ri-asterisk align-middle text-danger"></i></label>
             <div class="col-sm-2">
                 <select class="form-select" id="cboTaxpayerTypeID" name="TaxpayerTypeID">
                     @if (@ViewBag.TaxpayerTypeList != null)
@@ -43,8 +57,8 @@
             </div>
         </div>
         <div class="row pb-2">
-            <label for="txtCompanyPhone" class="col-sm-1 col-form-label">Moneda<i class="ri-asterisk align-middle text-danger"></i></label>
-            <div class="col-sm-2">
+            <label for="txtCompanyMobile" class="col-sm-1 col-form-label">Afectación<i class="ri-asterisk align-middle text-danger"></i></label>
+            <div class="col-sm-3">
                 <select class="form-select" id="cboTaxpayerTypeID" name="TaxpayerTypeID">
                     @if (@ViewBag.TaxpayerTypeList != null)
                     {
@@ -57,17 +71,6 @@
                     }
                 </select>
             </div>
-            <label for="txtCompanyMobile" class="col-sm-1 col-form-label">Precio<i class="ri-asterisk align-middle text-danger"></i></label>
-            <div class="col-sm-2">
-                <input type="text" class="form-control" id="txtCompanyMobile" name="CompanyMobile" />
-            </div>
-            <label for="chkStateID" class="col-sm-1 col-form-label">&nbsp;</label>
-            <div class="col-sm-2 pt-2">
-                <div class="form-check form-switch form-switch-md form-switch-secondary" dir="ltr">
-                    <input type="checkbox" class="form-check-input" checked id="chkStateID">
-                    <label class="form-check-label" for="chkStateID">Incluye Impuesto</label>
-                </div>
-            </div>
             <label for="chkStateID" class="col-sm-1 col-form-label">Estado</label>
             <div class="col-sm-2 pt-2">
                 <div class="form-check form-switch form-switch-md form-switch-secondary" dir="ltr">
@@ -75,9 +78,9 @@
                     <label class="form-check-label" for="chkStateID">Activo</label>
                 </div>
             </div>
-        </div> 
-        <div class="row pb-2">
-            <div class="col-sm-12 mt-3">
+        </div>
+        <div class="row2">
+            <div class="col-sm-12">
                 <div class="text-end">
                     <button type="button" class="btn btn-light" id="btnCompanyNew"><i class="ri-file-text-fill align-bottom me-1 fs-13"></i>&nbsp;Nuevo&nbsp;</button>&nbsp;&nbsp;
                     <button type="button" class="btn btn-primary" id="btnCompanyCreate"><i class="ri-save-3-line align-bottom me-1 fs-13"></i><span>Guardar</span></button>
@@ -87,24 +90,58 @@
         </div>
     </div>
 </form>
-<div class="card-body">
-    <div class="table-responsive table-card p-1">
-        <table class="table align-middle" id="dtCompany">
-            <thead class="table-light text-muted">
-                <tr>
-                    <th class="text-center">Establecimiento</th>
-                    <th class="text-center">ID.Precio</th>                  
-                    <th class="text-center">Presentación</th>
-                    <th class="text-center">Tipo Precio</th>
-                    <th class="text-center">Moneda</th>                  
-                    <th class="text-center">Precio</th>
-                    <th class="text-center">Incluye Impuesto</th>
-                    <th class="text-center">Estado</th>
-                    <th class="text-center" colspan="2">Opciones</th>
-                </tr>
-            </thead>
-            <tbody id="details-list">
-            </tbody>
-        </table>
+<div class="card m-2 border-1">
+    <div class="card-header p-2" style="background:#f3f3f9">
+        <div class="d-flex align-items-center">
+            <div class="flex-grow-1">
+                <h6 class="card-title mb-0">LISTADO DE IMPUESTO</h6>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive table-card p-1">
+            <table class="table align-middle" id="dtCompany">
+                <thead class="table-light text-muted">
+                    <tr>
+                        <th class="text-center">ID.Impuesto</th>
+                        <th class="text-center">Tipo Impuesto</th>
+                        <th class="text-center">Tipo Calculo</th>
+                        <th class="text-center">Tipo Dirección</th>
+                        <th class="text-center">Tipo Afectación</th>
+                        <th class="text-center">Estado</th>
+                        <th class="text-center" colspan="2">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody id="details-list">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="card m-2 border-1">
+    <div class="card-header p-2" style="background:#f3f3f9">
+        <div class="d-flex align-items-center">
+            <div class="flex-grow-1">
+                <h6 class="card-title mb-0">LISTADO DE IMPUESTO EXCLUIDOS</h6>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive table-card p-1">
+            <table class="table align-middle" id="dtCompany">
+                <thead class="table-light text-muted">
+                    <tr>
+                        <th class="text-center">Establecimiento</th>
+                        <th class="text-center">ID.Excluido</th>
+                        <th class="text-center">Tipo Impuesto</th>  
+                        <th class="text-center">Estado</th>
+                        <th class="text-center" colspan="2">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody id="details-list">
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
