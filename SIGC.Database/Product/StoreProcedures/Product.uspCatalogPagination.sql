@@ -42,7 +42,7 @@ BEGIN
 
     SET @RecordsTotal = (SELECT COUNT(C.CatalogID) FROM Product.[Catalog] C WITH(NOLOCK) WHERE C.CompanyID=@CompanyID AND C.RecordStateID<>2)
 	 
-    SELECT C.CatalogID,C.CatalogName,C.CatalogSlug,C.CatalogDescription,
+    SELECT C.CatalogID,C.CatalogName,C.CatalogDescription,
 	      T.CatalogTypeName,		 
 		  CA.CategoryName,	
 		  CV.CatalogVariantName,
@@ -66,8 +66,7 @@ BEGIN
 			   ).value('.','NVARCHAR(MAX)')
 		   ,1,1,''),
 		  C.RecordStateID,
-		  ISNULL(C.CatalogUpdatedDateTime,C.CatalogCreatedDateTime) AS CatalogLastUpdatedDateTime,
-		  ISNULL(C.CatalogUpdatedUserID,C.CatalogCreatedUserID) AS CatalogLastUpdatedUserID,
+		  ISNULL(C.CatalogUpdatedDateTime,C.CatalogCreatedDateTime) AS CatalogLastUpdatedDateTime,		 
 		  ISNULL(C.CatalogUpdatedUserName,C.CatalogCreatedUserName) AS CatalogLastUpdatedUserName,
 		 COUNT(C.CatalogID) OVER() AS RecordsFiltered
 	 FROM Product.[Catalog] C WITH(NOLOCK) 

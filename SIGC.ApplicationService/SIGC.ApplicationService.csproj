@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <Folder Include="Features\BrandFeatures\Commands\" />
+    <Folder Include="Features\CatalogFeatures\Commands\" />
     <Folder Include="Features\ManufacturerFeatures\Commands\" />
   </ItemGroup>
 

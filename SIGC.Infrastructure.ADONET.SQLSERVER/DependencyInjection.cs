@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using SIGC.DomainService.IRepositories.IAuthRepositories;
 using SIGC.DomainService.IRepositories.IBrandRepositories;
+using SIGC.DomainService.IRepositories.ICatalogRepositories;
 using SIGC.DomainService.IRepositories.ICatalogTypeRepositories;
 using SIGC.DomainService.IRepositories.ICategoryRepositories;
 using SIGC.DomainService.IRepositories.ICompanyRegisterRepositories;
@@ -24,6 +25,7 @@ using SIGC.DomainService.Transactions;
 using SIGC.Infrastructure.ADONET.SQLSERVER.AppDBContext;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.AuthRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.BrandRepositories;
+using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogTypeRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CategoryRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CompanyRegisterRepositories;
@@ -140,6 +142,8 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
             services.AddScoped<IManufacturerListRepository, ManufacturerListRepository>();
 
             services.AddScoped<ICatalogTypeListRepository, CatalogTypeListRepository>();
+
+            services.AddScoped<ICatalogPaginationRepository, CatalogPaginationRepository>();
 
             return services;
         }
