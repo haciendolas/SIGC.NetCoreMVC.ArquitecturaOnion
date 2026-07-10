@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SIGC.ApplicationService.Commons.Dtos;
 using SIGC.ApplicationService.Features.CategoryFeatures.Commands.CategoryChangeState;
 using SIGC.ApplicationService.Features.CategoryFeatures.Commands.CategoryCreate;
