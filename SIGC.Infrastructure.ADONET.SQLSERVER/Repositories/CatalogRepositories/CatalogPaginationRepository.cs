@@ -32,7 +32,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogRepositories
                     Command.CommandType = CommandType.StoredProcedure;
                     Command.Parameters.Add("@RecordsTotal", SqlDbType.Int).Direction = ParameterDirection.Output;
                     Command.Parameters.AddWithValue("@CompanyID", CatalogPaginationRequest.CompanyID);
-                    Command.Parameters.AddWithValue("@CatalogTypeID", CatalogPaginationRequest.CatalogTypeID);
+                    Command.Parameters.AddWithValue("@CatalogTypeID", CatalogPaginationRequest.CatalogTypeID.HasValue ? CatalogPaginationRequest.CatalogTypeID.Value : DBNull.Value);
                     Command.Parameters.AddWithValue("@CatalogName", string.IsNullOrWhiteSpace(CatalogPaginationRequest.Parameters.Search) ? DBNull.Value : CatalogPaginationRequest.Parameters.Search);
                     Command.Parameters.AddWithValue("@RecordStateID", CatalogPaginationRequest.RecordStateID.HasValue ? CatalogPaginationRequest.RecordStateID.Value : DBNull.Value);
                     Command.Parameters.AddWithValue("@CategoryID", CatalogPaginationRequest.CategoryID.HasValue ? CatalogPaginationRequest.CategoryID.Value : DBNull.Value);

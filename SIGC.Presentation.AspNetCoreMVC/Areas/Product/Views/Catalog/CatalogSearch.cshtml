@@ -1,27 +1,30 @@
-﻿@using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Constant
-@{
+﻿@{
     Layout = null;
 }
+@using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.Brand
+@using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.CatalogType 
+@using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.Category
+@using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.Manufacturer
 <div class="card-body border-bottom-dashed border-bottom">
     <form method="dialog">
         <div class="row pb-2">
-            <label for="scboTaxpayerTypeID" class="col-sm-1 col-form-label">Tipo</label>
+            <label for="scbosCatalogTypeID" class="col-sm-1 col-form-label">Tipo</label>
             <div class="col-sm-2">
-                <select class="form-select" id="scboTaxpayerTypeID">
-                    @if (@ViewBag.TaxpayerTypeList != null)
+                <select class="form-select" id="scbosCatalogTypeID">
+                    @if (@ViewBag.CatalogTypeList != null)
                     {
                         <option>Todos</option>
-                        var TaxpayerTypeList = ViewBag.TaxpayerTypeList as List<ConstantListResponseModel>;
-                        @foreach (var Item in TaxpayerTypeList!)
+                        var CatalogTypeList = ViewBag.CatalogTypeList as List<CatalogTypeListResponseModel>;
+                        @foreach (var Item in CatalogTypeList!)
                         {
-                            <option value="@Item.ConstantID">@Item.ConstantName</option>
+                            <option value="@Item.CatalogTypeID">@Item.CatalogTypeName</option>
                         }
                     }
                 </select>
             </div>
-            <label for="stxtCompanyDocumentNumber" class="col-sm-1 col-form-label">Nombre</label>
+            <label for="stxtCatalogName" class="col-sm-1 col-form-label">Nombre</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" id="stxtCompanyDocumentNumber" maxlength="15" />
+                <input type="text" class="form-control" id="stxtCatalogName" maxlength="15" />
             </div>
             <label for="scboStateID" class="col-sm-1 col-form-label">Estado</label>
             <div class="col-sm-2">
@@ -37,13 +40,13 @@
             <label for="txtNroInspeccion" class="col-sm-1 col-form-label">Categoria</label>
             <div class="col-sm-2">
                 <select class="form-select" id="scboRubroID">
-                    @if (@ViewBag.RubroList != null)
+                    @if (@ViewBag.CategoryList != null)
                     {
                         <option>Todos</option>
-                        var RubroList = ViewBag.RubroList as List<ConstantListResponseModel>;
-                        @foreach (var Item in RubroList!)
+                        var CategoryList = ViewBag.CategoryList as List<CategoryListResponseModel>;
+                        @foreach (var Item in CategoryList!)
                         {
-                            <option value="@Item.ConstantID">@Item.ConstantName</option>
+                            <option value="@Item.CategoryID">@Item.CategoryName</option>
                         }
                     }
                 </select>
@@ -51,13 +54,13 @@
             <label for="txtNroInspeccion" class="col-sm-1 col-form-label">Fabricante</label>
             <div class="col-sm-4">
                 <select class="form-select" id="scboRubroID">
-                    @if (@ViewBag.RubroList != null)
+                    @if (@ViewBag.ManufacturerList != null)
                     {
                         <option>Todos</option>
-                        var RubroList = ViewBag.RubroList as List<ConstantListResponseModel>;
-                        @foreach (var Item in RubroList!)
+                        var ManufacturerList = ViewBag.ManufacturerList as List<ManufacturerListResponseModel>;
+                        @foreach (var Item in ManufacturerList!)
                         {
-                            <option value="@Item.ConstantID">@Item.ConstantName</option>
+                            <option value="@Item.ManufacturerID">@Item.ManufacturerName</option>
                         }
                     }
                 </select>
@@ -65,13 +68,13 @@
             <label for="txtNroInspeccion" class="col-sm-1 col-form-label">Marca</label>
             <div class="col-sm-2">
                 <select class="form-select" id="scboRubroID">
-                    @if (@ViewBag.RubroList != null)
+                    @if (@ViewBag.BrandList != null)
                     {
                         <option>Todos</option>
-                        var RubroList = ViewBag.RubroList as List<ConstantListResponseModel>;
-                        @foreach (var Item in RubroList!)
+                        var BrandList = ViewBag.BrandList as List<BrandListResponseModel>;
+                        @foreach (var Item in BrandList!)
                         {
-                            <option value="@Item.ConstantID">@Item.ConstantName</option>
+                            <option value="@Item.BrandID">@Item.BrandName</option>
                         }
                     }
                 </select>
@@ -81,7 +84,7 @@
 </div>
 <div class="card-body">
     <div class="table-responsive table-card p-1">
-        <table class="table align-middle" id="dtCompany">
+        <table class="table align-middle" id="dtCatalog">
             <thead class="table-light text-muted">
                 <tr>
                     <th class="text-center">ID</th>                    
@@ -97,7 +100,7 @@
                     <th class="text-center" colspan="2">Opciones</th>
                 </tr>
             </thead>
-            <tbody id="details-list">
+            <tbody>
             </tbody>
         </table>
     </div>

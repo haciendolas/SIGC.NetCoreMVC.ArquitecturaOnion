@@ -31,6 +31,10 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CategoryService
         {
             return await ApiService.GetAsync<ApiResponse<CategoryGetResponseModel?>>($"{Controller}/CategoryGet/{CategoryID}");
         }
+        public async Task<ApiResponse<List<CategoryListResponseModel>>> CategoryList()
+        {
+            return await ApiService.GetAsync<ApiResponse<List<CategoryListResponseModel>>>($"{Controller}/CategoryList");
+        }
         public async Task<ApiResponse<PaginationResultModel<CategoryPaginationResponseModel>>> CategoryPagination(CategoryPaginationRequestModel Request)
         {
             return await ApiService.PostAsync<string, ApiResponse<PaginationResultModel<CategoryPaginationResponseModel>>>($"{Controller}/CategoryPagination", null, Request);

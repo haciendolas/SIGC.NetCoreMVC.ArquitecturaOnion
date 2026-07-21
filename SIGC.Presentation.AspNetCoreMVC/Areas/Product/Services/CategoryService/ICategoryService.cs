@@ -10,6 +10,7 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CategoryService
         Task<ApiResponse<object?>> CategoryUpdate(CategoryCreateUpdateRequestModel Request);
         Task<ApiResponse<object?>> CategoryChangeState(CategoryChangeStateRequestModel Request);
         Task<ApiResponse<CategoryGetResponseModel?>> CategoryGet(int CategoryID);
+        Task<ApiResponse<List<CategoryListResponseModel>>> CategoryList();
         Task<ApiResponse<PaginationResultModel<CategoryPaginationResponseModel>>> CategoryPagination(CategoryPaginationRequestModel Request);
     }
 }

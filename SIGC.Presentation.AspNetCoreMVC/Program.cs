@@ -1,7 +1,11 @@
 using Microsoft.Extensions.FileProviders;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Organization.Services.EstablishmentService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Organization.Services.WarehouseService;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.BrandService;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogService;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogTypeService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CategoryService;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.ManufacturerService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.CompanyService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.ConstantService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.PageCompanyService;
@@ -59,6 +63,10 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<SIGC.Presentation.AspNetCoreMVC.Services.EstablishmentService.IEstablishmentService, SIGC.Presentation.AspNetCoreMVC.Services.EstablishmentService.EstablishmentService>();
 builder.Services.AddScoped<IEstablishmentService, EstablishmentService>();
 builder.Services.AddScoped<IWarehouseService, WarehouseService>();
+builder.Services.AddScoped<IBrandService, BrandService>();
+builder.Services.AddScoped<IManufacturerService, ManufacturerService>();
+builder.Services.AddScoped<ICatalogTypeService, CatalogTypeService>();
+builder.Services.AddScoped<ICatalogService, CatalogService>();
 
 var app = builder.Build();
 
