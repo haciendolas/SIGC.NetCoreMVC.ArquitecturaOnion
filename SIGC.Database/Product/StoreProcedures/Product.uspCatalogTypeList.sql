@@ -5,10 +5,10 @@
 -- Update:				   Joel Castillo Rojas    
 -- Exec                    Exec Product.uspCatalogTypeList 
 -- ============================================================================== 
-CREATE PROCEDURE Product.uspCatalogTypeList
+ALTER PROCEDURE Product.uspCatalogTypeList
 AS
 BEGIN
 	SET NOCOUNT ON
-		SELECT CT.CatalogTypeID,CT.CatalogTypeName FROM Product.CatalogType CT WHERE CT.RecordStateID=1
+		SELECT CT.CatalogTypeID,CT.CatalogTypeName FROM Product.CatalogType CT  WITH(NOLOCK) WHERE CT.RecordStateID=1
 	SET NOCOUNT OFF
 END

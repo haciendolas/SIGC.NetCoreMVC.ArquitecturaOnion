@@ -10,7 +10,7 @@ ALTER PROCEDURE Product.uspCategoryList
 AS
 BEGIN
 	SET NOCOUNT ON
-		SELECT C.CategoryID,C.CategoryName,CategorySlug FROM Product.Category C WHERE C.RecordStateID=1
+		SELECT C.CategoryID,C.CategoryName,CategorySlug FROM Product.Category C  WITH(NOLOCK) WHERE C.RecordStateID=1
 		AND C.CompanyID=@CompanyID
 	SET NOCOUNT OFF
 END

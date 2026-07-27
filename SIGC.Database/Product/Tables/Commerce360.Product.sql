@@ -121,7 +121,7 @@ GO
 CREATE TABLE Product.Attribute(
      AttributeID TINYINT NOT NULL,
 	 AttributeName NVARCHAR(50) NOT NULL,
-	 AttributeIsVariantAttribute BIT NOT NULL,
+	 AttributeIsVariant BIT NOT NULL,
 	 RecordOriginID TINYINT NOT NULL,
 	 RecordStateID TINYINT NOT NULL,
 	 AttributeCreatedUserID INT NOT NULL,
@@ -217,11 +217,12 @@ CREATE TABLE Product.[Catalog](
   CompanyID INT NOT NULL,
   CatalogTypeID TINYINT NOT NULL, 
   CategoryID INT NOT NULL, 
+  CatalogCode NVARCHAR(15),
   CatalogSlug NVARCHAR(200) NOT NULL,
   CatalogName NVARCHAR(200) NOT NULL, 
   PrescriptionTypeID TINYINT,
   ManufacturerID INT,
-  BrandID INT, --Proveedor/Laboratorio proviene de otra base de datos
+  BrandID INT,
   --CatalogConcentration NVARCHAR(50),
   --CatalogSanitaryRegistrationNumber NVARCHAR(50)
   PharmaceuticalFormID SMALLINT, 
@@ -253,8 +254,11 @@ CREATE TABLE Product.CatalogActiveIngredient(
    CompanyID INT NOT NULL,
    CatalogID INT NOT NULL,
    ActiveIngredientID INT NOT NULL,
-   CatalogActiveIngredientQuantity NUMERIC(5,2) NOT NULL,--0.5,20.00
+   CatalogActiveIngredientQuantity NUMERIC(8,3) NOT NULL,--0.5,20.00
    UnitMeasureID INT NOT NULL, --Unidad,mg,mg/mL
+  -- CatalogActiveIngredientDenominatorQuantity  NUMERIC(8,3) ,
+   --UnitMeasureIDDenominator INT,
+   CatalogActiveIngredientLabel NVARCHAR(100) NOT NULL,
    RecordOriginID TINYINT NOT NULL,
    RecordStateID TINYINT NOT NULL,
    CatalogActiveIngredientCreatedUserID INT NOT NULL,
@@ -312,8 +316,8 @@ CREATE TABLE Product.CatalogConfiguration(
 	CompanyID INT NOT NULL,
 	EstablishmentID INT NOT NULL, --Biene de otra BD
 	CatalogID INT NOT NULL,	
-	CatalogConfigurationIsStockManaged BIT NOT NULL DEFAULT 0,
-    CatalogConfigurationIsAffectStock BIT NOT NULL DEFAULT 0,
+	CatalogConfigurationIsStockManaged BIT NOT NULL,
+    CatalogConfigurationIsAffectStock BIT NOT NULL,
     RecordOriginID TINYINT NOT NULL,
     RecordStateID TINYINT NOT NULL,
     CatalogConfigurationCreatedUserID INT NOT NULL,
@@ -438,12 +442,12 @@ CREATE TABLE Product.CatalogPresentation(
    CompanyID INT NOT NULL,
    CatalogVariantID INT NOT NULL,
    PresentationID INT NOT NULL, 
+   CatalogPresentationIsDefault BIT NOT NULL DEFAULT 0,
+   CatalogPresentationEquivalence NUMERIC(10,4) NOT NULL, 	--CatalogPresentationConversionFactor
+   CatalogPresentationSKU NVARCHAR(50),
+   CatalogPresentationBarcode NVARCHAR(50), 
    RecordOriginID TINYINT NOT NULL,
    RecordStateID TINYINT NOT NULL,
-   CatalogPresentationIsDefault BIT NOT NULL DEFAULT 0,
-   CatalogPresentationEquivalence NUMERIC(6,2) NOT NULL, 	
-   CatalogPresentationSKU NVARCHAR(20),
-   CatalogPresentationQRCode NVARCHAR(100), 
    CatalogPresentationCreatedUserID INT NOT NULL,
    CatalogPresentationCreatedUserName NVARCHAR(20) NOT NULL,
    CatalogPresentationCreatedUserFullName NVARCHAR(80) NOT NULL,
@@ -462,6 +466,65 @@ CREATE UNIQUE INDEX CatalogPresentation_UQ_CatalogPresentationIsDefault
               ON Product.CatalogPresentation(CatalogVariantID) 
               WHERE CatalogPresentationIsDefault = 1
 
+--CONSTRAINT CatalogPresentation_UQ_SKU UNIQUE(CompanyID, CatalogPresentationSKU)
+--CONSTRAINT CatalogPresentation_UQ_Barcode UNIQUE(CompanyID, CatalogPresentationBarcode)
+GO
+CREATE TABLE Product.PriceType( 
+   PriceTypeID TINYINT NOT NULL,
+   PriceTypeName NVARCHAR(30) NOT NULL,
+   RecordOriginID TINYINT NOT NULL,
+   RecordStateID TINYINT NOT NULL,
+   CONSTRAINT PriceType_PK_PriceTypeID PRIMARY KEY(PriceTypeID),
+   CONSTRAINT PriceType_CHK_RecordStateID CHECK(RecordStateID IN(0,1,2))  
+)
+GO
+CREATE TABLE Product.CatalogPrice(
+    CatalogPriceID INT NOT NULL IDENTITY(1,1),
+	CompanyID INT,
+	CatalogPresentationID INT NOT NULL,
+	EstablishmentID INT NOT NULL, --Biene de otra BD
+	PriceTypeID TINYINT NOT NULL,
+	CurrencyTypeID TINYINT NOT NULL, --Biene de otra BD
+	CatalogPriceAmount NUMERIC(12,6) NOT NULL,
+	CatalogPriceIsTaxIncluded BIT NOT NULL,
+    RecordOriginID TINYINT NOT NULL,
+    RecordStateID TINYINT NOT NULL,
+    CatalogPriceCreatedUserID INT NOT NULL,
+    CatalogPriceCreatedUserName NVARCHAR(20) NOT NULL,
+    CatalogPriceCreatedUserFullName NVARCHAR(80) NOT NULL,
+    CatalogPriceCreatedDateTime DATETIME NOT NULL,
+    CatalogPriceUpdatedUserID INT,
+    CatalogPriceUpdatedUserName NVARCHAR(20),
+    CatalogPriceUpdatedUserFullName NVARCHAR(80),
+    CatalogPriceUpdatedDateTime DATETIME,
+	CONSTRAINT CatalogPrice_PK_CatalogPriceID PRIMARY KEY(CatalogPriceID),
+	CONSTRAINT CatalogPrice_FK_PriceTypeID FOREIGN KEY(PriceTypeID) REFERENCES Product.PriceType(PriceTypeID),
+	CONSTRAINT CatalogPrice_FK_CatalogPresentationID FOREIGN KEY(CatalogPresentationID) REFERENCES Product.CatalogPresentation(CatalogPresentationID),
+	CONSTRAINT CatalogPrice_CHK_RecordStateID  CHECK (RecordStateID IN (0,1,2))
+)
+GO
+CREATE TABLE Product.CatalogStock(
+    CatalogStockID INT NOT NULL IDENTITY(1,1),
+	CompanyID INT NOT NULL,
+	CatalogVariantID INT NOT NULL,
+	WarehouseID INT NOT NULL, --Biene de otra BD	 
+	CatalogStockCurrentQuantity NUMERIC(12,6) NOT NULL, 
+	CatalogStockMinimumQuantity NUMERIC(12,6),
+	CatalogStockMaximumQuantity NUMERIC(12,6),
+    RecordOriginID TINYINT NOT NULL,
+    RecordStateID TINYINT NOT NULL,
+	CatalogStockCreatedUserID INT NOT NULL,
+    CatalogStockCreatedUserName NVARCHAR(20) NOT NULL,
+    CatalogStockCreatedUserFullName NVARCHAR(80) NOT NULL,
+    CatalogStockCreatedDateTime DATETIME NOT NULL,  
+    CatalogStockUpdatedUserID INT, 
+    CatalogStockUpdatedUserName NVARCHAR(20),
+    CatalogStockUpdatedUserFullName NVARCHAR(80),
+    CatalogStockUpdatedDateTime DATETIME, 
+    CONSTRAINT CatalogStock_PK_CatalogStockID PRIMARY KEY(CatalogStockID),
+    CONSTRAINT CatalogStock_FK_CatalogVariantID FOREIGN KEY(CatalogVariantID) REFERENCES Product.CatalogVariant(CatalogVariantID),
+	CONSTRAINT CatalogStock_CHK_RecordStateID CHECK(RecordStateID IN(0,1,2))  
+)
 GO
 CREATE TABLE Product.CatalogLot(
     CatalogLotID INT NOT NULL IDENTITY(1,1),
@@ -486,29 +549,6 @@ CREATE TABLE Product.CatalogLot(
     CONSTRAINT CatalogLot_CHK_RecordStateID CHECK (RecordStateID IN (0,1,2))
 )
 GO 
-CREATE TABLE Product.CatalogStock(
-    CatalogStockID INT NOT NULL IDENTITY(1,1),
-	CompanyID INT NOT NULL,
-	CatalogVariantID INT NOT NULL,
-	WarehouseID INT NOT NULL, --Biene de otra BD	 
-	CatalogStockCurrentQuantity NUMERIC(12,6) NOT NULL, 
-	CatalogStockMinimumQuantity NUMERIC(12,6),
-	CatalogStockMaximumQuantity NUMERIC(12,6),
-    RecordOriginID TINYINT NOT NULL,
-    RecordStateID TINYINT NOT NULL,
-	CatalogStockCreatedUserID INT NOT NULL,
-    CatalogStockCreatedUserName NVARCHAR(20) NOT NULL,
-    CatalogStockCreatedUserFullName NVARCHAR(80) NOT NULL,
-    CatalogStockCreatedDateTime DATETIME NOT NULL,  
-    CatalogStockUpdatedUserID INT, 
-    CatalogStockUpdatedUserName NVARCHAR(20),
-    CatalogStockUpdatedUserFullName NVARCHAR(80),
-    CatalogStockUpdatedDateTime DATETIME, 
-    CONSTRAINT CatalogStock_PK_CatalogStockID PRIMARY KEY(CatalogStockID),
-    CONSTRAINT CatalogStock_FK_CatalogVariantID FOREIGN KEY(CatalogVariantID) REFERENCES Product.CatalogVariant(CatalogVariantID),
-	CONSTRAINT CatalogStock_CHK_RecordStateID CHECK(RecordStateID IN(0,1,2))  
-)
-GO
 CREATE TABLE Product.ReasonType(
    ReasonTypeID TINYINT NOT NULL,
    ReasonTypeName NVARCHAR(50) NOT NULL,
@@ -580,53 +620,21 @@ CREATE TABLE Product.CatalogAdjustmentDetail(
     CatalogAdjustmentDetailObservation NVARCHAR(200),
     RecordOriginID TINYINT NOT NULL,
     RecordStateID TINYINT NOT NULL,
-    CatalogAdjustmentCreatedUserID INT NOT NULL,
-    CatalogAdjustmentCreatedUserName NVARCHAR(20) NOT NULL,
-    CatalogAdjustmentCreatedUserFullName NVARCHAR(80) NOT NULL,
-    CatalogAdjustmentCreatedDateTime DATETIME NOT NULL,
-    CatalogAdjustmentUpdatedUserID INT,
-    CatalogAdjustmentUpdatedUserName NVARCHAR(20),
-    CatalogAdjustmentUpdatedUserFullName NVARCHAR(80),
-    CatalogAdjustmentUpdatedDateTime DATETIME,
+    CatalogAdjustmentDetailCreatedUserID INT NOT NULL,
+    CatalogAdjustmentDetailCreatedUserName NVARCHAR(20) NOT NULL,
+    CatalogAdjustmentDetailCreatedUserFullName NVARCHAR(80) NOT NULL,
+    CatalogAdjustmentDetailCreatedDateTime DATETIME NOT NULL,
+    CatalogAdjustmentDetailUpdatedUserID INT,
+    CatalogAdjustmentDetailUpdatedUserName NVARCHAR(20),
+    CatalogAdjustmentDetailUpdatedUserFullName NVARCHAR(80),
+    CatalogAdjustmentDetailUpdatedDateTime DATETIME,
     CONSTRAINT CatalogAdjustmentDetail_PK_CatalogAdjustmentDetailID PRIMARY KEY (CatalogAdjustmentDetailID),
     CONSTRAINT CatalogAdjustmentDetail_FK_CatalogAdjustmentID FOREIGN KEY (CatalogAdjustmentID)  REFERENCES Product.CatalogAdjustment(CatalogAdjustmentID),
     CONSTRAINT CatalogAdjustmentDetail_FK_CatalogVariantID FOREIGN KEY (CatalogVariantID) REFERENCES Product.CatalogVariant(CatalogVariantID),
 	CONSTRAINT CatalogAdjustmentDetail_FK_CatalogLotID FOREIGN KEY (CatalogLotID) REFERENCES Product.CatalogLot(CatalogLotID),
     CONSTRAINT CatalogAdjustmentDetail_CHK_RecordStateID  CHECK (RecordStateID IN (0,1,2))
 )
-GO
-CREATE TABLE Product.PriceType( 
-   PriceTypeID TINYINT NOT NULL,
-   PriceTypeName NVARCHAR(30) NOT NULL,
-   RecordOriginID TINYINT NOT NULL,
-   RecordStateID TINYINT NOT NULL,
-   CONSTRAINT PriceType_PK_PriceTypeID PRIMARY KEY(PriceTypeID),
-   CONSTRAINT PriceType_CHK_RecordStateID CHECK(RecordStateID IN(0,1,2))  
-)
-GO
-CREATE TABLE Product.CatalogPrice(
-    CatalogPriceID INT NOT NULL IDENTITY(1,1),
-	CatalogPresentationID INT NOT NULL,
-	EstablishmentID INT NOT NULL, --Biene de otra BD
-	PriceTypeID TINYINT NOT NULL,
-	CurrencyTypeID TINYINT NOT NULL, --Biene de otra BD
-	CatalogPriceAmount NUMERIC(12,6) NOT NULL,
-	CatalogPriceIsTaxIncluded BIT NOT NULL,
-    RecordOriginID TINYINT NOT NULL,
-    RecordStateID TINYINT NOT NULL,
-    CatalogPriceCreatedUserID INT NOT NULL,
-    CatalogPriceCreatedUserName NVARCHAR(20) NOT NULL,
-    CatalogPriceCreatedUserFullName NVARCHAR(80) NOT NULL,
-    CatalogPriceCreatedDateTime DATETIME NOT NULL,
-    CatalogPriceUpdatedUserID INT,
-    CatalogPriceUpdatedUserName NVARCHAR(20),
-    CatalogPriceUpdatedUserFullName NVARCHAR(80),
-    CatalogPriceUpdatedDateTime DATETIME,
-	CONSTRAINT CatalogPrice_PK_CatalogPriceID PRIMARY KEY(CatalogPriceID),
-	CONSTRAINT CatalogPrice_FK_PriceTypeID FOREIGN KEY(PriceTypeID) REFERENCES Product.PriceType(PriceTypeID),
-	CONSTRAINT CatalogPrice_FK_CatalogPresentationID FOREIGN KEY(CatalogPresentationID) REFERENCES Product.CatalogPresentation(CatalogPresentationID),
-	CONSTRAINT CatalogPrice_CHK_RecordStateID  CHECK (RecordStateID IN (0,1,2))
-)
+
 /*
 GO
 CREATE TABLE Product.GalleryType(

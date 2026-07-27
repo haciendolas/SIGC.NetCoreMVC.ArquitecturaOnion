@@ -1,14 +1,15 @@
  -- =============================================================================          
 -- Author:                 JOEL CASTILLO ROJAS      
 -- Create date:            06/07/2026
--- Description:            Permite listar marcas activas de la tabla Product.Brand
+-- Description:            Permite listar presentaciones activas de la tabla Product.Presentation
 -- Update:				   Joel Castillo Rojas    
--- Exec                    Exec Product.uspBrandList
+-- Exec                    Exec Product.uspPresentationList
 -- ============================================================================== 
-ALTER PROCEDURE Product.uspBrandList
+CREATE PROCEDURE Product.uspPresentationList
 AS
 BEGIN
 	SET NOCOUNT ON
-		SELECT B.BrandID,B.BrandName FROM Product.Brand B  WITH(NOLOCK) WHERE B.RecordStateID=1	 
+		SELECT P.PresentationID,P.PresentationName,P.PresentationEquivalence
+	    FROM Product.Presentation P WITH(NOLOCK) WHERE P.RecordStateID=1	 
 	SET NOCOUNT OFF
 END

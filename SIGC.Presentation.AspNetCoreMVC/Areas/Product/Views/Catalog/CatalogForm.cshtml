@@ -1,4 +1,8 @@
-﻿@using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Constant
+﻿@using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.Brand
+@using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.CatalogType
+@using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.Category
+@using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.Manufacturer
+@using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Constant
 @using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Ubigeo
 @{
     Layout = null;
@@ -14,18 +18,15 @@
                         <input type="text" class="form-control" id="txtCompanyID" name="CompanyID" value="GENERADO" readonly />
                     </div>
                     <div class="col-sm-4">
-                        <label for="cboCountryID">Tipo<i class="ri-asterisk align-middle text-danger"></i></label>
-                        <select class="form-select" id="cboCountryID" name="CountryID">
-                            <option value="">Seleccionar</option>
-                            <option value="">Articulo</option>
-                            <option value="">Servicio</option>
-                            @if (@ViewBag.CountryList != null)
+                        <label for="cboCatalogTypeID">Tipo<i class="ri-asterisk align-middle text-danger"></i></label>
+                        <select class="form-select" id="cboCatalogTypeID">
+                            @if (@ViewBag.CatalogTypeList != null)
                             {
-
-                                var CountryList = ViewBag.CountryList as List<UbigeoListByClassAndCodeAndLenCodeResponseModel>;
-                                @foreach (var Item in CountryList!)
+                                <option>Seleccionar</option>
+                                var CatalogTypeList = ViewBag.CatalogTypeList as List<CatalogTypeListResponseModel>;
+                                @foreach (var Item in CatalogTypeList!)
                                 {
-                                    <option value="@Item.UbigeoID">@Item.UbigeoName</option>
+                                    <option value="@Item.CatalogTypeID">@Item.CatalogTypeName</option>
                                 }
                             }
                         </select>
@@ -51,68 +52,46 @@
                     </div>
                 </div>
                 <div class="row pb-2">
-                    <label for="cboRubroID" class="col-sm-2 col-form-label">Categoría<i class="ri-asterisk align-middle text-danger"></i></label>
+                    <label for="cboCategoryID" class="col-sm-2 col-form-label">Categoría<i class="ri-asterisk align-middle text-danger"></i></label>
                     <div class="col-sm-4">
-                        <select class="form-select" id="cboRubroID" name="RubroID">
-                            <option value="">Seleccionar</option>
-                            <option value="">Alimentos y Bebidas</option>
-                            <option value="">Limpieza y Hogar</option>
-                            <option value="">Ropa y Calzado</option>
-                            <option value="">Papelería</option>
-                            <option value="">Muebles</option>
-                            <option value="">Agroquímicos</option>
-                            @if (@ViewBag.RubroList != null)
+                        <select class="form-select" id="cboCategoryID">
+                            @if (@ViewBag.CategoryList != null)
                             {
-                                <option value="">Seleccionar</option>
-                                var RubroList = ViewBag.RubroList as List<ConstantListResponseModel>;
-                                @foreach (var Item in RubroList!)
+                                <option>Seleccionar</option>
+                                var CategoryList = ViewBag.CategoryList as List<CategoryListResponseModel>;
+                                @foreach (var Item in CategoryList!)
                                 {
-                                    <option value="@Item.ConstantID">@Item.ConstantName</option>
+                                    <option value="@Item.CategoryID">@Item.CategoryName</option>
                                 }
                             }
                         </select>
                     </div>
-                    <label for="cboRubroID" class="col-sm-2 col-form-label">Fabricante<i class="ri-asterisk align-middle text-danger"></i></label>
+                    <label for="cboManufacturerID" class="col-sm-2 col-form-label">Fabricante<i class="ri-asterisk align-middle text-danger"></i></label>
                     <div class="col-sm-4">
-                        <select class="form-select" id="cboRubroID" name="RubroID">
-                            <option value="">Seleccionar</option>
-                            <option value="">Ninguno</option>
-                            <option value="">Nestlé</option>
-                            <option value="">Unilever</option>
-                            <option value="">Kraft Heinz</option>
-                            <option value="">Alicorp</option>
-                            <option value="">Gloria</option>
-                            <option value="">Backus</option>
-                            <option value="">Inca Kola / Coca Cola</option>
-                            @if (@ViewBag.RubroList != null)
+                        <select class="form-select" id="cboManufacturerID">
+                            @if (@ViewBag.ManufacturerList != null)
                             {
-                                <option value="">Seleccionar</option> 
-                                var RubroList = ViewBag.RubroList as List<ConstantListResponseModel>;
-                                @foreach (var Item in RubroList!)
+                                <option>Seleccionar</option>
+                                var ManufacturerList = ViewBag.ManufacturerList as List<ManufacturerListResponseModel>;
+                                @foreach (var Item in ManufacturerList!)
                                 {
-                                    <option value="@Item.ConstantID">@Item.ConstantName</option>
+                                    <option value="@Item.ManufacturerID">@Item.ManufacturerName</option>
                                 }
                             }
                         </select>
                     </div>
                 </div>
                 <div class="row pb-2">
-                    <label for="cboRubroID" class="col-sm-2 col-form-label">Marca<i class="ri-asterisk align-middle text-danger"></i></label>
+                    <label for="cboBrandID" class="col-sm-2 col-form-label">Marca<i class="ri-asterisk align-middle text-danger"></i></label>
                     <div class="col-sm-5">
-                        <select class="form-select" id="cboRubroID" name="RubroID">
-                            <option value="">Seleccionar</option>
-                            <option value="">Ninguno</option>
-                            <option value="">Maggi</option>
-                            <option value="">Nestlé</option>
-                            <option value="">Gloria</option>
-                            <option value="">Alicorp</option>
-                            @if (@ViewBag.RubroList != null)
+                        <select class="form-select" id="cboBrandID">
+                            @if (@ViewBag.BrandList != null)
                             {
-                                <option value="">Seleccionar</option>
-                                var RubroList = ViewBag.RubroList as List<ConstantListResponseModel>;
-                                @foreach (var Item in RubroList!)
+                                <option>Seleccionar</option>
+                                var BrandList = ViewBag.BrandList as List<BrandListResponseModel>;
+                                @foreach (var Item in BrandList!)
                                 {
-                                    <option value="@Item.ConstantID">@Item.ConstantName</option>
+                                    <option value="@Item.BrandID">@Item.BrandName</option>
                                 }
                             }
                         </select>

@@ -9,7 +9,7 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.Catalog
         public byte? ManufacturerID { get; set; }
         public byte? BrandID { get; set; }
         public byte RecordStateID { get; set; }
-
+        public string? Search { get; set; }
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
     }

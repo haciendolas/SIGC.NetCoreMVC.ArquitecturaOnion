@@ -5,10 +5,10 @@
 -- Update:				   Joel Castillo Rojas    
 -- Exec                    Exec Product.uspManufacturerList
 -- ============================================================================== 
-CREATE PROCEDURE Product.uspManufacturerList
+ALTER PROCEDURE Product.uspManufacturerList
 AS
 BEGIN
 	SET NOCOUNT ON
-		SELECT M.ManufacturerID,M.ManufacturerName FROM Product.Manufacturer M WHERE M.RecordStateID=1	 
+		SELECT M.ManufacturerID,M.ManufacturerName FROM Product.Manufacturer M  WITH(NOLOCK) WHERE M.RecordStateID=1	 
 	SET NOCOUNT OFF
 END

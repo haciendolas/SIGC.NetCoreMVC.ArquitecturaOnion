@@ -19,9 +19,9 @@
                     Catalog._Search.fnCatalogDataTable();
                 };
             }));
-            $('#scboStateID').on('change', function () {
+            $('#scboStateID,#scboCatalogTypeID,#scboCategoryID,#scboManufacturerID,#scboBrandID').on('change', function () {
                 Catalog._Search.fnCatalogDataTable();
-            });
+            }); 
             if ($('#btnCatalogCreate').length > 0) {
                 $('#btnCatalogCreate').on('click', function () {
                     Catalog._Operation.fnCatalogCreateUpdate();
@@ -160,9 +160,13 @@
                     sAjaxSource: Uti.Url.Base + '/Product/Catalog/CatalogDataTable',
                     fnServerParams: function (aoData) {
                         aoData.push(
+                            { name: 'CatalogTypeID', value: $('#scboCatalogTypeID').val() },
+                            { name: 'CategoryID', value: $('#scboCategoryID').val() },
+                            { name: 'ManufacturerID', value: $('#scboManufacturerID').val() },
+                            { name: 'BrandID', value: $('#scboBrandID').val() },
                             { name: 'RecordStateID', value: $('#scboStateID').val() },
                             { name: 'Search', value: $('#stxtCatalogName').val().trim() }
-                          //  { name: 'CatalogTypeID', value: 1 }
+                          
                         );
                     },
                     sPaginationType: 'full_numbers',

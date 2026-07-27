@@ -1,40 +1,45 @@
 /*=============================================================================          
    Author:                 JOEL CASTILLO ROJAS      
-   Create date:            27/09/2025
+   Create date:            21/07/2026
    Description:            Permite actualizar un registro en la tabla Product.[Catalog]
-   Execute:
-	 	 
+   Execute:	 	 
 		  EXECUTE Product.uspCatalogUpdate 
-			@CatalogID=1,
+			@CatalogID= 1 ,
+			@CompanyID=1,
+			@CatalogTypeID=1,
 			@CategoryID=1,
-			@UnitMeasureID=1,			 
-			@CatalogName='COCACOLA 3 L',
-			@CatalogSlug='cocacola_3_l',
-			@CatalogSalePrice=12,
-			@CatalogDiscount=NULL,
-			@CatalogUnitInStock=20,
-			@CatalogDescription='COCACOLA 3 L',
+			@CatalogCode='PARACEL-001',
+			@CatalogSlug='cuarderno-rallado-5o-hojas',
+			@CatalogName='CUADERNO RALLADO 50 HOJAS',
+			@PrescriptionTypeID=1,
+			@ManufacturerID=1,	 
+			@BrandID=1,
+			@PharmaceuticalFormID=1,
+			@CatalogBrandType='NINGUNO',
+			@CatalogDescription='',	
 			@RecordStateID=1,
 			@CatalogUpdatedUserID=1,
 			@CatalogUpdatedUserName='administrador',
 			@CatalogUpdatedUserFullName='Joel Castillo Rojas',
-			@CatalogUpdatedDateTime='2025-09-02 11:00' 
-		  SELECT @CategoryID		 					   				 
+			@CatalogUpdatedDateTime='2025-09-02 11:00' 	 	 					   				 
 
    Identifcador:		   Date Update  |   User Update   |  Description Update  
      @1
 ==============================================================================*/
 ALTER PROCEDURE Product.uspCatalogUpdate
 (  @CatalogID INT,
+   @CompanyID INT,
    @CatalogTypeID TINYINT,
-   @CategoryID INT,
-   @UnitMeasureID INT,
-   @CatalogName VARCHAR(200),  
-   @CatalogSlug VARCHAR(200), 
-   @CatalogSalePrice NUMERIC(10,2) ,
-   @CatalogDiscount NUMERIC(10,2),
-   @CatalogUnitInStock NUMERIC(10,2),
-   @CatalogDescription VARCHAR(300),
+   @CategoryID INT, 
+   @CatalogCode NVARCHAR(15),
+   @CatalogSlug NVARCHAR(200), 
+   @CatalogName NVARCHAR(200), 
+   @PrescriptionTypeID TINYINT ,
+   @ManufacturerID INT,
+   @BrandID INT,
+   @PharmaceuticalFormID SMALLINT,
+   @CatalogBrandType NVARCHAR(15),
+   @CatalogDescription NVARCHAR(300),
    @RecordStateID TINYINT,
    @CatalogUpdatedUserID INT, 
    @CatalogUpdatedUserName VARCHAR(20),
@@ -43,19 +48,21 @@ ALTER PROCEDURE Product.uspCatalogUpdate
 )
 AS
 BEGIN 
-  UPDATE Product.[Catalog] SET CategoryID = @CategoryID,
-                               CatalogTypeID = @CatalogTypeID,
-							   UnitMeasureID = @UnitMeasureID,
-							   CatalogName = @CatalogName,
+  UPDATE Product.[Catalog] SET CatalogTypeID = @CatalogTypeID,
+							   CategoryID = @CategoryID,
+							   CatalogCode = @CatalogCode,
 							   CatalogSlug = @CatalogSlug,
-							   CatalogSalePrice = @CatalogSalePrice,
-							   CatalogDiscount = @CatalogDiscount,
-							   CatalogUnitInStock = @CatalogUnitInStock,
+							   CatalogName = @CatalogName,							
+							   PrescriptionTypeID = @PrescriptionTypeID,
+							   ManufacturerID = @ManufacturerID,
+							   BrandID = @BrandID,
+							   PharmaceuticalFormID = @PharmaceuticalFormID,
+							   CatalogBrandType = @CatalogBrandType,
 							   CatalogDescription = @CatalogDescription,
 							   RecordStateID = @RecordStateID,
 							   CatalogUpdatedUserID = @CatalogUpdatedUserID,   
 							   CatalogUpdatedUserName = @CatalogUpdatedUserName,  
 							   CatalogUpdatedUserFullName = @CatalogUpdatedUserFullName,
 							   CatalogUpdatedDateTime = @CatalogUpdatedDateTime  
-         WHERE CatalogID=@CatalogID
+         WHERE CatalogID=@CatalogID AND CompanyID=@CompanyID
 END

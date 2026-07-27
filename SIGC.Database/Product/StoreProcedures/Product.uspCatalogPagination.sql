@@ -70,7 +70,7 @@ BEGIN
 		  ISNULL(C.CatalogUpdatedUserName,C.CatalogCreatedUserName) AS CatalogLastUpdatedUserName,
 		 COUNT(C.CatalogID) OVER() AS RecordsFiltered
 	 FROM Product.[Catalog] C WITH(NOLOCK) 
-	     INNER JOIN Product.CatalogType T WITH(NOLOCK) ON T.CatalogTypeID=T.CatalogTypeID
+	     INNER JOIN Product.CatalogType T WITH(NOLOCK) ON C.CatalogTypeID=T.CatalogTypeID
 	     INNER JOIN Product.Category CA WITH(NOLOCK) ON C.CategoryID=CA.CategoryID AND C.CompanyID=CA.CompanyID
 		 INNER JOIN (
 		  SELECT CV.CompanyID,CV.CatalogID,RowNumber=ROW_NUMBER() OVER(PARTITION BY CV.CatalogVariantID ORDER BY CV.CatalogVariantID),

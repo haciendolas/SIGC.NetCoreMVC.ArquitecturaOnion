@@ -10,7 +10,7 @@
         <div class="row pb-2">
             <label for="scbosCatalogTypeID" class="col-sm-1 col-form-label">Tipo</label>
             <div class="col-sm-2">
-                <select class="form-select" id="scbosCatalogTypeID">
+                <select class="form-select" id="scboCatalogTypeID">
                     @if (@ViewBag.CatalogTypeList != null)
                     {
                         <option>Todos</option>
@@ -24,7 +24,7 @@
             </div>
             <label for="stxtCatalogName" class="col-sm-1 col-form-label">Nombre</label>
             <div class="col-sm-5">
-                <input type="text" class="form-control" id="stxtCatalogName" maxlength="15" />
+                <input type="text" class="form-control" id="stxtCatalogName" maxlength="100" />
             </div>
             <label for="scboStateID" class="col-sm-1 col-form-label">Estado</label>
             <div class="col-sm-2">
@@ -39,7 +39,7 @@
         <div class="row pb-2">
             <label for="txtNroInspeccion" class="col-sm-1 col-form-label">Categoria</label>
             <div class="col-sm-2">
-                <select class="form-select" id="scboRubroID">
+                <select class="form-select" id="scboCategoryID">
                     @if (@ViewBag.CategoryList != null)
                     {
                         <option>Todos</option>
@@ -53,7 +53,7 @@
             </div>
             <label for="txtNroInspeccion" class="col-sm-1 col-form-label">Fabricante</label>
             <div class="col-sm-4">
-                <select class="form-select" id="scboRubroID">
+                <select class="form-select" id="scboManufacturerID">
                     @if (@ViewBag.ManufacturerList != null)
                     {
                         <option>Todos</option>
@@ -67,7 +67,7 @@
             </div>
             <label for="txtNroInspeccion" class="col-sm-1 col-form-label">Marca</label>
             <div class="col-sm-2">
-                <select class="form-select" id="scboRubroID">
+                <select class="form-select" id="scboBrandID">
                     @if (@ViewBag.BrandList != null)
                     {
                         <option>Todos</option>
