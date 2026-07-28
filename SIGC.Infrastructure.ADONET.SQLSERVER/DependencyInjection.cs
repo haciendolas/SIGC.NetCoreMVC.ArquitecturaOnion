@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SIGC.DomainService.IRepositories.IActiveIngredientRepositories;
 using SIGC.DomainService.IRepositories.IAttributeValueRepositories;
 using SIGC.DomainService.IRepositories.IAuthRepositories;
 using SIGC.DomainService.IRepositories.IBrandRepositories;
@@ -25,6 +26,7 @@ using SIGC.DomainService.IRepositories.IWarehouseRepositories;
 using SIGC.DomainService.IRepositories.UserRoleRepositories;
 using SIGC.DomainService.Transactions;
 using SIGC.Infrastructure.ADONET.SQLSERVER.AppDBContext;
+using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.ActiveIngredientRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.AttributeValueRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.AuthRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.BrandRepositories;
@@ -152,6 +154,8 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
             services.AddScoped<IPrescriptionTypeListRepository, PrescriptionTypeListRepository>();
 
             services.AddScoped<IAttributeValueListRepository, AttributeValueListRepository>();
+
+            services.AddScoped<IActiveIngredientListRepository, ActiveIngredientListRepository>();
 
             return services;
         }
