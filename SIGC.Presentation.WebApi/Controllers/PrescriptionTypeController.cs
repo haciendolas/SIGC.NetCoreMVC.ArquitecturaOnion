@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SIGC.ApplicationService.Features.PrescriptionTypeFeatures.Queries.PrescriptionTypeList;
 using SIGC.DomainModel.Dtos.PrescriptionType;
 using SIGC.Infrastructure.CrossCutting.Wrappers;
@@ -8,8 +7,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace SIGC.Presentation.WebApi.Controllers
 {   
     public class PrescriptionTypeController : BaseController
-    {
-        [AllowAnonymous]
+    {   
         [HttpGet("PrescriptionTypeList")]
         [SwaggerOperation(Summary = "Listar los tipos de recetas", Description = "Permite listar los tipos de recetas.")]
         [ProducesResponseType(typeof(MsgResponse<List<PrescriptionTypeListResponseDto>>), StatusCodes.Status200OK)]

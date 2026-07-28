@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SIGC.DomainService.IRepositories.IAttributeValueRepositories;
 using SIGC.DomainService.IRepositories.IAuthRepositories;
 using SIGC.DomainService.IRepositories.IBrandRepositories;
 using SIGC.DomainService.IRepositories.ICatalogRepositories;
@@ -24,6 +25,7 @@ using SIGC.DomainService.IRepositories.IWarehouseRepositories;
 using SIGC.DomainService.IRepositories.UserRoleRepositories;
 using SIGC.DomainService.Transactions;
 using SIGC.Infrastructure.ADONET.SQLSERVER.AppDBContext;
+using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.AttributeValueRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.AuthRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.BrandRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogRepositories;
@@ -148,6 +150,8 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
             services.AddScoped<ICatalogPaginationRepository, CatalogPaginationRepository>();
 
             services.AddScoped<IPrescriptionTypeListRepository, PrescriptionTypeListRepository>();
+
+            services.AddScoped<IAttributeValueListRepository, AttributeValueListRepository>();
 
             return services;
         }
