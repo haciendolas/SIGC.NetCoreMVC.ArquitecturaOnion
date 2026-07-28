@@ -12,6 +12,7 @@ using SIGC.DomainService.IRepositories.IEstablishmentRepositories;
 using SIGC.DomainService.IRepositories.IManufacturerRepositories;
 using SIGC.DomainService.IRepositories.IPageCompanyRepositories;
 using SIGC.DomainService.IRepositories.IPageRepositories;
+using SIGC.DomainService.IRepositories.IPrescriptionTypeRepositories;
 using SIGC.DomainService.IRepositories.IRolePermissionRepositories;
 using SIGC.DomainService.IRepositories.IRoleRepositories;
 using SIGC.DomainService.IRepositories.ITokenRepositories;
@@ -35,6 +36,7 @@ using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.EstablishmentRepositorie
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.ManufacturerRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.PageCompanyRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.PageRepositories;
+using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.PrescriptionTypeRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RolePermissionRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RoleRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.TokenRepositories;
@@ -144,6 +146,8 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
             services.AddScoped<ICatalogTypeListRepository, CatalogTypeListRepository>();
 
             services.AddScoped<ICatalogPaginationRepository, CatalogPaginationRepository>();
+
+            services.AddScoped<IPrescriptionTypeListRepository, PrescriptionTypeListRepository>();
 
             return services;
         }
