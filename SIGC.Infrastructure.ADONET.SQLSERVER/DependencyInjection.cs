@@ -18,6 +18,7 @@ using SIGC.DomainService.IRepositories.IPharmaceuticalFormRepositories;
 using SIGC.DomainService.IRepositories.IPrescriptionTypeRepositories;
 using SIGC.DomainService.IRepositories.IRolePermissionRepositories;
 using SIGC.DomainService.IRepositories.IRoleRepositories;
+using SIGC.DomainService.IRepositories.ITherapeuticActionRepositories;
 using SIGC.DomainService.IRepositories.ITokenRepositories;
 using SIGC.DomainService.IRepositories.IUbigeoRepositories;
 using SIGC.DomainService.IRepositories.IUserCompanyRepositories;
@@ -45,6 +46,7 @@ using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.PharmaceuticalFormReposi
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.PrescriptionTypeRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RolePermissionRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RoleRepositories;
+using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.TherapeuticActionRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.TokenRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.UbigeoRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.UserCompanyRepositories;
@@ -160,6 +162,8 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
             services.AddScoped<IActiveIngredientListRepository, ActiveIngredientListRepository>();
 
             services.AddScoped<IPharmaceuticalFormListRepository, PharmaceuticalFormListRepository>();
+
+            services.AddScoped<ITherapeuticActionListRepository, TherapeuticActionListRepository>();
             return services;
         }
     }
