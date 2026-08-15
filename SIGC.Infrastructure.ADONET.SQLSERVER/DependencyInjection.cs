@@ -23,6 +23,7 @@ using SIGC.DomainService.IRepositories.IRoleRepositories;
 using SIGC.DomainService.IRepositories.ITherapeuticActionRepositories;
 using SIGC.DomainService.IRepositories.ITokenRepositories;
 using SIGC.DomainService.IRepositories.IUbigeoRepositories;
+using SIGC.DomainService.IRepositories.IUnitMeasureRepositories;
 using SIGC.DomainService.IRepositories.IUserCompanyRepositories;
 using SIGC.DomainService.IRepositories.IUserRepositories;
 using SIGC.DomainService.IRepositories.IUserRoleRepositories;
@@ -53,6 +54,7 @@ using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RoleRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.TherapeuticActionRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.TokenRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.UbigeoRepositories;
+using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.UnitMeasureRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.UserCompanyRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.UserRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.UserRoleRepositories;
@@ -172,6 +174,8 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
             services.AddScoped<IPresentationListRepository, PresentationListRepository>();
 
             services.AddScoped<IPriceTypeListRepository, PriceTypeListRepository>();
+
+            services.AddScoped<IUnitMeasureListRepository, UnitMeasureListRepository>();
             return services;
         }
     }

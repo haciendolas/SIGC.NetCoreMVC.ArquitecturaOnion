@@ -9,7 +9,9 @@ using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CategoryService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.ManufacturerService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.PharmaceuticalFormService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.PrescriptionTypeService;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.PriceTypeService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.TherapeuticActionService;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.UnitMeasureService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.CompanyService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.ConstantService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.PageCompanyService;
@@ -75,6 +77,8 @@ builder.Services.AddScoped<IPharmaceuticalFormService, PharmaceuticalFormService
 builder.Services.AddScoped<IActiveIngredientService, ActiveIngredientService>();
 builder.Services.AddScoped<IPrescriptionTypeService, PrescriptionTypeService>();
 builder.Services.AddScoped<ITherapeuticActionService, TherapeuticActionService>();
+builder.Services.AddScoped<IUnitMeasureService, UnitMeasureService>();
+builder.Services.AddScoped<IPriceTypeService, PriceTypeService>();
 
 var app = builder.Build();
 

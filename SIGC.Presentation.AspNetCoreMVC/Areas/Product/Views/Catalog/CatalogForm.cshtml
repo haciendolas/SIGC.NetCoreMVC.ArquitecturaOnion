@@ -58,7 +58,7 @@
                 <div class="row pb-2">
                     <label for="cboCategoryID" class="col-sm-2 col-form-label">Categoría<i class="ri-asterisk align-middle text-danger"></i></label>
                     <div class="col-sm-4">
-                        <select class="form-select" id="cboCategoryID">
+                        <select class="form-select" id="cboCategoryID" data-choices>
                             @if (@ViewBag.CategoryList != null)
                             {
                                 <option value="">Seleccionar</option>
@@ -72,7 +72,7 @@
                     </div>
                     <label for="cboManufacturerID" class="col-sm-2 col-form-label">Fabricante<i class="ri-asterisk align-middle text-danger"></i></label>
                     <div class="col-sm-4">
-                        <select class="form-select" id="cboManufacturerID">
+                        <select class="form-select" id="cboManufacturerID" data-choices>
                             @if (@ViewBag.ManufacturerList != null)
                             {
                                 <option value="">Seleccionar</option>
@@ -88,7 +88,7 @@
                 <div class="row pb-2">
                     <label for="cboBrandID" class="col-sm-2 col-form-label">Marca<i class="ri-asterisk align-middle text-danger"></i></label>
                     <div class="col-sm-5">
-                        <select class="form-select" id="cboBrandID">
+                        <select class="form-select" id="cboBrandID" data-choices>
                             @if (@ViewBag.BrandList != null)
                             {
                                 <option value="">Seleccionar</option>
@@ -118,8 +118,7 @@
                 <div class="row pb-2">
                     <label for="cboPharmaceuticalFormID" class="col-sm-2 col-form-label">Forma Farmacéutica</label>
                     <div class="col-sm-4">
-                        <select class="form-select" id="cboPharmaceuticalFormID" name="PharmaceuticalFormID">
-                           
+                        <select class="form-select" id="cboPharmaceuticalFormID" name="PharmaceuticalFormID" data-choices>
                             @if (@ViewBag.PharmaceuticalFormList != null)
                             {
                                 <option value="">Seleccionar</option>

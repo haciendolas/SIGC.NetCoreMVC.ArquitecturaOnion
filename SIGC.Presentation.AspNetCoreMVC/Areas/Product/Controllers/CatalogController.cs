@@ -9,7 +9,9 @@ using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CategoryService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.ManufacturerService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.PharmaceuticalFormService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.PrescriptionTypeService;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.PriceTypeService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.TherapeuticActionService;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.UnitMeasureService;
 using SIGC.Presentation.AspNetCoreMVC.Controllers;
 using SIGC.Presentation.AspNetCoreMVC.Helpers;
 using SIGC.Presentation.AspNetCoreMVC.Models;
@@ -29,6 +31,8 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
         private readonly IPharmaceuticalFormService PharmaceuticalFormService;
         private readonly IPrescriptionTypeService PrescriptionTypeService;
         private readonly ITherapeuticActionService TherapeuticActionService;
+        private readonly IUnitMeasureService UnitMeasureService;
+        private readonly IPriceTypeService PriceTypeService;
 
         public CatalogController(ICategoryService CategoryService,
             IBrandService BrandService,
@@ -38,7 +42,9 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
             IActiveIngredientService ActiveIngredientService,
             IPharmaceuticalFormService PharmaceuticalFormService,
             IPrescriptionTypeService PrescriptionTypeService,
-            ITherapeuticActionService TherapeuticActionService
+            ITherapeuticActionService TherapeuticActionService,
+            IUnitMeasureService UnitMeasureService,
+            IPriceTypeService PriceTypeService
         )
         {
             this.CategoryService = CategoryService;
@@ -50,6 +56,8 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
             this.PharmaceuticalFormService = PharmaceuticalFormService;
             this.PrescriptionTypeService = PrescriptionTypeService;
             this.TherapeuticActionService = TherapeuticActionService;
+            this.UnitMeasureService = UnitMeasureService;
+            this.PriceTypeService = PriceTypeService;
         }
 
         public async Task<IActionResult> Index()
@@ -62,6 +70,8 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
             ViewBag.PharmaceuticalFormList = (await PharmaceuticalFormService.PharmaceuticalFormList()).Data;
             ViewBag.PrescriptionTypeList = (await PrescriptionTypeService.PrescriptionTypeList()).Data;
             ViewBag.TherapeuticActionList = (await TherapeuticActionService.TherapeuticActionList()).Data;
+            ViewBag.UnitMeasureList = (await UnitMeasureService.UnitMeasureList()).Data;
+            ViewBag.PriceTypeList = (await PriceTypeService.PriceTypeList()).Data;         
             return View("CatalogIndex");
         }
 
