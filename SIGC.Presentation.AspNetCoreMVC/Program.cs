@@ -1,11 +1,15 @@
 using Microsoft.Extensions.FileProviders;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Organization.Services.EstablishmentService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Organization.Services.WarehouseService;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.ActiveIngredientService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.BrandService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogTypeService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CategoryService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.ManufacturerService;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.PharmaceuticalFormService;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.PrescriptionTypeService;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.TherapeuticActionService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.CompanyService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.ConstantService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.PageCompanyService;
@@ -67,6 +71,10 @@ builder.Services.AddScoped<IBrandService, BrandService>();
 builder.Services.AddScoped<IManufacturerService, ManufacturerService>();
 builder.Services.AddScoped<ICatalogTypeService, CatalogTypeService>();
 builder.Services.AddScoped<ICatalogService, CatalogService>();
+builder.Services.AddScoped<IPharmaceuticalFormService, PharmaceuticalFormService>();
+builder.Services.AddScoped<IActiveIngredientService, ActiveIngredientService>();
+builder.Services.AddScoped<IPrescriptionTypeService, PrescriptionTypeService>();
+builder.Services.AddScoped<ITherapeuticActionService, TherapeuticActionService>();
 
 var app = builder.Build();
 

@@ -1,7 +1,11 @@
-﻿@using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.Brand
+﻿@using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.ActiveIngredient
+@using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.Brand
 @using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.CatalogType
 @using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.Category
 @using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.Manufacturer
+@using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.PharmaceuticalForm
+@using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.PrescriptionType
+@using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.TherapeuticAction
 @using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Constant
 @using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Ubigeo
 @{
@@ -22,7 +26,7 @@
                         <select class="form-select" id="cboCatalogTypeID">
                             @if (@ViewBag.CatalogTypeList != null)
                             {
-                                <option>Seleccionar</option>
+                                <option value="">Seleccionar</option>
                                 var CatalogTypeList = ViewBag.CatalogTypeList as List<CatalogTypeListResponseModel>;
                                 @foreach (var Item in CatalogTypeList!)
                                 {
@@ -57,7 +61,7 @@
                         <select class="form-select" id="cboCategoryID">
                             @if (@ViewBag.CategoryList != null)
                             {
-                                <option>Seleccionar</option>
+                                <option value="">Seleccionar</option>
                                 var CategoryList = ViewBag.CategoryList as List<CategoryListResponseModel>;
                                 @foreach (var Item in CategoryList!)
                                 {
@@ -71,7 +75,7 @@
                         <select class="form-select" id="cboManufacturerID">
                             @if (@ViewBag.ManufacturerList != null)
                             {
-                                <option>Seleccionar</option>
+                                <option value="">Seleccionar</option>
                                 var ManufacturerList = ViewBag.ManufacturerList as List<ManufacturerListResponseModel>;
                                 @foreach (var Item in ManufacturerList!)
                                 {
@@ -87,7 +91,7 @@
                         <select class="form-select" id="cboBrandID">
                             @if (@ViewBag.BrandList != null)
                             {
-                                <option>Seleccionar</option>
+                                <option value="">Seleccionar</option>
                                 var BrandList = ViewBag.BrandList as List<BrandListResponseModel>;
                                 @foreach (var Item in BrandList!)
                                 {
@@ -96,55 +100,71 @@
                             }
                         </select>
                     </div>
-                    <label for="cboRubroID" class="col-sm-2 col-form-label">Venta Con<i class="ri-asterisk align-middle text-danger"></i></label>
+                    <label for="cboPrescriptionTypeID" class="col-sm-2 col-form-label">Venta Con<i class="ri-asterisk align-middle text-danger"></i></label>
                     <div class="col-sm-3">
-                        <select class="form-select" id="cboRubroID" name="RubroID">
-                            <option value="">Seleccionar</option>
-                            <option value="">Receta</option>
-                            <option value="">Sin Receta</option>                        
-                            @if (@ViewBag.RubroList != null)
+                        <select class="form-select" id="cboPrescriptionTypeID" name="PrescriptionTypeID">
+                            @if (@ViewBag.PrescriptionTypeList != null)
                             {
                                 <option value="">Seleccionar</option>
-                                var RubroList = ViewBag.RubroList as List<ConstantListResponseModel>;
-                                @foreach (var Item in RubroList!)
+                                var PrescriptionTypeList = ViewBag.PrescriptionTypeList as List<PrescriptionTypeListResponseModel>;
+                                @foreach (var Item in PrescriptionTypeList!)
                                 {
-                                    <option value="@Item.ConstantID">@Item.ConstantName</option>
+                                    <option value="@Item.PrescriptionTypeID">@Item.PrescriptionTypeName</option>
                                 }
                             }
                         </select>
                     </div>
                 </div>
                 <div class="row pb-2">
-                    <label for="cboRubroID" class="col-sm-2 col-form-label">Atributos</label>
-                    <div class="col-sm-10">                         
-                            <div class="table-responsive table-card p-3">
-                                <table class="table align-middle" id="dtCompany">
-                                    <thead class="table-light text-muted">
-                                        <tr>
-                                            <th class="text-center">Nombre Atribto</th>
-                                            <th class="text-center">Valor Atributo</th>
-                                            <th class="text-center">Opción</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="details-list">
-                                        <tr>
-                                            <td><input type="checkbox" name="optTalla" />Concentración</td>
-                                            <td>
-                                                <input type="radio" name="optValorC"  /> 500 mg
-                                                <input type="radio" name="optValorC" /> 600 mg
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox" name="optColor" />Tamaño</td>
-                                            <td>
-                                                <input type="radio" name="optValorP" /> Pequeño
-                                                <input type="radio" name="optValorP" /> Mediano
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                       
+                    <label for="cboPharmaceuticalFormID" class="col-sm-2 col-form-label">Forma Farmacéutica</label>
+                    <div class="col-sm-4">
+                        <select class="form-select" id="cboPharmaceuticalFormID" name="PharmaceuticalFormID">
+                           
+                            @if (@ViewBag.PharmaceuticalFormList != null)
+                            {
+                                <option value="">Seleccionar</option>
+                                var PharmaceuticalFormList = ViewBag.PharmaceuticalFormList as List<PharmaceuticalFormListResponseModel>;
+                                @foreach (var Item in PharmaceuticalFormList!)
+                                {
+                                    <option value="@Item.PharmaceuticalFormID">@Item.PharmaceuticalFormName</option>
+                                }
+                            }
+                        </select>                       
+                    </div>
+                    <label for="cboTherapeuticActionID" class="col-sm-2 col-form-label">Acción Terapéutica</label>
+                    <div class="col-sm-4">
+                        <select class="form-select" id="cboTherapeuticActionID" name="TherapeuticActionID">
+
+                            @if (@ViewBag.TherapeuticActionList != null)
+                            {
+                                <option value="">Seleccionar</option>
+                                var TherapeuticActionList = ViewBag.TherapeuticActionList as List<TherapeuticActionListResponseModel>;
+                                @foreach (var Item in TherapeuticActionList!)
+                                {
+                                    <option value="@Item.TherapeuticActionID">@Item.TherapeuticActionName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="row pb-2">
+                    <label for="cboActiveIngredientID" class="col-sm-2 col-form-label">Principio Activo</label>
+                    <div class="col-sm-4">
+                        <select class="form-select" id="cboActiveIngredientID" name="ActiveIngredientID">
+                            @if (@ViewBag.ActiveIngredientList != null)
+                            {
+                                <option value="">Seleccionar</option>
+                                var ActiveIngredientList = ViewBag.ActiveIngredientList as List<ActiveIngredientListResponseModel>;
+                                @foreach (var Item in ActiveIngredientList!)
+                                {
+                                    <option value="@Item.ActiveIngredientID">@Item.ActiveIngredientName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <label for="cboRubroID" class="col-sm-2 col-form-label">Concentración</label>
+                    <div class="col-sm-4">
+                            <input type="text" class="form-control" id="txtCompanySocialReason" name="CompanySocialReason" />
                     </div>
                 </div>
                 <div class="row pb-2">

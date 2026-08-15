@@ -1,11 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.Catalog;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.Category;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.ActiveIngredientService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.BrandService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogTypeService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CategoryService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.ManufacturerService;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.PharmaceuticalFormService;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.PrescriptionTypeService;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.TherapeuticActionService;
 using SIGC.Presentation.AspNetCoreMVC.Controllers;
 using SIGC.Presentation.AspNetCoreMVC.Helpers;
 using SIGC.Presentation.AspNetCoreMVC.Models;
@@ -21,12 +25,20 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
         private readonly IManufacturerService ManufacturerService;
         private readonly ICatalogTypeService CatalogTypeService;
         private readonly ICatalogService CatalogService;
+        private readonly IActiveIngredientService ActiveIngredientService;
+        private readonly IPharmaceuticalFormService PharmaceuticalFormService;
+        private readonly IPrescriptionTypeService PrescriptionTypeService;
+        private readonly ITherapeuticActionService TherapeuticActionService;
 
         public CatalogController(ICategoryService CategoryService,
             IBrandService BrandService,
             IManufacturerService ManufacturerService,
             ICatalogTypeService CatalogTypeService,
-            ICatalogService CatalogService
+            ICatalogService CatalogService,
+            IActiveIngredientService ActiveIngredientService,
+            IPharmaceuticalFormService PharmaceuticalFormService,
+            IPrescriptionTypeService PrescriptionTypeService,
+            ITherapeuticActionService TherapeuticActionService
         )
         {
             this.CategoryService = CategoryService;
@@ -34,6 +46,10 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
             this.ManufacturerService = ManufacturerService;
             this.CatalogTypeService = CatalogTypeService;
             this.CatalogService = CatalogService;
+            this.ActiveIngredientService = ActiveIngredientService;
+            this.PharmaceuticalFormService = PharmaceuticalFormService;
+            this.PrescriptionTypeService = PrescriptionTypeService;
+            this.TherapeuticActionService = TherapeuticActionService;
         }
 
         public async Task<IActionResult> Index()
@@ -42,6 +58,10 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
             ViewBag.CategoryList = (await CategoryService.CategoryList()).Data;
             ViewBag.ManufacturerList = (await ManufacturerService.ManufacturerList()).Data;
             ViewBag.BrandList = (await BrandService.BrandList()).Data;
+            ViewBag.ActiveIngredientList = (await ActiveIngredientService.ActiveIngredientList()).Data;
+            ViewBag.PharmaceuticalFormList = (await PharmaceuticalFormService.PharmaceuticalFormList()).Data;
+            ViewBag.PrescriptionTypeList = (await PrescriptionTypeService.PrescriptionTypeList()).Data;
+            ViewBag.TherapeuticActionList = (await TherapeuticActionService.TherapeuticActionList()).Data;
             return View("CatalogIndex");
         }
 
