@@ -58,10 +58,9 @@
                 <div class="row pb-2">
                     <label for="cboCategoryID" class="col-sm-2 col-form-label">Categoría<i class="ri-asterisk align-middle text-danger"></i></label>
                     <div class="col-sm-4">
-                        <select class="form-select" id="cboCategoryID" data-choices>
+                        <select class="form-select" id="cboCategoryID">
                             @if (@ViewBag.CategoryList != null)
-                            {
-                                <option value="">Seleccionar</option>
+                            {   <option value="">Seleccionar</option>                
                                 var CategoryList = ViewBag.CategoryList as List<CategoryListResponseModel>;
                                 @foreach (var Item in CategoryList!)
                                 {
@@ -72,7 +71,7 @@
                     </div>
                     <label for="cboManufacturerID" class="col-sm-2 col-form-label">Fabricante<i class="ri-asterisk align-middle text-danger"></i></label>
                     <div class="col-sm-4">
-                        <select class="form-select" id="cboManufacturerID" data-choices>
+                        <select class="form-select" id="cboManufacturerID">
                             @if (@ViewBag.ManufacturerList != null)
                             {
                                 <option value="">Seleccionar</option>
@@ -88,7 +87,7 @@
                 <div class="row pb-2">
                     <label for="cboBrandID" class="col-sm-2 col-form-label">Marca<i class="ri-asterisk align-middle text-danger"></i></label>
                     <div class="col-sm-5">
-                        <select class="form-select" id="cboBrandID" data-choices>
+                        <select class="form-select" id="cboBrandID">
                             @if (@ViewBag.BrandList != null)
                             {
                                 <option value="">Seleccionar</option>
@@ -118,7 +117,7 @@
                 <div class="row pb-2">
                     <label for="cboPharmaceuticalFormID" class="col-sm-2 col-form-label">Forma Farmacéutica</label>
                     <div class="col-sm-4">
-                        <select class="form-select" id="cboPharmaceuticalFormID" name="PharmaceuticalFormID" data-choices>
+                        <select class="form-select" id="cboPharmaceuticalFormID" name="PharmaceuticalFormID">
                             @if (@ViewBag.PharmaceuticalFormList != null)
                             {
                                 <option value="">Seleccionar</option>

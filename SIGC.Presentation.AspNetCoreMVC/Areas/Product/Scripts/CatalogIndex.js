@@ -10,6 +10,7 @@
             Catalog._Validation.fnCatalogCreateUpdateValidate();
             Catalog._Other.fnOpenFile();
             Catalog._Search.fnCatalogDataTable();
+            Catalog._Other.fnChoices();
             $('#stxtCatalogName,#txtCatalogName').keypress(function (event) {
                 return Uti.KeyBoard.LettersAndNumbers(event);
             });
@@ -43,6 +44,12 @@
                 $(this).hide();
                 $('#hdCatalogImageBandera').val('DELETE');
             });
+            $('#cboUnitMeasureID').on('change', function () {
+                const UnitMeasureID = $(this).val();
+                if (UnitMeasureID) {
+                    Catalog._Search.fnPresentationComboBox(UnitMeasureID);
+                };
+            })
         },
         _Clear: {
             fnCatalogGet: function () {
@@ -81,6 +88,20 @@
             fnCatalogTabs: function () {
                 $('#Catalog-card ul li a[href="#tab-search"]').removeClass('disabled');
                 $('#Catalog-card ul li a[href="#tab-search"]').attr('data-bs-toggle', 'tab');
+            },
+            fnChoices: function () {
+                new Choices('#cboCategoryID', {
+                    noResultsText: 'No se encontraron registros'         
+                });
+                new Choices('#cboManufacturerID', {
+                    noResultsText: 'No se encontraron registros'
+                });
+                new Choices('#cboBrandID', {
+                    noResultsText: 'No se encontraron registros'
+                });
+                new Choices('#cboPharmaceuticalFormID', {
+                    noResultsText: 'No se encontraron registros'
+                });
             }
         },
         _Validation: {
@@ -227,6 +248,33 @@
                         $('#Catalog-card ul li a[href="#tab-register"]').tab('show');
                         if ($('#btnCatalogUpdate').length > 0) $('#btnCatalogUpdate').show();
                         if ($('#btnCatalogCreate').length > 0) $('#btnCatalogCreate').hide();
+                    };
+                });
+            },
+            fnPresentationComboBox: function (UnitMeasureID) {
+                const options = {
+                    url: Uti.Url.Base + '/Product/Presentation/PresentationList/' + UnitMeasureID,
+                    type: Uti.Variable.FetchAjax.Type.Get
+                };
+                Uti.Ajax.Custom(options, function (response) {
+                    Uti.Modal.Message(response.type, response.message, response.function);
+                    if (response.type === Uti.Message.Type.Session) {
+                        Uti.Modal.Process();
+                    }
+                    if (response.type === Uti.Message.Type.Query) {
+                        const { data: rowData } = response;
+                        $('#cboPresentationID').empty();
+                        let options = '';
+                        if (rowData && rowData.length>0) {   
+                            options = `<option value="">${Uti.Message.Description.Select}</option>`;
+                            rowData.forEach(row => {
+                                options += `<option value="${row.presentationID}" presentationEquivalence="${row.presentationEquivalence}">${row.presentationName}</option>`;
+                            });                          
+                        }
+                        else {
+                            options = `<option value="">${Uti.Message.Description.NoResultsFound}</option>`;
+                        }
+                    $('#cboPresentationID').append(options);
                     };
                 });
             }

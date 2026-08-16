@@ -542,7 +542,9 @@
                 QuestionDelete: $('#QuestionDelete').text(),
                 RequiredDetalleLinea: $('#RequiredDetalleLinea').text(),
                 RequiredSeleccionarDetalleLinea: $('#RequiredSeleccionarDetalleLinea').text(),
-                ErrorException: $('#ErrorException').text()
+                ErrorException: $('#ErrorException').text(),
+                NoResultsFound: 'No se encontraron resultados',
+                Select: 'Seleccionar'
             }
         },
         Image: {        

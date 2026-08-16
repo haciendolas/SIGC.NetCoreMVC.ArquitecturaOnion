@@ -27,6 +27,7 @@
     <Folder Include="Areas\Sale\Models\" />
     <Folder Include="Areas\Sale\Views\" />
     <Folder Include="Areas\Security\Data\" />
+    <Folder Include="wwwroot\assets\libs\select2\" />
   </ItemGroup>
 
   <ItemGroup>

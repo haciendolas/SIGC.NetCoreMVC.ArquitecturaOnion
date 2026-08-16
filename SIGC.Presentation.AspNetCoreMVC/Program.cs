@@ -9,6 +9,7 @@ using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CategoryService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.ManufacturerService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.PharmaceuticalFormService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.PrescriptionTypeService;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.PresentationService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.PriceTypeService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.TherapeuticActionService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.UnitMeasureService;
@@ -79,7 +80,7 @@ builder.Services.AddScoped<IPrescriptionTypeService, PrescriptionTypeService>();
 builder.Services.AddScoped<ITherapeuticActionService, TherapeuticActionService>();
 builder.Services.AddScoped<IUnitMeasureService, UnitMeasureService>();
 builder.Services.AddScoped<IPriceTypeService, PriceTypeService>();
-
+builder.Services.AddScoped<IPresentationService, PresentationService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

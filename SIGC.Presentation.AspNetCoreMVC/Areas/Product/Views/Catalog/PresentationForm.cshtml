@@ -58,18 +58,10 @@
                                         }
                                     </select>
                                 </div>
-                                <label for="cboRubroID" class="col-sm-2 col-form-label">Presentación<i class="ri-asterisk align-middle text-danger"></i></label>
+                            <label for="cboPresentationID" class="col-sm-2 col-form-label">Presentación<i class="ri-asterisk align-middle text-danger"></i></label>
                                 <div class="col-sm-4">
-                                    <select class="form-select" id="cboRubroID" name="RubroID">
-                                        @if (@ViewBag.RubroList != null)
-                                        {
-                                            <option value="">Seleccionar</option>
-                                            var RubroList = ViewBag.RubroList as List<ConstantListResponseModel>;
-                                            @foreach (var Item in RubroList!)
-                                            {
-                                                <option value="@Item.ConstantID">@Item.ConstantName</option>
-                                            }
-                                        }
+                                <select class="form-select" id="cboPresentationID" name="PresentationID">
+                                    <option value="">Seleccionar</option> 
                                     </select>
                                 </div>
                                 <label for="txtCompanyAddress" class="col-sm-1 col-form-label">Equivalente<i class="ri-asterisk align-middle text-danger"></i></label>
