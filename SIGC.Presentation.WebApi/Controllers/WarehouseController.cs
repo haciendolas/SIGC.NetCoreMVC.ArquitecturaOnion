@@ -4,6 +4,7 @@ using SIGC.ApplicationService.Features.WarehouseFeatures.Commands.WarehouseChang
 using SIGC.ApplicationService.Features.WarehouseFeatures.Commands.WarehouseCreate;
 using SIGC.ApplicationService.Features.WarehouseFeatures.Commands.WarehouseUpdate;
 using SIGC.ApplicationService.Features.WarehouseFeatures.Queries.WarehouseGet;
+using SIGC.ApplicationService.Features.WarehouseFeatures.Queries.WarehouseList;
 using SIGC.ApplicationService.Features.WarehouseFeatures.Queries.WarehousePagination;
 using SIGC.DomainModel.Dtos.Establishment;
 using SIGC.Infrastructure.CrossCutting.Wrappers;
@@ -48,7 +49,16 @@ namespace SIGC.Presentation.WebApi.Controllers
        {
            return Ok(await Mediator.Send(new WarehouseGetQueryRequest(WarehouseID), CancellationToken));
        }
- 
+
+       [HttpGet("WarehouseList/{EstablishmentID}")]
+       [SwaggerOperation(Summary = "Obtener una lista de almacenes por establecimiento id", Description = "Permite obtener una lista de almacenes por establecimiento id.")]
+       [ProducesResponseType(typeof(MsgResponse<EstablishmentListResponseDto>), StatusCodes.Status200OK)]
+       [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
+       public async Task<IActionResult> WarehouseList([FromRoute] int EstablishmentID, CancellationToken CancellationToken)
+       {
+            return Ok(await Mediator.Send(new WarehouseListQueryRequest(EstablishmentID), CancellationToken));
+       }
+
        [HttpPost("WarehousePagination")]
        [SwaggerOperation(Summary = "Paginación de almacen", Description = "Permite la paginación de almacen.")]
        [ProducesResponseType(typeof(MsgResponse<PaginationResultDto<WarehousePaginationQueryResponse>>), StatusCodes.Status200OK)]
