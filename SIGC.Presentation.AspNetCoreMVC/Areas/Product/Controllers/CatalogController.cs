@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Accounting.Services.TaxService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.Catalog;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.ActiveIngredientService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.AttributeService;
@@ -35,6 +36,7 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
         private readonly IPriceTypeService PriceTypeService;
         private readonly IAttributeService AttributeService;
         private readonly IConstantService ConstantService;
+        private readonly ITaxService TaxService;
 
         public CatalogController(ICategoryService CategoryService,
             IBrandService BrandService,
@@ -48,7 +50,8 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
             IUnitMeasureService UnitMeasureService,
             IPriceTypeService PriceTypeService,
             IAttributeService AttributeService,
-            IConstantService ConstantService
+            IConstantService ConstantService,
+            ITaxService TaxService
         )
         {
             this.CategoryService = CategoryService;
@@ -64,6 +67,7 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
             this.PriceTypeService = PriceTypeService;
             this.AttributeService = AttributeService;
             this.ConstantService = ConstantService;
+            this.TaxService = TaxService;
         }
 
         public async Task<IActionResult> Index()
@@ -82,6 +86,7 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
             var ConstantList = (await ConstantService.ConstantList($"{ConstantsHelper.TableKeys.CurrencyType.All},{ConstantsHelper.TableKeys.TaxAffectationType.All}")).Data!;
             ViewBag.CurrencyTypeList = ConstantList.Where(w => w.ConstantClass == ConstantsHelper.TableKeys.CurrencyType.All && w.ConstantID != 0).ToList();
             ViewBag.TaxAffectationTypeList = ConstantList.Where(w => w.ConstantClass == ConstantsHelper.TableKeys.TaxAffectationType.All && w.ConstantID != 0).ToList();
+            ViewBag.TaxList = (await TaxService.TaxList()).Data;
             return View("CatalogIndex");
         }
 

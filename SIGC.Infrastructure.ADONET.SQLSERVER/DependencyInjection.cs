@@ -4,6 +4,7 @@ using SIGC.DomainService.IRepositories.IActiveIngredientRepositories;
 using SIGC.DomainService.IRepositories.IAttributeValueRepositories;
 using SIGC.DomainService.IRepositories.IAuthRepositories;
 using SIGC.DomainService.IRepositories.IBrandRepositories;
+using SIGC.DomainService.IRepositories.ICatalogPresentationRepositories;
 using SIGC.DomainService.IRepositories.ICatalogRepositories;
 using SIGC.DomainService.IRepositories.ICatalogTypeRepositories;
 using SIGC.DomainService.IRepositories.ICategoryRepositories;
@@ -36,6 +37,7 @@ using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.ActiveIngredientReposito
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.AttributeValueRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.AuthRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.BrandRepositories;
+using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogPresentationRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogTypeRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CategoryRepositories;
@@ -180,6 +182,8 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
             services.AddScoped<IUnitMeasureListRepository, UnitMeasureListRepository>();
 
             services.AddScoped<ITaxListRepository, TaxListRepository>();
+
+            services.AddScoped<ICatalogPresentationListRepository, CatalogPresentationListRepository>();
             return services;
         }
     }

@@ -414,6 +414,7 @@ CREATE TABLE Product.CatalogVariant(
     CatalogVariantUpdatedDateTime DATETIME,
 	CONSTRAINT CatalogVariant_PK_CatalogVariantID PRIMARY KEY(CatalogVariantID),
     CONSTRAINT CatalogVariant_FK_CatalogID FOREIGN KEY(CatalogID) REFERENCES Product.[Catalog](CatalogID),
+	CONSTRAINT CatalogVariant_UQ_CompanyID_CatalogID_CatalogVariantName UNIQUE (CompanyID, CatalogID, CatalogVariantName),
     CONSTRAINT CatalogVariant_CHK_RecordStateID CHECK(RecordStateID IN(0,1,2))
 )
 GO

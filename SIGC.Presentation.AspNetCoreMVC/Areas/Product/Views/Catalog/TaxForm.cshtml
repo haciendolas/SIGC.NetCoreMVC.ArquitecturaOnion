@@ -1,4 +1,5 @@
-﻿@using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Constant
+﻿@using SIGC.Presentation.AspNetCoreMVC.Areas.Accounting.Models.Tax
+@using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Constant
 @{
     Layout = null;
 }
@@ -12,17 +13,17 @@
             </div>
         </div>
         <div class="row pb-2">
-            <label for="txtCompanyPhone" class="col-sm-1 col-form-label" style="padding-right:0px">Impuesto<i class="ri-asterisk align-middle text-danger"></i></label>
+            <label for="cboTaxID" class="col-sm-1 col-form-label" style="padding-right:0px">Impuesto<i class="ri-asterisk align-middle text-danger"></i></label>
             <div class="col-sm-3">
-                <select class="form-select" id="cboTaxpayerTypeID" name="TaxpayerTypeID">
-                    @if (@ViewBag.TaxpayerTypeList != null)
+                <select class="form-select" id="cboTaxID" name="TaxID">
+                    @if (@ViewBag.TaxList != null)
                     {
                         <option value="">Seleccionar</option>
 
-                        var TaxpayerTypeList = ViewBag.TaxpayerTypeList as List<ConstantListResponseModel>;
-                        @foreach (var Item in TaxpayerTypeList!)
+                        var TaxList = ViewBag.TaxList as List<TaxListResponseModel>;
+                        @foreach (var Item in TaxList!)
                         {
-                            <option value="@Item.ConstantID">@Item.ConstantName</option>
+                            <option value="@Item.TaxID">@Item.TaxName ( @Item.TaxValor )</option>
                         }
                     }
                 </select>

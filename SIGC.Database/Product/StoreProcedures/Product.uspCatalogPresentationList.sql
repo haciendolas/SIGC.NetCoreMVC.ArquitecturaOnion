@@ -12,7 +12,7 @@ ALTER PROCEDURE Product.uspCatalogPresentationList(
 AS
 BEGIN
 	SET NOCOUNT ON
-		SELECT CV.CatalogVariantName,CP.CatalogPresentationID,P.PresentationName AS CatalogPresentationName
+		SELECT CV.CatalogVariantID,CV.CatalogVariantName,CP.CatalogPresentationID,P.PresentationName AS CatalogPresentationName
 	    FROM Product.Presentation P WITH(NOLOCK) 
 		INNER JOIN Product.CatalogPresentation CP WITH(NOLOCK) ON P.PresentationID=CP.PresentationID AND P.CompanyID=CP.CompanyID AND CP.RecordStateID=1
 		INNER JOIN Product.CatalogVariant CV WITH(NOLOCK) ON CP.CatalogVariantID=CV.CatalogVariantID AND CP.CompanyID=CV.CompanyID AND CV.RecordStateID=1

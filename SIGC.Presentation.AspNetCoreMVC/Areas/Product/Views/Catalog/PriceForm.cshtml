@@ -13,19 +13,10 @@
             </div>
         </div>
         <div class="row pb-2">
-            <label for="txtCompanyPhone" class="col-sm-1 col-form-label" style="padding-right:0px">Presentación<i class="ri-asterisk align-middle text-danger"></i></label>
+            <label for="cboCatalogPresentationID" class="col-sm-1 col-form-label" style="padding-right:0px">Presentación<i class="ri-asterisk align-middle text-danger"></i></label>
             <div class="col-sm-7">
-                <select class="form-select" id="cboTaxpayerTypeID" name="TaxpayerTypeID">
-                    @if (@ViewBag.TaxpayerTypeList != null)
-                    {
-                        <option value="">Seleccionar</option>
-
-                        var TaxpayerTypeList = ViewBag.TaxpayerTypeList as List<ConstantListResponseModel>;
-                        @foreach (var Item in TaxpayerTypeList!)
-                        {
-                            <option value="@Item.ConstantID">@Item.ConstantName</option>
-                        }
-                    }
+                <select class="form-select" id="cboCatalogPresentationID" name="CatalogPresentationID">
+                    <option value="">Seleccionar</option>
                 </select>
             </div>
             <label for="cboPriceTypeID" class="col-sm-2 col-form-label">Tipo Precio<i class="ri-asterisk align-middle text-danger"></i></label>

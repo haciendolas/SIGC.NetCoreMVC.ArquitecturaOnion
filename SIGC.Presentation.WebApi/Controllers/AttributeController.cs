@@ -11,7 +11,7 @@ namespace SIGC.Presentation.WebApi.Controllers
         [SwaggerOperation(Summary = "Listar los atributos con su detalle", Description = "Permite listar los atributos con su detalle.")]
         [ProducesResponseType(typeof(MsgResponse<List<AttributeListQueryResponse>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AttributeValueList(bool? AttributeIsVariant, CancellationToken CancellationToken)
+        public async Task<IActionResult> AttributeValueList([FromQuery] bool? AttributeIsVariant, CancellationToken CancellationToken)
         {
             return Ok(await Mediator.Send(new AttributeValueListQueryRequest(AttributeIsVariant), CancellationToken));
         }

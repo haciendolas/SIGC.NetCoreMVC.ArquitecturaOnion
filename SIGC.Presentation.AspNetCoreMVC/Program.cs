@@ -1,9 +1,11 @@
 using Microsoft.Extensions.FileProviders;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Accounting.Services.TaxService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Organization.Services.EstablishmentService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Organization.Services.WarehouseService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.ActiveIngredientService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.AttributeService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.BrandService;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogPresentationService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogTypeService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CategoryService;
@@ -80,6 +82,8 @@ builder.Services.AddScoped<IUnitMeasureService, UnitMeasureService>();
 builder.Services.AddScoped<IPriceTypeService, PriceTypeService>();
 builder.Services.AddScoped<IPresentationService, PresentationService>();
 builder.Services.AddScoped<IAttributeService, AttributeService>();
+builder.Services.AddScoped<ITaxService, TaxService>();
+builder.Services.AddScoped<ICatalogPresentationService, CatalogPresentationService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
