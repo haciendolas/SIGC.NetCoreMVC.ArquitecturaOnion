@@ -7,7 +7,7 @@ using SIGC.Infrastructure.CrossCutting.Wrappers;
 
 namespace SIGC.ApplicationService.Features.AttributeValueFeatures.Queries.AttributeValueList
 {
-    internal class AttributeValueListQueryHandler : IRequestHandler<AttributeValueListQueryRequest, MsgResponse<List<AttributeValueListResponseDto>>>
+    internal class AttributeValueListQueryHandler : IRequestHandler<AttributeValueListQueryRequest, MsgResponse<List<AttributeListQueryResponse>>>
     {
         private readonly IMessageService MessageService;    
         private readonly IAttributeValueListRepository AttributeValueListRepository;
@@ -20,12 +20,23 @@ namespace SIGC.ApplicationService.Features.AttributeValueFeatures.Queries.Attrib
             this.AttributeValueListRepository = AttributeValueListRepository;        
         }
 
-        public async Task<MsgResponse<List<AttributeValueListResponseDto>>> Handle(AttributeValueListQueryRequest Request, CancellationToken CancellationToken)
+        public async Task<MsgResponse<List<AttributeListQueryResponse>>> Handle(AttributeValueListQueryRequest Request, CancellationToken CancellationToken)
         {
-            var MsgResponse = new MsgResponse<List<AttributeValueListResponseDto>>();
+            var MsgResponse = new MsgResponse<List<AttributeListQueryResponse>>();
             MsgResponse.Type = MessageTypeConst.QUERY;
             MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.QUERY_RESULT);
-            MsgResponse.Data = await AttributeValueListRepository.ListAsync(Request.AttributeIsVariant,CancellationToken);
+            var AttributeValueList = await AttributeValueListRepository.ListAsync(Request.AttributeIsVariant,CancellationToken);
+
+            MsgResponse.Data = AttributeValueList.GroupBy(x => new { x.AttributeID, x.AttributeName, x.AttributeIsVariant })
+                                .Select(g => new AttributeListQueryResponse(
+                                    g.Key.AttributeID,
+                                    g.Key.AttributeName,
+                                    g.Key.AttributeIsVariant,
+                                    g.Select(x => new AttributeValueListQueryResponse(
+                                        x.AttributeValueID,
+                                        x.AttributeValueName
+                                    )).ToList()
+                                )).ToList();
             if (!MsgResponse.Data.Any())
             {
                 MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.QUERY_EMPTY);

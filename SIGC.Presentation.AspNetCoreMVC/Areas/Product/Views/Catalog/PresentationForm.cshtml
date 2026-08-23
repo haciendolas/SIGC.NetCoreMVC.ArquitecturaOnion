@@ -9,14 +9,14 @@
         <div class="row pb-2">
             <label for="txtCompanyCorporateEmail" class="col-sm-1 col-form-label">Producto</label>
             <div class="col-sm-11">
-                <input type="text" class="form-control" id="txtCompanyCorporateEmail" name="CompanyCorporateEmail" readonly />
+                <input type="text" class="form-control" name="CatalogName" readonly />
             </div>
         </div>
         <div class="card" id="div-variant">
             <div class="card-header p-2" style="background:#f3f3f9">
                 <div class="d-flex align-items-center">
                     <div class="flex-grow-1">
-                        <h6 class="card-title mb-0">Variante</h6>
+                        <h6 class="card-title mb-0">Variante:&nbsp;<span id="span-catalog-variant-name"></span></h6>
                     </div>
                 </div>
             </div>
@@ -25,13 +25,13 @@
                     <label for="txtCompanyAddress" class="col-sm-2 col-form-label">Nombre<i class="ri-asterisk align-middle text-danger"></i></label>
                     <div class="col-sm-6">
                         <div class="input-group">
-                            <input type="text" class="form-control" id="txtCompanyAddress" name="CompanyAddress" placeholder="Talla - Color, 32 - R" />
-                            <button class="btn btn-outline-success" type="button" id="button-addon2"><i class="ri-search-2-line align-bottom me-1 fs-13"></i>Ver</button>
+                            <input type="text" class="form-control" id="txtCatalogVariantName" name="CatalogVariantName" maxlength="50" placeholder="Talla - Color, 32 - R" />
+                            <button class="btn btn-outline-success" type="button" id="btnAttributeSearchOpen"><i class="ri-search-2-line align-bottom me-1 fs-13"></i>Ver</button>
                         </div>
                     </div>
                     <label for="txtCompanyAddress" class="col-sm-1 col-form-label">SKU<i class="ri-asterisk align-middle text-danger"></i></label>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" id="txtCompanyAddress" name="CompanyAddress" />
+                        <input type="text" class="form-control" id="txtCatalogVariantSKU" name="CatalogVariantSKU" maxlength="15" />
                     </div>
                 </div> 
                 <div class="card mb-2" id="div-presentation">
@@ -162,3 +162,4 @@
         </div>
     </div>
 </form>
+<partial name="Modal/AttributeSearch" />

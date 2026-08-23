@@ -22,7 +22,7 @@
             }));
             $('#scboStateID,#scboCatalogTypeID,#scboCategoryID,#scboManufacturerID,#scboBrandID').on('change', function () {
                 Catalog._Search.fnCatalogDataTable();
-            }); 
+            });
             if ($('#btnCatalogCreate').length > 0) {
                 $('#btnCatalogCreate').on('click', function () {
                     Catalog._Operation.fnCatalogCreateUpdate();
@@ -49,7 +49,13 @@
                 if (UnitMeasureID) {
                     Catalog._Search.fnPresentationComboBox(UnitMeasureID);
                 };
-            })
+            });
+            $('#btnAttributeSearchOpen').on('click', function () {
+                Catalog._Modal.fnAttributeSearchOpen();
+            });
+            $('#btnModalAttributeAccept').on('click', function () {
+                Catalog._Other.fnAttributeChecked();
+            });
         },
         _Clear: {
             fnCatalogGet: function () {
@@ -91,7 +97,7 @@
             },
             fnChoices: function () {
                 new Choices('#cboCategoryID', {
-                    noResultsText: 'No se encontraron registros'         
+                    noResultsText: 'No se encontraron registros'
                 });
                 new Choices('#cboManufacturerID', {
                     noResultsText: 'No se encontraron registros'
@@ -102,6 +108,54 @@
                 new Choices('#cboPharmaceuticalFormID', {
                     noResultsText: 'No se encontraron registros'
                 });
+                new Choices('#cboTaxAffectationTypeID', {
+                    noResultsText: 'No se encontraron registros'
+                });                
+            },
+            fnAttributeChecked: function () {
+                const attributes = [];
+                $('#tb-modal-attribute-list input:checkbox[name=chkAttributeValueID]:checked').each(function (index, element) {
+                    console.log(index)                 
+                    const attributeID = $(element).data('attributeid');
+                    let attribute = attributes.find(x => x.attributeID === attributeID);
+                    if (!attribute) {
+                        attribute = {
+                            attributeID: attributeID,
+                            attributeName: $(element).data('attributename'),
+                            attributeValues: []
+                        };
+                        attributes.push(attribute);
+                    };
+                    attribute.attributeValues.push({
+                        attributeValueID: $(element).data('attributevalueid'),
+                        attributeValueName: $(element).data('attributevaluename')
+                    });                                
+                });
+                if (attributes.length === 0) {
+                    Uti.Modal.Toastify(Uti.Message.Description.AtLeastOneItemMustBeSelected('un valor'), Uti.Message.Type.Warning);
+                    return;
+                };
+                const catalogName = $('input:text[name=CatalogName]').val().trim();
+                const catalogVariantName = attributes
+                    .map(item =>
+                        item.attributeName + '/' +
+                        item.attributeValues.map(subItem => subItem.attributeValueName).join('/')
+                ).join(' - ');
+                const attributeValueIDs = attributes.flatMap(item =>
+                    item.attributeValues.map(subItem => subItem.attributeValueID)
+                );
+                $('#txtCatalogVariantName').val(catalogVariantName.trim()).data("attributeValueIDs", attributeValueIDs);
+                $('#span-catalog-variant-name').text(catalogVariantName);
+                $('#txtCatalogVariantSKU').val(Catalog._Other.fnGetInitials(catalogName) + '-' + catalogVariantName.replace(/\s+/g, '').replace(/[\/-]/g, '-'));
+                Catalog._Modal.fnAttributeSearchClose();
+            },
+            fnGetInitials(text) {
+                return text
+                    .trim()
+                    .split(/\s+/)
+                    .map(word => word.charAt(0))
+                    .join('')
+                    .toUpperCase();
             }
         },
         _Validation: {
@@ -138,6 +192,14 @@
                     submitHandler: function (form) {
                     }
                 });
+            }
+        },
+        _Modal: {
+            fnAttributeSearchOpen: function () {
+                $('#modal-attribute-search').modal('show');                
+            },
+            fnAttributeSearchClose: function () {
+                $('#modal-attribute-search').modal('hide');
             }
         },
         _Search: {

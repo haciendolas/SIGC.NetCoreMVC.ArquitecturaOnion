@@ -338,8 +338,8 @@ CREATE TABLE Product.CatalogTax(
    CompanyID INT NOT NULL,
    CatalogID INT NOT NULL, 
    TaxID SMALLINT NOT NULL,--Biene de otra DB
-   CalculationTypeID TINYINT NOT NULL,--Biene de otra DB 1=Porcentaje ,2 = Monto por unidad    
-   TaxDirectionID TINYINT NOT NULL,  --1071 Impuesto para Venta ,1072 Impuesto para compra
+  --CalculationTypeID TINYINT NOT NULL,--Biene de otra DB 1=Porcentaje ,2 = Monto por unidad    
+  --TaxDirectionID TINYINT NOT NULL,  --1071 Impuesto para Venta ,1072 Impuesto para compra
    TaxAffectationTypeID TINYINT NOT NULL,  --Gravado=1,Exonerado=2,Inafecto=3,Gratuita=4
    RecordOriginID TINYINT NOT NULL,
    RecordStateID TINYINT NOT NULL,

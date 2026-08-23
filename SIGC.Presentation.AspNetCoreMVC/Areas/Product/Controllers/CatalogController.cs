@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.Catalog;
-using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.Category;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.ActiveIngredientService;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.AttributeService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.BrandService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogTypeService;
@@ -12,10 +12,10 @@ using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.PrescriptionTypeSer
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.PriceTypeService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.TherapeuticActionService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.UnitMeasureService;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.ConstantService;
 using SIGC.Presentation.AspNetCoreMVC.Controllers;
 using SIGC.Presentation.AspNetCoreMVC.Helpers;
 using SIGC.Presentation.AspNetCoreMVC.Models;
-using System.Threading.Tasks;
 
 namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
 {
@@ -33,6 +33,8 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
         private readonly ITherapeuticActionService TherapeuticActionService;
         private readonly IUnitMeasureService UnitMeasureService;
         private readonly IPriceTypeService PriceTypeService;
+        private readonly IAttributeService AttributeService;
+        private readonly IConstantService ConstantService;
 
         public CatalogController(ICategoryService CategoryService,
             IBrandService BrandService,
@@ -44,7 +46,9 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
             IPrescriptionTypeService PrescriptionTypeService,
             ITherapeuticActionService TherapeuticActionService,
             IUnitMeasureService UnitMeasureService,
-            IPriceTypeService PriceTypeService
+            IPriceTypeService PriceTypeService,
+            IAttributeService AttributeService,
+            IConstantService ConstantService
         )
         {
             this.CategoryService = CategoryService;
@@ -58,6 +62,8 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
             this.TherapeuticActionService = TherapeuticActionService;
             this.UnitMeasureService = UnitMeasureService;
             this.PriceTypeService = PriceTypeService;
+            this.AttributeService = AttributeService;
+            this.ConstantService = ConstantService;
         }
 
         public async Task<IActionResult> Index()
@@ -71,7 +77,11 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
             ViewBag.PrescriptionTypeList = (await PrescriptionTypeService.PrescriptionTypeList()).Data;
             ViewBag.TherapeuticActionList = (await TherapeuticActionService.TherapeuticActionList()).Data;
             ViewBag.UnitMeasureList = (await UnitMeasureService.UnitMeasureList()).Data;
-            ViewBag.PriceTypeList = (await PriceTypeService.PriceTypeList()).Data;         
+            ViewBag.PriceTypeList = (await PriceTypeService.PriceTypeList()).Data; 
+            ViewBag.AttributeList = (await AttributeService.AttributeValueList(true)).Data;
+            var ConstantList = (await ConstantService.ConstantList($"{ConstantsHelper.TableKeys.CurrencyType.All},{ConstantsHelper.TableKeys.TaxAffectationType.All}")).Data!;
+            ViewBag.CurrencyTypeList = ConstantList.Where(w => w.ConstantClass == ConstantsHelper.TableKeys.CurrencyType.All && w.ConstantID != 0).ToList();
+            ViewBag.TaxAffectationTypeList = ConstantList.Where(w => w.ConstantClass == ConstantsHelper.TableKeys.TaxAffectationType.All && w.ConstantID != 0).ToList();
             return View("CatalogIndex");
         }
 

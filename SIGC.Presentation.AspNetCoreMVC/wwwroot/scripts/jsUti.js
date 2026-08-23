@@ -269,7 +269,15 @@
                     bytes[i] = ascii;
                 }
                 return bytes;
-            }
+            },
+            Object: function (data) {
+                if (data === null) return null;
+                try {
+                    return JSON.parse(data);
+                } catch (e) {
+                    return data;
+                }
+            }            
         },
         Download: {
             /*
@@ -544,7 +552,11 @@
                 RequiredSeleccionarDetalleLinea: $('#RequiredSeleccionarDetalleLinea').text(),
                 ErrorException: $('#ErrorException').text(),
                 NoResultsFound: 'No se encontraron resultados',
-                Select: 'Seleccionar'
+                NoRecordsFound: 'No se encontraron registros',
+                Select: 'Seleccionar',
+                AtLeastOneItemMustBeSelected: function (item) {
+                    return `Debe seleccionar al menos ${item}.`;
+                }
             }
         },
         Image: {        
@@ -698,6 +710,25 @@
                         fn(...args)
                     }, delay);
                 }
+            }
+        },
+        LocalStorage: {
+            SetItem: function (key, data) {
+                localStorage.setItem(key, JSON.stringify(data));
+            },
+            GetItem(key) {
+                const item = localStorage.getItem(key);
+                if (item === null) return null;
+                try {
+                    return JSON.parse(item);
+                } catch (e) {
+                    return item;
+                }
+            },
+            removeItem: function (key) {                 
+                const item = localStorage.getItem(key);
+                if (item && item != null)
+                    localStorage.removeItem(key);
             }
         },
         Screen: {

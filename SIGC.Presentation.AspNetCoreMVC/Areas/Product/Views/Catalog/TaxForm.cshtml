@@ -27,44 +27,14 @@
                     }
                 </select>
             </div>
-            <label for="txtCompanyMobile" class="col-sm-2 col-form-label">Tipo Calculo<i class="ri-asterisk align-middle text-danger"></i></label>
-            <div class="col-sm-2">
-                <select class="form-select" id="cboTaxpayerTypeID" name="TaxpayerTypeID">
-                    @if (@ViewBag.TaxpayerTypeList != null)
-                    {
-                        <option value="">Seleccionar</option>
-                        var TaxpayerTypeList = ViewBag.TaxpayerTypeList as List<ConstantListResponseModel>;
-                        @foreach (var Item in TaxpayerTypeList!)
-                        {
-                            <option value="@Item.ConstantID">@Item.ConstantName</option>
-                        }
-                    }
-                </select>
-            </div>
-            <label for="txtCompanyPhone" class="col-sm-2 col-form-label">Tipo Dirección<i class="ri-asterisk align-middle text-danger"></i></label>
-            <div class="col-sm-2">
-                <select class="form-select" id="cboTaxpayerTypeID" name="TaxpayerTypeID">
-                    @if (@ViewBag.TaxpayerTypeList != null)
-                    {
-                        <option value="">Seleccionar</option>
-                        var TaxpayerTypeList = ViewBag.TaxpayerTypeList as List<ConstantListResponseModel>;
-                        @foreach (var Item in TaxpayerTypeList!)
-                        {
-                            <option value="@Item.ConstantID">@Item.ConstantName</option>
-                        }
-                    }
-                </select>
-            </div>
-        </div>
-        <div class="row pb-2">
-            <label for="txtCompanyMobile" class="col-sm-1 col-form-label">Afectación<i class="ri-asterisk align-middle text-danger"></i></label>
+            <label for="cboTaxAffectationTypeID" class="col-sm-1 col-form-label">Afectación<i class="ri-asterisk align-middle text-danger"></i></label>
             <div class="col-sm-3">
-                <select class="form-select" id="cboTaxpayerTypeID" name="TaxpayerTypeID">
-                    @if (@ViewBag.TaxpayerTypeList != null)
+                <select class="form-select" id="cboTaxAffectationTypeID" name="TaxAffectationTypeID">
+                    @if (@ViewBag.TaxAffectationTypeList != null)
                     {
                         <option value="">Seleccionar</option>
-                        var TaxpayerTypeList = ViewBag.TaxpayerTypeList as List<ConstantListResponseModel>;
-                        @foreach (var Item in TaxpayerTypeList!)
+                        var TaxAffectationTypeList = ViewBag.TaxAffectationTypeList as List<ConstantListResponseModel>;
+                        @foreach (var Item in TaxAffectationTypeList!)
                         {
                             <option value="@Item.ConstantID">@Item.ConstantName</option>
                         }
@@ -79,6 +49,7 @@
                 </div>
             </div>
         </div>
+ 
         <div class="row2">
             <div class="col-sm-12">
                 <div class="text-end">

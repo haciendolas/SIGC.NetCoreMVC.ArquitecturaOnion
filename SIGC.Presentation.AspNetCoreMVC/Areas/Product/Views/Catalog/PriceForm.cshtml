@@ -44,14 +44,14 @@
             </div>
         </div>
         <div class="row pb-2">
-            <label for="txtCompanyPhone" class="col-sm-1 col-form-label">Moneda<i class="ri-asterisk align-middle text-danger"></i></label>
+            <label for="cboCurrencyTypeID" class="col-sm-1 col-form-label">Moneda<i class="ri-asterisk align-middle text-danger"></i></label>
             <div class="col-sm-2">
-                <select class="form-select" id="cboTaxpayerTypeID" name="TaxpayerTypeID">
-                    @if (@ViewBag.TaxpayerTypeList != null)
+                <select class="form-select" id="cboCurrencyTypeID" name="CurrencyTypeID">
+                    @if (@ViewBag.CurrencyTypeList != null)
                     {
                         <option value="">Seleccionar</option>
-                        var TaxpayerTypeList = ViewBag.TaxpayerTypeList as List<ConstantListResponseModel>;
-                        @foreach (var Item in TaxpayerTypeList!)
+                        var CurrencyTypeList = ViewBag.CurrencyTypeList as List<ConstantListResponseModel>;
+                        @foreach (var Item in CurrencyTypeList!)
                         {
                             <option value="@Item.ConstantID">@Item.ConstantName</option>
                         }

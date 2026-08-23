@@ -1,0 +1,65 @@
+﻿@using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.Attribute
+@{
+    Layout = null;
+}
+<div class="modal fade" id="modal-attribute-search" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-2">
+                <h5 class="modal-title" id="modal-title">LISTADO DE VARIANTES</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+            </div>
+            <div class="modal-body"> 
+                <div class="table-responsive table-card pt-3">
+                    <table class="table align-middle">
+                        <thead class="text-muted table-light">
+                            <tr class="text-uppercase">
+                                <th style="width:30%">Nombre Variante</th>
+                                <th style="width:70%" class="text-center">Valor Variante</th>                                 
+                            </tr>
+                        </thead>
+                        <tbody id="tb-modal-attribute-list">
+                            @if (@ViewBag.AttributeList != null)
+                            {
+                                var AttributeList = ViewBag.AttributeList as List<AttributeListResponseModel>;
+                                @foreach (var Item in AttributeList!)
+                                {
+                                    <tr>
+                                        <td>@Item.AttributeName</td>
+                                        <td>
+                                            @foreach (var SubItem in @Item.AttributeValues){
+
+                                                <div class="form-check form-check-secondary form-check-inline">
+                                                    <input type="checkbox" id="chkAttributeValueID_@SubItem.AttributeValueID"
+                                                     name="chkAttributeValueID" 
+                                                     data-attributevalueid='@SubItem.AttributeValueID'
+                                                     data-attributevaluename='@SubItem.AttributeValueName'
+                                                     data-attributeid='@Item.AttributeID'
+                                                     data-attributename='@Item.AttributeName'
+                                                     value="@SubItem.AttributeValueID" 
+                                                     class="form-check-input"
+                                                     style="width:20px;height:20px">
+                                                    <label class="form-check-label p-1" for="chkAttributeValueID_@SubItem.AttributeValueID">@SubItem.AttributeValueName</label>
+                                                </div> 
+                                            } 
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr><td colspan="2">No se encontraron registros</td></tr>
+                            }
+                        </tbody>                        
+                    </table>                 
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="hstack gap-2 justify-content-end">
+                    <button type="button" class="btn btn-light" id="btnModalAttributeClose" data-bs-dismiss="modal"><i class="ri-close-fill align-bottom"></i> Cerrar</button>
+                    <button type="button" class="btn btn-secondary" id="btnModalAttributeAccept"><i class="ri-check-fill align-bottom"></i> <span>Aceptar</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

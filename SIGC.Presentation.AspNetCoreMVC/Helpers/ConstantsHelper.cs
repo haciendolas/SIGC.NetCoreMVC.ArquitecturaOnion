@@ -40,5 +40,23 @@
             public const String UbigeoCodePeru = "9200";
             public const Int32 UbigeoIDPeru = 38;
         }
-    }
+        public static class TableKeys
+        {
+            public static class CurrencyType
+            {
+                public const int All = 1040;
+                public const short SoleId = 1;
+                public const short DolarId = 2;
+                public const string DolarName = "Dolares";
+                public const string DolarAbbreviation = "USD";
+                public const short EuroId = 2;
+            }
+
+            public static class TaxAffectationType
+            {
+                public const int All = 1065;
+                public const short GravadoName = 1;          
+            }
+        }
+   }
 }

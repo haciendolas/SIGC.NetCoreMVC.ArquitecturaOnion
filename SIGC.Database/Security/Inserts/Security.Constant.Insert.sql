@@ -74,3 +74,38 @@ GO
 		 (1034	,4,'','CENTRO MEDICO',1),
 		 (1034	,99,'','VARIOS',1) 
 GO
+GO
+	  ---- TABLA 1040 : TIPO DE MONEDA -------
+  INSERT INTO [Security].Constant
+        (ConstantClass,ConstantID,ConstantAbbreviation,ConstantName,StateID)
+  VALUES (1040	,0	,'T.T.M','TIPO DE MONEDA',1),
+         (1040	,1,'PEN','Soles',1),
+		 (1040	,2,'USD','Dolares',1),	  
+		 (1040	,3,'','Euros',0)
+ 
+ GO
+ 	   --- TABLA 1065 : SUNAT TIPO AFECTACION ------
+  INSERT INTO [Security].Constant		 
+        (ConstantClass,ConstantID,ConstantAbbreviation,ConstantName,StateID)
+  VALUES (1065	,0	,'00','SUNAT:TIPO AFECTACION IGV VENTA',1),
+         (1065	,10,'1','10:Gravado - Operación Onerosa',1),
+		 (1065	,11,'4','11:[Gratuita] Gravado – Retiro por premio',1),		  
+		 (1065	,12,'4','12:[Gratuita] Gravado – Retiro por donación',1)	,
+		 (1065	,13,'4','13:[Gratuita] Gravado – Retiro ',1),
+		 (1065	,14,'4','14:[Gratuita] Gravado – Retiro por publicidad',1),
+		 (1065	,15,'4','15:[Gratuita] Gravado – Bonificaciones',1),
+		 (1065	,16,'4','16:[Gratuita] Gravado – Retiro por entrega a trabajadores',1),
+         (1065	,17,'5','17:Gravado – IVAP',1),
+		 (1065	,20,'2','20:Exonerado - Operación Onerosa',1),
+         (1065	,21,'4','21:[Gratuita] Exonerado – Transferencia Gratuita',1),
+		 (1065	,30,'3','30:Inafecto - Operación Onerosa',1),
+		 (1065	,31,'4','31:[Gratuita] Inafecto – Retiro por Bonificación',1),
+		 (1065	,32,'4','32:[Gratuita] Inafecto – Retiro',1),
+		 (1065	,33,'4','33:[Gratuita] Inafecto – Retiro por Muestras Médicas',1),
+		 (1065	,34,'4','34:[Gratuita] Inafecto - Retiro por Convenio Colectivo',1),
+		 (1065	,35,'4','35:[Gratuita] Inafecto – Retiro por premio',1),
+		 (1065	,36,'4','36:[Gratuita] Inafecto - Retiro por publicidad',1),
+		 (1065	,40,'3','40:Exportación',1),
+		 (1065	,41,'4','101:[Gratuita] Gravado - IVAP',1)
+
+GO

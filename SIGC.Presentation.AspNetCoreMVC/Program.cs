@@ -2,6 +2,7 @@ using Microsoft.Extensions.FileProviders;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Organization.Services.EstablishmentService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Organization.Services.WarehouseService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.ActiveIngredientService;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.AttributeService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.BrandService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogTypeService;
@@ -46,18 +47,15 @@ builder.Services.AddSession(options =>
 builder.Services.Configure<ApiEndpoints>(builder.Configuration.GetSection("ApiEndpoints"));
 var endpoints = builder.Configuration.GetSection("ApiEndpoints").Get<ApiEndpoints>();
 
-
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient(ConstantsHelper.HttpClientNames.ApiCommerce360, client => client.BaseAddress = new Uri(endpoints!.Commerce360))
                 .AddHttpMessageHandler<AccessTokenHandler>();
-
 builder.Services.AddHttpClient(ConstantsHelper.HttpClientNames.ApiAuth360, client => client.BaseAddress = new Uri(endpoints!.Commerce360));
 builder.Services.AddScoped<AccessTokenHandler>();
 builder.Services.AddScoped<IApiService,ApiService>();
 builder.Services.AddScoped<IApiServiceFactory,ApiServiceFactory>();
 builder.Services.AddScoped<IAuthService,AuthService>();
 builder.Services.AddScoped<IRolePermissionService, RolePermissionService>();
-
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IPageService, PageService>();
 builder.Services.AddScoped<IPageCompanyService, PageCompanyService>();
@@ -81,6 +79,7 @@ builder.Services.AddScoped<ITherapeuticActionService, TherapeuticActionService>(
 builder.Services.AddScoped<IUnitMeasureService, UnitMeasureService>();
 builder.Services.AddScoped<IPriceTypeService, PriceTypeService>();
 builder.Services.AddScoped<IPresentationService, PresentationService>();
+builder.Services.AddScoped<IAttributeService, AttributeService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
