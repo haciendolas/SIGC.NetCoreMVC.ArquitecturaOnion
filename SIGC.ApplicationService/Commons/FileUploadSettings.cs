@@ -7,5 +7,6 @@
         public string UserPhotoLocation { get; set; } = null!;
         public string CompanyLogoLocation { get; set; } = null!;
         public string EstablishmentLogoLocation { get; set; } = null!;
+        public string CatalogImageLocation { get; set; } = null!;
     }
 }

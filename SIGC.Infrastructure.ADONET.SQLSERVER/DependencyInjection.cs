@@ -165,6 +165,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
             services.AddScoped<ICatalogTypeListRepository, CatalogTypeListRepository>();
 
             services.AddScoped<ICatalogPaginationRepository, CatalogPaginationRepository>();
+            services.AddScoped<ICatalogCreateRepository, CatalogCreateRepository>();
 
             services.AddScoped<IPrescriptionTypeListRepository, PrescriptionTypeListRepository>();
 

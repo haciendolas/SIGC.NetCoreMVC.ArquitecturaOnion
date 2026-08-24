@@ -47,5 +47,10 @@
             public const string OK = "OK";
             public const string NAME_EXISTS = "NAME_EXISTS";
         }
+        public static class Catalog
+        {
+            public const string OK = "OK";
+            public const string NAME_EXISTS = "NAME_EXISTS";
+        }
     }
 }
