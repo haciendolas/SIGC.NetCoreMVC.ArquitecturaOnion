@@ -7,6 +7,7 @@ using SIGC.ApplicationService.Features.WarehouseFeatures.Queries.WarehouseGet;
 using SIGC.ApplicationService.Features.WarehouseFeatures.Queries.WarehouseList;
 using SIGC.ApplicationService.Features.WarehouseFeatures.Queries.WarehousePagination;
 using SIGC.DomainModel.Dtos.Establishment;
+using SIGC.DomainModel.Dtos.Warehouse;
 using SIGC.Infrastructure.CrossCutting.Wrappers;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -52,7 +53,7 @@ namespace SIGC.Presentation.WebApi.Controllers
 
        [HttpGet("WarehouseList/{EstablishmentID}")]
        [SwaggerOperation(Summary = "Obtener una lista de almacenes por establecimiento id", Description = "Permite obtener una lista de almacenes por establecimiento id.")]
-       [ProducesResponseType(typeof(MsgResponse<EstablishmentListResponseDto>), StatusCodes.Status200OK)]
+       [ProducesResponseType(typeof(MsgResponse<WarehouseListResponseDto>), StatusCodes.Status200OK)]
        [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
        public async Task<IActionResult> WarehouseList([FromRoute] int EstablishmentID, CancellationToken CancellationToken)
        {

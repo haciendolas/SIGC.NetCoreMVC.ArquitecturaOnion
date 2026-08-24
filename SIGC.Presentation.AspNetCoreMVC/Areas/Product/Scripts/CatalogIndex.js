@@ -12,6 +12,7 @@
             Catalog._Search.fnCatalogDataTable();
             Catalog._Other.fnChoices();
             Catalog._Search.fnCatalogPresentationComboBox();
+            Catalog._Search.fnWarehouseComboBox();
             $('#stxtCatalogName,#txtCatalogName').keypress(function (event) {
                 return Uti.KeyBoard.LettersAndNumbers(event);
             });
@@ -56,6 +57,9 @@
             });
             $('#btnModalAttributeAccept').on('click', function () {
                 Catalog._Other.fnAttributeChecked();
+            });
+            $('#cboGlobalEstablishmentID').on('change', function () {
+                Catalog._Search.fnWarehouseComboBox();
             });
         },
         _Clear: {
@@ -358,8 +362,7 @@
                         let options = '';
                         if (rowData && rowData.length > 0) {
                             options = `<option value="">${Uti.Message.Description.Select}</option>`;
-                            rowData.forEach(row => {
-                                debugger
+                            rowData.forEach(row => {                             
                                 options += `<optgroup label="${row.catalogVariantName}">`;
                                 row.catalogPresentations.forEach(subRow => {
                                     options += `<option value="${subRow.catalogPresentationID}">${subRow.catalogPresentationName}</option>`;
@@ -370,17 +373,36 @@
                         else {
                             options = `<option value="">${Uti.Message.Description.NoRecordsFound}</option>`;
                         }
-                        $('#cboCatalogPresentationID').append(options);
-                        /*
-                        <select>
-    <optgroup label="Color">
-        <option value="1">Rojo</option>
-        <option value="2">Azul</option>
-        <option value="3">Negro</option>
-    </optgroup>
- 
-</select>
-                        */
+                        $('#cboCatalogPresentationID').append(options); 
+                    };
+                });
+            },
+            fnWarehouseComboBox: function () {
+                const EstablishmentID = $('#cboGlobalEstablishmentID').val() === '' ? 0 : $('#cboGlobalEstablishmentID').val();
+                const options = {
+                    url: Uti.Url.Base + '/Organization/Warehouse/WarehouseList/' + EstablishmentID,
+                    type: Uti.Variable.FetchAjax.Type.Get,
+                    preload:false
+                };
+                Uti.Ajax.Custom(options, function (response) {
+                    Uti.Modal.Message(response.type, response.message, response.function);
+                    if (response.type === Uti.Message.Type.Session) {
+                        Uti.Modal.Process();
+                    }
+                    if (response.type === Uti.Message.Type.Query) {
+                        const { data: rowData } = response;
+                        $('#cboWarehouseID').empty();
+                        let options = '';
+                        if (rowData && rowData.length > 0) {
+                            options = `<option value="">${Uti.Message.Description.Select}</option>`;
+                            rowData.forEach(row => {
+                                options += `<option value="${row.warehouseID}">${row.warehouseCode}-${row.warehouseName}</option>`;
+                            });
+                        }
+                        else {
+                            options = `<option value="">${Uti.Message.Description.NoRecordsFound}</option>`;
+                        }
+                        $('#cboWarehouseID').append(options);
                     };
                 });
             }

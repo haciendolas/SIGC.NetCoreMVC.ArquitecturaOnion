@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SIGC.Presentation.AspNetCoreMVC.Areas.Organization.Models.Establishment;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Organization.Models.Warehouse;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Organization.Services.WarehouseService;
 using SIGC.Presentation.AspNetCoreMVC.Controllers;
@@ -45,6 +44,12 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Organization.Controllers
         public async Task<IActionResult> WarehouseGet([FromRoute(Name = "id")] int WarehouseID)
         {
             return Json(await WarehouseService.WarehouseGet(WarehouseID));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> WarehouseList([FromRoute(Name = "id")] int EstablishmentID)
+        {
+            return Json(await WarehouseService.WarehouseList(EstablishmentID));
         }
 
         [HttpPost]

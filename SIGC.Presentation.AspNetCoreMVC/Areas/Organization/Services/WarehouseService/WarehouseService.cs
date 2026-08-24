@@ -30,6 +30,10 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Organization.Services.WarehouseS
         {
             return await ApiService.GetAsync<ApiResponse<WarehouseGetResponseModel?>>($"{Controller}/WarehouseGet/{WarehouseID}");
         }
+        public async Task<ApiResponse<List<WarehouseListResponseModel>>> WarehouseList(int EstablishmentID)
+        {
+            return await ApiService.GetAsync<ApiResponse<List<WarehouseListResponseModel>>>($"{Controller}/WarehouseList/{EstablishmentID}");
+        }
         public async Task<ApiResponse<PaginationResultModel<WarehousePaginationResponseModel>>> WarehousePagination(WarehousePaginationRequestModel Request)
         {
             return await ApiService.PostAsync<string, ApiResponse<PaginationResultModel<WarehousePaginationResponseModel>>>($"{Controller}/WarehousePagination", null, Request);

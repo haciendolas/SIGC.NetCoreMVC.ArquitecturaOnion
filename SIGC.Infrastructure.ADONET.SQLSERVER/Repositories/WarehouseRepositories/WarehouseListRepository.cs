@@ -27,7 +27,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.WarehouseRepositorie
             var Connection = await TransactionAccessor.GetOrOpenConnectionAsync(ConnectionString, CancellationToken);
             using (SqlCommand Command = new SqlCommand())
             {
-                Command.CommandText = "Product.uspWarehouseList";
+                Command.CommandText = "Organization.uspWarehouseList";
                 Command.Parameters.AddWithValue("@CompanyID", CompanyID);
                 Command.Parameters.AddWithValue("@EstablishmentID", EstablishmentID);
                 Command.CommandType = CommandType.StoredProcedure;           
