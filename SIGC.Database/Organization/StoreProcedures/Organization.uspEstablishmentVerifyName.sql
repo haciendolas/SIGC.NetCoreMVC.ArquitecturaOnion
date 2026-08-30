@@ -26,7 +26,7 @@ AS
 BEGIN   
   SET NOCOUNT ON;
     SET @RetMsg='OK'
-	IF EXISTS(SELECT E.EstablishmentID FROM Organization.Establishment E WITH(NOLOCK) WHERE E.EstablishmentName=@EstablishmentName AND E.CompanyID=@CompanyID
+	IF EXISTS(SELECT E.EstablishmentID FROM Organization.Establishment E WHERE E.EstablishmentName=@EstablishmentName AND E.CompanyID=@CompanyID
 	     AND E.EstablishmentID<>@EstablishmentID AND E.RecordStateID<>2
 	)
 	BEGIN	  

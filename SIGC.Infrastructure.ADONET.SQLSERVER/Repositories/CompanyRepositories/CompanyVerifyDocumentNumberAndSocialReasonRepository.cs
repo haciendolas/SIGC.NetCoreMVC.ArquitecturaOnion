@@ -24,7 +24,8 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CompanyRepositories
         public async Task<string> VerifyDocumentNumberAndSocialAsync(Company Model, CancellationToken CancellationToken = default)
         {
             string RetMsg = string.Empty;
-            var Connection = await TransactionAccessor.GetOrOpenConnectionAsync(ConnectionString, CancellationToken); 
+            var Connection = await TransactionAccessor.GetOrOpenConnectionAsync(ConnectionString, CancellationToken);
+            var Transaction = TransactionAccessor.CurrentTransaction;
             using (SqlCommand Command = new SqlCommand()){
                     Command.CommandText = "[Security].uspCompanyVerifyDocumentNumberAndSocialReason";
                     Command.CommandType = CommandType.StoredProcedure;
@@ -34,6 +35,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CompanyRepositories
                     Command.Parameters.AddWithValue("@CompanyDocumentNumber", Model.CompanyDocumentNumber);
                     Command.Parameters.AddWithValue("@CompanySocialReason", Model.CompanySocialReason);
                     Command.Connection = Connection;
+                    Command.Transaction = Transaction;
                     await Command.ExecuteNonQueryAsync(CancellationToken);
                     RetMsg = Command.Parameters["@RetMsg"].Value.ToString()!;
             }          

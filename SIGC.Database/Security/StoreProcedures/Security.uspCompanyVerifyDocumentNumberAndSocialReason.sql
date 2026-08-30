@@ -27,7 +27,7 @@ BEGIN
    SET NOCOUNT ON;
     SET @RetMsg='OK'
 
-	IF EXISTS(SELECT C.CompanyID FROM [Security].Company C WITH(NOLOCK) WHERE C.CompanyDocumentNumber=@CompanyDocumentNumber
+	IF EXISTS(SELECT C.CompanyID FROM [Security].Company C WHERE C.CompanyDocumentNumber=@CompanyDocumentNumber
 	      AND C.CompanyID<>@CompanyID
     )
 	BEGIN	  
@@ -35,7 +35,7 @@ BEGIN
 	  RETURN 
 	END
 
-    IF EXISTS(SELECT C.CompanyID FROM [Security].Company C WITH(NOLOCK) WHERE C.CompanySocialReason=@CompanySocialReason
+    IF EXISTS(SELECT C.CompanyID FROM [Security].Company C WHERE C.CompanySocialReason=@CompanySocialReason
 	    AND C.CompanyID<>@CompanyID
     )
 	BEGIN	  

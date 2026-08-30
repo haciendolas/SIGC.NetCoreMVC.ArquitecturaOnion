@@ -24,14 +24,14 @@ AS
 BEGIN   
   SET NOCOUNT ON;
     SET @RetMsg='OK'
-	IF EXISTS(SELECT UserID FROM [Security].[User] U WITH(NOLOCK) WHERE U.UserName=@UserName AND U.UserID<>@UserID)
+	IF EXISTS(SELECT UserID FROM [Security].[User] U WHERE U.UserName=@UserName AND U.UserID<>@UserID)
 	BEGIN	  
 	  SET @RetMsg = 'USER_EXISTS'
 	END
 
 	IF(@UserMail IS NOT NULL OR @UserMail<>'')
 	  BEGIN
-	    IF EXISTS(SELECT U.UserID FROM [Security].[User] U WITH(NOLOCK) WHERE U.UserMail=@UserMail AND U.UserID<>@UserID)
+	    IF EXISTS(SELECT U.UserID FROM [Security].[User] U WHERE U.UserMail=@UserMail AND U.UserID<>@UserID)
 		BEGIN	
 		  IF(@RetMsg = 'USER_EXISTS')	    
 			SET @RetMsg ='USER_AND_MAIL_EXISTS'

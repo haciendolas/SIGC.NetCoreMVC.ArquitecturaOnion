@@ -24,7 +24,7 @@ AS
 BEGIN   
   SET NOCOUNT ON;
     SET @RetMsg='OK'
-	IF EXISTS(SELECT C.CategoryID FROM Product.Category C WITH(NOLOCK) WHERE C.CategoryName=@CategoryName AND C.CompanyID=@CompanyID
+	IF EXISTS(SELECT C.CategoryID FROM Product.Category C WHERE C.CategoryName=@CategoryName AND C.CompanyID=@CompanyID
 	     AND C.CategoryID<>@CategoryID AND C.RecordStateID<>2
 	)
 	BEGIN	  

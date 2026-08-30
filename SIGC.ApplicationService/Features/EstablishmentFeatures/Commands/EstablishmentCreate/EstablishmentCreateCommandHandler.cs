@@ -54,8 +54,8 @@ namespace SIGC.ApplicationService.Features.EstablishmentFeatures.Commands.Establ
                         CurrentSessionService.UserFullName
                     );
 
-                var Validate = await EstablishmentCreateRepository.CreateAsync(Model, CancellationToken);
-                if (Validate == VerifyRegistryConst.Establishment.OK)
+                var Verify = await EstablishmentCreateRepository.CreateAsync(Model, CancellationToken);
+                if (Verify == VerifyRegistryConst.Establishment.OK)
                 {                    
                     if (Model.EstablishmentID > 0)
                     {

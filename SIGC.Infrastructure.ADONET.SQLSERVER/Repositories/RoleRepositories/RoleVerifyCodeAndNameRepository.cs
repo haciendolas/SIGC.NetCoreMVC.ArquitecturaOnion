@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using SIGC.DomainModel.Models;
 using SIGC.DomainService.IRepositories.IRoleRepositories;
+using SIGC.DomainService.Transactions;
 using SIGC.Infrastructure.ADONET.SQLSERVER.AppDBContext;
 using System.Data;
 
@@ -10,19 +11,19 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RoleRepositories
     internal class RoleVerifyCodeAndNameRepository : IRoleVerifyCodeAndNameRepository
     {
         private readonly string ConnectionString;
+        private readonly ITransactionAccessor TransactionAccessor;
         public RoleVerifyCodeAndNameRepository(IOptions<AppDbContext> Options)
         {
             ConnectionString = Options.Value.ConnectionDBCommerce360;
+            this.TransactionAccessor = TransactionAccessor;
         }
 
         public async Task<string> VerifyCodeAndNameAsync(Role Model, CancellationToken CancellationToken = default)
         {
             string RetMsg = string.Empty;
-            using (SqlConnection Connection = new SqlConnection(ConnectionString))
-            {
-                await Connection.OpenAsync(CancellationToken);
-                using (SqlCommand Command = new SqlCommand())
-                {
+            var Connection = await TransactionAccessor.GetOrOpenConnectionAsync(ConnectionString, CancellationToken);
+            var Transaction = TransactionAccessor.CurrentTransaction;
+            using (SqlCommand Command = new SqlCommand()){
                     Command.CommandText = "Security.uspRoleVerifyCodeAndName";
                     Command.CommandType = CommandType.StoredProcedure;
                     Command.Parameters.Add("@RetMsg", SqlDbType.VarChar,11);
@@ -30,12 +31,12 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RoleRepositories
                     Command.Parameters.AddWithValue("@RoleID", Model.RoleID);
                     Command.Parameters.AddWithValue("@CompanyID", Model.CompanyID);
                     Command.Parameters.AddWithValue("@RoleCode", Model.RoleCode);
-                    Command.Parameters.AddWithValue("@RoleName", Model.RoleName); 
+                    Command.Parameters.AddWithValue("@RoleName", Model.RoleName);
                     Command.Connection = Connection;
+                    Command.Transaction = Transaction;
                     await Command.ExecuteNonQueryAsync(CancellationToken);
                     RetMsg =Command.Parameters["@RetMsg"].Value.ToString()!;
-                }
-            }
+            }           
             return RetMsg;
         }
     }

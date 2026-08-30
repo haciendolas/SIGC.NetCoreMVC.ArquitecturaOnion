@@ -4,6 +4,7 @@ using SIGC.DomainModel.Dtos;
 using SIGC.DomainModel.Models;
 using SIGC.DomainService.IRepositories.ICompanyRepositories;
 using SIGC.DomainService.IServices;
+using SIGC.DomainService.Transactions;
 using SIGC.Infrastructure.CrossCutting.Constants;
 using SIGC.Infrastructure.CrossCutting.Wrappers;
 
@@ -15,6 +16,7 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Commands.CompanyUpdat
         private readonly IMessageService MessageService;
         private readonly ICompanyUpdateRepository CompanyUpdateRepository;
         private readonly ICompanyVerifyDocumentNumberAndSocialReasonRepository CompanyVerifyDocumentNumberAndSocialReasonRepository;
+        private readonly IUnitOfWork UnitOfWork;
         private readonly IFileStorageService FileStorageService;
         private readonly FileUploadSettings FileUploadSettings;
 
@@ -24,6 +26,7 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Commands.CompanyUpdat
             IMessageService MessageService,
             ICompanyUpdateRepository CompanyUpdateRepository,
             ICompanyVerifyDocumentNumberAndSocialReasonRepository CompanyVerifyDocumentNumberAndSocialReasonRepository,
+            IUnitOfWork UnitOfWork,
             IFileStorageService FileStorageService
             )
         {
@@ -32,6 +35,7 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Commands.CompanyUpdat
             this.MessageService = MessageService;
             this.CompanyUpdateRepository = CompanyUpdateRepository;
             this.CompanyVerifyDocumentNumberAndSocialReasonRepository = CompanyVerifyDocumentNumberAndSocialReasonRepository;
+            this.UnitOfWork = UnitOfWork;
             this.FileStorageService = FileStorageService;
         }
 
@@ -40,7 +44,7 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Commands.CompanyUpdat
             var MsgResponse = new MsgResponse<object?>();
             FileEntryDto FileEntry = new FileEntryDto("", "");
             try
-            {
+            { 
                 var Model = Company.Update(
                         Request.CompanyID,
                         Request.CompanyTradeName,
@@ -59,6 +63,8 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Commands.CompanyUpdat
                         DateTime.Now,
                        CurrentSessionService.UserID
                     );
+
+                await UnitOfWork.BeginTransactionAsync(CancellationToken);
 
                 var Verify = await CompanyVerifyDocumentNumberAndSocialReasonRepository.VerifyDocumentNumberAndSocialAsync(Model, CancellationToken);
                 if (Verify == VerifyRegistryConst.Company.OK)
@@ -87,17 +93,24 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Commands.CompanyUpdat
                              await FileStorageService.DeleteAsync(FileEntry, CancellationToken);                            
                         }
 
+                        await UnitOfWork.CommitTransactionAsync(CancellationToken);
+
                         MsgResponse.Type = MessageTypeConst.SUCCESS;
-                        MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.SATISFACTORY_UPDATE);                       
+                        MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.SATISFACTORY_UPDATE);
+                                             
                     }
                     else
                     {
+                        await UnitOfWork.RollbackTransactionAsync(CancellationToken);
+
                         MsgResponse.Type = MessageTypeConst.ERROR;
                         MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.ERROR_UPDATE);
                     }
                 }
-                else
-                {
+                else{
+                    
+                    await UnitOfWork.RollbackTransactionAsync(CancellationToken);
+
                     MsgResponse.Type = MessageTypeConst.WARNING;
                     MsgResponse.Message = MessageService.GetMessageResult(Verify == VerifyRegistryConst.Company.DOCUMENT_NUMBER_EXISTS ? MessageDescriptionConst.EXIST_COMPANY_DOCUMENTNUMBER : MessageDescriptionConst.EXIST_COMPANY_SOCIALREASON);
                 }
@@ -109,6 +122,8 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Commands.CompanyUpdat
             }
             catch (Exception ex)
             {
+                await UnitOfWork.RollbackTransactionAsync(CancellationToken);
+
                 if (Request.File is not null && !string.IsNullOrWhiteSpace(FileEntry.FileName)) await FileStorageService.DeleteAsync(FileEntry, CancellationToken);
                 MsgResponse.Type = MessageTypeConst.ERROR;
                 MsgResponse.Message = $"{MessageService.GetMessageResult(MessageDescriptionConst.ERROR_OPERATION)}:{ex.Message}";

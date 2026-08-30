@@ -16,7 +16,7 @@
    Identifcador:		   Date Update  |   User Update   |  Description Update  
      @1
 ==============================================================================*/ 
- CREATE PROCEDURE Organization.uspWarehouseVerifyName
+ ALTER PROCEDURE Organization.uspWarehouseVerifyName
    @CompanyID INT,
    @WarehouseID INT,
    @EstablishmentID INT,   
@@ -26,7 +26,7 @@ AS
 BEGIN   
   SET NOCOUNT ON;
     SET @RetMsg='OK'
-	IF EXISTS(SELECT W.WarehouseID FROM Organization.Warehouse W WITH(NOLOCK) WHERE W.WarehouseName=@WarehouseName
+	IF EXISTS(SELECT W.WarehouseID FROM Organization.Warehouse W WHERE W.WarehouseName=@WarehouseName
 	     AND W.CompanyID=@CompanyID
 	     AND W.EstablishmentID = @EstablishmentID 
 		 AND W.WarehouseID<>@WarehouseID

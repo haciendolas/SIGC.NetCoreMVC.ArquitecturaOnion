@@ -16,13 +16,14 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Transactions
             _transactionAccessor = transactionAccessor ?? throw new ArgumentNullException(nameof(transactionAccessor));
         }
 
-        public async Task BeginTransactionAsync(CancellationToken cancellationToken = default)
+        public async Task BeginTransactionAsync(CancellationToken cancellationToken = default, IsolationLevel isolationLevel = IsolationLevel.Serializable)
         {
             // Obtiene o abre la conexión
             var connection = await _transactionAccessor.GetOrOpenConnectionAsync(_connectionString, cancellationToken);
 
             // Inicia la transacción
-            var transaction = connection.BeginTransaction(IsolationLevel.ReadCommitted);
+            var transaction = connection.BeginTransaction(isolationLevel);
+            //var transaction = connection.BeginTransaction(IsolationLevel.ReadCommitted);
             _transactionAccessor.SetTransaction(transaction);
         }
 

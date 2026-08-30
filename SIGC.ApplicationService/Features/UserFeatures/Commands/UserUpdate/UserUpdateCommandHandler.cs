@@ -56,8 +56,8 @@ namespace SIGC.ApplicationService.Features.UserFeatures.Commands.UserUpdate
         {
             var MsgResponse = new MsgResponse<object?>();
             FileEntryDto FileEntry = new FileEntryDto("", "");
-            try
-            {
+            try{
+                
                 var Model = User.Update( Request.UserID,
                                         Request.UserFirstName,
                                          Request.UserLastName,
@@ -69,19 +69,21 @@ namespace SIGC.ApplicationService.Features.UserFeatures.Commands.UserUpdate
                                          DateTime.Now,
                                          CurrentSessionService.UserID
                                      );
+
+                await UnitOfWork.BeginTransactionAsync(CancellationToken);
+
                 var Verify = await UserVerifyNameAndMailRepository.VerifyNameAndMailAsync(Model, CancellationToken);
                 if (Verify == VerifyRegistryConst.User.OK)
                 {
-                    await UnitOfWork.BeginTransactionAsync(CancellationToken);
-
                     int RecordAffected = await UserUpdateRepository.UpdateAsync(Model, CancellationToken);
-                    RecordAffected = await UserCompanyUpdateRepository.UpdateAsync(new UserCompany{
-                                                CompanyID = Request.CompanyID,
-                                                UserID = Model.UserId,
-                                                StateID = Request.StateID,
-                                                CreatedBy = Model.CreatedBy,
-                                                CreatedDateTime = Model.CreatedDateTime
-                                            });
+                    RecordAffected = await UserCompanyUpdateRepository.UpdateAsync(new UserCompany
+                    {
+                        CompanyID = Request.CompanyID,
+                        UserID = Model.UserId,
+                        StateID = Request.StateID,
+                        CreatedBy = Model.CreatedBy,
+                        CreatedDateTime = Model.CreatedDateTime
+                    });
                     RecordAffected = await UserRoleDeleteRepository.DeleteAsync(Request.CompanyID, Request.UserID);
 
                     foreach (var RoleID in Request.RoleIDs)
@@ -124,34 +126,36 @@ namespace SIGC.ApplicationService.Features.UserFeatures.Commands.UserUpdate
                             await FileStorageService.DeleteAsync(FileEntry, CancellationToken);
                         }
 
-
+                        await UnitOfWork.CommitTransactionAsync(CancellationToken);
                         MsgResponse.Type = MessageTypeConst.SUCCESS;
                         MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.SATISFACTORY_INSERT);
-
-                        await UnitOfWork.CommitTransactionAsync(CancellationToken);
                     }
                     else
                     {
-
                         await UnitOfWork.RollbackTransactionAsync(CancellationToken);
                         MsgResponse.Type = MessageTypeConst.ERROR;
                         MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.ERROR_INSERT);
                     }
                 }
-                else if (Verify == VerifyRegistryConst.User.USER_EXISTS)
-                {
-                    MsgResponse.Type = MessageTypeConst.WARNING;
-                    MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.EXIST_USER_USERNAME);
-                }
-                else if (Verify == VerifyRegistryConst.User.MAIL_EXISTS)
-                {
-                    MsgResponse.Type = MessageTypeConst.WARNING;
-                    MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.EXIST_USER_USERMAIL);
-                }
                 else
                 {
-                    MsgResponse.Type = MessageTypeConst.WARNING;
-                    MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.EXIST_USER_NAME_AND_MAIL);
+                    await UnitOfWork.RollbackTransactionAsync(CancellationToken);
+
+                    if (Verify == VerifyRegistryConst.User.USER_EXISTS)
+                    {
+                        MsgResponse.Type = MessageTypeConst.WARNING;
+                        MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.EXIST_USER_USERNAME);
+                    }
+                    else if (Verify == VerifyRegistryConst.User.MAIL_EXISTS)
+                    {
+                        MsgResponse.Type = MessageTypeConst.WARNING;
+                        MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.EXIST_USER_USERMAIL);
+                    }
+                    else
+                    {
+                        MsgResponse.Type = MessageTypeConst.WARNING;
+                        MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.EXIST_USER_NAME_AND_MAIL);
+                    }
                 }
             }
             catch (ArgumentNullException ae)

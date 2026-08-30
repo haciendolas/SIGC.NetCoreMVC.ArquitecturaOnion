@@ -29,7 +29,7 @@ BEGIN
    SET NOCOUNT ON;
     SET @RetMsg='OK'
 
-	IF EXISTS(SELECT RoleID FROM Security.[Role] R WITH(NOLOCK) WHERE R.RoleCode=@RoleCode
+	IF EXISTS(SELECT RoleID FROM Security.[Role] R WHERE R.RoleCode=@RoleCode
 	    AND R.RoleID<>@RoleID AND R.CompanyID=@CompanyID
     )
 	BEGIN	  
@@ -37,7 +37,7 @@ BEGIN
 	  RETURN 
 	END
 
-    IF EXISTS(SELECT RoleID FROM Security.[Role] R WITH(NOLOCK) WHERE R.RoleName=@RoleName
+    IF EXISTS(SELECT RoleID FROM Security.[Role] R WHERE R.RoleName=@RoleName
 	    AND RoleID<>@RoleID AND R.CompanyID=@CompanyID
     )
 	BEGIN	  

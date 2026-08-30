@@ -4,6 +4,7 @@ using SIGC.DomainModel.Dtos;
 using SIGC.DomainModel.Models;
 using SIGC.DomainService.IRepositories.ICategoryRepositories;
 using SIGC.DomainService.IServices;
+using SIGC.DomainService.Transactions;
 using SIGC.Infrastructure.CrossCutting.Constants;
 using SIGC.Infrastructure.CrossCutting.Wrappers;
 
@@ -15,7 +16,8 @@ namespace SIGC.ApplicationService.Features.CategoryFeatures.Commands.CategoryUpd
         ICurrentSessionService CurrentSessionService,
         IMessageService MessageService,
         IFileStorageService FileStorageService,
-        FileUploadSettings FileUploadSettings
+        FileUploadSettings FileUploadSettings,
+        IUnitOfWork UnitOfWork
      ) : IRequestHandler<CategoryUpdateCommandRequest, MsgResponse<object?>>
      {
         public async Task<MsgResponse<object?>> Handle(CategoryUpdateCommandRequest Request, CancellationToken CancellationToken)
@@ -37,8 +39,10 @@ namespace SIGC.ApplicationService.Features.CategoryFeatures.Commands.CategoryUpd
                     CurrentSessionService.UserName
                     );
 
-                var Validate = await CategoryValidateRepository.VerifyNameAsync(Model,CancellationToken);
-                if (Validate == VerifyRegistryConst.Category.OK)
+                await UnitOfWork.BeginTransactionAsync(CancellationToken);
+
+                var Verify = await CategoryValidateRepository.VerifyNameAsync(Model,CancellationToken);
+                if (Verify == VerifyRegistryConst.Category.OK)
                 {
                     var RecordAffected = await CategoryUpdateRepository.UpdateAsync(Model, CancellationToken);
                     if (RecordAffected > 0)
@@ -63,23 +67,30 @@ namespace SIGC.ApplicationService.Features.CategoryFeatures.Commands.CategoryUpd
                             FileEntry.FileLocation = $"{FileUploadSettings.CategoryImageLocation}/{Request.CategoryImage}";
                             await FileStorageService.DeleteAsync(FileEntry, CancellationToken);
                         }
+
+                        await UnitOfWork.CommitTransactionAsync(CancellationToken);
+
                         MsgResponse.Type = MessageTypeConst.SUCCESS;
                         MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.SATISFACTORY_UPDATE);
                     }
-                    else
-                    {
+                    else{
+                        await UnitOfWork.RollbackTransactionAsync(CancellationToken);
+
                         MsgResponse.Type = MessageTypeConst.ERROR;
-                        MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.ERROR_UPDATE);
+                        MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.ERROR_UPDATE); 
                     }
                 }
-                else
-                {
+                else{
+                    await UnitOfWork.RollbackTransactionAsync(CancellationToken);
+
                     MsgResponse.Type = MessageTypeConst.WARNING;
                     MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.EXIST_CATEGORY_CATEGORYNAME);
-                }
+                 }
             }
             catch(Exception ex)
             {
+                await UnitOfWork.RollbackTransactionAsync(CancellationToken);
+
                 if (Request.File is not null && !string.IsNullOrWhiteSpace(FileEntry.FileName)) await FileStorageService.DeleteAsync(FileEntry, CancellationToken);
 
                 MsgResponse.Type = MessageTypeConst.ERROR;

@@ -55,8 +55,8 @@ namespace SIGC.ApplicationService.Features.EstablishmentFeatures.Commands.Establ
                         CurrentSessionService.UserFullName
                     );  
 
-                var Validate = await EstablishmentUpdateRepository.UpdateAsync(Model,CancellationToken);
-                if (Validate == VerifyRegistryConst.Category.OK)
+                var Verify = await EstablishmentUpdateRepository.UpdateAsync(Model,CancellationToken);
+                if (Verify == VerifyRegistryConst.Category.OK)
                 { 
                      if (Request.File is not null){
                          if (!string.IsNullOrWhiteSpace(Request.EstablishmentLogo)){

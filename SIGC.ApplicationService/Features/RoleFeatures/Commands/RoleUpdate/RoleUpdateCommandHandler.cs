@@ -46,8 +46,7 @@ namespace SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleUpdate
         {
             var MsgResponse = new MsgResponse<object?>();
             try
-            { 
-                var Model = Role.Update(
+            {  var Model = Role.Update(
                         Request.RoleID,
                         Request.CompanyID,
                         Request.RoleCode,
@@ -57,11 +56,10 @@ namespace SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleUpdate
                         DateTime.Now,
                        CurrentSessionService.UserID
                     );
-
+                await UnitOfWork.BeginTransactionAsync(CancellationToken);
                 var Verify = await RoleVerifyCodeAndNameRepository.VerifyCodeAndNameAsync(Model, CancellationToken);
                 if (Verify == VerifyRegistryConst.Role.OK)
-                {
-                    await UnitOfWork.BeginTransactionAsync(CancellationToken);
+                {                   
                     int RecordAffected = await RoleUpdateRepository.UpdateAsync(Model, CancellationToken);
                     if (RecordAffected > 0)
                     {
@@ -92,7 +90,8 @@ namespace SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleUpdate
                                 });
                             }
                         }
- 
+
+                        await UnitOfWork.CommitTransactionAsync(CancellationToken);
                         MsgResponse.Type = MessageTypeConst.SUCCESS;
                         MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.SATISFACTORY_UPDATE);
                         MsgResponse.Data = new
@@ -101,9 +100,7 @@ namespace SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleUpdate
                             Model.RoleCode,
                             Model.RoleName,
                             Model.CreatedDateTime,
-                        };
-              
-                        await UnitOfWork.CommitTransactionAsync(CancellationToken);
+                        }; 
                     }
                     else
                     {
@@ -114,6 +111,7 @@ namespace SIGC.ApplicationService.Features.RoleFeatures.Commands.RoleUpdate
                 }
                 else
                 {
+                    await UnitOfWork.RollbackTransactionAsync(CancellationToken);
                     MsgResponse.Type = MessageTypeConst.WARNING;
                     MsgResponse.Message = MessageService.GetMessageResult(Verify == VerifyRegistryConst.Role.NAME_EXISTS ? MessageDescriptionConst.EXIST_ROLE_ROLENAME : MessageDescriptionConst.EXIST_ROLE_ROLECODE);
                 }

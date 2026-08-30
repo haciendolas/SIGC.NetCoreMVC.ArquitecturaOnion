@@ -44,8 +44,8 @@ namespace SIGC.ApplicationService.Features.WarehouseFeatures.Commands.WarehouseC
                         CurrentSessionService.UserFullName
                     );
 
-                var Validate = await WarehouseCreateRepository.CreateAsync(Model, CancellationToken);
-                if (Validate == VerifyRegistryConst.Warehouse.OK)
+                var Verify = await WarehouseCreateRepository.CreateAsync(Model, CancellationToken);
+                if (Verify == VerifyRegistryConst.Warehouse.OK)
                 {                    
                     if (Model.WarehouseID > 0)
                     { 

@@ -4,6 +4,7 @@ using SIGC.DomainModel.Dtos;
 using SIGC.DomainModel.Models;
 using SIGC.DomainService.IRepositories.ICategoryRepositories;
 using SIGC.DomainService.IServices;
+using SIGC.DomainService.Transactions;
 using SIGC.Infrastructure.CrossCutting.Constants;
 using SIGC.Infrastructure.CrossCutting.Wrappers;
 
@@ -15,7 +16,8 @@ namespace SIGC.ApplicationService.Features.CategoryFeatures.Commands.CategoryCre
         IMessageService MessageService,
         ICurrentSessionService CurrentSessionService,
         IFileStorageService FileStorageService,
-        FileUploadSettings FileUploadSettings
+        FileUploadSettings FileUploadSettings,
+        IUnitOfWork UnitOfWork
     ) : IRequestHandler<CategoryCreateCommandRequest, MsgResponse<object>>
     { 
         public async Task<MsgResponse<object>> Handle(CategoryCreateCommandRequest Request, CancellationToken CancellationToken)
@@ -35,9 +37,11 @@ namespace SIGC.ApplicationService.Features.CategoryFeatures.Commands.CategoryCre
                         CurrentSessionService.UserName,
                         CurrentSessionService.UserFullName
                     );
+                
+                await UnitOfWork.BeginTransactionAsync(CancellationToken);
 
-                var Validate = await CategoryValidateRepository.VerifyNameAsync(Model, CancellationToken);
-                if (Validate == VerifyRegistryConst.Category.OK)
+                var Verify = await CategoryValidateRepository.VerifyNameAsync(Model, CancellationToken);
+                if (Verify == VerifyRegistryConst.Category.OK)
                 {
                     int RecordAffected = await CategoryCreateRepository.CreateAsync(Model, CancellationToken);
                     if (RecordAffected > 0)
@@ -48,6 +52,8 @@ namespace SIGC.ApplicationService.Features.CategoryFeatures.Commands.CategoryCre
                             FileEntry.FileLocation = $"{FileUploadSettings.CategoryImageLocation}/{Model.CategoryImage}";
                             await FileStorageService.CreateAsync(FileEntry, Request.File.OpenReadStream(), CancellationToken);
                         }
+                        
+                        await UnitOfWork.CommitTransactionAsync(CancellationToken);
 
                         MsgResponse.Type = MessageTypeConst.SUCCESS;
                         MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.PROCESS_FULLYCOMPLETED);
@@ -57,15 +63,19 @@ namespace SIGC.ApplicationService.Features.CategoryFeatures.Commands.CategoryCre
                             Model.CategoryName,
                             Model.RecordStateId,
                             Model.CreatedDate,
-                        };
+                        }; 
                     }
                     else
                     {
+                        await UnitOfWork.RollbackTransactionAsync(CancellationToken);
+
                         MsgResponse.Type = MessageTypeConst.ERROR;
                         MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.ERROR_INSERT);
                     }
                 }
                 else{
+                    await UnitOfWork.RollbackTransactionAsync(CancellationToken);
+
                     MsgResponse.Type = MessageTypeConst.WARNING;
                     MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.EXIST_CATEGORY_CATEGORYNAME);
                 }
@@ -77,6 +87,8 @@ namespace SIGC.ApplicationService.Features.CategoryFeatures.Commands.CategoryCre
             }
             catch (Exception ex)
             {
+                await UnitOfWork.RollbackTransactionAsync(CancellationToken);
+
                 if (Request.File is not null && !string.IsNullOrWhiteSpace(FileEntry.FileName)) await FileStorageService.DeleteAsync(FileEntry, CancellationToken);
 
                 MsgResponse.Type = MessageTypeConst.ERROR;

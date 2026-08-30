@@ -53,7 +53,7 @@ namespace SIGC.ApplicationService.Features.UserFeatures.Commands.UserCreate
         {
             var MsgResponse = new MsgResponse<object?>();
             FileEntryDto FileEntry = new FileEntryDto("", "");
-            try {
+            try { 
                 var Model = User.Create( Request.UserFirstName, 
                                          Request.UserLastName,
                                          Request.UserName,
@@ -64,28 +64,28 @@ namespace SIGC.ApplicationService.Features.UserFeatures.Commands.UserCreate
                                          DateTime.Now,
                                          CurrentSessionService.UserID
                                      );
+                await UnitOfWork.BeginTransactionAsync(CancellationToken);
                 var Verify = await UserVerifyNameAndMailRepository.VerifyNameAndMailAsync(Model, CancellationToken);
                 if (Verify == VerifyRegistryConst.User.OK)
                 {
-                    await UnitOfWork.BeginTransactionAsync(CancellationToken);
-
                     int RecordAffected = await UserCreateRepository.CreateAsync(Model, CancellationToken);
-                        RecordAffected = await UserCompanyCreateRepository.CreateAsync(new UserCompany
-                                                                                {
-                                                                                 CompanyID = Request.CompanyID,
-                                                                                 UserID = Model.UserId,
-                                                                                 StateID = Request.StateID,
-                                                                                 CreatedBy = Model.CreatedBy,
-                                                                                 CreatedDateTime = Model.CreatedDateTime
-                                                                                });
-                   
+                    RecordAffected = await UserCompanyCreateRepository.CreateAsync(new UserCompany
+                    {
+                        CompanyID = Request.CompanyID,
+                        UserID = Model.UserId,
+                        StateID = Request.StateID,
+                        CreatedBy = Model.CreatedBy,
+                        CreatedDateTime = Model.CreatedDateTime
+                    });
+
                     foreach (var RoleID in Request.RoleIDs)
                     {
-                        RecordAffected = await UserRoleCreateRepository.CreateAsync(new UserRole { 
-                                                         CompanyID = Request.CompanyID,
-                                                         RoleID = RoleID, 
-                                                         UserID = Model.UserId                         
-                                                         });
+                        RecordAffected = await UserRoleCreateRepository.CreateAsync(new UserRole
+                        {
+                            CompanyID = Request.CompanyID,
+                            RoleID = RoleID,
+                            UserID = Model.UserId
+                        });
                     }
 
                     if (RecordAffected > 0)
@@ -96,32 +96,38 @@ namespace SIGC.ApplicationService.Features.UserFeatures.Commands.UserCreate
                             FileEntry.FileLocation = $"{FileUploadSettings.UserPhotoLocation}/{Model.UserPhoto}";
                             await FileStorageService.CreateAsync(FileEntry, Request.File.OpenReadStream(), CancellationToken);
                         }
+                        await UnitOfWork.CommitTransactionAsync(CancellationToken);
+
                         MsgResponse.Type = MessageTypeConst.SUCCESS;
                         MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.SATISFACTORY_INSERT);
-
-                        await UnitOfWork.CommitTransactionAsync(CancellationToken);
                     }
-                    else{
+                    else
+                    {
 
                         await UnitOfWork.RollbackTransactionAsync(CancellationToken);
                         MsgResponse.Type = MessageTypeConst.ERROR;
                         MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.ERROR_INSERT);
                     }
                 }
-                else if(Verify == VerifyRegistryConst.User.USER_EXISTS)
-                {
-                    MsgResponse.Type = MessageTypeConst.WARNING;
-                    MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.EXIST_USER_USERNAME);
-                }
-                else if (Verify == VerifyRegistryConst.User.MAIL_EXISTS)
-                {
-                    MsgResponse.Type = MessageTypeConst.WARNING;
-                    MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.EXIST_USER_USERMAIL);
-                }
                 else
                 {
-                    MsgResponse.Type = MessageTypeConst.WARNING;
-                    MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.EXIST_USER_NAME_AND_MAIL);
+                    await UnitOfWork.RollbackTransactionAsync(CancellationToken);
+
+                    if (Verify == VerifyRegistryConst.User.USER_EXISTS)
+                    {
+                        MsgResponse.Type = MessageTypeConst.WARNING;
+                        MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.EXIST_USER_USERNAME);
+                    }
+                    else if (Verify == VerifyRegistryConst.User.MAIL_EXISTS)
+                    {
+                        MsgResponse.Type = MessageTypeConst.WARNING;
+                        MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.EXIST_USER_USERMAIL);
+                    }
+                    else
+                    {
+                        MsgResponse.Type = MessageTypeConst.WARNING;
+                        MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.EXIST_USER_NAME_AND_MAIL);
+                    }
                 }
             }
             catch (ArgumentNullException ae)

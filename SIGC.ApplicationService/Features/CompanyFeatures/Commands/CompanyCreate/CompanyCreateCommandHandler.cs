@@ -48,7 +48,7 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Commands.CompanyCreat
         {
             var MsgResponse = new MsgResponse<object?>();
             FileEntryDto FileEntry = new FileEntryDto("","");
-            try{                
+            try{
                 var Model = Company.Create(
                         Request.CompanyTradeName,
                         Request.CompanySocialReason,
@@ -67,11 +67,11 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Commands.CompanyCreat
                        CurrentSessionService.UserID
                     );
 
+                await UnitOfWork.BeginTransactionAsync(CancellationToken);
+
                 var Verify = await CompanyVerifyDocumentNumberAndSocialReasonRepository.VerifyDocumentNumberAndSocialAsync(Model, CancellationToken);
                 if (Verify == VerifyRegistryConst.Company.OK)
                 {
-                    await UnitOfWork.BeginTransactionAsync(CancellationToken);
-
                     int RecordAffected = await CompanyCreateRepository.CreateAsync(Model, CancellationToken);
                         RecordAffected = await CompanyRegisterCreateRepository.CreateAsync(new CompanyRegister{
                                                 CompanyID = Model.CompanyID,
@@ -88,20 +88,24 @@ namespace SIGC.ApplicationService.Features.CompanyFeatures.Commands.CompanyCreat
                             FileEntry.FileLocation = $"{FileUploadSettings.CompanyLogoLocation}/{Model.CompanyLogo}";
                             await FileStorageService.CreateAsync(FileEntry, Request.File.OpenReadStream(), CancellationToken);
                         }
-                        MsgResponse.Type = MessageTypeConst.SUCCESS;
-                        MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.SATISFACTORY_INSERT);                        
 
                         await UnitOfWork.CommitTransactionAsync(CancellationToken);
+
+                        MsgResponse.Type = MessageTypeConst.SUCCESS;
+                        MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.SATISFACTORY_INSERT);                        
                     }
                     else
                     {
                         await UnitOfWork.RollbackTransactionAsync(CancellationToken);
+
                         MsgResponse.Type = MessageTypeConst.ERROR;
                         MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.ERROR_INSERT);
                     }
                 }
                 else
                 {
+                    await UnitOfWork.RollbackTransactionAsync(CancellationToken);
+
                     MsgResponse.Type = MessageTypeConst.WARNING;
                     MsgResponse.Message = MessageService.GetMessageResult(Verify == VerifyRegistryConst.Company.DOCUMENT_NUMBER_EXISTS ? MessageDescriptionConst.EXIST_COMPANY_DOCUMENTNUMBER : MessageDescriptionConst.EXIST_COMPANY_SOCIALREASON);
                 }

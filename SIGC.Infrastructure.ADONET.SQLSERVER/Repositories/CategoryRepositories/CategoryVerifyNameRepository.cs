@@ -25,6 +25,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CategoryRepositories
         {
             string RetMsg = string.Empty;
             var Connection = await TransactionAccessor.GetOrOpenConnectionAsync(ConnectionString, CancellationToken);
+            var Transaction = TransactionAccessor.CurrentTransaction;
             using (SqlCommand Command = new SqlCommand())
             {
                 Command.CommandText = "Product.uspCategoryVerifyName";
@@ -35,6 +36,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CategoryRepositories
                 Command.Parameters.AddWithValue("@CategoryID", Model.CategoryId);
                 Command.Parameters.AddWithValue("@CategoryName", Model.CategoryName);          
                 Command.Connection = Connection;
+                Command.Transaction = Transaction;
                 await Command.ExecuteNonQueryAsync(CancellationToken);
                 RetMsg = Command.Parameters["@RetMsg"].Value.ToString()!;
             }
