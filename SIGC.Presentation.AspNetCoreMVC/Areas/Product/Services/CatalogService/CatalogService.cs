@@ -1,4 +1,5 @@
 ﻿using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.Catalog;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.Category;
 using SIGC.Presentation.AspNetCoreMVC.Helpers;
 using SIGC.Presentation.AspNetCoreMVC.Models;
 using SIGC.Presentation.AspNetCoreMVC.Services;
@@ -15,6 +16,14 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogService
             this.ApiService = ApiServiceFactory.Create(ConstantsHelper.HttpClientNames.ApiCommerce360);
         }
 
+        public async Task<ApiResponse<object?>> CatalogCreate(CatalogCreateUpdateRequestModel Request)
+        {
+            return await ApiService.PostFormDataAsync<CatalogCreateUpdateRequestModel, ApiResponse<object?>>($"{Controller}/CatalogCreate", Request);
+        }
+        public async Task<ApiResponse<object?>> CatalogUpdate(CatalogCreateUpdateRequestModel Request)
+        {
+            return await ApiService.PutFormDataAsync<CatalogCreateUpdateRequestModel, ApiResponse<object?>>($"{Controller}/CatalogUpdate", Request);
+        }
         public async Task<ApiResponse<PaginationResultModel<CatalogPaginationResponseModel>>> CatalogPagination(CatalogPaginationRequestModel Request)
         {
             return await ApiService.PostAsync<string, ApiResponse<PaginationResultModel<CatalogPaginationResponseModel>>>($"{Controller}/CatalogPagination", null, Request);

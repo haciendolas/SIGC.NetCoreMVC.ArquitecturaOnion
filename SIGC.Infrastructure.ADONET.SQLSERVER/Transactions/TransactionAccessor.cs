@@ -2,7 +2,7 @@
 
 namespace SIGC.DomainService.Transactions
 { 
-    public class TransactionAccessor : ITransactionAccessor
+    public class TransactionAccessor : ITransactionAccessor, IAsyncDisposable
     {
         public SqlConnection? CurrentConnection { get; private set; }
         public SqlTransaction? CurrentTransaction { get; private set; }
@@ -10,9 +10,10 @@ namespace SIGC.DomainService.Transactions
 
         public async Task<SqlConnection> GetOrOpenConnectionAsync(string connectionString, CancellationToken cancellationToken)
         {
-            if (CurrentConnection != null)
+            //if (CurrentConnection != null) return CurrentConnection;
+            if (CurrentConnection != null && CurrentConnection.State == System.Data.ConnectionState.Open){
                 return CurrentConnection;
-
+            }
             CurrentConnection = new SqlConnection(connectionString);
             await CurrentConnection.OpenAsync(cancellationToken);
             _ownsConnection = true;
@@ -37,6 +38,11 @@ namespace SIGC.DomainService.Transactions
             CurrentTransaction = null;
             CurrentConnection = null;
             _ownsConnection = false;
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            await ClearAsync();
         }
     }
 

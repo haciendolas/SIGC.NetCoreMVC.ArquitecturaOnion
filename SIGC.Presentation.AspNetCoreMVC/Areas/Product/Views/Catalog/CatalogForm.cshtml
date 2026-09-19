@@ -4,14 +4,14 @@
 @using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.Category
 @using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.Manufacturer
 @using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.PharmaceuticalForm
-@using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.PrescriptionType
+@using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.SaleCondition
 @using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.TherapeuticAction
 @using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Constant
 @using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Ubigeo
 @{
     Layout = null;
 }
-<form id="frmCompanyCreateUpdate" class="needs-validation" novalidate method="dialog">
+<form id="frmCatalogCreateUpdate" class="needs-validation" novalidate method="dialog">
     <h6 class="pt-2">&nbsp;&nbsp;Todos los campos(<i class="ri-asterisk align-middle text-danger"></i>) son obligatorios</h6>
     <div class="card-body">
         <div class="row g-3">
@@ -19,11 +19,11 @@
                 <div class="row g-3 pb-2">
                     <div class="col-sm-3">
                         <label for="txtCompanyID">ID</label>
-                        <input type="text" class="form-control" id="txtCatalogID" name="CatalogID" value="1" readonly />
+                        <input type="text" class="form-control" id="txtCatalogID" name="CatalogID" value="GENERADO" readonly />
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <label for="cboCatalogTypeID">Tipo<i class="ri-asterisk align-middle text-danger"></i></label>
-                        <select class="form-select" id="cboCatalogTypeID">
+                        <select class="form-select" id="cboCatalogTypeID" name="CatalogTypeID">
                             @if (@ViewBag.CatalogTypeList != null)
                             {
                                 <option value="">Seleccionar</option>
@@ -36,29 +36,35 @@
                         </select>
                     </div>
                     <div class="col-sm-3">
-                        <label for="txtCompanyDocumentNumber">Código Interno<i class="ri-asterisk align-middle text-danger"></i></label>
-                        <input type="text" class="form-control" id="txtCompanyDocumentNumber" name="CompanyDocumentNumber" />
+                        <label for="txtCatalogCode">Código Interno<i class="ri-asterisk align-middle text-danger"></i></label>
+                        <input type="text" class="form-control" id="txtCatalogCode" name="CatalogCode" maxlength="15" />
                     </div>
-                    <div class="col-sm-2">
-                        <label for="chkStateID" class="col-sm-4 col-form-label">Estado</label>
+                    <div class="col-sm-3">
+                        <label for="chkCatalogStateID" class="col-sm-4 col-form-label">Estado</label>
                         <div class="col-sm-8">
                             <div class="form-check form-switch form-switch-md form-switch-secondary" dir="ltr">
-                                <input type="checkbox" class="form-check-input" checked id="chkStateID">
-                                <label class="form-check-label" for="chkStateID">Activo</label>
+                                <input type="checkbox" class="form-check-input" checked id="chkCatalogStateID">
+                                <label class="form-check-label" for="chkCatalogStateID">Activo</label>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row pb-2">
-                    <label for="txtCompanySocialReason" class="col-sm-2 col-form-label">Nombre<i class="ri-asterisk align-middle text-danger"></i></label>
+                    <label for="txtCatalogName" class="col-sm-2 col-form-label">Nombre<i class="ri-asterisk align-middle text-danger"></i></label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="txtCompanySocialReason" name="CompanySocialReason" />
+                        <input type="text" class="form-control" id="txtCatalogName" name="CatalogName" maxlength="200" />
+                    </div>
+                </div>
+                <div class="row pb-2">
+                    <label for="txtCatalogSlug" class="col-sm-2 col-form-label">Slug<i class="ri-asterisk align-middle text-danger"></i></label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="txtCatalogSlug" name="CatalogSlug" maxlength="200" disabled="disabled" />
                     </div>
                 </div>
                 <div class="row pb-2">
                     <label for="cboCategoryID" class="col-sm-2 col-form-label">Categoría<i class="ri-asterisk align-middle text-danger"></i></label>
                     <div class="col-sm-4">
-                        <select class="form-select" id="cboCategoryID">
+                        <select class="form-select" id="cboCategoryID" name="CategoryID">
                             @if (@ViewBag.CategoryList != null)
                             {   <option value="">Seleccionar</option>                
                                 var CategoryList = ViewBag.CategoryList as List<CategoryListResponseModel>;
@@ -71,7 +77,7 @@
                     </div>
                     <label for="cboManufacturerID" class="col-sm-2 col-form-label">Fabricante<i class="ri-asterisk align-middle text-danger"></i></label>
                     <div class="col-sm-4">
-                        <select class="form-select" id="cboManufacturerID">
+                        <select class="form-select" id="cboManufacturerID" name="ManufacturerID">
                             @if (@ViewBag.ManufacturerList != null)
                             {
                                 <option value="">Seleccionar</option>
@@ -87,7 +93,7 @@
                 <div class="row pb-2">
                     <label for="cboBrandID" class="col-sm-2 col-form-label">Marca<i class="ri-asterisk align-middle text-danger"></i></label>
                     <div class="col-sm-5">
-                        <select class="form-select" id="cboBrandID">
+                        <select class="form-select" id="cboBrandID" name="BrandID">
                             @if (@ViewBag.BrandList != null)
                             {
                                 <option value="">Seleccionar</option>
@@ -99,16 +105,16 @@
                             }
                         </select>
                     </div>
-                    <label for="cboPrescriptionTypeID" class="col-sm-2 col-form-label">Venta Con<i class="ri-asterisk align-middle text-danger"></i></label>
+                    <label for="cboSaleConditionID" class="col-sm-2 col-form-label">Condición<i class="ri-asterisk align-middle text-danger"></i></label>
                     <div class="col-sm-3">
-                        <select class="form-select" id="cboPrescriptionTypeID" name="PrescriptionTypeID">
-                            @if (@ViewBag.PrescriptionTypeList != null)
+                        <select class="form-select" id="cboSaleConditionID" name="SaleConditionID">
+                            @if (@ViewBag.SaleConditionList != null)
                             {
                                 <option value="">Seleccionar</option>
-                                var PrescriptionTypeList = ViewBag.PrescriptionTypeList as List<PrescriptionTypeListResponseModel>;
-                                @foreach (var Item in PrescriptionTypeList!)
+                                var SaleConditionList = ViewBag.SaleConditionList as List<SaleConditionListResponseModel>;
+                                @foreach (var Item in SaleConditionList!)
                                 {
-                                    <option value="@Item.PrescriptionTypeID">@Item.PrescriptionTypeName</option>
+                                    <option value="@Item.SaleConditionID">@Item.SaleConditionName</option>
                                 }
                             }
                         </select>
@@ -131,7 +137,7 @@
                     </div>
                     <label for="cboTherapeuticActionID" class="col-sm-2 col-form-label">Acción Terapéutica</label>
                     <div class="col-sm-4">
-                        <select class="form-select" id="cboTherapeuticActionID" name="TherapeuticActionID">
+                        <select class="form-select" id="cboTherapeuticActionID" name="TherapeuticActionID" multiple>
 
                             @if (@ViewBag.TherapeuticActionList != null)
                             {
@@ -148,7 +154,7 @@
                 <div class="row pb-2">
                     <label for="cboActiveIngredientID" class="col-sm-2 col-form-label">Principio Activo</label>
                     <div class="col-sm-4">
-                        <select class="form-select" id="cboActiveIngredientID" name="ActiveIngredientID">
+                        <select class="form-select" id="cboActiveIngredientID" name="ActiveIngredientID" multiple>
                             @if (@ViewBag.ActiveIngredientList != null)
                             {
                                 <option value="">Seleccionar</option>
@@ -160,11 +166,12 @@
                             }
                         </select>
                     </div>
-                    <label for="cboRubroID" class="col-sm-2 col-form-label">Concentración</label>
+                    <label for="txtCatalogConcentration" class="col-sm-2 col-form-label">Concentración</label>
                     <div class="col-sm-4">
-                            <input type="text" class="form-control" id="txtCompanySocialReason" name="CompanySocialReason" />
+                        <input type="text" class="form-control" id="txtCatalogConcentration" name="CatalogConcentration" maxlength="100" />
                     </div>
                 </div>
+                @*
                 <div class="row pb-2">
                     <label for="cboRubroID" class="col-sm-2 col-form-label">COD.UNSPSC</label>
                     <div class="col-sm-2">
@@ -175,10 +182,20 @@
                         <input type="text" class="form-control" rows="3" id="txtCompanyTradeName" name="CompanyTradeName" />
                     </div>
                 </div>
+                *@
                 <div class="row pb-2">
-                    <label for="txtCompanyTradeName" class="col-sm-2 col-form-label">Descripción</label>
+                    <label for="txtCatalogDescription" class="col-sm-2 col-form-label">Descripción</label>
                     <div class="col-sm-10">
-                        <textarea type="text" class="form-control" rows="3" id="txtCompanyTradeName" name="CompanyTradeName"></textarea>
+                        <textarea type="text" class="form-control" rows="3" id="txtCatalogDescription" name="CatalogDescription" maxlength="300"></textarea>
+                    </div>
+                </div>
+                <div class="row pb-2">
+                    <label for="txtCatalogDescription" class="col-sm-2 col-form-label">Tiene Variantes</label>
+                    <div class="col-sm-10 pt-2">
+                    <div class="form-check form-check-secondary">
+                         <input type="checkbox" class="form-check-input" id="chkCatalogHasVariants" style="width:23px;height:23px">
+                         <label class="form-check-label p-1" for="chkCatalogHasVariants">Si</label>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -188,9 +205,9 @@
                         <div class="text-center">
                             <h4>IMAGEN</h4>
                             <div class="profile-user position-relative d-inline-block mx-auto mb-4">
-                                <input type="hidden" id="hdCompanyLogo" name="CompanyLogo" />
-                                <input type="hidden" id="hdCompanyLogoBandera" name="CompanyLogoBandera" />
-                                <img style="width:300px;height:300px" src="~/assets/images/image-not-available.jpg" id="imgCompanyLogo" class="img-thumbnail user-profile-image" alt="Logo empresa">
+                                <input type="hidden" id="hdCatalogImage" name="CatalogImage" />
+                                <input type="hidden" id="hdCatalogImageBandera" name="CatalogImageBandera" />
+                                <img style="width:300px;height:300px" src="~/assets/images/image-not-available.jpg" id="imgCatalogImage" class="img-thumbnail user-profile-image" alt="Imagen Producto">
                                 <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
                                     <input id="profile-img-file-input" type="file" class="profile-img-file-input">
                                     <label for="profile-img-file-input" class="profile-photo-edit avatar-xs">
@@ -209,9 +226,9 @@
         <div class="row">
             <div class="col-sm-9 pb-2 mt-3">
                 <div class="text-end">
-                    <button type="button" class="btn btn-light" id="btnCompanyNew"><i class="ri-file-text-fill align-bottom me-1 fs-13"></i>&nbsp;Nuevo&nbsp;</button>&nbsp;&nbsp;
-                    <button type="button" class="btn btn-primary" id="btnCompanyCreate"><i class="ri-save-3-line align-bottom me-1 fs-13"></i><span>Guardar</span></button>
-                    <button type="button" class="btn btn-primary" id="btnCompanyUpdate"><i class="ri-pencil-fill align-bottom me-1 fs-13"></i>Editar&nbsp;</button>
+                    <button type="button" class="btn btn-light" id="btnCatalogNew"><i class="ri-file-text-fill align-bottom me-1 fs-13"></i>&nbsp;Nuevo&nbsp;</button>&nbsp;&nbsp;
+                    <button type="button" class="btn btn-primary" id="btnCatalogCreate"><i class="ri-save-3-line align-bottom me-1 fs-13"></i><span>Guardar</span></button>
+                    <button type="button" class="btn btn-primary" id="btnCatalogUpdate"><i class="ri-pencil-fill align-bottom me-1 fs-13"></i>Editar&nbsp;</button>
                 </div>
             </div>
         </div>

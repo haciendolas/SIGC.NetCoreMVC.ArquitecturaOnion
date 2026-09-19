@@ -4,9 +4,13 @@ using SIGC.DomainService.IRepositories.IActiveIngredientRepositories;
 using SIGC.DomainService.IRepositories.IAttributeValueRepositories;
 using SIGC.DomainService.IRepositories.IAuthRepositories;
 using SIGC.DomainService.IRepositories.IBrandRepositories;
+using SIGC.DomainService.IRepositories.ICatalogActiveIngredientRepositories;
 using SIGC.DomainService.IRepositories.ICatalogPresentationRepositories;
 using SIGC.DomainService.IRepositories.ICatalogRepositories;
+using SIGC.DomainService.IRepositories.ICatalogTherapeuticActionRepositories;
 using SIGC.DomainService.IRepositories.ICatalogTypeRepositories;
+using SIGC.DomainService.IRepositories.ICatalogVariantRepositories;
+using SIGC.DomainService.IRepositories.ICatalogVariantValueRepositories;
 using SIGC.DomainService.IRepositories.ICategoryRepositories;
 using SIGC.DomainService.IRepositories.ICompanyRegisterRepositories;
 using SIGC.DomainService.IRepositories.ICompanyRepositories;
@@ -16,7 +20,7 @@ using SIGC.DomainService.IRepositories.IManufacturerRepositories;
 using SIGC.DomainService.IRepositories.IPageCompanyRepositories;
 using SIGC.DomainService.IRepositories.IPageRepositories;
 using SIGC.DomainService.IRepositories.IPharmaceuticalFormRepositories;
-using SIGC.DomainService.IRepositories.IPrescriptionTypeRepositories;
+using SIGC.DomainService.IRepositories.ISaleConditionRepositories;
 using SIGC.DomainService.IRepositories.IPresentationRepositories;
 using SIGC.DomainService.IRepositories.IPriceTypeRepositories;
 using SIGC.DomainService.IRepositories.IRolePermissionRepositories;
@@ -37,9 +41,13 @@ using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.ActiveIngredientReposito
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.AttributeValueRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.AuthRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.BrandRepositories;
+using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogActiveIngredientRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogPresentationRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogRepositories;
+using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogTherapeuticActionRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogTypeRepositories;
+using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogVariantRepositories;
+using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogVariantValueRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CategoryRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CompanyRegisterRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CompanyRepositories;
@@ -49,7 +57,7 @@ using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.ManufacturerRepositories
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.PageCompanyRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.PageRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.PharmaceuticalFormRepositories;
-using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.PrescriptionTypeRepositories;
+using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.SaleConditionRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.PresentationRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.PriceTypeRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.RolePermissionRepositories;
@@ -166,8 +174,10 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
 
             services.AddScoped<ICatalogPaginationRepository, CatalogPaginationRepository>();
             services.AddScoped<ICatalogCreateRepository, CatalogCreateRepository>();
+            services.AddScoped<ICatalogUpdateRepository, CatalogUpdateRepository>();
+            services.AddScoped<ICatalogVerifyCodeAndNameRepository, CatalogVerifyCodeAndNameRepository>();
 
-            services.AddScoped<IPrescriptionTypeListRepository, PrescriptionTypeListRepository>();
+            services.AddScoped<ISaleConditionListRepository, SaleConditionListRepository>();
 
             services.AddScoped<IAttributeValueListRepository, AttributeValueListRepository>();
 
@@ -186,6 +196,24 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
             services.AddScoped<ITaxListRepository, TaxListRepository>();
 
             services.AddScoped<ICatalogPresentationListRepository, CatalogPresentationListRepository>();
+            services.AddScoped<ICatalogPresentationCreateRepository, CatalogPresentationCreateRepository>();
+            services.AddScoped<ICatalogPresentationUpdateRepository, CatalogPresentationUpdateRepository>();
+            services.AddScoped<ICatalogPresentationVerifyFieldsRepository, CatalogPresentationVerifyFieldsRepository>();
+
+            services.AddScoped<ICatalogTherapeuticActionCreateUpdateRepository, CatalogTherapeuticActionCreateUpdateRepository>();
+            services.AddScoped<ICatalogTherapeuticActionDeleteRepository, CatalogTherapeuticActionDeleteRepository>();
+
+            services.AddScoped<ICatalogActiveIngredientCreateUpdateRepository, CatalogActiveIngredientCreateUpdateRepository>();
+            services.AddScoped<ICatalogActiveIngredientDeleteRepository, CatalogActiveIngredientDeleteRepository>();
+
+            services.AddScoped<ICatalogVariantCreateRepository, CatalogVariantCreateRepository>();
+            services.AddScoped<ICatalogVariantUpdateRepository, CatalogVariantUpdateRepository>();
+            services.AddScoped<ICatalogVariantVerifySkuAndNameRepository, CatalogVariantVerifySkuAndNameRepository>();
+            services.AddScoped<ICatalogVariantListRepository, CatalogVariantListRepository>();
+
+            services.AddScoped<ICatalogVariantValueCreateUpdateRepository, CatalogVariantValueCreateUpdateRepository>();
+            services.AddScoped<ICatalogVariantValueDeleteRepository, CatalogVariantValueDeleteRepository>();
+            
             return services;
         }
     }

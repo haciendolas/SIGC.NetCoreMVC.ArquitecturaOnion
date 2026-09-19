@@ -23,7 +23,7 @@ namespace SIGC.Presentation.WebApi.Controllers
         [AllowAnonymous]
         [HttpPost("Refresh")]
         [SwaggerOperation(Summary = "Generar JWT", Description = "Permite Generar JWT.")]
-        [ProducesResponseType(typeof(MsgResponse<AuthTokenResponseDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(MsgResponse<AuthTokenResponseDto?>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Refresh([FromBody] AuthRefreshTokenCommandRequest Command, CancellationToken CancellationToken)
         {

@@ -12,14 +12,18 @@ namespace SIGC.ApplicationService.Features.CatalogFeatures.Commands.CatalogCreat
         public string? CatalogCode { get; set; }
         public string CatalogSlug { get; set; } = null!;
         public string CatalogName { get; set; } = null!;
-        public byte? PrescriptionTypeID { get; set; }
+        public bool CatalogHasVariants { get; set; }
+        public byte SaleConditionID { get; set; }
         public int? ManufacturerID { get; set; }
         public int? BrandID { get; set; }
         public short? PharmaceuticalFormID { get; set; }
         public string CatalogBrandType { get; set; } = null!;
+        public string? CatalogConcentration { get; set; }
         public string? CatalogDescription { get; set; }       
         public RecordOriginEnum RecordOriginID { get; set; }
         public RecordStateEnum RecordStateID { get; set; }
         public IFileDataService? File { get; set; }
+        public List<CatalogActiveIngredientCreateCommandRequest> CatalogActiveIngredients { get; set; } = new List<CatalogActiveIngredientCreateCommandRequest>();
+        public List<CatalogTherapeuticActionCreateCommandRequest> CatalogTherapeuticActions { get; set; } = new List<CatalogTherapeuticActionCreateCommandRequest>();
     }
 }

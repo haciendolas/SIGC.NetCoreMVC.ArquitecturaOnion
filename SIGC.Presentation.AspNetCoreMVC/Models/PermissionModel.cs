@@ -9,6 +9,9 @@
         public const Int16 AccUnchange = 5;
         public const Int16 AccPrint = 6;
         public const Int16 AccExport = 7;
-        public const Int16 AccAdd = 8;
+        public const Int16 AccAdd = 8; 
+        public const Int16 AccApprove = 9;
+        public const Int16 AccView = 10;
+        public const Int16 AccFinish = 11;
     }
 }

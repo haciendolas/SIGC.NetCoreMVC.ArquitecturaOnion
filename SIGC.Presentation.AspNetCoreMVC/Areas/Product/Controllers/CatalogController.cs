@@ -9,7 +9,7 @@ using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogTypeService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CategoryService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.ManufacturerService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.PharmaceuticalFormService;
-using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.PrescriptionTypeService;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.SaleConditionService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.PriceTypeService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.TherapeuticActionService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.UnitMeasureService;
@@ -30,7 +30,7 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
         private readonly ICatalogService CatalogService;
         private readonly IActiveIngredientService ActiveIngredientService;
         private readonly IPharmaceuticalFormService PharmaceuticalFormService;
-        private readonly IPrescriptionTypeService PrescriptionTypeService;
+        private readonly ISaleConditionService SaleConditionService;
         private readonly ITherapeuticActionService TherapeuticActionService;
         private readonly IUnitMeasureService UnitMeasureService;
         private readonly IPriceTypeService PriceTypeService;
@@ -45,7 +45,7 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
             ICatalogService CatalogService,
             IActiveIngredientService ActiveIngredientService,
             IPharmaceuticalFormService PharmaceuticalFormService,
-            IPrescriptionTypeService PrescriptionTypeService,
+            ISaleConditionService SaleConditionService,
             ITherapeuticActionService TherapeuticActionService,
             IUnitMeasureService UnitMeasureService,
             IPriceTypeService PriceTypeService,
@@ -61,7 +61,7 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
             this.CatalogService = CatalogService;
             this.ActiveIngredientService = ActiveIngredientService;
             this.PharmaceuticalFormService = PharmaceuticalFormService;
-            this.PrescriptionTypeService = PrescriptionTypeService;
+            this.SaleConditionService = SaleConditionService;
             this.TherapeuticActionService = TherapeuticActionService;
             this.UnitMeasureService = UnitMeasureService;
             this.PriceTypeService = PriceTypeService;
@@ -78,7 +78,7 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
             ViewBag.BrandList = (await BrandService.BrandList()).Data;
             ViewBag.ActiveIngredientList = (await ActiveIngredientService.ActiveIngredientList()).Data;
             ViewBag.PharmaceuticalFormList = (await PharmaceuticalFormService.PharmaceuticalFormList()).Data;
-            ViewBag.PrescriptionTypeList = (await PrescriptionTypeService.PrescriptionTypeList()).Data;
+            ViewBag.SaleConditionList = (await SaleConditionService.SaleConditionList()).Data;
             ViewBag.TherapeuticActionList = (await TherapeuticActionService.TherapeuticActionList()).Data;
             ViewBag.UnitMeasureList = (await UnitMeasureService.UnitMeasureList()).Data;
             ViewBag.PriceTypeList = (await PriceTypeService.PriceTypeList()).Data; 
@@ -91,8 +91,32 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> CatalogCreate([FromForm] CatalogCreateUpdateRequestModel Request)
+        {
+            Request.RecordOriginID = (byte)EnumsHelper.RecordOrigin.WebForm;
+            return Json(await CatalogService.CatalogCreate(Request));
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> CatalogUpdate([FromForm] CatalogCreateUpdateRequestModel Request)
+        {
+            Request.RecordOriginID = (byte)EnumsHelper.RecordOrigin.WebForm;
+            return Json(await CatalogService.CatalogUpdate(Request));
+        }
+
+        [HttpPost]
         public async Task<IActionResult> CatalogDataTable(CatalogPaginationRequestModel DataTable)
         {
+            var control = new List<ControlModel>();
+            control.Add(new ControlModel { Value = PermissionModel.AccUpdate });
+            control.Add(new ControlModel { Value = PermissionModel.AccChange });
+            control.Add(new ControlModel { Value = PermissionModel.AccUnchange });
+            control.Add(new ControlModel { Value = PermissionModel.AccDelete });
+            control.Add(new ControlModel { Value = PermissionModel.AccAdd,Label="Presentación" });
+            control.Add(new ControlModel { Value = PermissionModel.AccAdd, Label = "Precio" ,Icon= "ri-coins-line" });
+            control.Add(new ControlModel { Value = PermissionModel.AccAdd, Label = "Impuesto", Icon = "ri-percent-line" });
+            control.Add(new ControlModel { Value = PermissionModel.AccAdd, Label = "Configuración",  Icon = "ri-settings-2-line" });
+
             DataTable.PageNumber = (DataTable.iDisplayStart / DataTable.iDisplayLength) + 1;
             DataTable.PageSize = DataTable.iDisplayLength;
             var ApiResponse = await CatalogService.CatalogPagination(DataTable);
@@ -109,8 +133,9 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
                                  SpanStateType((short)sql.RecordStateID),
                                  sql.CatalogLastUpdatedDateTime.ToString("dd/MM/yyyy hh:mm:ss"),
                                  sql.CatalogLastUpdatedUserName,
-                                 sql.RecordStateID==(short)EnumsHelper.StateType.Active ? LinkHRef(new ControlModel{Value=PermissionModel.AccUpdate}):"&nbsp;",
-                                 sql.RecordStateID==(short)EnumsHelper.StateType.Active ? LinkHRef(new ControlModel{Value=PermissionModel.AccUnchange}):LinkHRef(new ControlModel{Value=PermissionModel.AccChange})
+                                "",
+                                // sql.RecordStateID==(short)EnumsHelper.StateType.Active ? LinkHRef(new ControlModel{Value=PermissionModel.AccUnchange}):LinkHRef(new ControlModel{Value=PermissionModel.AccChange})
+                                 LinkUL(control, sql.RecordStateID == (short)EnumsHelper.StateType.Active)
 
              };
             return Json(new { sEcho = Convert.ToInt32(DataTable.sEcho), iTotalRecords = ApiResponse.Data.TotalRecords, iTotalDisplayRecords = ApiResponse.Data.RecordsFiltered, aaData = result });

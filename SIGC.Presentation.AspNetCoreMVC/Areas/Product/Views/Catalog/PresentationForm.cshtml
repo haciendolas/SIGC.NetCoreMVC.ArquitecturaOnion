@@ -1,15 +1,14 @@
-﻿@using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.UnitMeasure
-@using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Models.Constant
+﻿@using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.UnitMeasure 
 @{
     Layout = null;
 }
-<form id="frmCompanyCreateUpdate" class="needs-validation" novalidate method="dialog">
+<form id="frmCatalogVariantCreateUpdate" class="needs-validation" novalidate method="dialog">
     <h6 class="pt-2">&nbsp;&nbsp;Todos los campos(<i class="ri-asterisk align-middle text-danger"></i>) son obligatorios</h6>
     <div class="card-body">
         <div class="row pb-2">
-            <label for="txtCompanyCorporateEmail" class="col-sm-1 col-form-label">Producto</label>
+            <label class="col-sm-1 col-form-label">Producto</label>
             <div class="col-sm-11">
-                <input type="text" class="form-control" name="CatalogName" readonly />
+                <input type="text" class="form-control" name="CatalogNameLabel" readonly />
             </div>
         </div>
         <div class="card" id="div-variant">
@@ -22,16 +21,19 @@
             </div>
             <div class="card-body">
                 <div class="row pb-2">
-                    <label for="txtCompanyAddress" class="col-sm-2 col-form-label">Nombre<i class="ri-asterisk align-middle text-danger"></i></label>
-                    <div class="col-sm-6">
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="txtCatalogVariantName" name="CatalogVariantName" maxlength="50" placeholder="Talla - Color, 32 - R" />
+                    <label for="txtCatalogVariantName" class="col-sm-2 col-form-label">Nombre<i class="ri-asterisk align-middle text-danger"></i></label>
+                    <div class="col-sm-6 row">
+                        <div class="col-sm-10">
+                            <input type="hidden" id="hdCatalogVariantID" />
+                            <input type="text" class="form-control" id="txtCatalogVariantName" name="CatalogVariantName" maxlength="100" placeholder="Único / Talla - Color, 32 - R" value="Único" />
+                          </div>
+                        <div class="col-sm-2">
                             <button class="btn btn-outline-success" type="button" id="btnAttributeSearchOpen"><i class="ri-search-2-line align-bottom me-1 fs-13"></i>Ver</button>
-                        </div>
+                        </div>                
                     </div>
-                    <label for="txtCompanyAddress" class="col-sm-1 col-form-label">SKU<i class="ri-asterisk align-middle text-danger"></i></label>
+                    <label for="txtCatalogVariantSKU" class="col-sm-1 col-form-label">SKU</label>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" id="txtCatalogVariantSKU" name="CatalogVariantSKU" maxlength="15" />
+                        <input type="text" class="form-control" id="txtCatalogVariantSKU" name="CatalogVariantSKU" maxlength="50" />
                     </div>
                 </div> 
                 <div class="card mb-2" id="div-presentation">
@@ -44,9 +46,10 @@
                         </div>
                         <div class="card-body">
                             <div class="row pb-2">
-                            <label for="cboUnitMeasureID" class="col-sm-1 col-form-label">U.Medida<i class="ri-asterisk align-middle text-danger"></i></label>
-                                <div class="col-sm-2">
-                                <select class="form-select" id="cboUnitMeasureID" name="UnitMeasureID" data-choices>
+                            <input type="hidden" id="hdCatalogPresentationID" />
+                                <label for="cboUnitMeasureID" class="col-sm-1 col-form-label">Medida<i class="ri-asterisk align-middle text-danger"></i></label>
+                                <div class="col-sm-3">
+                                <select class="form-select" id="cboUnitMeasureID" name="UnitMeasureID">
                                     @if (@ViewBag.UnitMeasureList != null)
                                         {
                                             <option value="">Seleccionar</option>
@@ -59,59 +62,47 @@
                                     </select>
                                 </div>
                             <label for="cboPresentationID" class="col-sm-2 col-form-label">Presentación<i class="ri-asterisk align-middle text-danger"></i></label>
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                 <select class="form-select" id="cboPresentationID" name="PresentationID">
                                     <option value="">Seleccionar</option> 
                                     </select>
                                 </div>
-                                <label for="txtCompanyAddress" class="col-sm-1 col-form-label">Equivalente<i class="ri-asterisk align-middle text-danger"></i></label>
+                            <label for="txtCatalogPresentationEquivalence" class="col-sm-1 col-form-label">Factor<i class="ri-asterisk align-middle text-danger"></i></label>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control" id="txtCompanyAddress" name="CompanyAddress" />
+                                <input type="text" class="form-control" id="txtCatalogPresentationEquivalence" name="CatalogPresentationEquivalence" />
                                 </div>
                             </div>
                             <div class="row pb-2">
-                                <label for="txtCompanyCorporateEmail" class="col-sm-1 col-form-label">SKU<i class="ri-asterisk align-middle text-danger"></i></label>
+                            <label for="txtCatalogPresentationSKU" class="col-sm-1 col-form-label">SKU</label>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control" id="txtCompanyCorporateEmail" name="CompanyCorporateEmail" />
+                                <input type="text" class="form-control" id="txtCatalogPresentationSKU" name="CatalogPresentationSKU" />
                                 </div>
-                                <label for="txtCompanyMobile" class="col-sm-1 col-form-label">COD.QR</label>
+                                <label for="txtCatalogPresentationBarcode" class="col-sm-1 col-form-label">COD.QR</label>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control" id="txtCompanyMobile" name="CompanyMobile" />
+                                <input type="text" class="form-control" id="txtCatalogPresentationBarcode" name="CatalogPresentationBarcode" />
                                 </div>
                                 <label for="chkStateID" class="col-sm-1 col-form-label">Estado</label>
                                 <div class="col-sm-2 pt-2">
                                     <div class="form-check form-switch form-switch-md form-switch-secondary" dir="ltr">
-                                        <input type="checkbox" class="form-check-input" checked id="chkStateID">
-                                        <label class="form-check-label" for="chkStateID">Activo</label>
+                                    <input type="checkbox" class="form-check-input" checked id="chkCatalogPresentationStateID">
+                                    <label class="form-check-label" for="chkCatalogPresentationStateID">Activo</label>
                                     </div>
                                 </div>
-                            </div>
-                            @*
-                            <div class="row pt-2">
-                                <div class="col-sm-12">
-                                    <div class="text-end">
-                                        <button type="button" class="btn btn-light" id="btnCompanyNew"><i class="ri-file-text-fill align-bottom me-1 fs-13"></i>&nbsp;Nuevo&nbsp;</button>&nbsp;&nbsp;
-                                        <button type="button" class="btn btn-primary" id="btnCompanyCreate"><i class="ri-save-3-line align-bottom me-1 fs-13"></i><span>Guardar</span></button>
-                                        <button type="button" class="btn btn-primary" id="btnCompanyUpdate"><i class="ri-pencil-fill align-bottom me-1 fs-13"></i>Editar&nbsp;</button>
-                                    </div>
-                                </div>
-                            </div>
-                            *@
+                            </div>                           
                         </div>
-                    </div>
-                
+                    </div>                
                 <div class="row pt-2">
                     <div class="col-sm-12">
                         <div class="text-end">
-                            <button type="button" class="btn btn-light" id="btnCompanyNew"><i class="ri-file-text-fill align-bottom me-1 fs-13"></i>&nbsp;Nuevo&nbsp;</button>&nbsp;&nbsp;
-                            <button type="button" class="btn btn-primary" id="btnCompanyCreate"><i class="ri-save-3-line align-bottom me-1 fs-13"></i><span>Guardar</span></button>
-                            <button type="button" class="btn btn-primary" id="btnCompanyUpdate"><i class="ri-pencil-fill align-bottom me-1 fs-13"></i>Editar&nbsp;</button>
+                            <button type="button" class="btn btn-light" id="btnCatalogVariantNew"><i class="ri-file-text-fill align-bottom me-1 fs-13"></i>&nbsp;Nuevo&nbsp;</button>&nbsp;&nbsp;
+                            <button type="button" class="btn btn-primary" id="btnCatalogVariantCreate"><i class="ri-save-3-line align-bottom me-1 fs-13"></i><span>Guardar</span></button>
+                            <button type="button" class="btn btn-primary" id="btnCatalogVariantUpdate"><i class="ri-pencil-fill align-bottom me-1 fs-13"></i>Editar&nbsp;</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
+        @*
         <div class="card">
             <div class="card-header p-2" style="background:#f3f3f9">
                 <div class="d-flex align-items-center">
@@ -160,6 +151,7 @@
                 </div>
             </div>
         </div>
+        *@
     </div>
 </form>
 <partial name="Modal/AttributeSearch" />

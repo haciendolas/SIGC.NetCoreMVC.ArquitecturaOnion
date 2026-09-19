@@ -7,5 +7,5 @@ namespace SIGC.ApplicationService.Features.AuthFeatures.Commands.AuthRefreshToke
     public record struct AuthRefreshTokenCommandRequest
     ( string AccessToken,
       string RefreshToken
-    ):IRequest<MsgResponse<AuthTokenResponseDto>>;
+    ):IRequest<MsgResponse<AuthTokenResponseDto?>>;
 }

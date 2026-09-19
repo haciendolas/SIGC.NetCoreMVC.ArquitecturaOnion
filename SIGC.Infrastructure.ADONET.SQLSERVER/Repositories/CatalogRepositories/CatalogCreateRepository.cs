@@ -33,9 +33,20 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogRepositories
                 Command.Parameters.Add("@CatalogID", SqlDbType.Int);
                 Command.Parameters["@CatalogID"].Direction = ParameterDirection.Output;
                 Command.Parameters.AddWithValue("@CompanyID", Model.CompanyID);
+                Command.Parameters.AddWithValue("@CatalogTypeID", Model.CatalogTypeID);
+                Command.Parameters.AddWithValue("@CategoryID", Model.CategoryID);
+                Command.Parameters.AddWithValue("@CatalogCode", string.IsNullOrWhiteSpace(Model.CatalogCode) ? DBNull.Value : Model.CatalogCode);
                 Command.Parameters.AddWithValue("@CatalogName", Model.CatalogName);
                 Command.Parameters.AddWithValue("@CatalogSlug", Model.CatalogSlug);
+                Command.Parameters.AddWithValue("@CatalogHasVariants", Model.CatalogHasVariants);
+                Command.Parameters.AddWithValue("@SaleConditionID", Model.SaleConditionID);
+                Command.Parameters.AddWithValue("@ManufacturerID", Model.ManufacturerID.HasValue && Model.ManufacturerID.Value > 0 ? Model.ManufacturerID : DBNull.Value);
+                Command.Parameters.AddWithValue("@BrandID", Model.BrandID.HasValue && Model.BrandID.Value > 0 ? Model.BrandID : DBNull.Value);
+                Command.Parameters.AddWithValue("@PharmaceuticalFormID", Model.PharmaceuticalFormID.HasValue && Model.PharmaceuticalFormID.Value > 0 ? Model.PharmaceuticalFormID : DBNull.Value);
+                Command.Parameters.AddWithValue("@CatalogBrandType", string.IsNullOrWhiteSpace(Model.CatalogBrandType) ? "NINGUNO" : Model.CatalogBrandType);
                 Command.Parameters.AddWithValue("@CatalogImage", string.IsNullOrWhiteSpace(Model.CatalogImage) ? DBNull.Value : Model.CatalogImage);
+                Command.Parameters.AddWithValue("@CatalogConcentration", string.IsNullOrWhiteSpace(Model.CatalogConcentration) ? DBNull.Value : Model.CatalogConcentration);
+                Command.Parameters.AddWithValue("@CatalogDescription", string.IsNullOrWhiteSpace(Model.CatalogDescription) ? DBNull.Value : Model.CatalogDescription);
                 Command.Parameters.AddWithValue("@RecordOriginID", (short)Model.RecordOriginID);
                 Command.Parameters.AddWithValue("@RecordStateID", (short)Model.RecordStateID);
                 Command.Parameters.AddWithValue("@CatalogCreatedUserID", Model.CreatedById);
@@ -46,9 +57,8 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogRepositories
                 Command.Transaction = Transaction;
                 RecordAffected = await Command.ExecuteNonQueryAsync(CancellationToken);
                 Model.CatalogID = Convert.ToInt32(Command.Parameters["@CatalogID"].Value);
-            }
-
+            }         
             return RecordAffected;
-        }
+        } 
     }
 }

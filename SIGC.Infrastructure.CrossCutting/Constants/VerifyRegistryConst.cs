@@ -50,7 +50,25 @@
         public static class Catalog
         {
             public const string OK = "OK";
+            public const string CODE_EXISTS = "CODE_EXISTS";
             public const string NAME_EXISTS = "NAME_EXISTS";
+            public const string CODE_AND_NAME_EXISTS = "CODE_AND_NAME_EXISTS";
+        }
+        public static class CatalogVariant
+        {
+            public const string OK = "OK";
+            public const string SKU_EXISTS = "SKU_EXISTS";
+            public const string NAME_EXISTS = "NAME_EXISTS";
+            public const string SKU_AND_NAME_EXISTS = "SKU_AND_NAME_EXISTS";
+        }
+        public static class CatalogPresentation
+        {
+            public const string OK = "OK";
+            public const string SKU_EXISTS = "SKU_EXISTS";
+            public const string BARCODE_EXISTS = "BARCODE_EXISTS";
+            public const string SKU_AND_BARCODE_EXISTS = "SKU_AND_BARCODE_EXISTS"; 
+            public const string PRESENTATION_EXISTS = "PRESENTATION_EXISTS";
+
         }
     }
 }

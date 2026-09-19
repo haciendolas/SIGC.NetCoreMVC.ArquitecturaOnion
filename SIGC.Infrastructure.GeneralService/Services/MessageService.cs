@@ -60,7 +60,17 @@ public class MessageService(IServiceProvider ServiceProvider) : IMessageService
                 { MessageDescriptionConst.EXIST_USER_USERMAIL, "The user's email address already exists." },
                 { MessageDescriptionConst.EXIST_USER_NAME_AND_MAIL, "The user and email already exist." },
                 { MessageDescriptionConst.EXIST_ESTABLISHMENT_ESTABLISHMENTNAME, "The establishment name already exists." },
-                { MessageDescriptionConst.EXIST_WAREHOUSE_WAREHOUSENAME, "The warehouse name already exists." }
+                { MessageDescriptionConst.EXIST_WAREHOUSE_WAREHOUSENAME, "The warehouse name already exists." },
+                { MessageDescriptionConst.EXIST_CATALOG_CATALOGCODE, "The product code already exists." },
+                { MessageDescriptionConst.EXIST_CATALOG_CATALOGNAME, "The product name already exists." },
+                { MessageDescriptionConst.EXIST_CATALOG_CODE_AND_NAME, "The code and name already exist." },
+                { MessageDescriptionConst.EXIST_CATALOGVARIANT_SKU, "The SKU already exists in another variant" },
+                { MessageDescriptionConst.EXIST_CATALOGVARIANT_NAME, "The variant name already exists in another variant" },
+                { MessageDescriptionConst.EXIST_CATALOGVARIANT_SKU_AND_NAME, "The SKU and name already exist in another variant" },
+                { MessageDescriptionConst.EXIST_CATALOGPRESENTATION_SKU, "The SKU already exists in another presentation" },
+                { MessageDescriptionConst.EXIST_CATALOGPRESENTATION_BARCODE, "The barcode already exists in another presentation" },
+                { MessageDescriptionConst.EXIST_CATALOGPRESENTATION_SKU_AND_BARCODE, "The SKU and barcode already exist in another presentation" },
+                { MessageDescriptionConst.EXIST_CATALOGPRESENTATION_PRESENTATION, "The presentation already exists in this variant" }
             },
 
             [(short)IdiomEnum.Spanish] = new()
@@ -99,7 +109,17 @@ public class MessageService(IServiceProvider ServiceProvider) : IMessageService
                 { MessageDescriptionConst.EXIST_USER_USERMAIL, "El correo del usuario ya existe." },
                 { MessageDescriptionConst.EXIST_USER_NAME_AND_MAIL, "El usuario y el correo ya existe." },
                 { MessageDescriptionConst.EXIST_ESTABLISHMENT_ESTABLISHMENTNAME, "El nombre del establecimiento ya existe." },
-                { MessageDescriptionConst.EXIST_WAREHOUSE_WAREHOUSENAME, "El nombre del almacen ya existe." }
+                { MessageDescriptionConst.EXIST_WAREHOUSE_WAREHOUSENAME, "El nombre del almacen ya existe." },
+                { MessageDescriptionConst.EXIST_CATALOG_CATALOGCODE, "El código del producto ya existe." },
+                { MessageDescriptionConst.EXIST_CATALOG_CATALOGNAME, "El nombre de producto ya existe." },
+                { MessageDescriptionConst.EXIST_CATALOG_CODE_AND_NAME, "El código y el nombre del producto ya existe." },
+                { MessageDescriptionConst.EXIST_CATALOGVARIANT_SKU, "El SKU ya existe en otra variante" },
+                { MessageDescriptionConst.EXIST_CATALOGVARIANT_NAME, "El nombre de la variante ya existe en otra variante" },
+                { MessageDescriptionConst.EXIST_CATALOGVARIANT_SKU_AND_NAME, "El SKU y el nombre ya existen en otra variante" },
+                { MessageDescriptionConst.EXIST_CATALOGPRESENTATION_SKU, "El SKU ya existe en otra presentación" },
+                { MessageDescriptionConst.EXIST_CATALOGPRESENTATION_BARCODE, "El código de barra ya existe en otra presentación" },
+                { MessageDescriptionConst.EXIST_CATALOGPRESENTATION_SKU_AND_BARCODE, "El SKU y el código de barra ya existe en otra presentación" }, 
+                { MessageDescriptionConst.EXIST_CATALOGPRESENTATION_PRESENTATION, "La presentación ya existen en esta variante" }
             }
         };
     }

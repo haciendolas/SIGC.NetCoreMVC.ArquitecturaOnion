@@ -1,9 +1,9 @@
 ﻿using SIGC.DomainModel.Enums;
+using SIGC.DomainModel.ValueObjects;
 
 namespace SIGC.DomainModel.Models
 {
-   public class Catalog
-    {
+   public class Catalog {
         public int CompanyID { get; set; }
         public int CatalogID { get; set; }
         public byte CatalogTypeID { get; private set; }
@@ -11,11 +11,13 @@ namespace SIGC.DomainModel.Models
         public string? CatalogCode { get; private set; }
         public string CatalogSlug { get; private set; }
         public string CatalogName { get; private set; }
-        public byte? PrescriptionTypeID { get; private set; }
+        public bool CatalogHasVariants { get; private set; }
+        public byte SaleConditionID { get; private set; }
         public int? ManufacturerID { get; private set; }
         public int? BrandID { get; private set; }
         public short? PharmaceuticalFormID { get; private set; }
         public string CatalogBrandType { get; private set; }
+        public string? CatalogConcentration { get; set; }
         public string? CatalogDescription { get; private set; }
         public string? CatalogImage { get; private set; }
         public RecordOriginEnum RecordOriginID{ get; private set; }
@@ -23,7 +25,13 @@ namespace SIGC.DomainModel.Models
         public int CreatedById { get; private set; }
         public string CreatedByName { get; private set; }
         public string CreatedByFullName { get; private set; }
-        public DateTime CreatedDate { get; private set; }
+        public DateTime CreatedDate { get; private set; } 
+     
+        private readonly List<CatalogActiveIngredient> _CatalogActiveIngredients = [];
+        public IReadOnlyList<CatalogActiveIngredient> CatalogActiveIngredients => _CatalogActiveIngredients.AsReadOnly();
+
+        private readonly List<CatalogTherapeuticAction> _CatalogTherapeuticActions = [];
+        public IReadOnlyList<CatalogTherapeuticAction> CatalogTherapeuticActions => _CatalogTherapeuticActions.AsReadOnly();
 
         protected Catalog() { }
 
@@ -33,12 +41,14 @@ namespace SIGC.DomainModel.Models
             int CategoryID,
             string? CatalogCode,
             string CatalogSlug,
-            string CatalogName,            
-            byte? PrescriptionTypeID,
+            string CatalogName, 
+            bool CatalogHasVariants,
+            byte SaleConditionID,
             int? ManufacturerID,
             int? BrandID,
             short? PharmaceuticalFormID,
             string CatalogBrandType,
+            string? CatalogConcentration,
             string? CatalogDescription,
             string? CatalogImage,
             RecordOriginEnum RecordOriginID,
@@ -58,11 +68,13 @@ namespace SIGC.DomainModel.Models
                 CatalogCode = CatalogCode,
                 CatalogSlug = CatalogSlug,
                 CatalogName = CatalogName,
-                PrescriptionTypeID = PrescriptionTypeID,
+                CatalogHasVariants = CatalogHasVariants,
+                SaleConditionID = SaleConditionID,
                 ManufacturerID = ManufacturerID,
                 BrandID = BrandID,
                 PharmaceuticalFormID = PharmaceuticalFormID,
                 CatalogBrandType = CatalogBrandType,
+                CatalogConcentration = CatalogConcentration,
                 CatalogDescription = CatalogDescription,
                 CatalogImage = CatalogImage,
                 RecordOriginID = RecordOriginID,
@@ -82,13 +94,16 @@ namespace SIGC.DomainModel.Models
             string? CatalogCode,
             string CatalogSlug,
             string CatalogName,
-            byte? PrescriptionTypeID,
+            bool CatalogHasVariants,
+            byte SaleConditionID,
             int? ManufacturerID,
             int? BrandID,
             short? PharmaceuticalFormID,
             string CatalogBrandType,
+            string? CatalogConcentration,
             string? CatalogDescription,
             string? CatalogImage,
+            RecordOriginEnum RecordOriginID,
             RecordStateEnum RecordStateID,
             DateTime UpdatedDate,
             int UpdatedById,
@@ -105,13 +120,16 @@ namespace SIGC.DomainModel.Models
                 CatalogCode = CatalogCode,
                 CatalogSlug = CatalogSlug,
                 CatalogName = CatalogName,
-                PrescriptionTypeID = PrescriptionTypeID,
+                CatalogHasVariants = CatalogHasVariants,
+                SaleConditionID = SaleConditionID,
                 ManufacturerID = ManufacturerID,
                 BrandID = BrandID,
                 PharmaceuticalFormID = PharmaceuticalFormID,
                 CatalogBrandType = CatalogBrandType,
+                CatalogConcentration = CatalogConcentration,
                 CatalogDescription = CatalogDescription,
                 CatalogImage = CatalogImage,
+                RecordOriginID = RecordOriginID,
                 RecordStateID = RecordStateID,
                 CreatedDate = UpdatedDate,
                 CreatedById = UpdatedById,
@@ -139,6 +157,45 @@ namespace SIGC.DomainModel.Models
             if (string.IsNullOrWhiteSpace(CatalogName)) throw new ArgumentNullException("El nombre de la catálogo no debe estar vacia" + nameof(CatalogName));
             if (CreatedDate.AddMinutes(1) < DateTime.Now) throw new ArgumentNullException($"La fecha de creación de ser mayor a {DateTime.Now.ToString("dd/MM/yyyy HH:mm")}");
             if (CreatedById==0) throw new ArgumentNullException("El codigo del usuario debe ser mayor a cero");
+        }
+
+        public void AddCatalogActiveIngredient(            
+            int ActiveIngredientID,
+            decimal? CatalogActiveIngredientQuantity,            
+            int? UnitMeasureID,
+            string? CatalogActiveIngredientLabel)
+        {
+            _CatalogActiveIngredients.Add(new CatalogActiveIngredient(
+                CompanyID:this.CompanyID,
+                CatalogID:this.CatalogID,
+                ActiveIngredientID: ActiveIngredientID,               
+                CatalogActiveIngredientQuantity: CatalogActiveIngredientQuantity,
+                UnitMeasureID: UnitMeasureID,
+                CatalogActiveIngredientLabel: CatalogActiveIngredientLabel,
+                RecordOriginID: this.RecordOriginID,
+                RecordStateID:this.RecordStateID,
+                CreatedById:this.CreatedById,
+                CreatedByName:this.CreatedByName,
+                CreatedByFullName:this.CreatedByFullName,
+                CreatedDate:this.CreatedDate
+                )
+             );
+        }
+
+        public void AddCatalogTherapeuticAction(short TherapeuticActionID)
+        {
+            _CatalogTherapeuticActions.Add(new CatalogTherapeuticAction(
+                CompanyID: this.CompanyID,
+                CatalogID: this.CatalogID,
+                TherapeuticActionID: TherapeuticActionID,       
+                RecordOriginID: this.RecordOriginID,
+                RecordStateID: this.RecordStateID,
+                CreatedById: this.CreatedById,
+                CreatedByName: this.CreatedByName,
+                CreatedByFullName: this.CreatedByFullName,
+                CreatedDate: this.CreatedDate
+                )
+             );
         }
     }
 }

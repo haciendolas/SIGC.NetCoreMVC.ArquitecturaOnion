@@ -177,7 +177,7 @@
             Custom: function (options, successCallback) {
                 if (options.type == null) options.type = Uti.Variable.FetchAjax.Type.Post; 
                 if (options.url == null) options.url = "";
-                if (options.async == null) options.async = true; //true peticion asincrona | false no asincrona =ejecuta una funcion despues de haberse terminado la otra
+                if (options.async == null) options.async = true; //true peticion asincrona | false no asincrona = ejecuta una funcion despues de haberse terminado la otra
                 if (options.dataType == null) options.dataType = Uti.Variable.FetchAjax.DataType.Json; // Tipo de respuesta que retornada del controlador
                 if (options.data == null) options.data = {};
                 if (options.cache == null) options.cache = false; // true Borrar la cache
@@ -650,6 +650,133 @@
                 Inactive: 0,
                 Active: 1,
                 Delete:2
+            },
+            ButtonType: {
+                Insert: 1,
+                Update: 2,
+                Delete: 3,
+                Change: 4,
+                Unchange: 5,
+                Print: 6,
+                Export: 7,
+                Add:8
+            },
+            Control: function () {
+                return {
+                    Type: 0,
+                    Name: null,
+                    Label: null,
+                    Icon: null,
+                    Property: null,
+                    Style: null,
+                    IsVisible:null
+                };
+            }
+        },
+        Control: {
+            SpanStateType: function (StateID) {
+                let MyHtml = "<span class='badge badge-soft-success text-uppercase fs-14'><i class='ri-checkbox-circle-line align-bottom'></i> Activo</span>";
+                if (StateID == Uti.Variable.StateType.Inactive) {
+                    MyHtml = "<span class='badge badge-soft-danger text-uppercase fs-14'><i class='ri-close-circle-line align-bottom'></i> Inactivo</span>";
+                }
+                return MyHtml;
+            },
+            LinkHRef: function (Control) {
+                let control = '';
+
+                switch (Control.Type) {
+
+                    case Uti.Variable.ButtonType.Update:
+                        control = `<a href="javascript:void(0)"
+                                    name='${Control.Name ?? "slnkEdit"}'
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="top"
+                                    data-title="Editar"
+                                    title="Editar"
+                                    class="link-primary"
+                                    ${Control.Property ?? ''}>
+                                    <i class="ri-pencil-fill fs-24"></i>
+                                </a>`;
+                        break;
+
+                    case Uti.Variable.ButtonType.Delete:
+                         control = `<a href="javascript:void(0)"                              
+                                name='${Control.Name ?? "slnkDelete"}'
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="top"
+                                data-title="Eliminar"
+                                title="Eliminar"
+                                class="link-danger"
+                                ${Control.Property ?? ''}>
+                                <i class="ri-close-line fs-24"></i>
+                            </a>`;
+                        break;
+
+                    case Uti.Variable.ButtonType.Change:
+                        control = `<a href="javascript:void(0)"                                    
+                                    name="${Control.Name ?? 'slnkActive'}"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="top"
+                                    data-title="Activar"
+                                    title="Activar"
+                                    class="link-success"
+                                    ${Control.Property ?? ''}>
+                                    <i class="ri-refresh-line fs-24"></i>
+                                </a>`;
+                        break;
+
+                    case Uti.Variable.ButtonType.Unchange:
+                        control = `<a href="javascript:void(0)"                                  
+                                    name="${Control.Name ?? 'slnkInactive'}"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="top"
+                                    data-title="Desactivar"
+                                    title="Desactivar"
+                                    class="link-success"
+                                    ${Control.Property ?? ''}>
+                                    <i class="ri-delete-bin-line fs-24"></i>
+                                </a>`;
+                        break;
+
+                    case Uti.Variable.ButtonType.Print:
+                        control = `<a href="javascript:void(0)"
+                                    name="${Control.Name ?? 'slnkPrint'}"
+                                    class="btn btn-info btn-xs rounded tooltips"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    data-title="Vista Impresión"
+                                    ${Control.Property ?? ''}>
+                                    <i class="glyphicon glyphicon-print"></i>
+                                </a>`;
+                        break;
+
+                    case Uti.Variable.ButtonType.Export:
+                        control = `<a href="javascript:void(0)"
+                                name="${Control.Name ?? 'slnkExport'}"
+                                class="btn btn-info btn-xs rounded tooltips"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                data-title="Download PDF"
+                                ${Control.Property ?? ''}>
+                                <i class="glyphicon glyphicon-download-alt"></i>
+                            </a>`;
+                        break;
+
+                    case Uti.Variable.ButtonType.Add:
+                        control = `<a href="javascript:void(0)"
+                                name="${Control.Name ?? 'slnkAdd'}"                                
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="top"
+                                data-title="Agregar"
+                                title="Agregar"
+                                class="link-primary"
+                                ${Control.Property ?? ''}>
+                                <i class="ri-add-line fs-24"></i>
+                            </a>`;
+                        break;
+                };
+
+                return control;
             }
         },
         HttpsServices: {
@@ -725,7 +852,7 @@
                     return item;
                 }
             },
-            removeItem: function (key) {                 
+            RemoveItem: function (key) {                 
                 const item = localStorage.getItem(key);
                 if (item && item != null)
                     localStorage.removeItem(key);

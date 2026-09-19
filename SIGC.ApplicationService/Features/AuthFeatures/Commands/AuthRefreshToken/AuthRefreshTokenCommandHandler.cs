@@ -20,11 +20,11 @@ namespace SIGC.ApplicationService.Features.AuthFeatures.Commands.AuthRefreshToke
        IMessageService MessageService,
        IGenerateTokenService GenerateTokenService,
        IAuthMapper AuthMapper
-    ) : IRequestHandler<AuthRefreshTokenCommandRequest, MsgResponse<AuthTokenResponseDto>>
+    ) : IRequestHandler<AuthRefreshTokenCommandRequest, MsgResponse<AuthTokenResponseDto?>>
     {
-        public async Task<MsgResponse<AuthTokenResponseDto>> Handle(AuthRefreshTokenCommandRequest Request, CancellationToken CancellationToken)
+        public async Task<MsgResponse<AuthTokenResponseDto?>> Handle(AuthRefreshTokenCommandRequest Request, CancellationToken CancellationToken)
         {
-            var MsgResponse = new MsgResponse<AuthTokenResponseDto>();
+            var MsgResponse = new MsgResponse<AuthTokenResponseDto?>();
             try{
                 var ClaimsPrincipal = await GenerateTokenService.ValidateJWTToken(Request.AccessToken, IgnoreExpiration: true);
 

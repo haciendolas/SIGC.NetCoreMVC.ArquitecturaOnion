@@ -10,6 +10,7 @@
 			@CompanyID=1,	
 			@CatalogID=1,
 		    @CatalogVariantName='Default',
+			@CatalogVariantSKU = '2323121212121',
 			@RecordOriginID=1,
 			@RecordStateID=1,
 			@CatalogVariantCreatedUserID=1,
@@ -22,11 +23,12 @@
    Identifcador:		   Date Update  |   User Update   |  Description Update  
      @1
 ==============================================================================*/
-CREATE PROCEDURE Product.uspCatalogVariantCreate
+ALTER PROCEDURE Product.uspCatalogVariantCreate
 (  @CatalogVariantID INT OUTPUT,
    @CompanyID INT,  
    @CatalogID INT, 
-   @CatalogVariantName NVARCHAR(50), 
+   @CatalogVariantName NVARCHAR(100), 
+   @CatalogVariantSKU NVARCHAR(50), 
    @RecordOriginID TINYINT,
    @RecordStateID TINYINT,
    @CatalogVariantCreatedUserID INT,
@@ -40,6 +42,7 @@ BEGIN
      CompanyID,	 
 	 CatalogID,
 	 CatalogVariantName, 
+	 CatalogVariantSKU,
      RecordOriginID,
 	 RecordStateID,
 	 CatalogVariantCreatedUserID,
@@ -50,6 +53,7 @@ BEGIN
     @CompanyID,	 
 	@CatalogID,
 	@CatalogVariantName,
+	@CatalogVariantSKU,
     @RecordOriginID,
 	@RecordStateID,
 	@CatalogVariantCreatedUserID,

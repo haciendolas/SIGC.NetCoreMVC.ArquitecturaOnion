@@ -9,5 +9,6 @@
         public string Property { get; set; }
         public string Style { get; set; }
         public bool? IsVisible { get; set; }
+        public bool ShowDivider { get; set; }
     }
 }

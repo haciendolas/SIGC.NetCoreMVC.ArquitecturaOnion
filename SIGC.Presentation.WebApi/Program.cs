@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SIGC.ApplicationService;
 using SIGC.ApplicationService.Commons;
@@ -19,6 +20,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(sg =>
 {
+    sg.CustomSchemaIds(type => type.FullName); // Para evitar problemas de clases con el mismo nombre pero en diferente nameespace
     sg.EnableAnnotations();
 });
 

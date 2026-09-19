@@ -26,6 +26,17 @@
         public const string EXIST_USER_NAME_AND_MAIL = "ExistUserNameAndMail";
         public const string EXIST_ESTABLISHMENT_ESTABLISHMENTNAME = "ExistEstablishmentEstablishmentName";
         public const string EXIST_WAREHOUSE_WAREHOUSENAME = "ExistWarehouseWarehouseName";
+        public const string EXIST_CATALOG_CATALOGCODE = "ExistCatalogCatalogCode";
+        public const string EXIST_CATALOG_CATALOGNAME = "ExistCatalogCatalogName";
+        public const string EXIST_CATALOG_CODE_AND_NAME = "ExistCatalogCodeAndName";
+        public const string EXIST_CATALOGVARIANT_SKU = "ExistCatalogVariantSKU";
+        public const string EXIST_CATALOGVARIANT_NAME = "ExistCatalogVariantName";
+        public const string EXIST_CATALOGVARIANT_SKU_AND_NAME = "ExistCatalogVariantSkuAndName";
+        public const string EXIST_CATALOGPRESENTATION_SKU = "ExistCatalogPresentationSku";
+        public const string EXIST_CATALOGPRESENTATION_BARCODE = "ExistCatalogPresentationBarcode";
+        public const string EXIST_CATALOGPRESENTATION_SKU_AND_BARCODE = "ExistCatalogPresentationSkuAndBarcode"; 
+        public const string EXIST_CATALOGPRESENTATION_PRESENTATION = "ExistCatalogPresentationPresentation";
+
         //ERRORES DE DE REGISTROS
         public const string ERROR_OBJECT = "ErrorObject";
         public const string ERROR_OPERATION = "ErrorOperation";

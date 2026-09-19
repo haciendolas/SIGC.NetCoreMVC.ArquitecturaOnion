@@ -75,12 +75,12 @@ CREATE TABLE Product.CatalogType(
 )
 GO
 --Tipo de prescripción
-CREATE TABLE Product.PrescriptionType( 
-   PrescriptionTypeID TINYINT NOT NULL IDENTITY(1,1),
-   PrescriptionTypeName NVARCHAR(30) NOT NULL, --Medicamento de venta libre,Medicamento que requiere receta,Medicamento con control especial (narcóticos, psicotrópicos),Suplementos o vitaminas de venta libre
-   PrescriptionTypeDescription NVARCHAR(150),
+CREATE TABLE Product.SaleCondition( 
+   SaleConditionID TINYINT NOT NULL IDENTITY(1,1),
+   SaleConditionName NVARCHAR(30) NOT NULL, --Medicamento de venta libre,Medicamento que requiere receta,Medicamento con control especial (narcóticos, psicotrópicos),Suplementos o vitaminas de venta libre
+   SaleConditionDescription NVARCHAR(150),
    RecordStateID TINYINT NOT NULL,
-   CONSTRAINT PrescriptionType_PK_PrescriptionTypeID PRIMARY KEY(PrescriptionTypeID),
+   CONSTRAINT PrescriptionType_PK_PrescriptionTypeID PRIMARY KEY(SaleConditionID),
    CONSTRAINT PrescriptionType_CHK_RecordStateID CHECK(RecordStateID IN(0,1,2)) 
 )
 GO
@@ -220,15 +220,15 @@ CREATE TABLE Product.[Catalog](
   CatalogCode NVARCHAR(15),
   CatalogSlug NVARCHAR(200) NOT NULL,
   CatalogName NVARCHAR(200) NOT NULL, 
-  PrescriptionTypeID TINYINT,
+  CatalogHasVariants BIT NOT NULL,
+  SaleConditionID TINYINT NOT NULL,
   ManufacturerID INT,
   BrandID INT,
-  --CatalogConcentration NVARCHAR(50),
-  --CatalogSanitaryRegistrationNumber NVARCHAR(50)
-  PharmaceuticalFormID SMALLINT, 
-  CatalogDescription NVARCHAR(300),
-  CatalogHasVariants BIT NOT NULL,
   CatalogBrandType NVARCHAR(15) NOT NULL,
+  CatalogConcentration NVARCHAR(100),
+  --CatalogSanitaryRegistrationNumber NVARCHAR(50)
+  PharmaceuticalFormID SMALLINT,  
+  CatalogDescription NVARCHAR(300), 
   RecordOriginID TINYINT NOT NULL,
   RecordStateID TINYINT NOT NULL,
   CatalogCreatedUserID INT NOT NULL,
@@ -244,7 +244,7 @@ CREATE TABLE Product.[Catalog](
   CONSTRAINT Catalog_FK_CategoryID FOREIGN KEY(CategoryID) REFERENCES Product.Category(CategoryID),
   CONSTRAINT Catalog_FK_ManufacturerID FOREIGN KEY(ManufacturerID) REFERENCES Product.Manufacturer(ManufacturerID),
   CONSTRAINT Catalog_FK_BrandID FOREIGN KEY(BrandID) REFERENCES Product.Brand(BrandID),
-  CONSTRAINT Catalog_FK_PrescriptionTypeID FOREIGN KEY(PrescriptionTypeID) REFERENCES Product.PrescriptionType(PrescriptionTypeID),
+  CONSTRAINT Catalog_FK_SaleConditionID FOREIGN KEY(SaleConditionID) REFERENCES Product.SaleCondition(SaleConditionID),
   CONSTRAINT Catalog_CHK_RecordStateID CHECK(RecordStateID IN(0,1,2)),
   CONSTRAINT Catalog_CHK_CatalogBrandType CHECK(CatalogBrandType IN('NINGUNO','GENERICO','COMERCIAL'))
 )
@@ -401,7 +401,8 @@ CREATE TABLE Product.CatalogVariant(
     CatalogVariantID INT NOT NULL IDENTITY(1,1),
 	CompanyID INT NOT NULL,
 	CatalogID INT NOT NULL,
-	CatalogVariantName NVARCHAR(50) NOT NULL,
+	CatalogVariantName NVARCHAR(100) NOT NULL,
+	CatalogVariantSKU NVARCHAR(50),
     RecordOriginID TINYINT NOT NULL,
 	RecordStateID TINYINT NOT NULL,
 	CatalogVariantCreatedUserID INT NOT NULL,
