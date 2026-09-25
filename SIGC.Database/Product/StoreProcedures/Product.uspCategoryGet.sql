@@ -14,6 +14,6 @@ BEGIN
 	SET NOCOUNT ON
 		SELECT C.CategoryID,C.CategoryName,C.CategorySlug,C.CategoryImage,C.RecordStateID		 
 		FROM Product.Category C WITH(NOLOCK)		 
-		WHERE C.CompanyID = @CompanyID AND C.CategoryID=@CategoryID 
+		WHERE C.CompanyID = @CompanyID AND C.CategoryID=@CategoryID AND C.RecordStateID<>2
 	SET NOCOUNT OFF
 END

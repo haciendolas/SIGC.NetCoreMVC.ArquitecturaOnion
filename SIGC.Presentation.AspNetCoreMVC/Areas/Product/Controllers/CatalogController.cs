@@ -104,6 +104,12 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
             return Json(await CatalogService.CatalogUpdate(Request));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> CatalogGet([FromRoute(Name = "id")] int CatalogID)
+        {
+            return Json(await CatalogService.CatalogGet(CatalogID));
+        }
+
         [HttpPost]
         public async Task<IActionResult> CatalogDataTable(CatalogPaginationRequestModel DataTable)
         {

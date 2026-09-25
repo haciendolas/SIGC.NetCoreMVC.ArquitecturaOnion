@@ -18,6 +18,7 @@
 			@BrandID=1,
 			@PharmaceuticalFormID=1,
 			@CatalogBrandType='NINGUNO',
+			@CatalogImage=NULL,
 			@CatalogConcentration=NULL,
 			@CatalogDescription='',
 			@RecordOriginID=1,
@@ -59,10 +60,10 @@ ALTER PROCEDURE Product.uspCatalogCreate
 AS
 BEGIN 
   INSERT INTO Product.[Catalog](CompanyID,CatalogTypeID,CategoryID,CatalogCode,CatalogSlug,CatalogName,CatalogHasVariants,SaleConditionID,
-     ManufacturerID,BrandID,PharmaceuticalFormID,CatalogBrandType,CatalogConcentration,CatalogDescription,RecordOriginID,RecordStateID,CatalogCreatedUserID,
+     ManufacturerID,BrandID,PharmaceuticalFormID,CatalogBrandType,CatalogConcentration,CatalogImage,CatalogDescription,RecordOriginID,RecordStateID,CatalogCreatedUserID,
 	 CatalogCreatedUserName,CatalogCreatedUserFullName,CatalogCreatedDateTime)
   VALUES(@CompanyID,@CatalogTypeID,@CategoryID,@CatalogCode,@CatalogSlug,@CatalogName,@CatalogHasVariants,@SaleConditionID,
-     @ManufacturerID,@BrandID,@PharmaceuticalFormID,@CatalogBrandType,@CatalogConcentration,@CatalogDescription,@RecordOriginID,@RecordStateID,@CatalogCreatedUserID,
+     @ManufacturerID,@BrandID,@PharmaceuticalFormID,@CatalogBrandType,@CatalogConcentration,@CatalogImage,@CatalogDescription,@RecordOriginID,@RecordStateID,@CatalogCreatedUserID,
 	 @CatalogCreatedUserName,@CatalogCreatedUserFullName,@CatalogCreatedDateTime)
  SET @CatalogID = SCOPE_IDENTITY()
 END

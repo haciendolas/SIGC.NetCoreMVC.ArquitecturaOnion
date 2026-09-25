@@ -2,7 +2,9 @@
 using SIGC.ApplicationService.Commons.Dtos;
 using SIGC.ApplicationService.Features.CatalogFeatures.Commands.CatalogCreate;
 using SIGC.ApplicationService.Features.CatalogFeatures.Commands.CatalogUpdate;
-using SIGC.ApplicationService.Features.CatalogFeatures.Queries.CatalogPagination; 
+using SIGC.ApplicationService.Features.CatalogFeatures.Queries.CatalogGet;
+using SIGC.ApplicationService.Features.CatalogFeatures.Queries.CatalogPagination;
+using SIGC.DomainModel.Dtos.Catalog;
 using SIGC.Infrastructure.CrossCutting.Wrappers;
 using SIGC.Infrastructure.GeneralService.Services;
 using Swashbuckle.AspNetCore.Annotations;
@@ -39,16 +41,15 @@ namespace SIGC.Presentation.WebApi.Controllers
        {
            return Ok(await Mediator.Send(Command, CancellationToken));
        }
-
-       [HttpGet("CatalogGet/{CatalogID}")]
-       [SwaggerOperation(Summary = "Obtener un establecimiento por Id", Description = "Permite obtener un establecimiento por id.")]
-       [ProducesResponseType(typeof(MsgResponse<CatalogGetResponseDto?>), StatusCodes.Status200OK)]
-       [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
-       public async Task<IActionResult> CatalogGet([FromRoute] int CatalogID, CancellationToken CancellationToken)
-       {
+         */
+        [HttpGet("CatalogGet/{CatalogID}")]
+        [SwaggerOperation(Summary = "Obtener un catalogo por Id", Description = "Permite obtener un catalogo por id.")]
+        [ProducesResponseType(typeof(MsgResponse<CatalogGetResponseDto?>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CatalogGet([FromRoute] int CatalogID, CancellationToken CancellationToken)
+        {
            return Ok(await Mediator.Send(new CatalogGetQueryRequest(CatalogID), CancellationToken));
-       }
-       */
+        }
 
         [HttpPost("CatalogPagination")]
         [SwaggerOperation(Summary = "Paginación de catalogo", Description = "Permite la paginación de catalogo.")]

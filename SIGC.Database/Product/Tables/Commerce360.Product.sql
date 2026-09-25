@@ -229,6 +229,7 @@ CREATE TABLE Product.[Catalog](
   --CatalogSanitaryRegistrationNumber NVARCHAR(50)
   PharmaceuticalFormID SMALLINT,  
   CatalogDescription NVARCHAR(300), 
+  CatalogImage VARCHAR(100),
   RecordOriginID TINYINT NOT NULL,
   RecordStateID TINYINT NOT NULL,
   CatalogCreatedUserID INT NOT NULL,

@@ -407,7 +407,7 @@
                     order: [[0, 'desc']],
                     bSort: false,
                     rowCallback: function (row, data, dataIndex) {
-                        $(row).find('a[name=slnkEdit]').on('click', function () {
+                        $(row).find('a[name=lnkEdit]').on('click', function () {
                             Catalog._Search.fnCatalogGet(data[0]);
                         }).tooltip();
                         $(row).find('a[name=slnkInactive]').on('click', function () {
@@ -435,16 +435,28 @@
                     if (response.type === Uti.Message.Type.Query) {
                         const { data: rowData } = response;
                         Catalog._Clear.fnCatalogGet();
-                        $('#txtCatalogID').val(rowData.CatalogId);
-                        $('#txtCatalogName').val(rowData.CatalogName.trim());
-                        $('#txtCatalogSlug').val(rowData.CatalogSlug.trim());
-                        $('#chkStateID').attr('checked', rowData.recordStateID == Uti.Variable.StateType.Active);
-                        $('#hdCatalogImage').val(rowData.CatalogImage.trim());
-                        Uti.Image.Preview('imgCatalogImage', rowData.CatalogUrl.trim());
-                        if (rowData.CatalogImage.trim() != '') $('#btnQuitar').show();
-                        $('#Catalog-card ul li a[href="#tab-search"]').addClass('disabled');
-                        $('#Catalog-card ul li a[href="#tab-search"]').removeAttr('data-bs-toggle');
-                        $('#Catalog-card ul li a[href="#tab-register"]').tab('show');
+                        $('#txtCatalogID').val(rowData.catalogID);
+                        $('#cboCatalogTypeID').val(rowData.catalogTypeID)
+                        $('#txtCatalogCode').val(rowData.catalogCode.trim());
+                        $('#txtCatalogName').val(rowData.catalogName.trim());
+                        $('#txtCatalogSlug').val(rowData.catalogSlug.trim());
+                        $('#chkCatalogStateID').attr('checked', rowData.recordStateID == Uti.Variable.StateType.Active);
+                        ChoicesControl.CboCategoryID.setChoiceByValue(String(rowData.categoryID));
+                        ChoicesControl.CboManufacturerID.setChoiceByValue(String(rowData.manufacturerID));
+                        ChoicesControl.CboBrandID.setChoiceByValue(String(rowData.brandID));                   
+                        $('#cboSaleConditionID').val(rowData.saleConditionID);
+                        ChoicesControl.CboPharmaceuticalFormID.setChoiceByValue(String(rowData.pharmaceuticalFormID));
+                        ChoicesControl.CboTherapeuticActionID.setChoiceByValue((rowData.therapeuticActionIDs || []).map(id=>id.toString()));    
+                        ChoicesControl.CboActiveIngredientID.setChoiceByValue((rowData.activeIngredientIDs || []).map(id=>id.toString()));  
+                        $('#txtCatalogConcentration').val(rowData.catalogConcentration.trim());
+                        $('#txtCatalogDescription').val(rowData.catalogDescription.trim());
+                        $('#chkCatalogHasVariants').attr('checked', rowData.catalogHasVariants);
+                        $('#hdCatalogImage').val(rowData.catalogImage.trim());
+                        Uti.Image.Preview('imgCatalogImage', rowData.catalogUrl.trim());
+                        if (rowData.catalogImage.trim() != '') $('#btnQuitar').show();
+                        $('#catalog-card ul li a[href="#tab-search"]').addClass('disabled');
+                        $('#catalog-card ul li a[href="#tab-search"]').removeAttr('data-bs-toggle');
+                        $('#catalog-card ul li a[href="#tab-register"]').tab('show');
                         if ($('#btnCatalogUpdate').length > 0) $('#btnCatalogUpdate').show();
                         if ($('#btnCatalogCreate').length > 0) $('#btnCatalogCreate').hide();
                     };

@@ -17,11 +17,11 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogVariantReposi
         private readonly IJsonSerializerService JsonSerializerService;
         public CatalogVariantListRepository(IOptions<AppDbContext> Options,
               ITransactionAccessor TransactionAccessor,
-              IJsonSerializerService jsonSerializerService)
+              IJsonSerializerService JsonSerializerService)
         {
             ConnectionString = Options.Value.ConnectionDBCommerce360;
             this.TransactionAccessor = TransactionAccessor;
-            this.JsonSerializerService = jsonSerializerService;
+            this.JsonSerializerService = JsonSerializerService;
         }
 
         public async Task<List<CatalogVariantListResponseDto>> ListAsync(int CompanyID,int CatalogID, CancellationToken CancellationToken = default)
