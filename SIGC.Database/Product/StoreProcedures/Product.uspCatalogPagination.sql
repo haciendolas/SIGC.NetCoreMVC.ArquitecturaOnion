@@ -72,7 +72,7 @@ BEGIN
 	 FROM Product.[Catalog] C WITH(NOLOCK) 
 	     INNER JOIN Product.CatalogType T WITH(NOLOCK) ON C.CatalogTypeID=T.CatalogTypeID
 	     INNER JOIN Product.Category CA WITH(NOLOCK) ON C.CategoryID=CA.CategoryID AND C.CompanyID=CA.CompanyID
-		 INNER JOIN (
+		 LEFT JOIN (
 		  SELECT CV.CompanyID,CV.CatalogID,RowNumber=ROW_NUMBER() OVER(PARTITION BY CV.CatalogVariantID ORDER BY CV.CatalogVariantID),
 		   CV.CatalogVariantID,CV.CatalogVariantName,
 		   P.PresentationName,CP.CatalogPresentationEquivalence,

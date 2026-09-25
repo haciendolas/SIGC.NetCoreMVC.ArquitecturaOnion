@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SIGC.ApplicationService.Commons.Dtos;
+using SIGC.ApplicationService.Features.CatalogFeatures.Commands.CatalogChangeState;
 using SIGC.ApplicationService.Features.CatalogFeatures.Commands.CatalogCreate;
 using SIGC.ApplicationService.Features.CatalogFeatures.Commands.CatalogUpdate;
 using SIGC.ApplicationService.Features.CatalogFeatures.Queries.CatalogGet;
@@ -32,16 +33,16 @@ namespace SIGC.Presentation.WebApi.Controllers
             if (FormFile != null) Command.File = new FormFileService(FormFile); 
             return Ok(await Mediator.Send(Command, CancellationToken));
         }
-        /*
-       [HttpPut("CatalogChangeState")]
-       [SwaggerOperation(Summary = "Cambiar el estado del establecimiento", Description = "Permite cambiar el estado del establecimiento.")]
-       [ProducesResponseType(typeof(MsgResponse<object?>), StatusCodes.Status200OK)]
-       [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
-       public async Task<IActionResult> CatalogChangeState([FromBody] CatalogChangeStateCommandRequest Command, CancellationToken CancellationToken)
-       {
+      
+        [HttpPut("CatalogChangeState")]
+        [SwaggerOperation(Summary = "Cambiar el estado del producto", Description = "Permite cambiar el estado del producto.")]
+        [ProducesResponseType(typeof(MsgResponse<object?>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CatalogChangeState([FromBody] CatalogChangeStateCommandRequest Command, CancellationToken CancellationToken)
+        {
            return Ok(await Mediator.Send(Command, CancellationToken));
-       }
-         */
+        }
+      
         [HttpGet("CatalogGet/{CatalogID}")]
         [SwaggerOperation(Summary = "Obtener un catalogo por Id", Description = "Permite obtener un catalogo por id.")]
         [ProducesResponseType(typeof(MsgResponse<CatalogGetResponseDto?>), StatusCodes.Status200OK)]

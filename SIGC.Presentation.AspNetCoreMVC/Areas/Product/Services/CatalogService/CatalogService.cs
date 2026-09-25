@@ -1,4 +1,5 @@
 ﻿using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.Catalog;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.Category;
 using SIGC.Presentation.AspNetCoreMVC.Helpers;
 using SIGC.Presentation.AspNetCoreMVC.Models;
 using SIGC.Presentation.AspNetCoreMVC.Services;
@@ -23,6 +24,10 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogService
         {
             return await ApiService.PutFormDataAsync<CatalogCreateUpdateRequestModel, ApiResponse<object?>>($"{Controller}/CatalogUpdate", Request);
         }
+        public async Task<ApiResponse<object?>> CatalogChangeState(CatalogChangeStateRequestModel Request)
+        {
+            return await ApiService.PutAsync<CatalogChangeStateRequestModel, ApiResponse<object?>>($"{Controller}/CatalogChangeState", Request);
+        }
         public async Task<ApiResponse<CatalogGetResponseModel?>> CatalogGet(int CatalogID)
         {
             return await ApiService.GetAsync<ApiResponse<CatalogGetResponseModel?>>($"{Controller}/CatalogGet/{CatalogID}");
@@ -31,6 +36,5 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogService
         {
             return await ApiService.PostAsync<string, ApiResponse<PaginationResultModel<CatalogPaginationResponseModel>>>($"{Controller}/CatalogPagination", null, Request);
         }
-
     }
 }

@@ -177,6 +177,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
             services.AddScoped<ICatalogUpdateRepository, CatalogUpdateRepository>();
             services.AddScoped<ICatalogVerifyCodeAndNameRepository, CatalogVerifyCodeAndNameRepository>();
             services.AddScoped<ICatalogGetRepository, CatalogGetRepository>();
+            services.AddScoped<ICatalogChangeStateRepository, CatalogChangeStateRepository>();
 
             services.AddScoped<ISaleConditionListRepository, SaleConditionListRepository>();
 

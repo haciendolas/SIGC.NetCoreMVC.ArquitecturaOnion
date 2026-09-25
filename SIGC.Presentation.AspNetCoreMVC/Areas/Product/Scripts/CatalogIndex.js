@@ -96,6 +96,9 @@
             $('#txtCatalogName').on('input', function () {
                 $('input[name="CatalogNameLabel"]').val($(this).val());
             });
+            $('#btn-modal-yes').on('click', function () {
+                Catalog._Operation.fnCatalogChangeState($('#message-modal-generic #hd-modal-id').val(), Uti.Variable.StateType.Delete);
+            });
         },
         _Clear: {
             fnCatalogGet: function () {
@@ -409,13 +412,17 @@
                     rowCallback: function (row, data, dataIndex) {
                         $(row).find('a[name=lnkEdit]').on('click', function () {
                             Catalog._Search.fnCatalogGet(data[0]);
-                        }).tooltip();
-                        $(row).find('a[name=slnkInactive]').on('click', function () {
+                        });
+                        $(row).find('a[name=lnkInactive]').on('click', function () {
                             Catalog._Operation.fnCatalogChangeState(data[0], Uti.Variable.StateType.Inactive);
-                        }).tooltip();
-                        $(row).find('a[name=slnkActive]').on('click', function () {
+                        });
+                        $(row).find('a[name=lnkActive]').on('click', function () {
                             Catalog._Operation.fnCatalogChangeState(data[0], Uti.Variable.StateType.Active);
-                        }).tooltip();
+                        });
+                        $(row).find('a[name=lnkDelete]').on('click', function () {
+                            Uti.Modal.Message(Uti.Message.Type.ConfirmDelete);
+                            $('#message-modal-generic #hd-modal-id').val(data[0]);
+                        });                      
                     },
                     drawCallback: function (data) {
                         const response = data.json;
@@ -692,8 +699,8 @@
                 const options = {
                     url: Uti.Url.Base + '/Product/Catalog/CatalogChangeState',
                     data: {
-                        CatalogId: CatalogId,
-                        RecordStateId: StateID
+                        CatalogID: CatalogId,
+                        RecordStateID: StateID
                     },
                     type: Uti.Variable.FetchAjax.Type.Put
                 };
@@ -765,12 +772,12 @@
                             if (response.data) { 
                                $('#txtCatalogID').val(response.data.catalogID);
                             };
-                            Uti.Modal.Process();
-                            Catalog._Search.fnCatalogDataTable();
+                            Uti.Modal.Process();                           
                             if (CatalogID === 0) {
                                 Catalog._Other.fnPresentationTabs();
                             }
                             else {
+                                Catalog._Search.fnCatalogDataTable();
                                 //Catalog._Clear.fnCatalogGet();
                             }
                          

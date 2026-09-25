@@ -17,6 +17,7 @@ using SIGC.Presentation.AspNetCoreMVC.Areas.Security.Services.ConstantService;
 using SIGC.Presentation.AspNetCoreMVC.Controllers;
 using SIGC.Presentation.AspNetCoreMVC.Helpers;
 using SIGC.Presentation.AspNetCoreMVC.Models;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.Category;
 
 namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
 {
@@ -102,6 +103,12 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
         {
             Request.RecordOriginID = (byte)EnumsHelper.RecordOrigin.WebForm;
             return Json(await CatalogService.CatalogUpdate(Request));
+        }
+        
+        [HttpPut]
+        public async Task<IActionResult> CatalogChangeState([FromBody] CatalogChangeStateRequestModel Request)
+        {
+            return Json(await CatalogService.CatalogChangeState(Request));
         }
 
         [HttpGet]

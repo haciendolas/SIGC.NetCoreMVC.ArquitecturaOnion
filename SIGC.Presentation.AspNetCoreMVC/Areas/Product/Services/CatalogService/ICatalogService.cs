@@ -8,6 +8,7 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogService
     {
         Task<ApiResponse<object?>> CatalogCreate(CatalogCreateUpdateRequestModel Request);
         Task<ApiResponse<object?>> CatalogUpdate(CatalogCreateUpdateRequestModel Request);
+        Task<ApiResponse<object?>> CatalogChangeState(CatalogChangeStateRequestModel Request);
         Task<ApiResponse<CatalogGetResponseModel?>> CatalogGet(int CatalogID);
         Task<ApiResponse<PaginationResultModel<CatalogPaginationResponseModel>>> CatalogPagination(CatalogPaginationRequestModel Request);
     }
