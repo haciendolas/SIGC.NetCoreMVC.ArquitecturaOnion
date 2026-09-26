@@ -11,13 +11,12 @@
             });
             Catalog._Validation.fnCatalogCreateUpdateValidate();
             Catalog._Validation.fnCatalogVariantCreateUpdateValidate()
-         //   Catalog._Other.fnCatalogTabs();
+            Catalog._Other.fnCatalogTabs();
             Catalog._Other.fnOpenFile();
             Catalog._Search.fnCatalogDataTable();
             ChoicesControl = Catalog._Other.fnChoices();
-            ChoicesControl;           
-            Catalog._Search.fnWarehouseComboBox();
-            Catalog._Search.fnCatalogVariantGrid();
+            ChoicesControl;
+            Catalog._Search.fnWarehouseComboBox();           
             $('#stxtCatalogName,#txtCatalogName').keypress(function (event) {
                 return Uti.KeyBoard.LettersAndNumbers(event);
             });
@@ -54,7 +53,12 @@
                 $('#btnCatalogVariantUpdate').on('click', function () {
                     Catalog._Operation.fnCatalogVariantCreateUpdate();
                 });
-            }; 
+            };
+            $('#btnCatalogVariantNew').on('click', function () {
+                Catalog._Clear.fnCatalogVariantGet();
+                Catalog._Clear.fnCatalogPresentationGet();
+            });
+            
             $('#btnQuitar').hide();
             $('#btnQuitar').on('click', function () {
                 Uti.Image.Preview('imgCatalogImage');
@@ -91,7 +95,7 @@
             $('#btnAttributeSearchOpen').hide();
             $('#cboPresentationID').on('change', function () {
                 const equivalence = $(this).find('option:selected').attr('presentationequivalence');
-                $('#txtCatalogPresentationEquivalence').val(equivalence);               
+                $('#txtCatalogPresentationEquivalence').val(equivalence);
             });
             $('#txtCatalogName').on('input', function () {
                 $('input[name="CatalogNameLabel"]').val($(this).val());
@@ -103,10 +107,18 @@
         _Clear: {
             fnCatalogGet: function () {
                 $('#txtCatalogID').val('GENERADO');
-                $('#txtCatalogName,#txtCatalogSlug').val('');
-                $('#chkStateID').prop('checked', true);
+                $('#txtCatalogName,#txtCatalogSlug,#cboCatalogTypeID,#txtCatalogCode').val('');
+                $('#chkCatalogStateID').prop('checked', true);
                 if ($('#btnCatalogUpdate').length > 0) $('#btnCatalogUpdate').hide();
                 if ($('#btnCatalogCreate').length > 0) $('#btnCatalogCreate').show();
+                ChoicesControl.CboCategoryID.setChoiceByValue('');
+                ChoicesControl.CboManufacturerID.setChoiceByValue('');
+                ChoicesControl.CboBrandID.setChoiceByValue('');
+                ChoicesControl.CboPharmaceuticalFormID.setChoiceByValue();
+                ChoicesControl.CboTherapeuticActionID.removeActiveItems();
+                ChoicesControl.CboActiveIngredientID.removeActiveItems();
+                $('#txtCatalogConcentration,#txtCatalogDescription,#cboSaleConditionID').val('');
+                $('#chkCatalogHasVariants').prop('checked', false);
                 Catalog._Other.fnCatalogTabs();
                 Catalog._Validation.fnCatalogCreateUpdateReset();
                 Uti.Image.Preview('imgCatalogImage');
@@ -114,6 +126,19 @@
                 $('#hdCatalogImage,#hdCatalogImageBandera').val('');
                 $('#profile-img-file-input').val('');
                 $('#btnQuitar').hide();
+            },
+            fnCatalogVariantGet: function () {
+                $('#hdCatalogVariantID,#txtCatalogVariantName,#txtCatalogVariantSKU').val('');
+            },
+            fnCatalogPresentationGet: function () {
+                $('#hdCatalogPresentationID,#txtCatalogPresentationEquivalence,#txtCatalogPresentationSKU,#txtCatalogPresentationBarcode,#cboPresentationID').val('');
+                ChoicesControl.CboUnitMeasureID.setChoiceByValue('');
+                $('#chkCatalogPresentationStateID').prop('checked', true);
+                const btnCatalogVariantCreate = $('#btnCatalogVariantCreate');
+                const btnCatalogVariantUpdate = $('#btnCatalogVariantUpdate');
+                if (btnCatalogVariantCreate.length > 0) btnCatalogVariantCreate.show();
+                if (btnCatalogVariantUpdate.length > 0) btnCatalogVariantUpdate.hide();
+                Catalog._Validation.fnCatalogVariantCreateUpdateReset();
             }
         },
         _Other: {
@@ -134,6 +159,14 @@
                     }
                 });
             },
+            fnSearchDisabledTabs: function () {
+                $('#catalog-card ul li a[href="#tab-search"]').addClass('disabled');
+                $('#catalog-card ul li a[href="#tab-search"]').removeAttr('data-bs-toggle');
+            },
+            fnRegisterDisabledTabs: function () {
+                $('#catalog-card ul li a[href="#tab-register"]').addClass('disabled');
+                $('#catalog-card ul li a[href="#tab-register"]').removeAttr('data-bs-toggle');
+            },
             fnCatalogTabs: function () {
                 $('#catalog-card ul li a[href="#tab-search"]').removeClass('disabled');
                 $('#catalog-card ul li a[href="#tab-search"]').attr('data-bs-toggle', 'tab');
@@ -145,25 +178,37 @@
                 $('#catalog-card ul li a[href="#tab-tax"]').removeAttr('data-bs-toggle');
                 $('#catalog-card ul li a[href="#tab-configuration"]').addClass('disabled');
                 $('#catalog-card ul li a[href="#tab-configuration"]').removeAttr('data-bs-toggle');
-            },
-            fnPresentationTabs: function () {           
+            },            
+            fnPresentationTabs: function () {
                 $('#catalog-card ul li a[href="#tab-register"]').addClass('disabled');
                 $('#catalog-card ul li a[href="#tab-register"]').removeAttr('data-bs-toggle');
+
+                $('#catalog-card ul li a[href="#tab-presentation"]').removeClass('disabled');           
+                $('#catalog-card ul li a[href="#tab-presentation"]').attr('data-bs-toggle', 'tab');
                 $('#catalog-card ul li a[href="#tab-presentation"]').tab('show');
             },
             fnPriceTabs: function () {
                 $('#catalog-card ul li a[href="#tab-presentation"]').addClass('disabled');
                 $('#catalog-card ul li a[href="#tab-presentation"]').removeAttr('data-bs-toggle');
+
+                $('#catalog-card ul li a[href="#tab-price"]').removeClass('disabled');
+                $('#catalog-card ul li a[href="#tab-price"]').attr('data-bs-toggle', 'tab');
                 $('#catalog-card ul li a[href="#tab-price"]').tab('show');
             },
             fnTaxTabs: function () {
                 $('#catalog-card ul li a[href="#tab-price"]').addClass('disabled');
                 $('#catalog-card ul li a[href="#tab-price"]').removeAttr('data-bs-toggle');
+
+                $('#catalog-card ul li a[href="#tab-tax"]').removeClass('disabled');
+                $('#catalog-card ul li a[href="#tab-tax"]').attr('data-bs-toggle', 'tab');
                 $('#catalog-card ul li a[href="#tab-tax"]').tab('show');
             },
             fnConfigurationTabs: function () {
                 $('#catalog-card ul li a[href="#tab-tax"]').addClass('disabled');
                 $('#catalog-card ul li a[href="#tab-tax"]').removeAttr('data-bs-toggle');
+
+                $('#catalog-card ul li a[href="#tab-configuration"]').removeClass('disabled');
+                $('#catalog-card ul li a[href="#tab-configuration"]').attr('data-bs-toggle', 'tab');
                 $('#catalog-card ul li a[href="#tab-configuration"]').tab('show');
             },
             fnChoices: function () {
@@ -171,23 +216,23 @@
                     CboCategoryID: new Choices('#cboCategoryID', {
                         noResultsText: 'No se encontraron registros'
                     }),
-                    CboManufacturerID : new Choices('#cboManufacturerID', {
+                    CboManufacturerID: new Choices('#cboManufacturerID', {
                         noResultsText: 'No se encontraron registros'
                     }),
                     CboBrandID: new Choices('#cboBrandID', {
                         noResultsText: 'No se encontraron registros'
                     }),
-                    CboPharmaceuticalFormID :  new Choices('#cboPharmaceuticalFormID', {
+                    CboPharmaceuticalFormID: new Choices('#cboPharmaceuticalFormID', {
                         noResultsText: 'No se encontraron registros'
                     }),
-                    CboTaxAffectationTypeID : new Choices('#cboTaxAffectationTypeID', {
+                    CboTaxAffectationTypeID: new Choices('#cboTaxAffectationTypeID', {
                         noResultsText: 'No se encontraron registros'
                     }),
-                    CboTherapeuticActionID : new Choices('#cboTherapeuticActionID', {
+                    CboTherapeuticActionID: new Choices('#cboTherapeuticActionID', {
                         removeItemButton: true,
                         noResultsText: 'No se encontraron registros'
                     }),
-                    CboActiveIngredientID : new Choices('#cboActiveIngredientID', {
+                    CboActiveIngredientID: new Choices('#cboActiveIngredientID', {
                         removeItemButton: true,
                         noResultsText: 'No se encontraron registros'
                     }),
@@ -198,7 +243,7 @@
             },
             fnAttributeChecked: function () {
                 const attributes = [];
-                $('#tb-modal-attribute-list input:checkbox[name=chkAttributeValueID]:checked').each(function (index, element) {                                 
+                $('#tb-modal-attribute-list input:checkbox[name=chkAttributeValueID]:checked').each(function (index, element) {
                     const attributeID = $(element).data('attributeid');
                     let attribute = attributes.find(x => x.attributeID === attributeID);
                     if (!attribute) {
@@ -212,7 +257,7 @@
                     attribute.attributeValues.push({
                         attributeValueID: $(element).data('attributevalueid'),
                         attributeValueName: $(element).data('attributevaluename')
-                    });                                
+                    });
                 });
                 if (attributes.length === 0) {
                     Uti.Modal.Toastify(Uti.Message.Description.AtLeastOneItemMustBeSelected('un valor'), Uti.Message.Type.Warning);
@@ -223,7 +268,7 @@
                     .map(item =>
                         item.attributeName + '/' +
                         item.attributeValues.map(subItem => subItem.attributeValueName).join('/')
-                ).join(' - ');
+                    ).join(' - ');
                 const attributeValueIDs = attributes.flatMap(item =>
                     item.attributeValues.map(subItem => subItem.attributeValueID)
                 );
@@ -248,7 +293,7 @@
             },
             fnCatalogCreateUpdateValidate: function () {
                 CatalogValidate = $('#frmCatalogCreateUpdate').validate({
-                    ignore:[],
+                    ignore: [],
                     rules: {
                         CatalogTypeID: { required: true },
                         CatalogSlug: { required: true, minlength: 3, maxlength: 200 },
@@ -259,7 +304,7 @@
                         BrandID: { required: true },
                     },
                     messages: {
-                        CatalogTypeID: { required: '*Campo requerido'},
+                        CatalogTypeID: { required: '*Campo requerido' },
                         CatalogSlug: { required: '*Campo requerido', minlength: '*Mínimo 3 caracteres', maxlength: '*Máximo 200 caracteres' },
                         CatalogName: { required: '*Campo requerido', minlength: '*Mínimo 3 caracteres', maxlength: '*Máximo 200 caracteres' },
                         CategoryID: { required: '*Campo requerido' },
@@ -294,16 +339,16 @@
             fnCatalogVariantCreateUpdateValidate: function () {
                 CatalogVariantValidate = $('#frmCatalogVariantCreateUpdate').validate({
                     ignore: [],
-                    rules: {                      
+                    rules: {
                         CatalogVariantSKU: { minlength: 3, maxlength: 50 },
-                        CatalogVariantName: {required: true, minlength: 3, maxlength: 100 },
+                        CatalogVariantName: { required: true, minlength: 3, maxlength: 100 },
                         UnitMeasureID: { required: true },
                         PresentationID: { required: true },
                         CatalogPresentationEquivalence: { required: true },
                         CatalogPresentationSKU: { maxlength: 50 },
                         CatalogPresentationBarcode: { maxlength: 50 },
                     },
-                    messages: {                      
+                    messages: {
                         CatalogVariantSKU: { minlength: '*Mínimo 3 caracteres', maxlength: '*Máximo 50 caracteres' },
                         CatalogVariantName: { required: '*Campo requerido', minlength: '*Mínimo 3 caracteres', maxlength: '*Máximo 100 caracteres' },
                         UnitMeasureID: { required: '*Campo requerido' },
@@ -336,7 +381,7 @@
         },
         _Modal: {
             fnAttributeSearchOpen: function () {
-                $('#modal-attribute-search').modal('show');                
+                $('#modal-attribute-search').modal('show');
             },
             fnAttributeSearchClose: function () {
                 $('#modal-attribute-search').modal('hide');
@@ -389,17 +434,17 @@
                             { name: 'BrandID', value: $('#scboBrandID').val() },
                             { name: 'RecordStateID', value: $('#scboStateID').val() },
                             { name: 'Search', value: $('#stxtCatalogName').val().trim() }
-                          
+
                         );
                     },
                     sPaginationType: 'full_numbers',
                     aoColumnDefs: [
-                        { bSortable: true,  aTargets: [0], sClass: 'text-center' },
-                        { bSortable: true,  aTargets: [1], sClass: 'text-left' },
-                        { bSortable: true,  aTargets: [2], sClass: 'text-left' },
+                        { bSortable: true, aTargets: [0], sClass: 'text-center' },
+                        { bSortable: true, aTargets: [1], sClass: 'text-left' },
+                        { bSortable: true, aTargets: [2], sClass: 'text-left' },
                         { bSortable: false, aTargets: [3], sClass: 'text-center' },
-                        { bSortable: true,  aTargets: [4], sClass: 'text-center' },
-                        { bSortable: true,  aTargets: [5], sClass: 'text-center' },
+                        { bSortable: true, aTargets: [4], sClass: 'text-center' },
+                        { bSortable: true, aTargets: [5], sClass: 'text-center' },
                         { bSortable: false, aTargets: [6], sClass: 'text-center' },
                         { bSortable: false, aTargets: [7], sClass: 'text-center' },
                         { bSortable: false, aTargets: [8], sClass: 'text-center' },
@@ -422,7 +467,41 @@
                         $(row).find('a[name=lnkDelete]').on('click', function () {
                             Uti.Modal.Message(Uti.Message.Type.ConfirmDelete);
                             $('#message-modal-generic #hd-modal-id').val(data[0]);
-                        });                      
+                        });
+                        $(row).find('a[name=lnkPresentation]').on('click', function () {                           
+                            Catalog._Other.fnCatalogTabs();
+                            Catalog._Other.fnSearchDisabledTabs();
+                            Catalog._Other.fnRegisterDisabledTabs(); 
+                            Catalog._Other.fnPresentationTabs();
+                            $('#txtCatalogID').val(data[0]);
+                            $('input[name="CatalogNameLabel"]').val(data[2]);
+                            Catalog._Search.fnCatalogVariantGrid();
+                        });
+                        $(row).find('a[name=lnkPrice]').on('click', function () {
+                            Catalog._Other.fnCatalogTabs();
+                            Catalog._Other.fnSearchDisabledTabs();
+                            Catalog._Other.fnRegisterDisabledTabs(); 
+                            Catalog._Other.fnPriceTabs();
+                            $('#txtCatalogID').val(data[0]);
+                            $('input[name="CatalogNameLabel"]').val(data[2]);
+                            Catalog._Search.fnCatalogPresentationComboBox();
+                        });
+                        $(row).find('a[name=lnkTax]').on('click', function () {
+                            Catalog._Other.fnCatalogTabs();
+                            Catalog._Other.fnSearchDisabledTabs();
+                            Catalog._Other.fnRegisterDisabledTabs(); 
+                            Catalog._Other.fnTaxTabs();
+                            $('#txtCatalogID').val(data[0]);
+                            $('input[name="CatalogNameLabel"]').val(data[2]);                           
+                        });
+                        $(row).find('a[name=lnkConfiguration]').on('click', function () {
+                            Catalog._Other.fnCatalogTabs();
+                            Catalog._Other.fnSearchDisabledTabs();
+                            Catalog._Other.fnRegisterDisabledTabs(); 
+                            Catalog._Other.fnConfigurationTabs();
+                            $('#txtCatalogID').val(data[0]);
+                            $('input[name="CatalogNameLabel"]').val(data[2]);
+                        });
                     },
                     drawCallback: function (data) {
                         const response = data.json;
@@ -446,23 +525,23 @@
                         $('#cboCatalogTypeID').val(rowData.catalogTypeID)
                         $('#txtCatalogCode').val(rowData.catalogCode.trim());
                         $('#txtCatalogName').val(rowData.catalogName.trim());
+                        $('input[name="CatalogNameLabel"]').val(rowData.catalogName.trim());
                         $('#txtCatalogSlug').val(rowData.catalogSlug.trim());
                         $('#chkCatalogStateID').attr('checked', rowData.recordStateID == Uti.Variable.StateType.Active);
                         ChoicesControl.CboCategoryID.setChoiceByValue(String(rowData.categoryID));
                         ChoicesControl.CboManufacturerID.setChoiceByValue(String(rowData.manufacturerID));
-                        ChoicesControl.CboBrandID.setChoiceByValue(String(rowData.brandID));                   
+                        ChoicesControl.CboBrandID.setChoiceByValue(String(rowData.brandID));
                         $('#cboSaleConditionID').val(rowData.saleConditionID);
                         ChoicesControl.CboPharmaceuticalFormID.setChoiceByValue(String(rowData.pharmaceuticalFormID));
-                        ChoicesControl.CboTherapeuticActionID.setChoiceByValue((rowData.therapeuticActionIDs || []).map(id=>id.toString()));    
-                        ChoicesControl.CboActiveIngredientID.setChoiceByValue((rowData.activeIngredientIDs || []).map(id=>id.toString()));  
+                        ChoicesControl.CboTherapeuticActionID.setChoiceByValue((rowData.therapeuticActionIDs || []).map(id => id.toString()));
+                        ChoicesControl.CboActiveIngredientID.setChoiceByValue((rowData.activeIngredientIDs || []).map(id => id.toString()));
                         $('#txtCatalogConcentration').val(rowData.catalogConcentration.trim());
                         $('#txtCatalogDescription').val(rowData.catalogDescription.trim());
-                        $('#chkCatalogHasVariants').attr('checked', rowData.catalogHasVariants);
+                        $('#chkCatalogHasVariants').prop('checked', rowData.catalogHasVariants);
                         $('#hdCatalogImage').val(rowData.catalogImage.trim());
                         Uti.Image.Preview('imgCatalogImage', rowData.catalogUrl.trim());
                         if (rowData.catalogImage.trim() != '') $('#btnQuitar').show();
-                        $('#catalog-card ul li a[href="#tab-search"]').addClass('disabled');
-                        $('#catalog-card ul li a[href="#tab-search"]').removeAttr('data-bs-toggle');
+                        Catalog._Other.fnSearchDisabledTabs();
                         $('#catalog-card ul li a[href="#tab-register"]').tab('show');
                         if ($('#btnCatalogUpdate').length > 0) $('#btnCatalogUpdate').show();
                         if ($('#btnCatalogCreate').length > 0) $('#btnCatalogCreate').hide();
@@ -484,24 +563,24 @@
                         const { data: rowData } = response;
                         $('#cboPresentationID').empty();
                         let options = '';
-                        if (rowData && rowData.length>0) {   
+                        if (rowData && rowData.length > 0) {
                             options = `<option value="">${Uti.Message.Description.Select}</option>`;
                             rowData.forEach(row => {
                                 options += `<option value="${row.presentationID}" presentationEquivalence="${row.presentationEquivalence}">${row.presentationName}</option>`;
-                            });                          
+                            });
                         }
                         else {
                             options = `<option value="">${Uti.Message.Description.NoRecordsFound}</option>`;
                         }
-                    $('#cboPresentationID').append(options);
+                        $('#cboPresentationID').append(options);
                     };
                 });
             },
-            fnCatalogPresentationComboBox: function () {          
-                const CatalogID = $('#txtCatalogID').val() == 'GENERADO' ? 0 : $('#txtCatalogID').val(); 
+            fnCatalogPresentationComboBox: function () {
+                const CatalogID = $('#txtCatalogID').val() == 'GENERADO' ? 0 : $('#txtCatalogID').val();
                 const options = {
                     url: Uti.Url.Base + '/Product/CatalogPresentation/CatalogPresentationList/' + CatalogID,
-                    type: Uti.Variable.FetchAjax.Type.Get                    
+                    type: Uti.Variable.FetchAjax.Type.Get
                 };
                 Uti.Ajax.Custom(options, function (response) {
                     Uti.Modal.Message(response.type, response.message, response.function);
@@ -514,7 +593,7 @@
                         let options = '';
                         if (rowData && rowData.length > 0) {
                             options = `<option value="">${Uti.Message.Description.Select}</option>`;
-                            rowData.forEach(row => {                             
+                            rowData.forEach(row => {
                                 options += `<optgroup label="${row.catalogVariantName}">`;
                                 row.catalogPresentations.forEach(subRow => {
                                     options += `<option value="${subRow.catalogPresentationID}">${subRow.catalogPresentationName}</option>`;
@@ -525,7 +604,7 @@
                         else {
                             options = `<option value="">${Uti.Message.Description.NoRecordsFound}</option>`;
                         }
-                        $('#cboCatalogPresentationID').append(options); 
+                        $('#cboCatalogPresentationID').append(options);
                     };
                 });
             },
@@ -534,7 +613,7 @@
                 const options = {
                     url: Uti.Url.Base + '/Organization/Warehouse/WarehouseList/' + EstablishmentID,
                     type: Uti.Variable.FetchAjax.Type.Get,
-                    preload:false
+                    preload: false
                 };
                 Uti.Ajax.Custom(options, function (response) {
                     Uti.Modal.Message(response.type, response.message, response.function);
@@ -559,7 +638,7 @@
                 });
             },
             fnCatalogVariantGrid: function (preload = false) {
-                const CatalogID = $('#txtCatalogID').val() == 'GENERADO' ? 0 : $('#txtCatalogID').val();   
+               const CatalogID = $('#txtCatalogID').val() == 'GENERADO' ? 0 : $('#txtCatalogID').val();
                 const options = {
                     url: Uti.Url.Base + '/Product/CatalogVariant/CatalogVariantList/' + CatalogID,
                     type: Uti.Variable.FetchAjax.Type.Get,
@@ -571,16 +650,16 @@
                         Uti.Modal.Process();
                     }
                     if (response.type === Uti.Message.Type.Query) {
-                        const { data: rowData } = response;    
+                        const { data: rowData } = response;
                         if (rowData && rowData.length > 0) {
                             const linkUpdate = Uti.Variable.Control();
-                                  linkUpdate.Type = Uti.Variable.ButtonType.Update;
+                            linkUpdate.Type = Uti.Variable.ButtonType.Update;
                             const linkChange = Uti.Variable.Control();
-                                  linkChange.Type = Uti.Variable.ButtonType.Change;
+                            linkChange.Type = Uti.Variable.ButtonType.Change;
                             const linkUnchange = Uti.Variable.Control();
-                                  linkUnchange.Type = Uti.Variable.ButtonType.Unchange;
+                            linkUnchange.Type = Uti.Variable.ButtonType.Unchange;
                             const linkAdd = Uti.Variable.Control();
-                                  linkAdd.Type = Uti.Variable.ButtonType.Add;
+                            linkAdd.Type = Uti.Variable.ButtonType.Add;
 
                             rowData.forEach(catalogVariant => {
                                 const attributeValueIDs = catalogVariant.catalogVariantValues.map(catalogVariantValue => catalogVariantValue.attributeValueID);
@@ -636,7 +715,11 @@
                                 $('#div-variant').append(grid);
                                 const element = $('#' + containerVariantButtonId);
                                 element.find('a[name=slnkAdd]').on('click', function () {
-                                  
+                                    $('#hdCatalogVariantID').val(catalogVariant.catalogVariantID);
+                                    $('#txtCatalogVariantName').val(catalogVariant.catalogVariantName.trim()).data("attributeValueIDs", attributeValueIDs);
+                                    $('#txtCatalogVariantSKU').val(catalogVariant.catalogVariantName.trim());
+                                    $('#span-catalog-variant-name').text(catalogVariant.catalogVariantName.trim());
+                                    Catalog._Clear.fnCatalogPresentationGet();
                                 }).tooltip();
                                 element.find('a[name=slnkInactive]').on('click', function () {
 
@@ -645,7 +728,7 @@
 
                                 }).tooltip();
 
-                              catalogVariant.catalogPresentations.forEach(catalogPresentation => {
+                                catalogVariant.catalogPresentations.forEach(catalogPresentation => {
                                     const column = `
                                             <td class="text-center">${catalogPresentation.catalogPresentationID}</td>
                                             <td>${catalogPresentation.unitMeasureName}</td>
@@ -662,34 +745,38 @@
                                             <td class="text-center" style="width:3%">${catalogPresentation.catalogPresentationStateID === Uti.Variable.StateType.Active ? Uti.Control.LinkHRef(linkUpdate) : "&nbsp;&nbsp;"}</td>
                                             <td class="text-center" style="width:3%">${catalogPresentation.catalogPresentationStateID === Uti.Variable.StateType.Active ? Uti.Control.LinkHRef(linkUnchange) : Uti.Control.LinkHRef(linkChange)}</td>
                                           `;
-                                  const element = $('#' + containerPresentationId);
-                                  element.append(column).fadeIn('slow');
-                                  element.find('a[name=slnkEdit]').on('click', function () {
-                                      $('#hdCatalogVariantID').val(catalogVariant.catalogVariantID);                                    
-                                      $('#txtCatalogVariantName').val(catalogVariant.catalogVariantName.trim()).data("attributeValueIDs", attributeValueIDs);
-                                      $('#txtCatalogVariantSKU').val(catalogVariant.catalogVariantName.trim());
-                                      $('#span-catalog-variant-name').text(catalogVariant.catalogVariantName.trim());
-                                      $('#hdCatalogPresentationID').val(catalogPresentation.catalogPresentationID);                                                                       
-                                      ChoicesControl.CboUnitMeasureID.setChoiceByValue(String(catalogPresentation.unitMeasureID))
-                                      Catalog._Search.fnPresentationComboBox(catalogPresentation.unitMeasureID, false);
-                                      $('#cboPresentationID').val(catalogPresentation.presentationID);
-                                      $('#txtCatalogPresentationEquivalence').val(catalogPresentation.catalogPresentationEquivalence);
-                                      $('#txtCatalogPresentationSKU').val(catalogPresentation.catalogPresentationSKU);
-                                      $('#txtCatalogPresentationBarcode').val(catalogPresentation.catalogPresentationBarcode);                                    
-                                      $('#chkCatalogPresentationStateID').attr('checked', catalogPresentation.catalogPresentationStateID == Uti.Variable.StateType.Active);                                   
-                                  }).tooltip();
-                                  element.find('a[name=slnkInactive]').on('click', function () {
-                                      alert('Inactivar' + catalogPresentation.unitMeasureID);
-                                  }).tooltip();
-                                  element.find('a[name=slnkActive]').on('click', function () {
-                                      alert('Activar' + catalogPresentation.catalogPresentationID);
-                                  }).tooltip();
+                                    const element = $('#' + containerPresentationId);
+                                    element.append(column).fadeIn('slow');
+                                    element.find('a[name=slnkEdit]').on('click', function () {
+                                        $('#hdCatalogVariantID').val(catalogVariant.catalogVariantID);
+                                        $('#txtCatalogVariantName').val(catalogVariant.catalogVariantName.trim()).data("attributeValueIDs", attributeValueIDs);
+                                        $('#txtCatalogVariantSKU').val(catalogVariant.catalogVariantName.trim());
+                                        $('#span-catalog-variant-name').text(catalogVariant.catalogVariantName.trim());
+                                        $('#hdCatalogPresentationID').val(catalogPresentation.catalogPresentationID);
+                                        ChoicesControl.CboUnitMeasureID.setChoiceByValue(String(catalogPresentation.unitMeasureID))
+                                        Catalog._Search.fnPresentationComboBox(catalogPresentation.unitMeasureID, false);
+                                        $('#cboPresentationID').val(catalogPresentation.presentationID);
+                                        $('#txtCatalogPresentationEquivalence').val(catalogPresentation.catalogPresentationEquivalence);
+                                        $('#txtCatalogPresentationSKU').val(catalogPresentation.catalogPresentationSKU);
+                                        $('#txtCatalogPresentationBarcode').val(catalogPresentation.catalogPresentationBarcode);
+                                        $('#chkCatalogPresentationStateID').attr('checked', catalogPresentation.catalogPresentationStateID == Uti.Variable.StateType.Active);
+                                        const btnCatalogVariantCreate = $('#btnCatalogVariantCreate');
+                                        const btnCatalogVariantUpdate = $('#btnCatalogVariantUpdate');
+                                        if (btnCatalogVariantCreate.length > 0) btnCatalogVariantCreate.hide();
+                                        if (btnCatalogVariantUpdate.length > 0) btnCatalogVariantUpdate.show();
+                                    }).tooltip();
+                                    element.find('a[name=slnkInactive]').on('click', function () {
+                                        alert('Inactivar' + catalogPresentation.unitMeasureID);
+                                    }).tooltip();
+                                    element.find('a[name=slnkActive]').on('click', function () {
+                                        alert('Activar' + catalogPresentation.catalogPresentationID);
+                                    }).tooltip();
                                 });
                             });
                         }
-                        else {                           
+                        else {
                             $('#div-variant').append(Uti.Message.Description.NoRecordsFound);
-                        }                      
+                        }
                     };
                 });
             }
@@ -724,7 +811,7 @@
                         };
                     };
                     const CatalogID = $('#txtCatalogID').val() == 'GENERADO' ? 0 : $('#txtCatalogID').val();
-
+                    const CatalogHasVariants = $('#chkCatalogHasVariants').is(':checked');
                     var formData = new FormData();
                     formData.append('CatalogID', CatalogID);
                     formData.append('CatalogTypeID', $('#cboCatalogTypeID').val());
@@ -749,7 +836,7 @@
                         formData.append(`CatalogActiveIngredients[${index}].CatalogActiveIngredientQuantity`, null);
                     });
 
-                    formData.append('CatalogHasVariants', $('#chkCatalogHasVariants').is(':checked'));
+                    formData.append('CatalogHasVariants', CatalogHasVariants);
                     formData.append('ActiveIngredientID', $('#cboActiveIngredientID').val());
                     formData.append('CatalogConcentration', $('#txtCatalogConcentration').val().trim());
                     formData.append('CatalogDescription', $('#txtCatalogDescription').val().trim());
@@ -777,10 +864,16 @@
                                 Catalog._Other.fnPresentationTabs();
                             }
                             else {
-                                Catalog._Search.fnCatalogDataTable();
-                                //Catalog._Clear.fnCatalogGet();
-                            }
-                         
+                                if (CatalogHasVariants) {
+                                    $('#chkCatalogHasVariants').change();
+                                    Catalog._Other.fnPresentationTabs();
+                                    Catalog._Search.fnCatalogVariantGrid();
+                                }
+                                else {
+                                    Catalog._Clear.fnCatalogGet();
+                                    Catalog._Search.fnCatalogDataTable();
+                                }
+                            };                         
                         };
                     });
                 }

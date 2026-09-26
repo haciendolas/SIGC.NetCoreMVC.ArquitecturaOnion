@@ -125,10 +125,10 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
             control.Add(new ControlModel { Value = PermissionModel.AccChange });
             control.Add(new ControlModel { Value = PermissionModel.AccUnchange });
             control.Add(new ControlModel { Value = PermissionModel.AccDelete });
-            control.Add(new ControlModel { Value = PermissionModel.AccAdd,Label="Presentación" });
-            control.Add(new ControlModel { Value = PermissionModel.AccAdd, Label = "Precio" ,Icon= "ri-coins-line" });
-            control.Add(new ControlModel { Value = PermissionModel.AccAdd, Label = "Impuesto", Icon = "ri-percent-line" });
-            control.Add(new ControlModel { Value = PermissionModel.AccAdd, Label = "Configuración",  Icon = "ri-settings-2-line" });
+            control.Add(new ControlModel { Value = PermissionModel.AccAdd,Label="Presentación" ,Name="lnkPresentation" });
+            control.Add(new ControlModel { Value = PermissionModel.AccAdd, Label = "Precio" ,Icon= "ri-coins-line", Name = "lnkPrice" });
+            control.Add(new ControlModel { Value = PermissionModel.AccAdd, Label = "Impuesto", Icon = "ri-percent-line", Name = "lnkTax" });
+            control.Add(new ControlModel { Value = PermissionModel.AccAdd, Label = "Configuración",  Icon = "ri-settings-2-line", Name = "lnkConfiguration" });
 
             DataTable.PageNumber = (DataTable.iDisplayStart / DataTable.iDisplayLength) + 1;
             DataTable.PageSize = DataTable.iDisplayLength;
