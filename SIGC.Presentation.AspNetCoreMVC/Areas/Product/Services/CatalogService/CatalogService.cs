@@ -1,5 +1,4 @@
 ﻿using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.Catalog;
-using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.Category;
 using SIGC.Presentation.AspNetCoreMVC.Helpers;
 using SIGC.Presentation.AspNetCoreMVC.Models;
 using SIGC.Presentation.AspNetCoreMVC.Services;

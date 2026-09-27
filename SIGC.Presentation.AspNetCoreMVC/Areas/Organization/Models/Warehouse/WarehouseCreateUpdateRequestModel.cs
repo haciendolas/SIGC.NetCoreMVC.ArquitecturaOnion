@@ -1,6 +1,6 @@
 ﻿namespace SIGC.Presentation.AspNetCoreMVC.Areas.Organization.Models.Warehouse
 {
-    public class WarehouseCreateUpdateRequestModel
+    public sealed class WarehouseCreateUpdateRequestModel
     {
         public int WarehouseID { get; set; }
         public int EstablishmentID { get; set; }

@@ -58,7 +58,14 @@
                 Catalog._Clear.fnCatalogVariantGet();
                 Catalog._Clear.fnCatalogPresentationGet();
             });
-            
+
+            if ($('#btnCatalogPresentationCreate').length > 0) {
+                $('#btnCatalogPresentationCreate').hide();
+                $('#btnCatalogPresentationCreate').on('click', function () {
+                    Catalog._Operation.fnCatalogPresentationCreateUpdate();
+                });
+            };
+
             $('#btnQuitar').hide();
             $('#btnQuitar').on('click', function () {
                 Uti.Image.Preview('imgCatalogImage');
@@ -652,6 +659,7 @@
                     if (response.type === Uti.Message.Type.Query) {
                         const { data: rowData } = response;
                         if (rowData && rowData.length > 0) {
+                            $('.grid-variant').remove();
                             const linkUpdate = Uti.Variable.Control();
                             linkUpdate.Type = Uti.Variable.ButtonType.Update;
                             const linkChange = Uti.Variable.Control();
@@ -666,7 +674,7 @@
                                 const containerVariantButtonId = `acction${catalogVariant.catalogVariantID}`;
                                 const containerPresentationId = `catalog-presentation${catalogVariant.catalogVariantID}`;
                                 const collapse = `collapse${catalogVariant.catalogVariantID}`;
-                                const grid = `<div class="card">
+                                const grid = `<div class="card grid-variant">
                                             <div class="card-header p-2" style="background:#f3f3f9">
                                                 <div class="d-flex align-items-center">
                                                     <div class="flex-grow-1">
@@ -712,7 +720,7 @@
                                                 </div>
                                             </div>
                                         </div>`;
-                                $('#div-variant').append(grid);
+                                $('#div-variant').after(grid);
                                 const element = $('#' + containerVariantButtonId);
                                 element.find('a[name=slnkAdd]').on('click', function () {
                                     $('#hdCatalogVariantID').val(catalogVariant.catalogVariantID);
@@ -720,6 +728,10 @@
                                     $('#txtCatalogVariantSKU').val(catalogVariant.catalogVariantName.trim());
                                     $('#span-catalog-variant-name').text(catalogVariant.catalogVariantName.trim());
                                     Catalog._Clear.fnCatalogPresentationGet();
+                                    const btnCatalogPresentationCreate = $('#btnCatalogPresentationCreate');
+                                    const btnCatalogVariantCreate = $('#btnCatalogVariantCreate');
+                                    if (btnCatalogPresentationCreate.length > 0) btnCatalogPresentationCreate.show();
+                                    if (btnCatalogVariantCreate.length > 0) btnCatalogVariantCreate.hide();
                                 }).tooltip();
                                 element.find('a[name=slnkInactive]').on('click', function () {
 
@@ -729,7 +741,8 @@
                                 }).tooltip();
 
                                 catalogVariant.catalogPresentations.forEach(catalogPresentation => {
-                                    const column = `
+                                    const rowId = `row${catalogPresentation.catalogPresentationID}`;
+                                    const column = `<tr id='${rowId}'>
                                             <td class="text-center">${catalogPresentation.catalogPresentationID}</td>
                                             <td>${catalogPresentation.unitMeasureName}</td>
                                             <td>${catalogPresentation.presentationName}</td>
@@ -744,10 +757,10 @@
                                             <td class="text-center">${Uti.Control.SpanStateType(catalogPresentation.catalogPresentationStateID)}</td>
                                             <td class="text-center" style="width:3%">${catalogPresentation.catalogPresentationStateID === Uti.Variable.StateType.Active ? Uti.Control.LinkHRef(linkUpdate) : "&nbsp;&nbsp;"}</td>
                                             <td class="text-center" style="width:3%">${catalogPresentation.catalogPresentationStateID === Uti.Variable.StateType.Active ? Uti.Control.LinkHRef(linkUnchange) : Uti.Control.LinkHRef(linkChange)}</td>
-                                          `;
+                                          </tr>`;
                                     const element = $('#' + containerPresentationId);
                                     element.append(column).fadeIn('slow');
-                                    element.find('a[name=slnkEdit]').on('click', function () {
+                                    element.find('#' + rowId + ' a[name = slnkEdit]').on('click', function () {                                         
                                         $('#hdCatalogVariantID').val(catalogVariant.catalogVariantID);
                                         $('#txtCatalogVariantName').val(catalogVariant.catalogVariantName.trim()).data("attributeValueIDs", attributeValueIDs);
                                         $('#txtCatalogVariantSKU').val(catalogVariant.catalogVariantName.trim());
@@ -759,11 +772,13 @@
                                         $('#txtCatalogPresentationEquivalence').val(catalogPresentation.catalogPresentationEquivalence);
                                         $('#txtCatalogPresentationSKU').val(catalogPresentation.catalogPresentationSKU);
                                         $('#txtCatalogPresentationBarcode').val(catalogPresentation.catalogPresentationBarcode);
-                                        $('#chkCatalogPresentationStateID').attr('checked', catalogPresentation.catalogPresentationStateID == Uti.Variable.StateType.Active);
+                                        $('#chkCatalogPresentationStateID').prop('checked', catalogPresentation.catalogPresentationStateID == Uti.Variable.StateType.Active);
                                         const btnCatalogVariantCreate = $('#btnCatalogVariantCreate');
                                         const btnCatalogVariantUpdate = $('#btnCatalogVariantUpdate');
+                                        const btnCatalogPresentationCreate = $('#btnCatalogPresentationCreate');                                         
                                         if (btnCatalogVariantCreate.length > 0) btnCatalogVariantCreate.hide();
                                         if (btnCatalogVariantUpdate.length > 0) btnCatalogVariantUpdate.show();
+                                        if (btnCatalogPresentationCreate.length > 0) btnCatalogPresentationCreate.hide();
                                     }).tooltip();
                                     element.find('a[name=slnkInactive]').on('click', function () {
                                         alert('Inactivar' + catalogPresentation.unitMeasureID);
@@ -919,10 +934,43 @@
                                 Catalog._Other.fnPriceTabs();
                                 Catalog._Search.fnCatalogPresentationComboBox();
                             }
+                            else {
+                                Catalog._Clear.fnCatalogVariantGet();
+                                Catalog._Clear.fnCatalogPresentationGet();
+                            };
                         };
                     });
                 }
             },
+            fnCatalogPresentationCreateUpdate: function () {
+                if ($('#frmCatalogVariantCreateUpdate').valid()) {
+                    const CatalogPresentationID = $('#hdCatalogPresentationID').val() == '' ? 0 : $('#hdCatalogPresentationID').val();
+                    const options = {
+                        url: Uti.Url.Base + '/Product/CatalogPresentation/' + (CatalogPresentationID == 0 ? 'CatalogPresentationCreate' : 'CatalogPresentationCreate') + '',
+                        data: {
+                            CatalogVariantID: $('#hdCatalogVariantID').val() == '' ? 0 : $('#hdCatalogVariantID').val(),   
+                          //CatalogPresentationID: $('#hdCatalogPresentationID').val() === '' ? 0 : $('#hdCatalogPresentationID').val(),
+                            PresentationID: $('#cboPresentationID').val(),
+                            CatalogPresentationIsDefault: false,
+                            CatalogPresentationEquivalence: $('#txtCatalogPresentationEquivalence').val(),
+                            CatalogPresentationSKU: $('#txtCatalogPresentationSKU').val().trim(),
+                            CatalogPresentationBarcode: $('#txtCatalogPresentationBarcode').val().trim(),
+                            RecordStateID: $('#chkCatalogPresentationStateID').is(':checked') ? Uti.Variable.StateType.Active : Uti.Variable.StateType.Inactive                            
+                        },
+                        type: CatalogPresentationID == 0 ? Uti.Variable.FetchAjax.Type.Post : Uti.Variable.FetchAjax.Type.Put
+                    };
+                    Uti.Ajax.Custom(options, function (response) {
+                        Uti.Modal.Message(response.type, response.message, response.function);
+                        if (response.type === Uti.Message.Type.Session) {
+                            Uti.Modal.Process();
+                        };
+                        if (response.type === Uti.Message.Type.Success) {                             
+                            Uti.Modal.Process();
+                            Catalog._Search.fnCatalogVariantGrid();
+                        };
+                    });
+                }
+            }
         }
     }
     Catalog._Init();

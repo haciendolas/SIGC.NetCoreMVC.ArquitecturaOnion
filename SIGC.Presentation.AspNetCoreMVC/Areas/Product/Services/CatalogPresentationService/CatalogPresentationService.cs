@@ -1,4 +1,4 @@
-﻿using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.CatalogPresentation;
+﻿using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.CatalogPresentation; 
 using SIGC.Presentation.AspNetCoreMVC.Helpers;
 using SIGC.Presentation.AspNetCoreMVC.Services;
 
@@ -12,6 +12,11 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogPresenta
         public CatalogPresentationService(IApiServiceFactory ApiServiceFactory)
         {
             this.ApiService = ApiServiceFactory.Create(ConstantsHelper.HttpClientNames.ApiCommerce360);
+        }
+
+        public async Task<ApiResponse<object?>> CatalogPresentationCreate(CatalogPresentationCreateRequestModel Request)
+        {
+            return await ApiService.PostAsync<CatalogPresentationCreateRequestModel, ApiResponse<object?>>($"{Controller}/CatalogPresentationCreate", Request);
         }
 
         public async Task<ApiResponse<List<CatalogVariantListResponseModel>>> CatalogPresentationList(int CatalogID)
