@@ -734,10 +734,10 @@
                                     if (btnCatalogVariantCreate.length > 0) btnCatalogVariantCreate.hide();
                                 }).tooltip();
                                 element.find('a[name=slnkInactive]').on('click', function () {
-
+                                    Catalog._Operation.fnCatalogVariantChangeState(catalogVariant.catalogVariantID, Uti.Variable.StateType.Inactive);
                                 }).tooltip();
-                                element.find('a[name=slnkInactive]').on('click', function () {
-
+                                element.find('a[name=slnkActive]').on('click', function () {
+                                    Catalog._Operation.fnCatalogVariantChangeState(catalogVariant.catalogVariantID, Uti.Variable.StateType.Active);
                                 }).tooltip();
 
                                 catalogVariant.catalogPresentations.forEach(catalogPresentation => {
@@ -780,11 +780,11 @@
                                         if (btnCatalogVariantUpdate.length > 0) btnCatalogVariantUpdate.show();
                                         if (btnCatalogPresentationCreate.length > 0) btnCatalogPresentationCreate.hide();
                                     }).tooltip();
-                                    element.find('a[name=slnkInactive]').on('click', function () {
-                                        alert('Inactivar' + catalogPresentation.unitMeasureID);
+                                    element.find('#' + rowId + ' a[name=slnkInactive]').on('click', function () {
+                                        Catalog._Operation.fnCatalogPresentationChangeState(catalogPresentation.catalogPresentationID, Uti.Variable.StateType.Inactive);
                                     }).tooltip();
-                                    element.find('a[name=slnkActive]').on('click', function () {
-                                        alert('Activar' + catalogPresentation.catalogPresentationID);
+                                    element.find('#' + rowId + ' a[name=slnkActive]').on('click', function () {
+                                        Catalog._Operation.fnCatalogPresentationChangeState(catalogPresentation.catalogPresentationID, Uti.Variable.StateType.Active);
                                     }).tooltip();
                                 });
                             });
@@ -813,6 +813,44 @@
                     }
                     if (response.type === Uti.Message.Type.Success) {
                         Catalog._Search.fnCatalogDataTable();
+                    }
+                });
+            },
+            fnCatalogPresentationChangeState: function (CatalogPresentationID, StateID) {
+                const options = {
+                    url: Uti.Url.Base + '/Product/CatalogPresentation/CatalogPresentationChangeState',
+                    data: {
+                        CatalogPresentationID: CatalogPresentationID,
+                        RecordStateID: StateID
+                    },
+                    type: Uti.Variable.FetchAjax.Type.Put
+                };
+                Uti.Ajax.Custom(options, function (response) {
+                    Uti.Modal.Message(response.type, response.message, response.function);
+                    if (response.type === Uti.Message.Type.Session) {
+                        Uti.Modal.Process();
+                    }
+                    if (response.type === Uti.Message.Type.Success) {
+                        Catalog._Search.fnCatalogVariantGrid();
+                    }
+                });
+            },
+            fnCatalogVariantChangeState: function (CatalogVariantID, StateID) {
+                const options = {
+                    url: Uti.Url.Base + '/Product/CatalogVariant/CatalogVariantChangeState',
+                    data: {
+                        CatalogVariantID: CatalogVariantID,
+                        RecordStateID: StateID
+                    },
+                    type: Uti.Variable.FetchAjax.Type.Put
+                };
+                Uti.Ajax.Custom(options, function (response) {
+                    Uti.Modal.Message(response.type, response.message, response.function);
+                    if (response.type === Uti.Message.Type.Session) {
+                        Uti.Modal.Process();
+                    }
+                    if (response.type === Uti.Message.Type.Success) {
+                        Catalog._Search.fnCatalogVariantGrid();
                     }
                 });
             },

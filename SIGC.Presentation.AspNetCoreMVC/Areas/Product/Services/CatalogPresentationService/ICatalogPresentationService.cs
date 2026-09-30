@@ -6,6 +6,7 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogPresenta
     public interface ICatalogPresentationService
     {
         Task<ApiResponse<object?>> CatalogPresentationCreate(CatalogPresentationCreateRequestModel Request);
+        Task<ApiResponse<object?>> CatalogPresentationChangeState(CatalogPresentationChangeStateRequestModel Request);
         Task<ApiResponse<List<CatalogVariantListResponseModel>>> CatalogPresentationList(int CatalogID);
     }
 }

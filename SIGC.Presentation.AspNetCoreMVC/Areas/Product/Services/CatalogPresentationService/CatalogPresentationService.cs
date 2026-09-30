@@ -1,4 +1,4 @@
-﻿using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.CatalogPresentation; 
+﻿using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.CatalogPresentation;
 using SIGC.Presentation.AspNetCoreMVC.Helpers;
 using SIGC.Presentation.AspNetCoreMVC.Services;
 
@@ -18,7 +18,10 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogPresenta
         {
             return await ApiService.PostAsync<CatalogPresentationCreateRequestModel, ApiResponse<object?>>($"{Controller}/CatalogPresentationCreate", Request);
         }
-
+        public async Task<ApiResponse<object?>> CatalogPresentationChangeState(CatalogPresentationChangeStateRequestModel Request)
+        {
+            return await ApiService.PutAsync<CatalogPresentationChangeStateRequestModel, ApiResponse<object?>>($"{Controller}/CatalogPresentationChangeState", Request);
+        }
         public async Task<ApiResponse<List<CatalogVariantListResponseModel>>> CatalogPresentationList(int CatalogID)
         {
             return await ApiService.GetAsync<ApiResponse<List<CatalogVariantListResponseModel>>>($"{Controller}/CatalogPresentationList/{CatalogID}");

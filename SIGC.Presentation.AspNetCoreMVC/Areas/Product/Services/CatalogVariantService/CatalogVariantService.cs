@@ -13,6 +13,7 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogVariantS
         {
             this.ApiService = ApiServiceFactory.Create(ConstantsHelper.HttpClientNames.ApiCommerce360);
         }
+
         public async Task<ApiResponse<object?>> CatalogVariantCreate(CatalogVariantCreateUpdateRequestModel Request)
         {
             return await ApiService.PostAsync<CatalogVariantCreateUpdateRequestModel, ApiResponse<object?>>($"{Controller}/CatalogVariantCreate", Request);
@@ -20,6 +21,10 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogVariantS
         public async Task<ApiResponse<object?>> CatalogVariantUpdate(CatalogVariantCreateUpdateRequestModel Request)
         {
             return await ApiService.PutAsync<CatalogVariantCreateUpdateRequestModel, ApiResponse<object?>>($"{Controller}/CatalogVariantUpdate", Request);
+        }
+        public async Task<ApiResponse<object?>> CatalogVariantChangeState(CatalogVariantChangeStateRequestModel Request)
+        {
+            return await ApiService.PutAsync<CatalogVariantChangeStateRequestModel, ApiResponse<object?>>($"{Controller}/CatalogVariantChangeState", Request);
         }
         public async Task<ApiResponse<List<CatalogVariantListResponseModel>>> CatalogVariantList(int CatalogID)
         {

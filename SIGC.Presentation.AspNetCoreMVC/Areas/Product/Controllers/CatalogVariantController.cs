@@ -29,6 +29,12 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
             return Json(await CatalogVariantService.CatalogVariantUpdate(Request));
         }
 
+        [HttpPut]
+        public async Task<IActionResult> CatalogVariantChangeState([FromBody] CatalogVariantChangeStateRequestModel Request)
+        {
+            return Json(await CatalogVariantService.CatalogVariantChangeState(Request));
+        }
+
         [HttpGet]
         public async Task<IActionResult> CatalogVariantList([FromRoute(Name = "id")] int CatalogID)
         {
