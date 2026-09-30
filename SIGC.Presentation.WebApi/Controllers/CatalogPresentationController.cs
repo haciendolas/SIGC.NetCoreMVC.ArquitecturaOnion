@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SIGC.ApplicationService.Features.CatalogPresentationFeatures.Commands.CatalogPresentationChangeState;
 using SIGC.ApplicationService.Features.CatalogPresentationFeatures.Commands.CatalogPresentationCreate;
 using SIGC.ApplicationService.Features.CatalogPresentationFeatures.Queries.CatalogPresentationList;
 using SIGC.Infrastructure.CrossCutting.Wrappers;
@@ -13,6 +14,15 @@ namespace SIGC.Presentation.WebApi.Controllers
         [ProducesResponseType(typeof(MsgResponse<object?>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CatalogPresentationCreate([FromBody] CatalogPresentationCreateCommandRequest Command, CancellationToken CancellationToken)
+        {
+            return Ok(await Mediator.Send(Command, CancellationToken));
+        }
+
+        [HttpPut("CatalogPresentationChangeState")]
+        [SwaggerOperation(Summary = "Cambiar el estado de la presentación", Description = "Permite cambiar el estado de la presentación.")]
+        [ProducesResponseType(typeof(MsgResponse<object?>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CatalogPresentationChangeState([FromBody] CatalogPresentationChangeStateCommandRequest Command, CancellationToken CancellationToken)
         {
             return Ok(await Mediator.Send(Command, CancellationToken));
         }

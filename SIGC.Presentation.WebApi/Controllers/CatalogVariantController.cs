@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SIGC.ApplicationService.Features.CatalogVariantFeatures.Commands.CatalogVariantChangeState;
 using SIGC.ApplicationService.Features.CatalogVariantFeatures.Commands.CatalogVariantCreate;
 using SIGC.ApplicationService.Features.CatalogVariantFeatures.Commands.CatalogVariantUpdate;
 using SIGC.ApplicationService.Features.CatalogVariantFeatures.Queries.CatalogVariantList;
@@ -26,16 +27,16 @@ namespace SIGC.Presentation.WebApi.Controllers
         { 
             return Ok(await Mediator.Send(Command, CancellationToken));
         }
-        /*
+       
         [HttpPut("CatalogVariantChangeState")]
-        [SwaggerOperation(Summary = "Cambiar el estado del establecimiento", Description = "Permite cambiar el estado del establecimiento.")]
+        [SwaggerOperation(Summary = "Cambiar el estado de la variante", Description = "Permite cambiar el estado de la variante.")]
         [ProducesResponseType(typeof(MsgResponse<object?>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CatalogVariantChangeState([FromBody] CatalogVariantChangeStateCommandRequest Command, CancellationToken CancellationToken)
         {
             return Ok(await Mediator.Send(Command, CancellationToken));
         } 
-        */
+        
         [HttpGet("CatalogVariantList/{CatalogID}")]
         [SwaggerOperation(Summary = "Listar las variantes por catálogo", Description = "Permite listar las variantes por catálogo.")]
         [ProducesResponseType(typeof(MsgResponse<List<CatalogVariantListQueryResponse>>), StatusCodes.Status200OK)]

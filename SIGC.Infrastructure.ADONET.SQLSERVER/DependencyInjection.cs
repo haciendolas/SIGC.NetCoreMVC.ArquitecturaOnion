@@ -201,6 +201,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
             services.AddScoped<ICatalogPresentationCreateRepository, CatalogPresentationCreateRepository>();
             services.AddScoped<ICatalogPresentationUpdateRepository, CatalogPresentationUpdateRepository>();
             services.AddScoped<ICatalogPresentationVerifyFieldsRepository, CatalogPresentationVerifyFieldsRepository>();
+            services.AddScoped<ICatalogPresentationChangeStateRepository, CatalogPresentationChangeStateRepository>();
 
             services.AddScoped<ICatalogTherapeuticActionCreateUpdateRepository, CatalogTherapeuticActionCreateUpdateRepository>();
             services.AddScoped<ICatalogTherapeuticActionDeleteRepository, CatalogTherapeuticActionDeleteRepository>();
@@ -212,6 +213,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
             services.AddScoped<ICatalogVariantUpdateRepository, CatalogVariantUpdateRepository>();
             services.AddScoped<ICatalogVariantVerifySkuAndNameRepository, CatalogVariantVerifySkuAndNameRepository>();
             services.AddScoped<ICatalogVariantListRepository, CatalogVariantListRepository>();
+            services.AddScoped<ICatalogVariantChangeStateRepository, CatalogVariantChangeStateRepository>();
 
             services.AddScoped<ICatalogVariantValueCreateUpdateRepository, CatalogVariantValueCreateUpdateRepository>();
             services.AddScoped<ICatalogVariantValueDeleteRepository, CatalogVariantValueDeleteRepository>();
