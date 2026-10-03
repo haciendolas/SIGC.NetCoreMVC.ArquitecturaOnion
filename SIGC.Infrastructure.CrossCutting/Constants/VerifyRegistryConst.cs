@@ -68,7 +68,13 @@
             public const string BARCODE_EXISTS = "BARCODE_EXISTS";
             public const string SKU_AND_BARCODE_EXISTS = "SKU_AND_BARCODE_EXISTS"; 
             public const string PRESENTATION_EXISTS = "PRESENTATION_EXISTS";
-
         }
+
+        public static class CatalogPrice
+        {
+            public const string OK = "OK";
+            public const string FIELDS_EXISTS = "FIELDS_EXISTS";
+        }
+
     }
 }

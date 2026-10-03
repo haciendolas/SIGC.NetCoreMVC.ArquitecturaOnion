@@ -1,7 +1,7 @@
 /*=============================================================================          
    Author:                 JOEL CASTILLO ROJAS      
-   Create date:            25/07/2026
-   Description:            Permite crear un registro en la tabla Product.CatalogLot
+   Create date:            03/10/2026
+   Description:            Permite crear un registro en la tabla Product.CatalogPrice
    Execute:	  
 
 		  DECLARE @CatalogPriceID INT  

@@ -36,6 +36,7 @@
         public const string EXIST_CATALOGPRESENTATION_BARCODE = "ExistCatalogPresentationBarcode";
         public const string EXIST_CATALOGPRESENTATION_SKU_AND_BARCODE = "ExistCatalogPresentationSkuAndBarcode"; 
         public const string EXIST_CATALOGPRESENTATION_PRESENTATION = "ExistCatalogPresentationPresentation";
+        public const string EXIST_CATALOGPRICE_FIELDS = "ExistCatalogPriceFields";
 
         //ERRORES DE DE REGISTROS
         public const string ERROR_OBJECT = "ErrorObject";
