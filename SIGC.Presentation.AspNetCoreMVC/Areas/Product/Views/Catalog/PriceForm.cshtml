@@ -3,7 +3,7 @@
 @{
     Layout = null;
 }
-<form id="frmCompanyCreateUpdate" class="needs-validation" novalidate method="dialog">
+<form id="frmCatalogPriceCreateUpdate" class="needs-validation" novalidate method="dialog">
     <h6 class="pt-2">&nbsp;&nbsp;Todos los campos(<i class="ri-asterisk align-middle text-danger"></i>) son obligatorios</h6>
     <div class="card-body">
         <div class="row pb-2">
@@ -13,6 +13,7 @@
             </div>
         </div>
         <div class="row pb-2">
+            <input type="hidden" id="hdCatalogPriceID" />
             <label for="cboCatalogPresentationID" class="col-sm-1 col-form-label" style="padding-right:0px">Presentación<i class="ri-asterisk align-middle text-danger"></i></label>
             <div class="col-sm-7">
                 <select class="form-select" id="cboCatalogPresentationID" name="CatalogPresentationID">
@@ -49,31 +50,31 @@
                     }
                 </select>
             </div>
-            <label for="txtCompanyMobile" class="col-sm-1 col-form-label">Precio<i class="ri-asterisk align-middle text-danger"></i></label>
+            <label for="txtCatalogPriceAmount" class="col-sm-1 col-form-label">Precio<i class="ri-asterisk align-middle text-danger"></i></label>
             <div class="col-sm-2">
-                <input type="text" class="form-control" id="txtCompanyMobile" name="CompanyMobile" />
+                <input type="text" class="form-control" id="txtCatalogPriceAmount" name="CatalogPriceAmount" />
             </div>
-            <label for="chkStateID" class="col-sm-1 col-form-label">&nbsp;</label>
+            <label for="chkCatalogPriceIsTaxIncluded" class="col-sm-1 col-form-label">&nbsp;</label>
             <div class="col-sm-2 pt-2">
                 <div class="form-check form-switch form-switch-md form-switch-secondary" dir="ltr">
-                    <input type="checkbox" class="form-check-input" checked id="chkStateID">
-                    <label class="form-check-label" for="chkStateID">Incluye Impuesto</label>
+                    <input type="checkbox" class="form-check-input" checked id="chkCatalogPriceIsTaxIncluded">
+                    <label class="form-check-label" for="chkCatalogPriceIsTaxIncluded">Incluye Impuesto</label>
                 </div>
             </div>
-            <label for="chkStateID" class="col-sm-1 col-form-label">Estado</label>
+            <label for="chkCatalogPriceStateID" class="col-sm-1 col-form-label">Estado</label>
             <div class="col-sm-2 pt-2">
                 <div class="form-check form-switch form-switch-md form-switch-secondary" dir="ltr">
-                    <input type="checkbox" class="form-check-input" checked id="chkStateID">
-                    <label class="form-check-label" for="chkStateID">Activo</label>
+                    <input type="checkbox" class="form-check-input" checked id="chkCatalogPriceStateID">
+                    <label class="form-check-label" for="chkCatalogPriceStateID">Activo</label>
                 </div>
             </div>
         </div> 
         <div class="row pb-2">
             <div class="col-sm-12 mt-3">
                 <div class="text-end">
-                    <button type="button" class="btn btn-light" id="btnCompanyNew"><i class="ri-file-text-fill align-bottom me-1 fs-13"></i>&nbsp;Nuevo&nbsp;</button>&nbsp;&nbsp;
-                    <button type="button" class="btn btn-primary" id="btnCompanyCreate"><i class="ri-save-3-line align-bottom me-1 fs-13"></i><span>Guardar</span></button>
-                    <button type="button" class="btn btn-primary" id="btnCompanyUpdate"><i class="ri-pencil-fill align-bottom me-1 fs-13"></i>Editar&nbsp;</button>
+                    <button type="button" class="btn btn-light" id="btnCatalogPriceNew"><i class="ri-file-text-fill align-bottom me-1 fs-13"></i>&nbsp;Nuevo&nbsp;</button>&nbsp;&nbsp;
+                    <button type="button" class="btn btn-primary" id="btnCatalogPriceCreate"><i class="ri-save-3-line align-bottom me-1 fs-13"></i><span>Guardar</span></button>
+                    <button type="button" class="btn btn-primary" id="btnCatalogPriceUpdate"><i class="ri-pencil-fill align-bottom me-1 fs-13"></i>Editar&nbsp;</button>
                 </div>
             </div>
         </div>

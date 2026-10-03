@@ -32,14 +32,13 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogPriceReposito
                 Connection = Connection,
                 Transaction = Transaction
             };
-            Command.Parameters.Add("@RetMsg", SqlDbType.VarChar, 60);
+            Command.Parameters.Add("@RetMsg", SqlDbType.VarChar, 20);
             Command.Parameters["@RetMsg"].Direction = ParameterDirection.Output;
+            Command.Parameters.AddWithValue("@CatalogPriceID", Model.CatalogPriceID);
+            Command.Parameters.AddWithValue("@CompanyID", Model.CompanyID);
             Command.Parameters.AddWithValue("@CatalogPresentationID", Model.CatalogPresentationID);
-            Command.Parameters.AddWithValue("@CompanyID", Model.CompanyID);        
-          //  Command.Parameters.AddWithValue("@CatalogVariantID", Model.CatalogVariantID);
-           // Command.Parameters.AddWithValue("@PresentationID", Model.PresentationID);
-           // Command.Parameters.AddWithValue("@CatalogPresentationSKU", string.IsNullOrWhiteSpace(Model.CatalogPresentationSKU) ? DBNull.Value :Model.CatalogPresentationSKU);
-           // Command.Parameters.AddWithValue("@CatalogPresentationBarcode", string.IsNullOrWhiteSpace(Model.CatalogPresentationBarcode) ? DBNull.Value : Model.CatalogPresentationBarcode);
+            Command.Parameters.AddWithValue("@EstablishmentID", Model.EstablishmentID);
+            Command.Parameters.AddWithValue("@PriceTypeID", Model.PriceTypeID); 
             await Command.ExecuteNonQueryAsync(CancellationToken);
             return Command.Parameters["@RetMsg"].Value.ToString()!;           
         }

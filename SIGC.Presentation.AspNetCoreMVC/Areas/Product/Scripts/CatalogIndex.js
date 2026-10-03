@@ -2,6 +2,7 @@
     let CatalogValidate = null;
     let CatalogVariantValidate = null;
     let ChoicesControl = null;
+    let CatalogPriceValidate = null;
     const Catalog = {
         _Init: function () {
             $("#txtCatalogName").stringToSlug({
@@ -10,7 +11,8 @@
                 space: '-'
             });
             Catalog._Validation.fnCatalogCreateUpdateValidate();
-            Catalog._Validation.fnCatalogVariantCreateUpdateValidate()
+            Catalog._Validation.fnCatalogVariantCreateUpdateValidate();
+            Catalog._Validation.fnCatalogPriceCreateUpdateValidate();
             Catalog._Other.fnCatalogTabs();
             Catalog._Other.fnOpenFile();
             Catalog._Search.fnCatalogDataTable();
@@ -63,6 +65,21 @@
                 $('#btnCatalogPresentationCreate').hide();
                 $('#btnCatalogPresentationCreate').on('click', function () {
                     Catalog._Operation.fnCatalogPresentationCreateUpdate();
+                });
+            };
+
+            $('#btnCatalogPriceNew').on('click', function () {
+                Catalog._Clear.fnCatalogPriceGet();
+            });
+            if ($('#btnCatalogPriceCreate').length > 0) {
+                $('#btnCatalogPriceCreate').on('click', function () {
+                    Catalog._Operation.fnCatalogPriceCreateUpdate();
+                });
+            };
+            if ($('#btnCatalogPriceUpdate').length > 0) {
+                $('#btnCatalogPriceUpdate').hide();
+                $('#btnCatalogPriceUpdate').on('click', function () {
+                    Catalog._Operation.fnCatalogPriceCreateUpdate();
                 });
             };
 
@@ -146,7 +163,13 @@
                 if (btnCatalogVariantCreate.length > 0) btnCatalogVariantCreate.show();
                 if (btnCatalogVariantUpdate.length > 0) btnCatalogVariantUpdate.hide();
                 Catalog._Validation.fnCatalogVariantCreateUpdateReset();
-            }
+            },
+            fnCatalogPriceGet: function () {
+                $('#hdCatalogPriceID,#cboCatalogPresentationID,#cboPriceTypeID,#cboCurrencyTypeID,#txtCatalogPriceAmount').val('');
+                $('#chkCatalogPriceIsTaxIncluded').prop('checked', true);
+                $('#chkCatalogPriceStateID').prop('checked', true);
+                Catalog._Validation.fnCatalogPriceCreateUpdateReset();
+            },
         },
         _Other: {
             fnOpenFile: function () {
@@ -364,6 +387,45 @@
                         CatalogPresentationEquivalence: { required: '*Campo requerido' },
                         CatalogPresentationSKU: { maxlength: '*Máximo 50 caracteres' },
                         CatalogPresentationBarcode: { maxlength: '*Máximo 50 caracteres' },
+                    },
+                    highlight: function (element) {
+                        $(element).addClass('is-invalid');
+                    },
+                    unhighlight: function (element) {
+                        $(element).removeClass('is-invalid');
+                    },
+                    errorPlacement: function (error, element) {
+                        const $parent = $(element).closest('.error-placeholder');
+                        error.addClass('invalid-feedback');
+
+                        if ($parent.length) {
+                            $parent.append(error);
+                        } else {
+                            error.insertAfter(element);
+                        }
+                    },
+                    submitHandler: function (form) {
+                    }
+                });
+            },
+            fnCatalogPriceCreateUpdateReset: function () {
+                CatalogPriceValidate.resetForm();
+                $('#frmCatalogPriceCreateUpdate *').removeClass(['invalid-feedback', 'is-invalid']);
+            },
+            fnCatalogPriceCreateUpdateValidate: function () {
+                CatalogPriceValidate = $('#frmCatalogPriceCreateUpdate').validate({
+                    ignore: [],
+                    rules: {                         
+                        CatalogPresentationID: { required: true },
+                        PriceTypeID: { required: true },
+                        CurrencyTypeID: { required: true },
+                        CatalogPriceAmount: { required: true }                 
+                    },
+                    messages: {                      
+                        CatalogPresentationID: { required: '*Campo requerido' },
+                        PriceTypeID: { required: '*Campo requerido' },
+                        CurrencyTypeID: { required: '*Campo requerido' },
+                        CatalogPriceAmount: { required: '*Campo requerido' }              
                     },
                     highlight: function (element) {
                         $(element).addClass('is-invalid');
@@ -1005,6 +1067,48 @@
                         if (response.type === Uti.Message.Type.Success) {                             
                             Uti.Modal.Process();
                             Catalog._Search.fnCatalogVariantGrid();
+                        };
+                    });
+                }
+            },
+            fnCatalogPriceCreateUpdate: function () {
+                if ($('#frmCatalogPriceCreateUpdate').valid()) {
+                    const EstablishmentID = $('#cboGlobalEstablishmentID').val() | 0;
+                    if (EstablishmentID === 0) {
+                        Uti.Message.Modal.Toastify('Debe seleccionar el establecimiento', Uti.Message.Type.Warning);
+                        return;
+                    };
+                    const CatalogPriceID = $('#hdCatalogPriceID').val() == '' ? 0 : $('#hdCatalogPriceID').val();
+                    const options = {
+                        url: Uti.Url.Base + '/Product/CatalogPrice/' + (CatalogPriceID == 0 ? 'CatalogPriceCreate' : 'CatalogPriceUpdate') + '',
+                        data: {
+                            CatalogPriceID: CatalogPriceID ,
+                            CatalogPresentationID: $('#cboCatalogPresentationID').val(),
+                            EstablishmentID: EstablishmentID,
+                            PriceTypeID: $('#cboPriceTypeID').val(),
+                            CurrencyTypeID: $('#cboCurrencyTypeID').val(),
+                            CatalogPriceAmount: $('#txtCatalogPriceAmount').val(),
+                            CatalogPriceIsTaxIncluded: $('#chkCatalogPriceIsTaxIncluded').is(':checked'),
+                            RecordStateID: $('#chkCatalogPriceStateID').is(':checked') ? Uti.Variable.StateType.Active : Uti.Variable.StateType.Inactive
+                        },
+                        type: CatalogPriceID == 0 ? Uti.Variable.FetchAjax.Type.Post : Uti.Variable.FetchAjax.Type.Put
+                    };
+                    Uti.Ajax.Custom(options, function (response) {
+                        Uti.Modal.Message(response.type, response.message, response.function);
+                        if (response.type === Uti.Message.Type.Session) {
+                            Uti.Modal.Process();
+                        };
+                        if (response.type === Uti.Message.Type.Success) {
+                            Uti.Modal.Process();
+                            Catalog._Clear.fnCatalogPriceGet();
+                            //if (CatalogPriceID === 0) {
+                             //   Catalog._Other.fnTaxTabs();
+                           // }
+                           // else {
+                            //    Catalog._Clear.fnCatalogPriceGet();
+                                // Catalog._Search.fnCatalogVariantGrid();
+                           // }
+                          
                         };
                     });
                 }
