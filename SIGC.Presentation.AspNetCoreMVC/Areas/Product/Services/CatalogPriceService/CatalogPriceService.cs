@@ -23,10 +23,11 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogPriceSer
         {
             return await ApiService.PutAsync<CatalogPresentationChangeStateRequestModel, ApiResponse<object?>>($"{Controller}/CatalogPresentationChangeState", Request);
         }
-        public async Task<ApiResponse<List<CatalogVariantListResponseModel>>> CatalogPresentationList(int CatalogID)
-        {
-            return await ApiService.GetAsync<ApiResponse<List<CatalogVariantListResponseModel>>>($"{Controller}/CatalogPresentationList/{CatalogID}");
-        }
         */
+        public async Task<ApiResponse<List<CatalogPriceListResponseModel>>> CatalogPriceList(int CatalogID)
+        {
+            return await ApiService.GetAsync<ApiResponse<List<CatalogPriceListResponseModel>>>($"{Controller}/CatalogPriceList/{CatalogID}");
+        }
+     
     }
 }

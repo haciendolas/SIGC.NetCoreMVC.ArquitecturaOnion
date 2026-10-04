@@ -12,7 +12,7 @@ ALTER PROCEDURE Product.uspCatalogPriceList(
 AS
 BEGIN
 	SET NOCOUNT ON
-		SELECT CP.EstablishmentID, E.EstablishmentName,CP.CatalogPriceID,CP.CatalogPresentationID,P.PresentationName AS CatalogPresentationName,
+		SELECT CP.EstablishmentID, E.EstablishmentName,CP.CatalogPriceID,CV.CatalogVariantName,CP.CatalogPresentationID,P.PresentationName AS CatalogPresentationName,
 		CP.PriceTypeID,PT.PriceTypeName,CP.CurrencyTypeID,CT.ConstantName AS CurrencyTypeName,
 		CP.CatalogPriceAmount,CP.CatalogPriceIsTaxIncluded,CP.RecordStateID
 	    FROM Product.CatalogPrice CP  WITH(NOLOCK) 
@@ -24,6 +24,7 @@ BEGIN
 		INNER JOIN Product.CatalogVariant CV WITH(NOLOCK) ON CPres.CatalogVariantID=CV.CatalogVariantID AND CPres.CompanyID=CV.CompanyID AND CV.RecordStateID<>2
 		WHERE CP.CompanyID=@CompanyID 
 		AND CV.CatalogID=@CatalogID
-		AND CP.RecordStateID<>2		 
+		AND CP.RecordStateID<>2
+		ORDER BY CP.CatalogPriceID DESC		 
 	SET NOCOUNT OFF
 END

@@ -7,6 +7,6 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogPriceSer
     {
         Task<ApiResponse<object?>> CatalogPriceCreate(CatalogPriceCreateUpdateRequestModel Request);
        // Task<ApiResponse<object?>> CatalogPresentationChangeState(CatalogPresentationChangeStateRequestModel Request);
-       // Task<ApiResponse<List<CatalogVariantListResponseModel>>> CatalogPresentationList(int CatalogID);
+        Task<ApiResponse<List<CatalogPriceListResponseModel>>> CatalogPriceList(int CatalogID);
     }
 }

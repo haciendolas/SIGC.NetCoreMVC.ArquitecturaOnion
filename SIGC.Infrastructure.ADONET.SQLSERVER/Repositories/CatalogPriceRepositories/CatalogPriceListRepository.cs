@@ -43,6 +43,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogPriceReposito
                                     EstablishmentID: Validation.SqlDBToInt32(ref DataReader, "EstablishmentID"),
                                     EstablishmentName: Validation.SqlDBToString(ref DataReader, "EstablishmentName"),
                                     CatalogPriceID: Validation.SqlDBToInt32(ref DataReader, "CatalogPriceID"),
+                                    CatalogVariantName: Validation.SqlDBToString(ref DataReader, "CatalogVariantName"),
                                     CatalogPresentationID: Validation.SqlDBToInt32(ref DataReader, "CatalogPresentationID"),
                                     CatalogPresentationName: Validation.SqlDBToString(ref DataReader, "CatalogPresentationName"),
                                     PriceTypeID: Validation.SqlDBToTinyint(ref DataReader, "PriceTypeID"),

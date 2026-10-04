@@ -1,6 +1,6 @@
-﻿namespace SIGC.DomainModel.Dtos.CatalogPrice
+﻿namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.CatalogPrice
 {
-    public sealed record CatalogPriceListResponseDto
+    public sealed record CatalogPriceListResponseModel
     (
         int EstablishmentID,
         string EstablishmentName,
@@ -15,5 +15,5 @@
         decimal CatalogPriceAmount,
         bool CatalogPriceIsTaxIncluded,
         byte RecordStateID
-    );   
+    );    
 }

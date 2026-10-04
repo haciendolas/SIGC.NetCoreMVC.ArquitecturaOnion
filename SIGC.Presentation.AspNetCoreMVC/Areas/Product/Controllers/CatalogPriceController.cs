@@ -26,12 +26,12 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
         {
             return Json(await CatalogPriceService.CatalogPriceChangeState(Request));
         }
-
+         */
         [HttpGet]
         public async Task<IActionResult> CatalogPriceList([FromRoute(Name = "id")] int CatalogID)
         {
             return Json(await CatalogPriceService.CatalogPriceList(CatalogID));
         }
-        */
+       
     }
 }
