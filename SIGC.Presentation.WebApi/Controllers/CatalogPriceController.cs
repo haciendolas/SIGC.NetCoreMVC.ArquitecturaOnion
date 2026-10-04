@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SIGC.ApplicationService.Features.CatalogPriceFeatures.Commands.CatalogPriceChangeState;
 using SIGC.ApplicationService.Features.CatalogPriceFeatures.Commands.CatalogPriceCreate;
 using SIGC.ApplicationService.Features.CatalogPriceFeatures.Queries.CatalogPriceList;
 using SIGC.DomainModel.Dtos.CatalogPrice;
@@ -17,16 +18,16 @@ namespace SIGC.Presentation.WebApi.Controllers
         {
             return Ok(await Mediator.Send(Command, CancellationToken));
         }
-        /*
+      
         [HttpPut("CatalogPriceChangeState")]
-        [SwaggerOperation(Summary = "Cambiar el estado de la presentación", Description = "Permite cambiar el estado de la presentación.")]
+        [SwaggerOperation(Summary = "Cambiar el estado del precio", Description = "Permite cambiar el estado del precio.")]
         [ProducesResponseType(typeof(MsgResponse<object?>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CatalogPriceChangeState([FromBody] CatalogPriceChangeStateCommandRequest Command, CancellationToken CancellationToken)
         {
             return Ok(await Mediator.Send(Command, CancellationToken));
         }
-         */
+      
         [HttpGet("CatalogPriceList/{CatalogID}")]
         [SwaggerOperation(Summary = "Listar los precios por catálogo", Description = "Permite listar los precios por catálogo.")]
         [ProducesResponseType(typeof(MsgResponse<List<CatalogPriceListResponseDto>>), StatusCodes.Status200OK)]
