@@ -3,7 +3,7 @@
 -- Create date:            16/08/2026
 -- Description:            Permite listar presentaciones activas por catalog de la tabla Product.CatalogPresentation
 -- Update:				   Joel Castillo Rojas    
--- Exec                    Exec Product.uspCatalogPresentationList @CompanyID=1,@CatalogID=1
+-- Exec                    Exec Product.uspCatalogPresentationList @CompanyID=1,@CatalogID=42
 -- ============================================================================== 
 ALTER PROCEDURE Product.uspCatalogPresentationList(
  @CompanyID INT,
@@ -19,6 +19,6 @@ BEGIN
 		WHERE P.CompanyID=@CompanyID 
 		AND CV.CatalogID=@CatalogID
 		AND CP.RecordStateID=1	
-		ORDER BY CP.CatalogPresentationIsDefault 
+		ORDER BY CV.CatalogVariantID,CP.CatalogPresentationIsDefault 
 	SET NOCOUNT OFF
 END
