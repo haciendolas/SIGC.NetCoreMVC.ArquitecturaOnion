@@ -6,7 +6,7 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogPriceSer
     public interface ICatalogPriceService
     {
         Task<ApiResponse<object?>> CatalogPriceCreate(CatalogPriceCreateUpdateRequestModel Request);
-       // Task<ApiResponse<object?>> CatalogPresentationChangeState(CatalogPresentationChangeStateRequestModel Request);
+        Task<ApiResponse<object?>> CatalogPriceChangeState(CatalogPriceChangeStateRequestModel Request);
         Task<ApiResponse<List<CatalogPriceListResponseModel>>> CatalogPriceList(int CatalogID);
     }
 }

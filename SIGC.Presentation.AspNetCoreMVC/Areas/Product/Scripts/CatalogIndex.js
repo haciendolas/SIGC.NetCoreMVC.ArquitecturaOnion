@@ -894,8 +894,9 @@
                                             <td class="text-end">${Uti.Format.NumericSeparator(item.catalogPriceAmount,2)}</td>
                                             <td class="text-center">${item.catalogPriceIsTaxIncluded ? 'SI':'NO'}</td>                                         
                                             <td class="text-center">${Uti.Control.SpanStateType(item.recordStateID)}</td>
-                                            <td class="text-center" style="width:3%">${item.recordStateID === Uti.Variable.StateType.Active ? Uti.Control.LinkHRef(linkUpdate) : "&nbsp;&nbsp;"}</td>
-                                            <td class="text-center" style="width:3%">${item.recordStateID === Uti.Variable.StateType.Active ? Uti.Control.LinkHRef(linkUnchange) : Uti.Control.LinkHRef(linkChange)}</td>
+                                            <td class="text-center" style="width:2%">${item.recordStateID === Uti.Variable.StateType.Active ? Uti.Control.LinkHRef(linkUpdate) : "&nbsp;&nbsp;"}</td>
+                                            <td class="text-center" style="width:2%">${item.recordStateID === Uti.Variable.StateType.Active ? Uti.Control.LinkHRef(linkUnchange) : Uti.Control.LinkHRef(linkChange)}</td>
+                                            <td class="text-center" style="width:2%">${Uti.Control.LinkHRef(linkDelete)}</td>
                                           </tr>`;                                   
                                     element.append(column).fadeIn('slow');
                                     element.find('#' + rowId + ' a[name = slnkEdit]').on('click', function () {
@@ -911,28 +912,31 @@
                                         if (btnCatalogPriceCreate.length > 0) btnCatalogPriceCreate.hide();
                                         if (btnCatalogPriceUpdate.length > 0) btnCatalogPriceUpdate.show();                                       
                                     }).tooltip();
-                                    element.find('#' + rowId + ' a[name=slnkInactive]').on('click', function () {
-                                       // Catalog._Operation.fnCatalogPresentationChangeState(catalogPresentation.catalogPresentationID, Uti.Variable.StateType.Inactive);
+                                   element.find('#' + rowId + ' a[name=slnkInactive]').on('click', function () {
+                                        Catalog._Operation.fnCatalogPriceChangeState(item.catalogPriceID, Uti.Variable.StateType.Inactive);
                                     }).tooltip();
                                     element.find('#' + rowId + ' a[name=slnkActive]').on('click', function () {
-                                     //   Catalog._Operation.fnCatalogPresentationChangeState(catalogPresentation.catalogPresentationID, Uti.Variable.StateType.Active);
+                                        Catalog._Operation.fnCatalogPriceChangeState(item.catalogPriceID, Uti.Variable.StateType.Active);
                                     }).tooltip();
+                                   element.find('#' + rowId + ' a[name=slnkDelete]').on('click', function () {
+                                     Catalog._Operation.fnCatalogPriceChangeState(item.catalogPriceID, Uti.Variable.StateType.Delete);
+                                }).tooltip();
                                 });                            
                         }
                         else {
-                            element.append(Uti.Message.Description.NoRecordsFound);
+                            element.append(`<tr><td colspan="11" class="text-center">${Uti.Message.Description.NoRecordsFound}'</td></tr>`);
                         }
                     };
                 });
             }
         },
         _Operation: {
-            fnCatalogChangeState: function (CatalogId, StateID) {
+            fnCatalogChangeState: function (CatalogId, RecordStateID) {
                 const options = {
                     url: Uti.Url.Base + '/Product/Catalog/CatalogChangeState',
                     data: {
                         CatalogID: CatalogId,
-                        RecordStateID: StateID
+                        RecordStateID: RecordStateID
                     },
                     type: Uti.Variable.FetchAjax.Type.Put
                 };
@@ -946,12 +950,12 @@
                     }
                 });
             },
-            fnCatalogPresentationChangeState: function (CatalogPresentationID, StateID) {
+            fnCatalogPresentationChangeState: function (CatalogPresentationID, RecordStateID) {
                 const options = {
                     url: Uti.Url.Base + '/Product/CatalogPresentation/CatalogPresentationChangeState',
                     data: {
                         CatalogPresentationID: CatalogPresentationID,
-                        RecordStateID: StateID
+                        RecordStateID: RecordStateID
                     },
                     type: Uti.Variable.FetchAjax.Type.Put
                 };
@@ -965,12 +969,12 @@
                     }
                 });
             },
-            fnCatalogVariantChangeState: function (CatalogVariantID, StateID) {
+            fnCatalogVariantChangeState: function (CatalogVariantID, RecordStateID) {
                 const options = {
                     url: Uti.Url.Base + '/Product/CatalogVariant/CatalogVariantChangeState',
                     data: {
                         CatalogVariantID: CatalogVariantID,
-                        RecordStateID: StateID
+                        RecordStateID: RecordStateID
                     },
                     type: Uti.Variable.FetchAjax.Type.Put
                 };
@@ -981,6 +985,25 @@
                     }
                     if (response.type === Uti.Message.Type.Success) {
                         Catalog._Search.fnCatalogVariantGrid();
+                    }
+                });
+            },
+            fnCatalogPriceChangeState: function (CatalogPriceID, RecordStateID) {
+                const options = {
+                    url: Uti.Url.Base + '/Product/CatalogPrice/CatalogPriceChangeState',
+                    data: {
+                        CatalogPriceID: CatalogPriceID,
+                        RecordStateID: RecordStateID
+                    },
+                    type: Uti.Variable.FetchAjax.Type.Put
+                };
+                Uti.Ajax.Custom(options, function (response) {
+                    Uti.Modal.Message(response.type, response.message, response.function);
+                    if (response.type === Uti.Message.Type.Session) {
+                        Uti.Modal.Process();
+                    }
+                    if (response.type === Uti.Message.Type.Success) {
+                        Catalog._Search.fnCatalogPriceGrid();
                     }
                 });
             },

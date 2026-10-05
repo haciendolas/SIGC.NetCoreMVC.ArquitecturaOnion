@@ -20,13 +20,13 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
             Request.RecordOriginID = (byte)EnumsHelper.RecordOrigin.WebForm;
             return Json(await CatalogPriceService.CatalogPriceCreate(Request));
         }
-        /*
+        
         [HttpPut]
         public async Task<IActionResult> CatalogPriceChangeState([FromBody] CatalogPriceChangeStateRequestModel Request)
         {
             return Json(await CatalogPriceService.CatalogPriceChangeState(Request));
         }
-         */
+        
         [HttpGet]
         public async Task<IActionResult> CatalogPriceList([FromRoute(Name = "id")] int CatalogID)
         {
