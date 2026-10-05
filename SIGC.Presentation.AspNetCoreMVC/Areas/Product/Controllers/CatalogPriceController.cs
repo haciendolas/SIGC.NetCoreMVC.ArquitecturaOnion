@@ -26,7 +26,13 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
         {
             return Json(await CatalogPriceService.CatalogPriceChangeState(Request));
         }
-        
+
+        [HttpDelete]
+        public async Task<IActionResult> CatalogPriceDelete([FromRoute(Name = "id")] int CatalogPriceID)
+        {
+            return Json(await CatalogPriceService.CatalogPriceDelete(CatalogPriceID));
+        }
+
         [HttpGet]
         public async Task<IActionResult> CatalogPriceList([FromRoute(Name = "id")] int CatalogID)
         {

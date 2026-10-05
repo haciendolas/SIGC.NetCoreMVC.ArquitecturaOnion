@@ -671,6 +671,10 @@
                     Style: null,
                     IsVisible:null
                 };
+            },
+            ActionType: {
+                CatalogPriceDelete: 'CatalogPriceDelete',
+                CatalogDelete:'CatalogDelete'
             }
         },
         Control: {

@@ -125,7 +125,12 @@
                 $('input[name="CatalogNameLabel"]').val($(this).val());
             });
             $('#btn-modal-yes').on('click', function () {
-                Catalog._Operation.fnCatalogChangeState($('#message-modal-generic #hd-modal-id').val(), Uti.Variable.StateType.Delete);
+                const modal_action = $('#message-modal-generic #hd-modal-action').val();
+                const modal_id = $('#message-modal-generic #hd-modal-id').val();
+                if (modal_action === Uti.Variable.ActionType.CatalogDelete)
+                    Catalog._Operation.fnCatalogChangeState(modal_id, Uti.Variable.StateType.Delete);
+                else if (modal_action === Uti.Variable.ActionType.CatalogPriceDelete)
+                    Catalog._Operation.fnCatalogPriceDelete(modal_id);
             });
         },
         _Clear: {
@@ -536,6 +541,7 @@
                         $(row).find('a[name=lnkDelete]').on('click', function () {
                             Uti.Modal.Message(Uti.Message.Type.ConfirmDelete);
                             $('#message-modal-generic #hd-modal-id').val(data[0]);
+                            $('#message-modal-generic #hd-modal-action').val(Uti.Variable.ActionType.CatalogDelete); 
                         });
                         $(row).find('a[name=lnkPresentation]').on('click', function () {                           
                             Catalog._Other.fnCatalogTabs();
@@ -871,6 +877,8 @@
                         Uti.Modal.Process();
                     }
                     if (response.type === Uti.Message.Type.Query) {
+                        const element = $('#catalog-price-list');
+                        element.html('');
                         const { data: rowData } = response;
                         if (rowData && rowData.length > 0) {                            
                             const linkUpdate = Uti.Variable.Control();
@@ -880,9 +888,8 @@
                             const linkUnchange = Uti.Variable.Control();
                             linkUnchange.Type = Uti.Variable.ButtonType.Unchange;
                             const linkDelete = Uti.Variable.Control();
-                            linkDelete.Type = Uti.Variable.ButtonType.Delete;
-                            const element = $('#catalog-price-list');
-                            element.html('');
+                            linkDelete.Type = Uti.Variable.ButtonType.Delete;                          
+                           
                             rowData.forEach(item => {  
                                     const rowId = `row${item.catalogPriceID}`;
                                     const column = `<tr id='${rowId}'>
@@ -918,9 +925,11 @@
                                     element.find('#' + rowId + ' a[name=slnkActive]').on('click', function () {
                                         Catalog._Operation.fnCatalogPriceChangeState(item.catalogPriceID, Uti.Variable.StateType.Active);
                                     }).tooltip();
-                                   element.find('#' + rowId + ' a[name=slnkDelete]').on('click', function () {
-                                     Catalog._Operation.fnCatalogPriceChangeState(item.catalogPriceID, Uti.Variable.StateType.Delete);
-                                }).tooltip();
+                                element.find('#' + rowId + ' a[name=slnkDelete]').on('click', function () {
+                                    Uti.Modal.Message(Uti.Message.Type.ConfirmDelete);
+                                    $('#message-modal-generic #hd-modal-id').val(item.catalogPriceID);
+                                    $('#message-modal-generic #hd-modal-action').val(Uti.Variable.ActionType.CatalogPriceDelete);  
+                                    }).tooltip();
                                 });                            
                         }
                         else {
@@ -996,6 +1005,21 @@
                         RecordStateID: RecordStateID
                     },
                     type: Uti.Variable.FetchAjax.Type.Put
+                };
+                Uti.Ajax.Custom(options, function (response) {
+                    Uti.Modal.Message(response.type, response.message, response.function);
+                    if (response.type === Uti.Message.Type.Session) {
+                        Uti.Modal.Process();
+                    }
+                    if (response.type === Uti.Message.Type.Success) {
+                        Catalog._Search.fnCatalogPriceGrid();
+                    }
+                });
+            },
+            fnCatalogPriceDelete: function (CatalogPriceID) {
+                const options = {
+                    url: Uti.Url.Base + '/Product/CatalogPrice/CatalogPriceDelete/' + CatalogPriceID,                    
+                    type: Uti.Variable.FetchAjax.Type.Delete
                 };
                 Uti.Ajax.Custom(options, function (response) {
                     Uti.Modal.Message(response.type, response.message, response.function);
