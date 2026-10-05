@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SIGC.ApplicationService.Features.CatalogPriceFeatures.Commands.CatalogPriceChangeState;
 using SIGC.ApplicationService.Features.CatalogPriceFeatures.Commands.CatalogPriceCreate;
+using SIGC.ApplicationService.Features.CatalogPriceFeatures.Commands.CatalogPriceDelete;
 using SIGC.ApplicationService.Features.CatalogPriceFeatures.Queries.CatalogPriceList;
 using SIGC.DomainModel.Dtos.CatalogPrice;
 using SIGC.Infrastructure.CrossCutting.Wrappers;
@@ -27,7 +28,16 @@ namespace SIGC.Presentation.WebApi.Controllers
         {
             return Ok(await Mediator.Send(Command, CancellationToken));
         }
-      
+
+        [HttpDelete("CatalogPriceDelete/{CatalogPriceID}")]
+        [SwaggerOperation(Summary = "Eliminar un precio por su id", Description = "Permite eliminar un precio por su id.")]
+        [ProducesResponseType(typeof(MsgResponse<object?>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CatalogPriceDelete([FromRoute] int CatalogPriceID, CancellationToken CancellationToken)
+        {
+            return Ok(await Mediator.Send(new CatalogPriceDeleteCommandRequest(CatalogPriceID), CancellationToken));
+        }
+
         [HttpGet("CatalogPriceList/{CatalogID}")]
         [SwaggerOperation(Summary = "Listar los precios por catálogo", Description = "Permite listar los precios por catálogo.")]
         [ProducesResponseType(typeof(MsgResponse<List<CatalogPriceListResponseDto>>), StatusCodes.Status200OK)]
