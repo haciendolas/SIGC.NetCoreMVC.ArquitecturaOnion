@@ -39,8 +39,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogPriceReposito
             Command.Parameters.AddWithValue("@PriceTypeID", Model.PriceTypeID);
             Command.Parameters.AddWithValue("@CurrencyTypeID ", Model.CurrencyTypeID);         
             Command.Parameters.AddWithValue("@CatalogPriceAmount", Model.CatalogPriceAmount);
-            Command.Parameters.AddWithValue("@CatalogPriceIsTaxIncluded", Model.CatalogPriceIsTaxIncluded);
-            Command.Parameters.AddWithValue("@RecordOriginID", Model.RecordOriginID);
+            Command.Parameters.AddWithValue("@CatalogPriceIsTaxIncluded", Model.CatalogPriceIsTaxIncluded);     
             Command.Parameters.AddWithValue("@RecordStateID", Model.RecordStateID);
             Command.Parameters.AddWithValue("@CatalogPriceUpdatedUserID", Model.CreatedById);
             Command.Parameters.AddWithValue("@CatalogPriceUpdatedUserName", Model.CreatedByName);

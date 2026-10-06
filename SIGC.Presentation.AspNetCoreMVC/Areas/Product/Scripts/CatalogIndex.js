@@ -132,6 +132,12 @@
                 else if (modal_action === Uti.Variable.ActionType.CatalogPriceDelete)
                     Catalog._Operation.fnCatalogPriceDelete(modal_id);
             });
+            $('button[name="btnCatalogReturn"]').on('click', function () {               
+                Catalog._Other.fnCatalogTabs();
+                $('#catalog-card ul li a[href="#tab-register"]').removeClass('disabled');
+                $('#catalog-card ul li a[href="#tab-register"]').attr('data-bs-toggle', 'tab');
+                $('#catalog-card ul li a[href="#tab-register"]').tab('show');
+            });
         },
         _Clear: {
             fnCatalogGet: function () {
@@ -173,6 +179,10 @@
                 $('#hdCatalogPriceID,#cboCatalogPresentationID,#cboPriceTypeID,#cboCurrencyTypeID,#txtCatalogPriceAmount').val('');
                 $('#chkCatalogPriceIsTaxIncluded').prop('checked', true);
                 $('#chkCatalogPriceStateID').prop('checked', true);
+                const btnCatalogPriceCreate = $('#btnCatalogPriceCreate');
+                const btnCatalogPriceUpdate = $('#btnCatalogPriceUpdate');
+                if (btnCatalogPriceCreate.length > 0) btnCatalogPriceCreate.show();
+                if (btnCatalogPriceUpdate.length > 0) btnCatalogPriceUpdate.hide();
                 Catalog._Validation.fnCatalogPriceCreateUpdateReset();
             },
         },
