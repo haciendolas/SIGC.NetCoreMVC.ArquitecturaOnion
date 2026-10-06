@@ -2,6 +2,7 @@
 using SIGC.ApplicationService.Features.CatalogPriceFeatures.Commands.CatalogPriceChangeState;
 using SIGC.ApplicationService.Features.CatalogPriceFeatures.Commands.CatalogPriceCreate;
 using SIGC.ApplicationService.Features.CatalogPriceFeatures.Commands.CatalogPriceDelete;
+using SIGC.ApplicationService.Features.CatalogPriceFeatures.Commands.CatalogPriceUpdate;
 using SIGC.ApplicationService.Features.CatalogPriceFeatures.Queries.CatalogPriceList;
 using SIGC.DomainModel.Dtos.CatalogPrice;
 using SIGC.Infrastructure.CrossCutting.Wrappers;
@@ -19,7 +20,16 @@ namespace SIGC.Presentation.WebApi.Controllers
         {
             return Ok(await Mediator.Send(Command, CancellationToken));
         }
-      
+
+        [HttpPut("CatalogPriceUpdate")]
+        [SwaggerOperation(Summary = "Editar un precio", Description = "Permite editar un precio.")]
+        [ProducesResponseType(typeof(MsgResponse<object?>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CatalogPriceUpdate([FromBody] CatalogPriceUpdateCommandRequest Command, CancellationToken CancellationToken)
+        {
+            return Ok(await Mediator.Send(Command, CancellationToken));
+        }
+
         [HttpPut("CatalogPriceChangeState")]
         [SwaggerOperation(Summary = "Cambiar el estado del precio", Description = "Permite cambiar el estado del precio.")]
         [ProducesResponseType(typeof(MsgResponse<object?>), StatusCodes.Status200OK)]

@@ -64,7 +64,7 @@ namespace SIGC.ApplicationService.Features.WarehouseFeatures.Commands.WarehouseU
                     else
                     {
                         MsgResponse.Type = MessageTypeConst.ERROR;
-                        MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.ERROR_INSERT);
+                        MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.ERROR_UPDATE);
                     }
                 }
                 else
