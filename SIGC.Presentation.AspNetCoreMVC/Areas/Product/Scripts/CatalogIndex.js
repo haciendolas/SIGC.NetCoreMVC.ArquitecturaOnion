@@ -3,6 +3,7 @@
     let CatalogVariantValidate = null;
     let ChoicesControl = null;
     let CatalogPriceValidate = null;
+    let CatalogTaxValidate = null;
     const Catalog = {
         _Init: function () {
             $("#txtCatalogName").stringToSlug({
@@ -13,6 +14,7 @@
             Catalog._Validation.fnCatalogCreateUpdateValidate();
             Catalog._Validation.fnCatalogVariantCreateUpdateValidate();
             Catalog._Validation.fnCatalogPriceCreateUpdateValidate();
+            Catalog._Validation.fnCatalogTaxCreateUpdateValidate();
             Catalog._Other.fnCatalogTabs();
             Catalog._Other.fnOpenFile();
             Catalog._Search.fnCatalogDataTable();
@@ -80,6 +82,21 @@
                 $('#btnCatalogPriceUpdate').hide();
                 $('#btnCatalogPriceUpdate').on('click', function () {
                     Catalog._Operation.fnCatalogPriceCreateUpdate();
+                });
+            };
+
+            $('#btnCatalogTaxNew').on('click', function () {
+                Catalog._Clear.fnCatalogTaxGet();
+            });
+            if ($('#btnCatalogTaxCreate').length > 0) {
+                $('#btnCatalogTaxCreate').on('click', function () {
+                    Catalog._Operation.fnCatalogTaxCreateUpdate();
+                });
+            };
+            if ($('#btnCatalogTaxUpdate').length > 0) {
+                $('#btnCatalogTaxUpdate').hide();
+                $('#btnCatalogTaxUpdate').on('click', function () {
+                    Catalog._Operation.fnCatalogTaxCreateUpdate();
                 });
             };
 
@@ -184,6 +201,15 @@
                 if (btnCatalogPriceCreate.length > 0) btnCatalogPriceCreate.show();
                 if (btnCatalogPriceUpdate.length > 0) btnCatalogPriceUpdate.hide();
                 Catalog._Validation.fnCatalogPriceCreateUpdateReset();
+            },
+            fnCatalogTaxGet: function () {
+                $('#hdCatalogTaxID,#cboTaxID,#cboTaxAffectationTypeID').val('');
+                $('#chkCatalogTaxStateID').prop('checked', true);
+                const btnCatalogTaxCreate = $('#btnCatalogTaxCreate');
+                const btnCatalogTaxUpdate = $('#btnCatalogTaxUpdate');
+                if (btnCatalogTaxCreate.length > 0) btnCatalogTaxCreate.show();
+                if (btnCatalogTaxUpdate.length > 0) btnCatalogTaxUpdate.hide();
+                Catalog._Validation.fnCatalogTaxCreateUpdateReset();
             },
         },
         _Other: {
@@ -441,6 +467,42 @@
                         PriceTypeID: { required: '*Campo requerido' },
                         CurrencyTypeID: { required: '*Campo requerido' },
                         CatalogPriceAmount: { required: '*Campo requerido' }              
+                    },
+                    highlight: function (element) {
+                        $(element).addClass('is-invalid');
+                    },
+                    unhighlight: function (element) {
+                        $(element).removeClass('is-invalid');
+                    },
+                    errorPlacement: function (error, element) {
+                        const $parent = $(element).closest('.error-placeholder');
+                        error.addClass('invalid-feedback');
+
+                        if ($parent.length) {
+                            $parent.append(error);
+                        } else {
+                            error.insertAfter(element);
+                        }
+                    },
+                    submitHandler: function (form) {
+                    }
+                });
+            },
+
+            fnCatalogTaxCreateUpdateReset: function () {
+                CatalogTaxValidate.resetForm();
+                $('#frmCatalogTaxCreateUpdate *').removeClass(['invalid-feedback', 'is-invalid']);
+            },
+            fnCatalogTaxCreateUpdateValidate: function () {
+                CatalogTaxValidate = $('#frmCatalogTaxCreateUpdate').validate({
+                    ignore: [],
+                    rules: {
+                        TaxID: { required: true },
+                        TaxAffectationTypeID: { required: true }                       
+                    },
+                    messages: {
+                        TaxID: { required: '*Campo requerido' },
+                        TaxAffectationTypeID: { required: '*Campo requerido' }                       
                     },
                     highlight: function (element) {
                         $(element).addClass('is-invalid');
@@ -976,7 +1038,7 @@
                             linkDelete.Type = Uti.Variable.ButtonType.Delete;
 
                             rowData.forEach(item => {
-                                const rowId = `row${item.catalogTaxtID}`;
+                                const rowId = `row${item.catalogTaxID}`;
                                 const column = `<tr id='${rowId}'>
                                             <td class="text-center">${item.catalogTaxID}</td>
                                             <td text-center>${item.taxName} (${Uti.Format.NumericSeparator(item.taxValor, 2)})</td>
@@ -989,17 +1051,14 @@
                                           </tr>`;
                                 element.append(column).fadeIn('slow');
                                 element.find('#' + rowId + ' a[name = slnkEdit]').on('click', function () {
-                                    $('#hdCatalogPriceID').val(item.catalogPriceID);
-                                    $('#cboCatalogPresentationID').val(item.catalogPresentationID);
-                                    $('#cboPriceTypeID').val(item.priceTypeID);
-                                    $('#cboCurrencyTypeID').val(item.currencyTypeID);
-                                    $('#txtCatalogPriceAmount').val(item.catalogPriceAmount);
-                                    $('#chkCatalogPriceIsTaxIncluded').prop('checked', item.catalogPriceIsTaxIncluded);
-                                    $('#chkCatalogPriceStateID').prop('checked', item.recordStateID == Uti.Variable.StateType.Active);
-                                    const btnCatalogPriceCreate = $('#btnCatalogPriceCreate');
-                                    const btnCatalogPriceUpdate = $('#btnCatalogPriceUpdate');
-                                    if (btnCatalogPriceCreate.length > 0) btnCatalogPriceCreate.hide();
-                                    if (btnCatalogPriceUpdate.length > 0) btnCatalogPriceUpdate.show();
+                                    $('#hdCatalogTaxID').val(item.catalogTaxID);
+                                    $('#cboTaxID').val(item.taxID);    
+                                    ChoicesControl.CboTaxAffectationTypeID.setChoiceByValue(String(item.taxAffectationTypeID));                                                          
+                                    $('#chkCatalogTaxStateID').prop('checked', item.recordStateID == Uti.Variable.StateType.Active);
+                                    const btnCatalogTaxCreate = $('#btnCatalogTaxCreate');
+                                    const btnCatalogTaxUpdate = $('#btnCatalogTaxUpdate');
+                                    if (btnCatalogTaxCreate.length > 0) btnCatalogTaxCreate.hide();
+                                    if (btnCatalogTaxUpdate.length > 0) btnCatalogTaxUpdate.show();
                                 }).tooltip();
                                 element.find('#' + rowId + ' a[name=slnkInactive]').on('click', function () {
                                     Catalog._Operation.fnCatalogPriceChangeState(item.catalogPriceID, Uti.Variable.StateType.Inactive);
@@ -1307,6 +1366,33 @@
                                 // Catalog._Search.fnCatalogVariantGrid();
                            // }
                           
+                        };
+                    });
+                }
+            },
+            fnCatalogTaxCreateUpdate: function () {
+                if ($('#frmCatalogTaxCreateUpdate').valid()) {                   
+                    const CatalogTaxID = $('#hdCatalogTaxID').val() == '' ? 0 : $('#hdCatalogTaxID').val();
+                    const options = {
+                        url: Uti.Url.Base + '/Product/CatalogTax/' + (CatalogTaxID == 0 ? 'CatalogTaxCreate' : 'CatalogTaxUpdate') + '',
+                        data: {
+                            CatalogTaxID: CatalogTaxID,
+                            CatalogID: $('#txtCatalogID').val() == 'GENERADO' ? 0 : $('#txtCatalogID').val(),
+                            TaxID: $('#cboTaxID').val(),
+                            TaxAffectationTypeID: $('#cboTaxAffectationTypeID').val(),                          
+                            RecordStateID: $('#chkCatalogTaxStateID').is(':checked') ? Uti.Variable.StateType.Active : Uti.Variable.StateType.Inactive
+                        },
+                        type: CatalogTaxID == 0 ? Uti.Variable.FetchAjax.Type.Post : Uti.Variable.FetchAjax.Type.Put
+                    };
+                    Uti.Ajax.Custom(options, function (response) {
+                        Uti.Modal.Message(response.type, response.message, response.function);
+                        if (response.type === Uti.Message.Type.Session) {
+                            Uti.Modal.Process();
+                        };
+                        if (response.type === Uti.Message.Type.Success) {
+                            Uti.Modal.Process();
+                            Catalog._Clear.fnCatalogTaxGet();
+                            Catalog._Search.fnCatalogTaxGrid();
                         };
                     });
                 }

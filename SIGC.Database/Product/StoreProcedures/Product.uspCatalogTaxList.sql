@@ -23,6 +23,6 @@ BEGIN
 		WHERE CT.CompanyID=@CompanyID 
 		AND CT.CatalogID=@CatalogID
 		AND CT.RecordStateID<>2	
-		ORDER BY CT.CatalogTaxID 
+		ORDER BY CT.CatalogTaxID DESC
 	SET NOCOUNT OFF
 END

@@ -53,7 +53,9 @@ namespace SIGC.ApplicationService.Features.CatalogVariantFeatures.Queries.Catalo
                                         x.CatalogPresentationSKU,
                                         x.CatalogPresentationBarcode,
                                         x.CatalogPresentationStateID
-                                    )).ToList()
+                                    ))
+                                    .OrderByDescending(ord=>ord.CatalogPresentationID)
+                                    .ToList()
                                 )).ToList();
             if (!MsgResponse.Data.Any())
             {

@@ -39,6 +39,7 @@ BEGIN
 		INNER JOIN Product.UnitMeasure UM WITH(NOLOCK) ON P.UnitMeasureID = UM.UnitMeasureID AND UM.RecordStateID<>2
 		WHERE P.CompanyID=@CompanyID 
 		AND CV.CatalogID=@CatalogID	
-		AND CV.RecordStateID<>2		
+		AND CV.RecordStateID<>2	
+		ORDER BY CV.CatalogVariantID DESC	
 	SET NOCOUNT OFF
 END

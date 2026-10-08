@@ -13,11 +13,11 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogTaxServi
         {
             ApiService = ApiServiceFactory.Create(ConstantsHelper.HttpClientNames.ApiCommerce360);
         }
-        /*
-        public async Task<ApiResponse<object?>> CatalogPriceCreate(CatalogPriceCreateUpdateRequestModel Request)
+       
+        public async Task<ApiResponse<object?>> CatalogTaxCreate(CatalogTaxCreateUpdateRequestModel Request)
         {
-            return await ApiService.PostAsync<CatalogPriceCreateUpdateRequestModel, ApiResponse<object?>>($"{Controller}/CatalogPriceCreate", Request);
-        }
+            return await ApiService.PostAsync<CatalogTaxCreateUpdateRequestModel, ApiResponse<object?>>($"{Controller}/CatalogTaxCreate", Request);
+        } /*
         public async Task<ApiResponse<object?>> CatalogPriceUpdate(CatalogPriceCreateUpdateRequestModel Request)
         {
             return await ApiService.PutAsync<CatalogPriceCreateUpdateRequestModel, ApiResponse<object?>>($"{Controller}/CatalogPriceUpdate", Request);

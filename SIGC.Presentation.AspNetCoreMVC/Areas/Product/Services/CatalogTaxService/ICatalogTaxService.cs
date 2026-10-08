@@ -5,12 +5,13 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogTaxServi
 {
     public interface ICatalogTaxService
     {
+      
+        Task<ApiResponse<object?>> CatalogTaxCreate(CatalogTaxCreateUpdateRequestModel Request);
         /*
-        Task<ApiResponse<object?>> CatalogPriceCreate(CatalogPriceCreateUpdateRequestModel Request);
-        Task<ApiResponse<object?>> CatalogPriceUpdate(CatalogPriceCreateUpdateRequestModel Request);
-        Task<ApiResponse<object?>> CatalogPriceChangeState(CatalogPriceChangeStateRequestModel Request);
-        Task<ApiResponse<object?>> CatalogPriceDelete(int CatalogPriceID);
-        */
+      Task<ApiResponse<object?>> CatalogPriceUpdate(CatalogPriceCreateUpdateRequestModel Request);
+      Task<ApiResponse<object?>> CatalogPriceChangeState(CatalogPriceChangeStateRequestModel Request);
+      Task<ApiResponse<object?>> CatalogPriceDelete(int CatalogPriceID);
+      */
         Task<ApiResponse<List<CatalogTaxListResponseModel>>> CatalogTaxList(int CatalogID);
     }
 }
