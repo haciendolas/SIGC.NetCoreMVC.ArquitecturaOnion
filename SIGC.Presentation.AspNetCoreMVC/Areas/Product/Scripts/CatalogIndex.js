@@ -578,7 +578,8 @@
                             Catalog._Other.fnRegisterDisabledTabs(); 
                             Catalog._Other.fnTaxTabs();
                             $('#txtCatalogID').val(data[0]);
-                            $('input[name="CatalogNameLabel"]').val(data[2]);                           
+                            $('input[name="CatalogNameLabel"]').val(data[2]);
+                            Catalog._Search.fnCatalogTaxGrid();
                         });
                         $(row).find('a[name=lnkConfiguration]').on('click', function () {
                             Catalog._Other.fnCatalogTabs();
@@ -944,6 +945,77 @@
                         }
                         else {
                             element.append(`<tr><td colspan="11" class="text-center">${Uti.Message.Description.NoRecordsFound}'</td></tr>`);
+                        }
+                    };
+                });
+            },
+            fnCatalogTaxGrid: function (preload = false) {
+                const CatalogID = $('#txtCatalogID').val() == 'GENERADO' ? 0 : $('#txtCatalogID').val();
+                const options = {
+                    url: Uti.Url.Base + '/Product/CatalogTax/CatalogTaxList/' + CatalogID,
+                    type: Uti.Variable.FetchAjax.Type.Get,
+                    preload: preload
+                };
+                Uti.Ajax.Custom(options, function (response) {
+                    Uti.Modal.Message(response.type, response.message, response.function);
+                    if (response.type === Uti.Message.Type.Session) {
+                        Uti.Modal.Process();
+                    }
+                    if (response.type === Uti.Message.Type.Query) {
+                        const element = $('#catalog-tax-list');
+                        element.html('');
+                        const { data: rowData } = response;
+                        if (rowData && rowData.length > 0) {
+                            const linkUpdate = Uti.Variable.Control();
+                            linkUpdate.Type = Uti.Variable.ButtonType.Update;
+                            const linkChange = Uti.Variable.Control();
+                            linkChange.Type = Uti.Variable.ButtonType.Change;
+                            const linkUnchange = Uti.Variable.Control();
+                            linkUnchange.Type = Uti.Variable.ButtonType.Unchange;
+                            const linkDelete = Uti.Variable.Control();
+                            linkDelete.Type = Uti.Variable.ButtonType.Delete;
+
+                            rowData.forEach(item => {
+                                const rowId = `row${item.catalogTaxtID}`;
+                                const column = `<tr id='${rowId}'>
+                                            <td class="text-center">${item.catalogTaxID}</td>
+                                            <td text-center>${item.taxName} (${Uti.Format.NumericSeparator(item.taxValor, 2)})</td>
+                                            <td>${item.calculationTypeName}</td>
+                                            <td class="text-center">${item.taxAffectationTypeName}</td>                                                                         
+                                            <td class="text-center">${Uti.Control.SpanStateType(item.recordStateID)}</td>
+                                            <td class="text-center" style="width:2%">${item.recordStateID === Uti.Variable.StateType.Active ? Uti.Control.LinkHRef(linkUpdate) : "&nbsp;&nbsp;"}</td>
+                                            <td class="text-center" style="width:2%">${item.recordStateID === Uti.Variable.StateType.Active ? Uti.Control.LinkHRef(linkUnchange) : Uti.Control.LinkHRef(linkChange)}</td>
+                                            <td class="text-center" style="width:2%">${Uti.Control.LinkHRef(linkDelete)}</td>
+                                          </tr>`;
+                                element.append(column).fadeIn('slow');
+                                element.find('#' + rowId + ' a[name = slnkEdit]').on('click', function () {
+                                    $('#hdCatalogPriceID').val(item.catalogPriceID);
+                                    $('#cboCatalogPresentationID').val(item.catalogPresentationID);
+                                    $('#cboPriceTypeID').val(item.priceTypeID);
+                                    $('#cboCurrencyTypeID').val(item.currencyTypeID);
+                                    $('#txtCatalogPriceAmount').val(item.catalogPriceAmount);
+                                    $('#chkCatalogPriceIsTaxIncluded').prop('checked', item.catalogPriceIsTaxIncluded);
+                                    $('#chkCatalogPriceStateID').prop('checked', item.recordStateID == Uti.Variable.StateType.Active);
+                                    const btnCatalogPriceCreate = $('#btnCatalogPriceCreate');
+                                    const btnCatalogPriceUpdate = $('#btnCatalogPriceUpdate');
+                                    if (btnCatalogPriceCreate.length > 0) btnCatalogPriceCreate.hide();
+                                    if (btnCatalogPriceUpdate.length > 0) btnCatalogPriceUpdate.show();
+                                }).tooltip();
+                                element.find('#' + rowId + ' a[name=slnkInactive]').on('click', function () {
+                                    Catalog._Operation.fnCatalogPriceChangeState(item.catalogPriceID, Uti.Variable.StateType.Inactive);
+                                }).tooltip();
+                                element.find('#' + rowId + ' a[name=slnkActive]').on('click', function () {
+                                    Catalog._Operation.fnCatalogPriceChangeState(item.catalogPriceID, Uti.Variable.StateType.Active);
+                                }).tooltip();
+                                element.find('#' + rowId + ' a[name=slnkDelete]').on('click', function () {
+                                    Uti.Modal.Message(Uti.Message.Type.ConfirmDelete);
+                                    $('#message-modal-generic #hd-modal-id').val(item.catalogPriceID);
+                                    $('#message-modal-generic #hd-modal-action').val(Uti.Variable.ActionType.CatalogPriceDelete);
+                                }).tooltip();
+                            });
+                        }
+                        else {
+                            element.append(`<tr><td colspan="8" class="text-center">${Uti.Message.Description.NoRecordsFound}'</td></tr>`);
                         }
                     };
                 });

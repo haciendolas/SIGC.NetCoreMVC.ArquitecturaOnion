@@ -1,19 +1,19 @@
-﻿using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.CatalogPrice;
+﻿using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.CatalogTax;
 using SIGC.Presentation.AspNetCoreMVC.Helpers;
 using SIGC.Presentation.AspNetCoreMVC.Services;
 
-namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogPriceService
+namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogTaxService
 {
-    public class CatalogPriceService : ICatalogPriceService
+    public class CatalogTaxService : ICatalogTaxService
     {
         private readonly IApiService ApiService;
-        private readonly string Controller = "CatalogPrice";
+        private readonly string Controller = "CatalogTax";
 
-        public CatalogPriceService(IApiServiceFactory ApiServiceFactory)
+        public CatalogTaxService(IApiServiceFactory ApiServiceFactory)
         {
-            this.ApiService = ApiServiceFactory.Create(ConstantsHelper.HttpClientNames.ApiCommerce360);
+            ApiService = ApiServiceFactory.Create(ConstantsHelper.HttpClientNames.ApiCommerce360);
         }
-
+        /*
         public async Task<ApiResponse<object?>> CatalogPriceCreate(CatalogPriceCreateUpdateRequestModel Request)
         {
             return await ApiService.PostAsync<CatalogPriceCreateUpdateRequestModel, ApiResponse<object?>>($"{Controller}/CatalogPriceCreate", Request);
@@ -30,9 +30,10 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogPriceSer
         {
             return await ApiService.DeleteAsync<ApiResponse<object?>>($"{Controller}/CatalogPriceDelete/{CatalogPriceID}");
         }
-        public async Task<ApiResponse<List<CatalogPriceListResponseModel>>> CatalogPriceList(int CatalogID)
+        */
+        public async Task<ApiResponse<List<CatalogTaxListResponseModel>>> CatalogTaxList(int CatalogID)
         {
-            return await ApiService.GetAsync<ApiResponse<List<CatalogPriceListResponseModel>>>($"{Controller}/CatalogPriceList/{CatalogID}");
+            return await ApiService.GetAsync<ApiResponse<List<CatalogTaxListResponseModel>>>($"{Controller}/CatalogTaxList/{CatalogID}");
         }
     }
 }

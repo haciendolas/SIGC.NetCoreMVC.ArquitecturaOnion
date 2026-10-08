@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.CatalogPrice; 
+using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.CatalogPrice;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogPriceService;
 using SIGC.Presentation.AspNetCoreMVC.Helpers;
 
