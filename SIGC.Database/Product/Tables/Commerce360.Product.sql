@@ -361,8 +361,7 @@ CREATE TABLE Product.CatalogTaxExemption(
    CatalogTaxExemptionID INT NOT NULL IDENTITY(1,1),
    CompanyID INT NOT NULL,
    EstablishmentID  INT NOT NULL,
-   CatalogID INT NOT NULL,  --Biene de otra DB
-   TaxID SMALLINT NOT NULL,--Biene de otra DB 
+   CatalogTaxID INT NOT NULL,  
    RecordOriginID TINYINT NOT NULL,
    RecordStateID TINYINT NOT NULL,
    CatalogTaxExemptionCreatedUserID INT NOT NULL,
@@ -374,7 +373,7 @@ CREATE TABLE Product.CatalogTaxExemption(
    CatalogTaxExemptionUpdatedUserFullName NVARCHAR(80),
    CatalogTaxExemptionUpdatedDateTime DATETIME,
    CONSTRAINT CatalogTaxExemption_PK_CatalogTaxExemptionID PRIMARY KEY(CatalogTaxExemptionID),
-   CONSTRAINT CatalogTaxExemption_FK_CatalogID FOREIGN KEY(CatalogID) REFERENCES Product.[Catalog](CatalogID),
+   CONSTRAINT CatalogTaxExemption_FK_CatalogTaxID FOREIGN KEY(CatalogTaxID) REFERENCES Product.CatalogTax(CatalogTaxID),
    CONSTRAINT CatalogTaxExemption_CHK_RecordStateID CHECK(RecordStateID IN (0,1,2))
 )
 GO

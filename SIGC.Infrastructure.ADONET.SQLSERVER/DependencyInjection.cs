@@ -8,6 +8,7 @@ using SIGC.DomainService.IRepositories.ICatalogActiveIngredientRepositories;
 using SIGC.DomainService.IRepositories.ICatalogPresentationRepositories;
 using SIGC.DomainService.IRepositories.ICatalogPriceRepositories;
 using SIGC.DomainService.IRepositories.ICatalogRepositories;
+using SIGC.DomainService.IRepositories.ICatalogTaxRepositories;
 using SIGC.DomainService.IRepositories.ICatalogTherapeuticActionRepositories;
 using SIGC.DomainService.IRepositories.ICatalogTypeRepositories;
 using SIGC.DomainService.IRepositories.ICatalogVariantRepositories;
@@ -46,6 +47,7 @@ using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogActiveIngredientR
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogPresentationRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogPriceRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogRepositories;
+using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogTaxRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogTherapeuticActionRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogTypeRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogVariantRepositories;
@@ -226,6 +228,8 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
             services.AddScoped<ICatalogPriceChangeStateRepository, CatalogPriceChangeStateRepository>();
             services.AddScoped<ICatalogPriceDeleteRepository, CatalogPriceDeleteRepository>();
             services.AddScoped<ICatalogPriceUpdateRepository, CatalogPriceUpdateRepository>();
+
+            services.AddScoped<ICatalogTaxListRepository, CatalogTaxListRepository>();
 
             return services;
         }
