@@ -1,6 +1,6 @@
 /*=============================================================================          
    Author:                 JOEL CASTILLO ROJAS      
-   Create date:            21/07/2026
+   Create date:            07/10/2026
    Description:            Permite crear un registro en la tabla Product.CatalogTax
    Execute:	  
 
@@ -9,10 +9,8 @@
 			@CatalogTaxID=@CatalogTaxID OUTPUT,
 			@CompanyID=1,	
 			@CatalogID=1,
-		    @TaxID=1,		
-			@CalculationTypeID=1,
-			@TaxDirectionID=1,	
-			@TaxAffectationTypeID = 1,		 
+		    @TaxID=1, 
+			@TaxAffectationTypeID = 10,		 
 			@RecordOriginID=1,
 			@RecordStateID=1,
 			@CatalogTaxCreatedUserID=1,
@@ -29,9 +27,7 @@ ALTER PROCEDURE Product.uspCatalogTaxCreate
 (  @CatalogTaxID INT OUTPUT,
    @CompanyID INT,  
    @CatalogID INT,
-   @TaxID SMALLINT,   
-   @CalculationTypeID SMALLINT,
-   @TaxDirectionID TINYINT,
+   @TaxID SMALLINT,    
    @TaxAffectationTypeID TINYINT, 
    @RecordOriginID TINYINT,
    @RecordStateID TINYINT,
@@ -45,9 +41,7 @@ BEGIN
   INSERT INTO Product.CatalogTax(
      CompanyID,	 
 	 CatalogID,
-	 TaxID,
-	 CalculationTypeID,
-	 TaxDirectionID,  
+	 TaxID, 
 	 TaxAffectationTypeID,
      RecordOriginID,
 	 RecordStateID,
@@ -58,9 +52,7 @@ BEGIN
   VALUES(
     @CompanyID,	 
 	@CatalogID,
-	@TaxID,
-	@CalculationTypeID,
-	@TaxDirectionID,  
+	@TaxID, 
 	@TaxAffectationTypeID,
     @RecordOriginID,
 	@RecordStateID,

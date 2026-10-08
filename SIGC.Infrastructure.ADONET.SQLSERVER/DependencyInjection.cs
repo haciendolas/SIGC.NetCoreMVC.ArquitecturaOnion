@@ -229,6 +229,8 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
             services.AddScoped<ICatalogPriceDeleteRepository, CatalogPriceDeleteRepository>();
             services.AddScoped<ICatalogPriceUpdateRepository, CatalogPriceUpdateRepository>();
 
+            services.AddScoped<ICatalogTaxCreateRepository, CatalogTaxCreateRepository>();
+            services.AddScoped<ICatalogTaxVerifyFieldsRepository, CatalogTaxVerifyFieldsRepository>();
             services.AddScoped<ICatalogTaxListRepository, CatalogTaxListRepository>();
 
             return services;

@@ -71,7 +71,8 @@ public class MessageService(IServiceProvider ServiceProvider) : IMessageService
                 { MessageDescriptionConst.EXIST_CATALOGPRESENTATION_BARCODE, "The barcode already exists in another presentation" },
                 { MessageDescriptionConst.EXIST_CATALOGPRESENTATION_SKU_AND_BARCODE, "The SKU and barcode already exist in another presentation" },
                 { MessageDescriptionConst.EXIST_CATALOGPRESENTATION_PRESENTATION, "The presentation already exists in this variant" },
-                { MessageDescriptionConst.EXIST_CATALOGPRICE_FIELDS, "A price already exists for the selected combination. Please verify the information entered" }
+                { MessageDescriptionConst.EXIST_CATALOGPRICE_FIELDS, "A price already exists for the selected combination. Please verify the information entered" },
+                { MessageDescriptionConst.EXIST_CATALOGTAX_FIELDS, "A tax already exists for the selected combination. Please verify the information entered" }
             },
 
             [(short)IdiomEnum.Spanish] = new()
@@ -121,7 +122,8 @@ public class MessageService(IServiceProvider ServiceProvider) : IMessageService
                 { MessageDescriptionConst.EXIST_CATALOGPRESENTATION_BARCODE, "El código de barra ya existe en otra presentación" },
                 { MessageDescriptionConst.EXIST_CATALOGPRESENTATION_SKU_AND_BARCODE, "El SKU y el código de barra ya existe en otra presentación" }, 
                 { MessageDescriptionConst.EXIST_CATALOGPRESENTATION_PRESENTATION, "La presentación ya existen en esta variante" },
-                { MessageDescriptionConst.EXIST_CATALOGPRICE_FIELDS, "Ya existe un precio registrado para la combinación seleccionada. Verifique los datos ingresados" }
+                { MessageDescriptionConst.EXIST_CATALOGPRICE_FIELDS, "Ya existe un precio registrado para la combinación seleccionada. Verifique los datos ingresados" },
+                { MessageDescriptionConst.EXIST_CATALOGTAX_FIELDS, "Ya existe un impuesto registrado para la combinación seleccionada. Verifique los datos ingresados" }
             }
         };
     }

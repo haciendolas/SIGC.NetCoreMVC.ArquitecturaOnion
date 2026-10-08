@@ -76,5 +76,11 @@
             public const string FIELDS_EXISTS = "FIELDS_EXISTS";
         }
 
+        public static class CatalogTax
+        {
+            public const string OK = "OK";
+            public const string FIELDS_EXISTS = "FIELDS_EXISTS";
+        }
+
     }
 }
