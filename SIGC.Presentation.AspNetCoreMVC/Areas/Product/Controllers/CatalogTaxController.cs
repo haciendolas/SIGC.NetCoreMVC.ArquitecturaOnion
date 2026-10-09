@@ -20,25 +20,25 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
             Request.RecordOriginID = (byte)EnumsHelper.RecordOrigin.WebForm;
             return Json(await CatalogTaxService.CatalogTaxCreate(Request));
         }
+       
+        [HttpPut]
+        public async Task<IActionResult> CatalogTaxUpdate([FromBody] CatalogTaxCreateUpdateRequestModel Request)
+        { 
+            return Json(await CatalogTaxService.CatalogTaxUpdate(Request));
+        }
         /*
-     [HttpPut]
-     public async Task<IActionResult> CatalogTaxUpdate([FromBody] CatalogTaxCreateUpdateRequestModel Request)
-     { 
-         return Json(await CatalogTaxService.CatalogTaxUpdate(Request));
-     }
+    [HttpPut]
+    public async Task<IActionResult> CatalogTaxChangeState([FromBody] CatalogTaxChangeStateRequestModel Request)
+    {
+        return Json(await CatalogTaxService.CatalogTaxChangeState(Request));
+    }
 
-     [HttpPut]
-     public async Task<IActionResult> CatalogTaxChangeState([FromBody] CatalogTaxChangeStateRequestModel Request)
-     {
-         return Json(await CatalogTaxService.CatalogTaxChangeState(Request));
-     }
-
-     [HttpDelete]
-     public async Task<IActionResult> CatalogTaxDelete([FromRoute(Name = "id")] int CatalogTaxID)
-     {
-         return Json(await CatalogTaxService.CatalogTaxDelete(CatalogTaxID));
-     }
-     */
+    [HttpDelete]
+    public async Task<IActionResult> CatalogTaxDelete([FromRoute(Name = "id")] int CatalogTaxID)
+    {
+        return Json(await CatalogTaxService.CatalogTaxDelete(CatalogTaxID));
+    }
+    */
         [HttpGet]
         public async Task<IActionResult> CatalogTaxList([FromRoute(Name = "id")] int CatalogID)
         {

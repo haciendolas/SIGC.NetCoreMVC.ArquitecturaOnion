@@ -203,7 +203,8 @@
                 Catalog._Validation.fnCatalogPriceCreateUpdateReset();
             },
             fnCatalogTaxGet: function () {
-                $('#hdCatalogTaxID,#cboTaxID,#cboTaxAffectationTypeID').val('');
+                $('#hdCatalogTaxID,#cboTaxID').val('');
+                ChoicesControl.CboTaxAffectationTypeID.setChoiceByValue('');
                 $('#chkCatalogTaxStateID').prop('checked', true);
                 const btnCatalogTaxCreate = $('#btnCatalogTaxCreate');
                 const btnCatalogTaxUpdate = $('#btnCatalogTaxUpdate');

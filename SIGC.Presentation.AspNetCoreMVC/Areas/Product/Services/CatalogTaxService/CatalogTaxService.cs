@@ -17,11 +17,11 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogTaxServi
         public async Task<ApiResponse<object?>> CatalogTaxCreate(CatalogTaxCreateUpdateRequestModel Request)
         {
             return await ApiService.PostAsync<CatalogTaxCreateUpdateRequestModel, ApiResponse<object?>>($"{Controller}/CatalogTaxCreate", Request);
-        } /*
-        public async Task<ApiResponse<object?>> CatalogPriceUpdate(CatalogPriceCreateUpdateRequestModel Request)
+        } 
+        public async Task<ApiResponse<object?>> CatalogTaxUpdate(CatalogTaxCreateUpdateRequestModel Request)
         {
-            return await ApiService.PutAsync<CatalogPriceCreateUpdateRequestModel, ApiResponse<object?>>($"{Controller}/CatalogPriceUpdate", Request);
-        }
+            return await ApiService.PutAsync<CatalogTaxCreateUpdateRequestModel, ApiResponse<object?>>($"{Controller}/CatalogTaxUpdate", Request);
+        }/*
         public async Task<ApiResponse<object?>> CatalogPriceChangeState(CatalogPriceChangeStateRequestModel Request)
         {
             return await ApiService.PutAsync<CatalogPriceChangeStateRequestModel, ApiResponse<object?>>($"{Controller}/CatalogPriceChangeState", Request);
