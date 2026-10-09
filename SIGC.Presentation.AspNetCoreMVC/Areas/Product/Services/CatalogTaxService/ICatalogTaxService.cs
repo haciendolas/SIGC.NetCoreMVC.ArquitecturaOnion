@@ -7,9 +7,8 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogTaxServi
     {      
         Task<ApiResponse<object?>> CatalogTaxCreate(CatalogTaxCreateUpdateRequestModel Request);      
         Task<ApiResponse<object?>> CatalogTaxUpdate(CatalogTaxCreateUpdateRequestModel Request);
-        /* Task<ApiResponse<object?>> CatalogPriceChangeState(CatalogPriceChangeStateRequestModel Request);
-       Task<ApiResponse<object?>> CatalogPriceDelete(int CatalogPriceID);
-       */
+        Task<ApiResponse<object?>> CatalogTaxChangeState(CatalogTaxChangeStateRequestModel Request);
+        //Task<ApiResponse<object?>> CatalogPriceDelete(int CatalogPriceID);       
         Task<ApiResponse<List<CatalogTaxListResponseModel>>> CatalogTaxList(int CatalogID);
     }
 }

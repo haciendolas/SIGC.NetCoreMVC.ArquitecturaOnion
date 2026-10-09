@@ -1062,14 +1062,14 @@
                                     if (btnCatalogTaxUpdate.length > 0) btnCatalogTaxUpdate.show();
                                 }).tooltip();
                                 element.find('#' + rowId + ' a[name=slnkInactive]').on('click', function () {
-                                    Catalog._Operation.fnCatalogPriceChangeState(item.catalogPriceID, Uti.Variable.StateType.Inactive);
+                                    Catalog._Operation.fnCatalogTaxChangeState(item.catalogTaxID, Uti.Variable.StateType.Inactive);
                                 }).tooltip();
                                 element.find('#' + rowId + ' a[name=slnkActive]').on('click', function () {
-                                    Catalog._Operation.fnCatalogPriceChangeState(item.catalogPriceID, Uti.Variable.StateType.Active);
+                                    Catalog._Operation.fnCatalogTaxChangeState(item.catalogTaxID, Uti.Variable.StateType.Active);
                                 }).tooltip();
                                 element.find('#' + rowId + ' a[name=slnkDelete]').on('click', function () {
                                     Uti.Modal.Message(Uti.Message.Type.ConfirmDelete);
-                                    $('#message-modal-generic #hd-modal-id').val(item.catalogPriceID);
+                                    $('#message-modal-generic #hd-modal-id').val(item.catalogTaxID);
                                     $('#message-modal-generic #hd-modal-action').val(Uti.Variable.ActionType.CatalogPriceDelete);
                                 }).tooltip();
                             });
@@ -1170,6 +1170,25 @@
                     }
                     if (response.type === Uti.Message.Type.Success) {
                         Catalog._Search.fnCatalogPriceGrid();
+                    }
+                });
+            },
+            fnCatalogTaxChangeState: function (CatalogTaxID, RecordStateID) {
+                const options = {
+                    url: Uti.Url.Base + '/Product/CatalogTax/CatalogTaxChangeState',
+                    data: {
+                        CatalogTaxID: CatalogTaxID,
+                        RecordStateID: RecordStateID
+                    },
+                    type: Uti.Variable.FetchAjax.Type.Put
+                };
+                Uti.Ajax.Custom(options, function (response) {
+                    Uti.Modal.Message(response.type, response.message, response.function);
+                    if (response.type === Uti.Message.Type.Session) {
+                        Uti.Modal.Process();
+                    }
+                    if (response.type === Uti.Message.Type.Success) {
+                        Catalog._Search.fnCatalogTaxGrid();
                     }
                 });
             },
