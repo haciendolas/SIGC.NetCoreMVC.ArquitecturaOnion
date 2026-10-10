@@ -32,6 +32,7 @@ using SIGC.Presentation.AspNetCoreMVC.Services.AuthService;
 using SIGC.Presentation.AspNetCoreMVC.Services.RolePermissionService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogPriceService;
 using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogTaxService;
+using SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogTaxExemptionService;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -88,6 +89,7 @@ builder.Services.AddScoped<ICatalogPresentationService, CatalogPresentationServi
 builder.Services.AddScoped<ICatalogVariantService, CatalogVariantService>();
 builder.Services.AddScoped<ICatalogPriceService, CatalogPriceService>();
 builder.Services.AddScoped<ICatalogTaxService, CatalogTaxService>();
+builder.Services.AddScoped<ICatalogTaxExemptionService, CatalogTaxExemptionService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

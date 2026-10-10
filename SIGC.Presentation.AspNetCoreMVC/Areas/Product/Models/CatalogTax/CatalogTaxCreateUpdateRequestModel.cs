@@ -1,6 +1,4 @@
-﻿using static SIGC.Presentation.AspNetCoreMVC.Helpers.EnumsHelper;
-
-namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.CatalogTax
+﻿namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.CatalogTax
 {
     public sealed class CatalogTaxCreateUpdateRequestModel
     {

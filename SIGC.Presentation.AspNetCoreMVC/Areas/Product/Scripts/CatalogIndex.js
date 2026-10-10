@@ -1071,7 +1071,7 @@
                                     Catalog._Operation.fnCatalogTaxChangeState(item.catalogTaxID, Uti.Variable.StateType.Active);
                                 }).tooltip();
                                 element.find('#' + rowId + ' a[name=slnkAdd]').on('click', function () {
-                                   
+                                    Catalog._Operation.fnCatalogTaxExemptionCreate(item.catalogTaxID);
                                 }).tooltip();
                             });
                         }
@@ -1417,6 +1417,32 @@
                         };
                     });
                 }
+            },
+            fnCatalogTaxExemptionCreate: function (CatalogTaxID) {
+                const EstablishmentID = $('#cboGlobalEstablishmentID').val() | 0;
+                if (EstablishmentID === 0) {
+                    Uti.Message.Modal.Toastify('Debe seleccionar el establecimiento', Uti.Message.Type.Warning);
+                    return;
+                };
+                const options = {
+                    url: Uti.Url.Base + '/Product/CatalogTaxExemption/CatalogTaxExemptionCreate',
+                    data: {
+                        CatalogTaxID: CatalogTaxID,
+                        EstablishmentID: EstablishmentID,
+                        RecordStateID: Uti.Variable.StateType.Active
+                    },
+                    type: Uti.Variable.FetchAjax.Type.Post
+                };
+                Uti.Ajax.Custom(options, function (response) {
+                    Uti.Modal.Message(response.type, response.message, response.function);
+                    if (response.type === Uti.Message.Type.Session) {
+                        Uti.Modal.Process();
+                    };
+                    if (response.type === Uti.Message.Type.Success) {
+                        Uti.Modal.Process();
+                       //Catalog._Search.fnCatalogTaxGrid();
+                    };
+                });
             }
         }
     }
