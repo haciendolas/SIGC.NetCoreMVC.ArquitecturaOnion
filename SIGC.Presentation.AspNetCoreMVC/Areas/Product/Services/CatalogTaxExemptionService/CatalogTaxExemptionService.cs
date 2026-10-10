@@ -21,13 +21,11 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogTaxExemp
         public async Task<ApiResponse<object?>> CatalogTaxExemptionChangeState(CatalogTaxExemptionChangeStateRequestModel Request)
         {
             return await ApiService.PutAsync<CatalogTaxExemptionChangeStateRequestModel, ApiResponse<object?>>($"{Controller}/CatalogTaxExemptionChangeState", Request);
-        }
-        /*
-         public async Task<ApiResponse<object?>> CatalogPriceDelete(int CatalogPriceID)
-         {
-             return await ApiService.DeleteAsync<ApiResponse<object?>>($"{Controller}/CatalogPriceDelete/{CatalogPriceID}");
-         }
-        */
+        }        
+        public async Task<ApiResponse<object?>> CatalogTaxExemptionDelete(int CatalogTaxExemptionID)
+        {
+           return await ApiService.DeleteAsync<ApiResponse<object?>>($"{Controller}/CatalogTaxExemptionDelete/{CatalogTaxExemptionID}");
+        }       
         public async Task<ApiResponse<List<CatalogTaxExemptionListResponseModel>>> CatalogTaxExemptionList(int CatalogID)
          {
              return await ApiService.GetAsync<ApiResponse<List<CatalogTaxExemptionListResponseModel>>>($"{Controller}/CatalogTaxExemptionList/{CatalogID}");

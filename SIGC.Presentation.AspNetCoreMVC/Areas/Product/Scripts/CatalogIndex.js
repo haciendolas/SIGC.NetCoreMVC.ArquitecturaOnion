@@ -144,10 +144,12 @@
             $('#btn-modal-yes').on('click', function () {
                 const modal_action = $('#message-modal-generic #hd-modal-action').val();
                 const modal_id = $('#message-modal-generic #hd-modal-id').val();
-                if (modal_action === Uti.Variable.ActionType.CatalogDelete)
+                if (modal_action === Uti.Variable.FormAction.CatalogDelete)
                     Catalog._Operation.fnCatalogChangeState(modal_id, Uti.Variable.StateType.Delete);
-                else if (modal_action === Uti.Variable.ActionType.CatalogPriceDelete)
+                else if (modal_action === Uti.Variable.FormAction.CatalogPriceDelete)
                     Catalog._Operation.fnCatalogPriceDelete(modal_id);
+                else if (modal_action === Uti.Variable.FormAction.CatalogTaxExemptionDelete)
+                    Catalog._Operation.fnCatalogTaxExemptionDelete(modal_id);
             });
             $('button[name="btnCatalogReturn"]').on('click', function () {               
                 Catalog._Other.fnCatalogTabs();
@@ -614,7 +616,7 @@
                         $(row).find('a[name=lnkDelete]').on('click', function () {
                             Uti.Modal.Message(Uti.Message.Type.ConfirmDelete);
                             $('#message-modal-generic #hd-modal-id').val(data[0]);
-                            $('#message-modal-generic #hd-modal-action').val(Uti.Variable.ActionType.CatalogDelete); 
+                            $('#message-modal-generic #hd-modal-action').val(Uti.Variable.FormAction.CatalogDelete); 
                         });
                         $(row).find('a[name=lnkPresentation]').on('click', function () {                           
                             Catalog._Other.fnCatalogTabs();
@@ -1003,7 +1005,7 @@
                                 element.find('#' + rowId + ' a[name=slnkDelete]').on('click', function () {
                                     Uti.Modal.Message(Uti.Message.Type.ConfirmDelete);
                                     $('#message-modal-generic #hd-modal-id').val(item.catalogPriceID);
-                                    $('#message-modal-generic #hd-modal-action').val(Uti.Variable.ActionType.CatalogPriceDelete);  
+                                    $('#message-modal-generic #hd-modal-action').val(Uti.Variable.FormAction.CatalogPriceDelete);  
                                     }).tooltip();
                                 });                            
                         }
@@ -1123,7 +1125,9 @@
                                     Catalog._Operation.fnCatalogTaxExemptionChangeState(item.catalogTaxExemptionID, Uti.Variable.StateType.Active);
                                 }).tooltip();
                                 element.find('#' + rowId + ' a[name=slnkDelete]').on('click', function () {
-                                  //  Catalog._Operation.fnCatalogTaxExemptionCreate(item.catalogTaxID);
+                                    Uti.Modal.Message(Uti.Message.Type.ConfirmDelete);
+                                    $('#message-modal-generic #hd-modal-id').val(item.catalogTaxExemptionID);
+                                    $('#message-modal-generic #hd-modal-action').val(Uti.Variable.FormAction.CatalogTaxExemptionDelete);  
                                 }).tooltip();
                             });
                         }
@@ -1253,6 +1257,21 @@
                         RecordStateID: RecordStateID
                     },
                     type: Uti.Variable.FetchAjax.Type.Put
+                };
+                Uti.Ajax.Custom(options, function (response) {
+                    Uti.Modal.Message(response.type, response.message, response.function);
+                    if (response.type === Uti.Message.Type.Session) {
+                        Uti.Modal.Process();
+                    }
+                    if (response.type === Uti.Message.Type.Success) {
+                        Catalog._Search.fnCatalogTaxExemptionGrid();
+                    }
+                });
+            },
+            fnCatalogTaxExemptionDelete: function (CatalogTaxExemptionID) {
+                const options = {
+                    url: Uti.Url.Base + '/Product/CatalogTaxExemption/CatalogTaxExemptionDelete/' + CatalogTaxExemptionID,
+                    type: Uti.Variable.FetchAjax.Type.Delete
                 };
                 Uti.Ajax.Custom(options, function (response) {
                     Uti.Modal.Message(response.type, response.message, response.function);

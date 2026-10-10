@@ -672,9 +672,10 @@
                     IsVisible:null
                 };
             },
-            ActionType: {
+            FormAction: {
                 CatalogPriceDelete: 'CatalogPriceDelete',
-                CatalogDelete:'CatalogDelete'
+                CatalogDelete: 'CatalogDelete',
+                CatalogTaxExemptionDelete: 'CatalogTaxExemptionDelete'
             }
         },
         Control: {
