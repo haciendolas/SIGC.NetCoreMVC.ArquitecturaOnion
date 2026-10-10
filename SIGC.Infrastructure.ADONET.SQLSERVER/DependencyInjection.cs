@@ -8,6 +8,7 @@ using SIGC.DomainService.IRepositories.ICatalogActiveIngredientRepositories;
 using SIGC.DomainService.IRepositories.ICatalogPresentationRepositories;
 using SIGC.DomainService.IRepositories.ICatalogPriceRepositories;
 using SIGC.DomainService.IRepositories.ICatalogRepositories;
+using SIGC.DomainService.IRepositories.ICatalogTaxExemptionRepositories;
 using SIGC.DomainService.IRepositories.ICatalogTaxRepositories;
 using SIGC.DomainService.IRepositories.ICatalogTherapeuticActionRepositories;
 using SIGC.DomainService.IRepositories.ICatalogTypeRepositories;
@@ -47,6 +48,7 @@ using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogActiveIngredientR
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogPresentationRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogPriceRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogRepositories;
+using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogTaxExemptionRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogTaxRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogTherapeuticActionRepositories;
 using SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogTypeRepositories;
@@ -234,6 +236,9 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
             services.AddScoped<ICatalogTaxListRepository, CatalogTaxListRepository>();
             services.AddScoped<ICatalogTaxUpdateRepository, CatalogTaxUpdateRepository>();
             services.AddScoped<ICatalogTaxChangeStateRepository, CatalogTaxChangeStateRepository>();
+
+            services.AddScoped<ICatalogTaxExemptionCreateRepository, CatalogTaxExemptionCreateRepository>();
+            services.AddScoped<ICatalogTaxExemptionVerifyFieldsRepository, CatalogTaxExemptionVerifyFieldsRepository>();
 
             return services;
         }

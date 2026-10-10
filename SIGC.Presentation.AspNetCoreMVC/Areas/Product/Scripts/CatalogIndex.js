@@ -1037,7 +1037,10 @@
                             linkUnchange.Type = Uti.Variable.ButtonType.Unchange;
                             const linkDelete = Uti.Variable.Control();
                             linkDelete.Type = Uti.Variable.ButtonType.Delete;
-
+                            const linkAdd = Uti.Variable.Control();
+                            linkAdd.Type = Uti.Variable.ButtonType.Add;
+                            linkAdd.Label = 'Asignar';
+                            linkAdd.Icon = 'ri-share-forward-fill';  
                             rowData.forEach(item => {
                                 const rowId = `row${item.catalogTaxID}`;
                                 const column = `<tr id='${rowId}'>
@@ -1048,7 +1051,7 @@
                                             <td class="text-center">${Uti.Control.SpanStateType(item.recordStateID)}</td>
                                             <td class="text-center" style="width:2%">${item.recordStateID === Uti.Variable.StateType.Active ? Uti.Control.LinkHRef(linkUpdate) : "&nbsp;&nbsp;"}</td>
                                             <td class="text-center" style="width:2%">${item.recordStateID === Uti.Variable.StateType.Active ? Uti.Control.LinkHRef(linkUnchange) : Uti.Control.LinkHRef(linkChange)}</td>
-                                            <td class="text-center" style="width:2%">${Uti.Control.LinkHRef(linkDelete)}</td>
+                                            <td class="text-center" style="width:2%">${Uti.Control.LinkHRef(linkAdd)}</td>
                                           </tr>`;
                                 element.append(column).fadeIn('slow');
                                 element.find('#' + rowId + ' a[name = slnkEdit]').on('click', function () {
@@ -1067,10 +1070,8 @@
                                 element.find('#' + rowId + ' a[name=slnkActive]').on('click', function () {
                                     Catalog._Operation.fnCatalogTaxChangeState(item.catalogTaxID, Uti.Variable.StateType.Active);
                                 }).tooltip();
-                                element.find('#' + rowId + ' a[name=slnkDelete]').on('click', function () {
-                                    Uti.Modal.Message(Uti.Message.Type.ConfirmDelete);
-                                    $('#message-modal-generic #hd-modal-id').val(item.catalogTaxID);
-                                    $('#message-modal-generic #hd-modal-action').val(Uti.Variable.ActionType.CatalogPriceDelete);
+                                element.find('#' + rowId + ' a[name=slnkAdd]').on('click', function () {
+                                   
                                 }).tooltip();
                             });
                         }

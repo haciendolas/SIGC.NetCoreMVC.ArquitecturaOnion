@@ -771,11 +771,11 @@
                                 name="${Control.Name ?? 'slnkAdd'}"                                
                                 data-bs-toggle="tooltip"
                                 data-bs-placement="top"
-                                data-title="Agregar"
-                                title="Agregar"
+                                data-title="${Control.Label ?? 'Agregar'}"
+                                title="${Control.Label ?? 'Agregar'}"
                                 class="link-primary"
                                 ${Control.Property ?? ''}>
-                                <i class="ri-add-line fs-24"></i>
+                                <i class=" ${Control.Icon ?? 'ri-add-line'} fs-24"></i>
                             </a>`;
                         break;
                 };

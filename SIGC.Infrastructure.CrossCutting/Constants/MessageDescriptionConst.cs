@@ -38,7 +38,7 @@
         public const string EXIST_CATALOGPRESENTATION_PRESENTATION = "ExistCatalogPresentationPresentation";
         public const string EXIST_CATALOGPRICE_FIELDS = "ExistCatalogPriceFields";
         public const string EXIST_CATALOGTAX_FIELDS = "ExistCatalogTaxFields";
-
+        public const string EXIST_CATALOGTAXEXEMPTION_FIELDS = "ExistCatalogTaxExemptionFields";
         //ERRORES DE DE REGISTROS
         public const string ERROR_OBJECT = "ErrorObject";
         public const string ERROR_OPERATION = "ErrorOperation";
