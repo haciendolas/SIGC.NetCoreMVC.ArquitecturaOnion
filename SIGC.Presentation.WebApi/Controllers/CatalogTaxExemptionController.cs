@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SIGC.ApplicationService.Features.CatalogTaxExemptionFeatures.Commands.CatalogTaxExemptionCreate;
+using SIGC.ApplicationService.Features.CatalogTaxExemptionFeatures.Queries.CatalogTaxExemptionList;
+using SIGC.DomainModel.Dtos.CatalogTaxExemption;
 using SIGC.Infrastructure.CrossCutting.Wrappers;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -43,15 +45,15 @@ namespace SIGC.Presentation.WebApi.Controllers
               {
                   return Ok(await Mediator.Send(new CatalogTaxDeleteCommandRequest(CatalogTaxID), CancellationToken));
               }
-
-            [HttpGet("CatalogTaxList/{CatalogID}")]
-            [SwaggerOperation(Summary = "Listar los impuesto por catálogo", Description = "Permite listar los impuesto por catálogo.")]
-            [ProducesResponseType(typeof(MsgResponse<List<CatalogTaxListResponseDto>>), StatusCodes.Status200OK)]
+         */
+            [HttpGet("CatalogTaxExemptionList/{CatalogID}")]
+            [SwaggerOperation(Summary = "Listar exoneración de impuestos por catálogo", Description = "Permite listar exoneración  de impuestos por catálogo.")]
+            [ProducesResponseType(typeof(MsgResponse<List<CatalogTaxExemptionListResponseDto>>), StatusCodes.Status200OK)]
             [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
-            public async Task<IActionResult> CatalogTaxList([FromRoute] int CatalogID, CancellationToken CancellationToken)
+            public async Task<IActionResult> CatalogTaxExemptionList([FromRoute] int CatalogID, CancellationToken CancellationToken)
             {
-                return Ok(await Mediator.Send(new CatalogTaxListQueryRequest(CatalogID), CancellationToken));
+                return Ok(await Mediator.Send(new CatalogTaxExemptionListQueryRequest(CatalogID), CancellationToken));
             }
-           */
+          
     }
 }
