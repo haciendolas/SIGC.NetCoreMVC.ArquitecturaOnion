@@ -25,12 +25,7 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogTaxServi
         public async Task<ApiResponse<object?>> CatalogTaxChangeState(CatalogTaxChangeStateRequestModel Request)
         {
             return await ApiService.PutAsync<CatalogTaxChangeStateRequestModel, ApiResponse<object?>>($"{Controller}/CatalogTaxChangeState", Request);
-        }/*
-        public async Task<ApiResponse<object?>> CatalogPriceDelete(int CatalogPriceID)
-        {
-            return await ApiService.DeleteAsync<ApiResponse<object?>>($"{Controller}/CatalogPriceDelete/{CatalogPriceID}");
         }
-        */
         public async Task<ApiResponse<List<CatalogTaxListResponseModel>>> CatalogTaxList(int CatalogID)
         {
             return await ApiService.GetAsync<ApiResponse<List<CatalogTaxListResponseModel>>>($"{Controller}/CatalogTaxList/{CatalogID}");

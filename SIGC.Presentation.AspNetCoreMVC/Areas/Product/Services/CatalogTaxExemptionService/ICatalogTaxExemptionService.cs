@@ -5,7 +5,8 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogTaxExemp
 {
     public interface ICatalogTaxExemptionService
     {      
-        Task<ApiResponse<object?>> CatalogTaxExemptionCreate(CatalogTaxExemptionCreateUpdateRequestModel Request);    
+        Task<ApiResponse<object?>> CatalogTaxExemptionCreate(CatalogTaxExemptionCreateUpdateRequestModel Request);
+        Task<ApiResponse<object?>> CatalogTaxExemptionChangeState(CatalogTaxExemptionChangeStateRequestModel Request);
         //Task<ApiResponse<object?>> CatalogPriceDelete(int CatalogPriceID);       
         Task<ApiResponse<List<CatalogTaxExemptionListResponseModel>>> CatalogTaxExemptionList(int CatalogID);
     }

@@ -20,6 +20,13 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
             Request.RecordOriginID = (byte)EnumsHelper.RecordOrigin.WebForm;
             return Json(await CatalogTaxExemptionService.CatalogTaxExemptionCreate(Request));
         }
+
+        [HttpPut]
+        public async Task<IActionResult> CatalogTaxExemptionChangeState([FromBody] CatalogTaxExemptionChangeStateRequestModel Request)
+        {
+            return Json(await CatalogTaxExemptionService.CatalogTaxExemptionChangeState(Request));
+        }
+
         /*
           [HttpDelete]
           public async Task<IActionResult> CatalogTaxExemptionDelete([FromRoute(Name = "id")] int CatalogTaxExemptionID)

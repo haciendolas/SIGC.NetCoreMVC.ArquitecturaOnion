@@ -1117,10 +1117,10 @@
                                           </tr>`;
                                 element.append(column).fadeIn('slow');                                
                                 element.find('#' + rowId + ' a[name=slnkInactive]').on('click', function () {
-                                   // Catalog._Operation.fnCatalogTaxChangeState(item.catalogTaxID, Uti.Variable.StateType.Inactive);
+                                    Catalog._Operation.fnCatalogTaxExemptionChangeState(item.catalogTaxExemptionID, Uti.Variable.StateType.Inactive);
                                 }).tooltip();
                                 element.find('#' + rowId + ' a[name=slnkActive]').on('click', function () {
-                                   // Catalog._Operation.fnCatalogTaxChangeState(item.catalogTaxID, Uti.Variable.StateType.Active);
+                                    Catalog._Operation.fnCatalogTaxExemptionChangeState(item.catalogTaxExemptionID, Uti.Variable.StateType.Active);
                                 }).tooltip();
                                 element.find('#' + rowId + ' a[name=slnkDelete]').on('click', function () {
                                   //  Catalog._Operation.fnCatalogTaxExemptionCreate(item.catalogTaxID);
@@ -1242,6 +1242,25 @@
                     }
                     if (response.type === Uti.Message.Type.Success) {
                         Catalog._Search.fnCatalogTaxGrid();
+                    }
+                });
+            },
+            fnCatalogTaxExemptionChangeState: function (CatalogTaxExemptionID, RecordStateID) {
+                const options = {
+                    url: Uti.Url.Base + '/Product/CatalogTaxExemption/CatalogTaxExemptionChangeState',
+                    data: {
+                        CatalogTaxExemptionID: CatalogTaxExemptionID,
+                        RecordStateID: RecordStateID
+                    },
+                    type: Uti.Variable.FetchAjax.Type.Put
+                };
+                Uti.Ajax.Custom(options, function (response) {
+                    Uti.Modal.Message(response.type, response.message, response.function);
+                    if (response.type === Uti.Message.Type.Session) {
+                        Uti.Modal.Process();
+                    }
+                    if (response.type === Uti.Message.Type.Success) {
+                        Catalog._Search.fnCatalogTaxExemptionGrid();
                     }
                 });
             },

@@ -32,13 +32,7 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
         {
             return Json(await CatalogTaxService.CatalogTaxChangeState(Request));
         }
-        /*
-          [HttpDelete]
-          public async Task<IActionResult> CatalogTaxDelete([FromRoute(Name = "id")] int CatalogTaxID)
-          {
-              return Json(await CatalogTaxService.CatalogTaxDelete(CatalogTaxID));
-          }
-          */
+ 
         [HttpGet]
         public async Task<IActionResult> CatalogTaxList([FromRoute(Name = "id")] int CatalogID)
         {

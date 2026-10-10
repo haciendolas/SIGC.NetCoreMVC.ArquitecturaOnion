@@ -10,8 +10,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace SIGC.Presentation.WebApi.Controllers
 {   
     public class CatalogTaxController : BaseController
-    {
-       
+    {       
         [HttpPost("CatalogTaxCreate")]
         [SwaggerOperation(Summary = "Crear un impuesto", Description = "Permite crear un impuesto.")]
         [ProducesResponseType(typeof(MsgResponse<object?>), StatusCodes.Status200OK)]
@@ -38,24 +37,14 @@ namespace SIGC.Presentation.WebApi.Controllers
        {
            return Ok(await Mediator.Send(Command, CancellationToken));
        }
-        /*
-          [HttpDelete("CatalogTaxDelete/{CatalogTaxID}")]
-          [SwaggerOperation(Summary = "Eliminar un precio por su id", Description = "Permite eliminar un precio por su id.")]
-          [ProducesResponseType(typeof(MsgResponse<object?>), StatusCodes.Status200OK)]
-          [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
-          public async Task<IActionResult> CatalogTaxDelete([FromRoute] int CatalogTaxID, CancellationToken CancellationToken)
-          {
-              return Ok(await Mediator.Send(new CatalogTaxDeleteCommandRequest(CatalogTaxID), CancellationToken));
-          }
-          */
-        [HttpGet("CatalogTaxList/{CatalogID}")]
-        [SwaggerOperation(Summary = "Listar los impuesto por catálogo", Description = "Permite listar los impuesto por catálogo.")]
-        [ProducesResponseType(typeof(MsgResponse<List<CatalogTaxListResponseDto>>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CatalogTaxList([FromRoute] int CatalogID, CancellationToken CancellationToken)
-        {
-            return Ok(await Mediator.Send(new CatalogTaxListQueryRequest(CatalogID), CancellationToken));
-        }
-     
+  
+       [HttpGet("CatalogTaxList/{CatalogID}")]
+       [SwaggerOperation(Summary = "Listar los impuesto por catálogo", Description = "Permite listar los impuesto por catálogo.")]
+       [ProducesResponseType(typeof(MsgResponse<List<CatalogTaxListResponseDto>>), StatusCodes.Status200OK)]
+       [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
+       public async Task<IActionResult> CatalogTaxList([FromRoute] int CatalogID, CancellationToken CancellationToken)
+       {
+           return Ok(await Mediator.Send(new CatalogTaxListQueryRequest(CatalogID), CancellationToken));
+       }     
     }
 }
