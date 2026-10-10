@@ -26,12 +26,12 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
           {
               return Json(await CatalogTaxExemptionService.CatalogTaxExemptionDelete(CatalogTaxExemptionID));
           }
-         
+          */
         [HttpGet]
         public async Task<IActionResult> CatalogTaxExemptionList([FromRoute(Name = "id")] int CatalogID)
         {
             return Json(await CatalogTaxExemptionService.CatalogTaxExemptionList(CatalogID));
         }
-        */
+      
     }
 }

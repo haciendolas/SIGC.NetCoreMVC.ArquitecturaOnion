@@ -23,11 +23,11 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogTaxExemp
          {
              return await ApiService.DeleteAsync<ApiResponse<object?>>($"{Controller}/CatalogPriceDelete/{CatalogPriceID}");
          }
-
-         public async Task<ApiResponse<List<CatalogTaxListResponseModel>>> CatalogTaxList(int CatalogID)
+        */
+        public async Task<ApiResponse<List<CatalogTaxExemptionListResponseModel>>> CatalogTaxExemptionList(int CatalogID)
          {
-             return await ApiService.GetAsync<ApiResponse<List<CatalogTaxListResponseModel>>>($"{Controller}/CatalogTaxList/{CatalogID}");
+             return await ApiService.GetAsync<ApiResponse<List<CatalogTaxExemptionListResponseModel>>>($"{Controller}/CatalogTaxExemptionList/{CatalogID}");
          }
-         */
+     
     }
 }
