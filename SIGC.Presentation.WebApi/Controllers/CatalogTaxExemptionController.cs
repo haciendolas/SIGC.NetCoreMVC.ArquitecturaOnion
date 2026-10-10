@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SIGC.ApplicationService.Features.CatalogTaxExemptionFeatures.Commands.CatalogTaxExemptionChangeState;
 using SIGC.ApplicationService.Features.CatalogTaxExemptionFeatures.Commands.CatalogTaxExemptionCreate;
+using SIGC.ApplicationService.Features.CatalogTaxExemptionFeatures.Commands.CatalogTaxExemptionDelete;
 using SIGC.ApplicationService.Features.CatalogTaxExemptionFeatures.Queries.CatalogTaxExemptionList;
 using SIGC.DomainModel.Dtos.CatalogTaxExemption;
 using SIGC.Infrastructure.CrossCutting.Wrappers;
@@ -27,16 +28,16 @@ namespace SIGC.Presentation.WebApi.Controllers
         {
            return Ok(await Mediator.Send(Command, CancellationToken));
         }
-        /*
-         [HttpDelete("CatalogTaxDelete/{CatalogTaxID}")]
-         [SwaggerOperation(Summary = "Eliminar un precio por su id", Description = "Permite eliminar un precio por su id.")]
-         [ProducesResponseType(typeof(MsgResponse<object?>), StatusCodes.Status200OK)]
-         [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
-         public async Task<IActionResult> CatalogTaxDelete([FromRoute] int CatalogTaxID, CancellationToken CancellationToken)
-         {
-             return Ok(await Mediator.Send(new CatalogTaxDeleteCommandRequest(CatalogTaxID), CancellationToken));
-         }
-        */
+       
+        [HttpDelete("CatalogTaxExemptionDelete/{CatalogTaxExemptionID}")]
+        [SwaggerOperation(Summary = "Eliminar un exoneración de impuesto por su id", Description = "Permite eliminar un exoneración de impuesto por su id.")]
+        [ProducesResponseType(typeof(MsgResponse<object?>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CatalogTaxExemptionDelete([FromRoute] int CatalogTaxExemptionID, CancellationToken CancellationToken)
+        {
+             return Ok(await Mediator.Send(new CatalogTaxExemptionDeleteCommandRequest(CatalogTaxExemptionID), CancellationToken));
+        }
+     
         [HttpGet("CatalogTaxExemptionList/{CatalogID}")]
         [SwaggerOperation(Summary = "Listar exoneración de impuestos por catálogo", Description = "Permite listar exoneración  de impuestos por catálogo.")]
         [ProducesResponseType(typeof(MsgResponse<List<CatalogTaxExemptionListResponseDto>>), StatusCodes.Status200OK)]
