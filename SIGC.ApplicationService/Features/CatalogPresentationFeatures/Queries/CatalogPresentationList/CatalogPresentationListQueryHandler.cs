@@ -33,7 +33,7 @@ namespace SIGC.ApplicationService.Features.CatalogPresentationFeatures.Queries.C
                                 .Select(g => new CatalogPresentationListQueryResponse(
                                     g.Key.CatalogVariantID,
                                     g.Key.CatalogVariantName,                               
-                                    g.Select(x => new CatalogPresentationListQueryResponse(
+                                    g.Select(x => new CatalogPresentationItemListQueryResponse(
                                         x.CatalogPresentationID,
                                         x.CatalogPresentationName
                                     )).ToList()
