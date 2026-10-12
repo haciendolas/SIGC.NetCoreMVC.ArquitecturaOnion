@@ -29,7 +29,7 @@ namespace SIGC.Presentation.WebApi.Controllers
 
         [HttpGet("CatalogPresentationList/{CatalogID}")]
         [SwaggerOperation(Summary = "Listar las presentaciones por catálogo", Description = "Permite listar las presentaciones por catálogo.")]
-        [ProducesResponseType(typeof(MsgResponse<List<CatalogVariantListQueryResponse>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(MsgResponse<List<CatalogPresentationListQueryResponse>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(JsonExceptionResult), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CatalogPresentationList([FromRoute] int CatalogID, CancellationToken CancellationToken)
         {

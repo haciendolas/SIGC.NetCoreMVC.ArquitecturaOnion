@@ -125,7 +125,7 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
             control.Add(new ControlModel { Value = PermissionModel.AccChange });
             control.Add(new ControlModel { Value = PermissionModel.AccUnchange });
             control.Add(new ControlModel { Value = PermissionModel.AccDelete });
-            control.Add(new ControlModel { Value = PermissionModel.AccAdd,Label="Presentación" ,Name="lnkPresentation" });
+            control.Add(new ControlModel { Value = PermissionModel.AccAdd,Label="Presentación" ,Name="lnkPresentation", Property = "cataloghasvariants=*CatalogHasVariants*" });
             control.Add(new ControlModel { Value = PermissionModel.AccAdd, Label = "Precio" ,Icon= "ri-coins-line", Name = "lnkPrice" });
             control.Add(new ControlModel { Value = PermissionModel.AccAdd, Label = "Impuesto", Icon = "ri-percent-line", Name = "lnkTax" });
             control.Add(new ControlModel { Value = PermissionModel.AccAdd, Label = "Configuración",  Icon = "ri-settings-2-line", Name = "lnkConfiguration" });
@@ -138,17 +138,17 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
                          select new[]{
                                  sql.CatalogID.ToString(),
                                  sql.CatalogTypeName,
-                                 sql.CatalogName,
-                                 sql.CatalogVariantName,
+                                 sql.CatalogName,                               
                                  sql.CategoryName,
                                  sql.ManufacturerName,
                                  sql.BrandName,
+                                 sql.CatalogHasVariants ? $"{sql.CatalogVariantName} {sql.PresentationName}": sql.PresentationName,
                                  SpanStateType((short)sql.RecordStateID),
                                  sql.CatalogLastUpdatedDateTime.ToString("dd/MM/yyyy hh:mm:ss"),
                                  sql.CatalogLastUpdatedUserName,
-                                "",
-                                // sql.RecordStateID==(short)EnumsHelper.StateType.Active ? LinkHRef(new ControlModel{Value=PermissionModel.AccUnchange}):LinkHRef(new ControlModel{Value=PermissionModel.AccChange})
+                                 "", 
                                  LinkUL(control, sql.RecordStateID == (short)EnumsHelper.StateType.Active)
+                                .Replace("*CatalogHasVariants*",sql.CatalogHasVariants.ToString().ToLower())
 
              };
             return Json(new { sEcho = Convert.ToInt32(DataTable.sEcho), iTotalRecords = ApiResponse.Data.TotalRecords, iTotalDisplayRecords = ApiResponse.Data.RecordsFiltered, aaData = result });

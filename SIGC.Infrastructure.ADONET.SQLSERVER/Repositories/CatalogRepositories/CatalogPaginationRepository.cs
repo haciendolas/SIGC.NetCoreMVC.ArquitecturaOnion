@@ -65,6 +65,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER.Repositories.CatalogRepositories
                                     ActiveIngredient = Validation.SqlDBToString(ref DataReader, "ActiveIngredient"),
                                     TherapeuticAction = Validation.SqlDBToString(ref DataReader, "TherapeuticAction"),                                   
                                     RecordStateID = Validation.SqlDBToTinyint(ref DataReader, "RecordStateID"),
+                                    CatalogHasVariants = Validation.SqlDBToBoolean(ref DataReader, "CatalogHasVariants"),
                                     CatalogLastUpdatedDateTime = Validation.SqlDBToDateTime(ref DataReader, "CatalogLastUpdatedDateTime"),                                    
                                     CatalogLastUpdatedUserName = Validation.SqlDBToString(ref DataReader, "CatalogLastUpdatedUserName")                                   
                                 };

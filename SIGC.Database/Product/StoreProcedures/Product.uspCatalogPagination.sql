@@ -66,6 +66,7 @@ BEGIN
 			   ).value('.','NVARCHAR(MAX)')
 		   ,1,1,''),
 		  C.RecordStateID,
+		  C.CatalogHasVariants,
 		  ISNULL(C.CatalogUpdatedDateTime,C.CatalogCreatedDateTime) AS CatalogLastUpdatedDateTime,		 
 		  ISNULL(C.CatalogUpdatedUserName,C.CatalogCreatedUserName) AS CatalogLastUpdatedUserName,
 		 COUNT(C.CatalogID) OVER() AS RecordsFiltered
@@ -73,17 +74,17 @@ BEGIN
 	     INNER JOIN Product.CatalogType T WITH(NOLOCK) ON C.CatalogTypeID=T.CatalogTypeID
 	     INNER JOIN Product.Category CA WITH(NOLOCK) ON C.CategoryID=CA.CategoryID AND C.CompanyID=CA.CompanyID
 		 LEFT JOIN (
-		  SELECT CV.CompanyID,CV.CatalogID,RowNumber=ROW_NUMBER() OVER(PARTITION BY CV.CatalogVariantID ORDER BY CV.CatalogVariantID),
+		  SELECT CV.CompanyID,CV.CatalogID,RowNumber=ROW_NUMBER() OVER(PARTITION BY CV.CatalogID ORDER BY CV.CatalogVariantID),
 		   CV.CatalogVariantID,CV.CatalogVariantName,
 		   P.PresentationName,CP.CatalogPresentationEquivalence,
 		   U.UnitMeasureName		   
 		  FROM Product.CatalogVariant CV 
-		   INNER JOIN Product.CatalogPresentation CP WITH(NOLOCK) ON CV.CatalogVariantID=CP.CatalogVariantID AND CV.CompanyID=CP.CompanyID AND CP.CatalogPresentationIsDefault=1
-		   INNER JOIN Product.Presentation P WITH(NOLOCK) ON CP.PresentationID=P.PresentationID AND CP.CompanyID=P.CompanyID
-		   INNER JOIN Product.UnitMeasure U WITH(NOLOCK) ON P.UnitMeasureID=U.UnitMeasureID  
+		   INNER JOIN Product.CatalogPresentation CP WITH(NOLOCK) ON CV.CatalogVariantID=CP.CatalogVariantID AND CV.CompanyID=CP.CompanyID AND CP.CatalogPresentationIsDefault=1 AND CP.RecordStateID<>2
+		   INNER JOIN Product.Presentation P WITH(NOLOCK) ON CP.PresentationID=P.PresentationID AND CP.CompanyID=P.CompanyID AND P.RecordStateID<>2
+		   INNER JOIN Product.UnitMeasure U WITH(NOLOCK) ON P.UnitMeasureID=U.UnitMeasureID AND U.RecordStateID<>2 
 		 ) AS CV ON C.CatalogID=CV.CatalogID AND C.CompanyID=CV.CompanyID AND CV.RowNumber=1
-		 LEFT JOIN Product.Brand B WITH(NOLOCK) ON C.BrandID=B.BrandID
-		 LEFT JOIN Product.Manufacturer M WITH(NOLOCK) ON C.ManufacturerID=M.ManufacturerID
+		 LEFT JOIN Product.Brand B WITH(NOLOCK) ON C.BrandID=B.BrandID AND B.RecordStateID<>2
+		 LEFT JOIN Product.Manufacturer M WITH(NOLOCK) ON C.ManufacturerID=M.ManufacturerID AND M.RecordStateID<>2
 	  WHERE C.CompanyID=@CompanyID 
 	       AND C.RecordStateID<>2 
 		   AND (@CatalogTypeID IS NULL OR @CatalogTypeID=0 OR C.CatalogTypeID=@CatalogTypeID)

@@ -7,7 +7,7 @@
     <div class="card-body">
         <div class="row pb-2">
             <label class="col-sm-1 col-form-label">Producto</label>
-            <div class="col-sm-11">
+            <div class="col-sm-11">              
                 <input type="text" class="form-control" name="CatalogNameLabel" readonly />
             </div>
         </div>
@@ -24,6 +24,7 @@
                     <label for="txtCatalogVariantName" class="col-sm-2 col-form-label">Nombre<i class="ri-asterisk align-middle text-danger"></i></label>
                     <div class="col-sm-6 row">
                         <div class="col-sm-10">
+                            <input type="hidden" id="hdCatalogHasVariants" value="false" />
                             <input type="hidden" id="hdCatalogVariantID" />
                             <input type="text" class="form-control" id="txtCatalogVariantName" name="CatalogVariantName" maxlength="100" placeholder="Único / Talla - Color, 32 - R" value="Único" />
                           </div>
@@ -77,7 +78,7 @@
                                 <div class="col-sm-3">
                                 <input type="text" class="form-control" id="txtCatalogPresentationSKU" name="CatalogPresentationSKU" />
                                 </div>
-                                <label for="txtCatalogPresentationBarcode" class="col-sm-1 col-form-label">COD.QR</label>
+                                <label for="txtCatalogPresentationBarcode" class="col-sm-2 col-form-label">COD.BARRA</label>
                                 <div class="col-sm-3">
                                 <input type="text" class="form-control" id="txtCatalogPresentationBarcode" name="CatalogPresentationBarcode" />
                                 </div>

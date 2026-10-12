@@ -15,6 +15,7 @@
         public string ActiveIngredient { get; set; } = null!;
         public string TherapeuticAction { get; set; } = null!;
         public byte RecordStateID { get; set; }
+        public bool CatalogHasVariants { get; set; }
         public DateTime CatalogLastUpdatedDateTime { get; set; }       
         public string CatalogLastUpdatedUserName { get; set; } = null!;
     }

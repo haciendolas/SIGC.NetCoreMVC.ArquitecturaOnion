@@ -64,6 +64,7 @@ namespace SIGC.ApplicationService.Features.CatalogFeatures.Queries.CatalogPagina
                 ActiveIngredient = s.ActiveIngredient,
                 TherapeuticAction = s.TherapeuticAction,
                 RecordStateID = s.RecordStateID,
+                CatalogHasVariants = s.CatalogHasVariants,
                 CatalogLastUpdatedDateTime = s.CatalogLastUpdatedDateTime,        
                 CatalogLastUpdatedUserName = s.CatalogLastUpdatedUserName              
             }).ToList();

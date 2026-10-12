@@ -4,6 +4,8 @@
     let ChoicesControl = null;
     let CatalogPriceValidate = null;
     let CatalogTaxValidate = null;
+    const hdAcctionNew = 'NEW';
+    const hdAcctionEdit = 'EDIT';
     const Catalog = {
         _Init: function () {
             $("#txtCatalogName").stringToSlug({
@@ -44,7 +46,7 @@
                     Catalog._Operation.fnCatalogCreateUpdate();
                 });
             };
-            $('#btnCatalogNew').on('click', function () {
+            $('#btnCatalogNew').on('click', function () {              
                 Catalog._Clear.fnCatalogGet();
             });
             if ($('#btnCatalogVariantCreate').length > 0) {
@@ -59,14 +61,29 @@
                 });
             };
             $('#btnCatalogVariantNew').on('click', function () {
-                Catalog._Clear.fnCatalogVariantGet();
-                Catalog._Clear.fnCatalogPresentationGet();
+                debugger
+                let CatalogHasVariants = $('#hdCatalogHasVariants').val();
+                CatalogHasVariants = CatalogHasVariants === true || CatalogHasVariants === 'true';
+                if (CatalogHasVariants) {
+                    Catalog._Clear.fnCatalogVariantGet();
+                    Catalog._Clear.fnCatalogPresentationGet();
+                    const btnCatalogPresentationCreate = $('#btnCatalogPresentationCreate');
+                    if (btnCatalogPresentationCreate.length > 0) btnCatalogPresentationCreate.hide();
+                }
+                else {
+                    Catalog._Clear.fnCatalogPresentationGet();
+                    $('#txtCatalogVariantSKU').attr('disabled', true);
+                    const btnCatalogVariantCreate = $('#btnCatalogVariantCreate');     
+                    const btnCatalogPresentationCreate = $('#btnCatalogPresentationCreate');
+                    if (btnCatalogVariantCreate.length > 0) btnCatalogVariantCreate.hide();
+                    if (btnCatalogPresentationCreate.length > 0) btnCatalogPresentationCreate.show();
+                };       
             });
 
             if ($('#btnCatalogPresentationCreate').length > 0) {
                 $('#btnCatalogPresentationCreate').hide();
                 $('#btnCatalogPresentationCreate').on('click', function () {
-                    Catalog._Operation.fnCatalogPresentationCreateUpdate();
+                    Catalog._Operation.fnCatalogPresentationCreate();
                 });
             };
 
@@ -123,14 +140,8 @@
                 Catalog._Search.fnWarehouseComboBox();
             });
             $('#chkCatalogHasVariants').on('change', function () {
-                if ($(this).is(':checked')) {
-                    $('#btnAttributeSearchOpen').show();
-                    $('#txtCatalogVariantName').val('').attr('disabled', false);
-                }
-                else {
-                    $('#btnAttributeSearchOpen').hide();
-                    $('#txtCatalogVariantName').val('Único').attr('disabled', true);
-                }
+                const CatalogHasVariants = $(this).is(':checked');
+                Catalog._Other.fnCatalogHasVariants(CatalogHasVariants);
             });
             $('#txtCatalogVariantName').val('Único').attr('disabled', true);
             $('#btnAttributeSearchOpen').hide();
@@ -153,6 +164,12 @@
             });
             $('button[name="btnCatalogReturn"]').on('click', function () {               
                 Catalog._Other.fnCatalogTabs();
+                Catalog._Clear.fnCatalogGet();
+                Catalog._Clear.fnCatalogVariantGet();
+                Catalog._Clear.fnCatalogPresentationGet();
+                Catalog._Clear.fnCatalogPriceGet();
+                Catalog._Clear.fnCatalogTaxGet();
+                $('#hdCatalogHasVariants').val('false');
                 $('#catalog-card ul li a[href="#tab-register"]').removeClass('disabled');
                 $('#catalog-card ul li a[href="#tab-register"]').attr('data-bs-toggle', 'tab');
                 $('#catalog-card ul li a[href="#tab-register"]').tab('show');
@@ -161,6 +178,7 @@
         _Clear: {
             fnCatalogGet: function () {
                 $('#txtCatalogID').val('GENERADO');
+                $('#hdAction').val(hdAcctionNew);
                 $('#txtCatalogName,#txtCatalogSlug,#cboCatalogTypeID,#txtCatalogCode').val('');
                 $('#chkCatalogStateID').prop('checked', true);
                 if ($('#btnCatalogUpdate').length > 0) $('#btnCatalogUpdate').hide();
@@ -183,6 +201,8 @@
             },
             fnCatalogVariantGet: function () {
                 $('#hdCatalogVariantID,#txtCatalogVariantName,#txtCatalogVariantSKU').val('');
+                $('#txtCatalogVariantName,#txtCatalogVariantSKU').attr('disabled', false);
+                $('#btnAttributeSearchOpen').show();
             },
             fnCatalogPresentationGet: function () {
                 $('#hdCatalogPresentationID,#txtCatalogPresentationEquivalence,#txtCatalogPresentationSKU,#txtCatalogPresentationBarcode,#cboPresentationID').val('');
@@ -337,7 +357,7 @@
                     Uti.Modal.Toastify(Uti.Message.Description.AtLeastOneItemMustBeSelected('un valor'), Uti.Message.Type.Warning);
                     return;
                 };
-                const catalogName = $('input:text[name=CatalogName]').val().trim();
+                const catalogName = $('input:text[name=CatalogNameLabel]').val().trim();
                 const catalogVariantName = attributes
                     .map(item =>
                         item.attributeName + '/' +
@@ -358,6 +378,17 @@
                     .map(word => word.charAt(0))
                     .join('')
                     .toUpperCase();
+            },
+            fnCatalogHasVariants: function (CatalogHasVariants) {              
+                CatalogHasVariants = CatalogHasVariants === true || CatalogHasVariants === 'true';
+                if (CatalogHasVariants) {
+                    $('#btnAttributeSearchOpen').show();
+                    $('#txtCatalogVariantName').val('').attr('disabled', false);
+                }
+                else {
+                    $('#btnAttributeSearchOpen').hide();
+                    $('#txtCatalogVariantName').val('Único').attr('disabled', true);
+                };
             }
         },
         _Validation: {
@@ -491,7 +522,6 @@
                     }
                 });
             },
-
             fnCatalogTaxCreateUpdateReset: function () {
                 CatalogTaxValidate.resetForm();
                 $('#frmCatalogTaxCreateUpdate *').removeClass(['invalid-feedback', 'is-invalid']);
@@ -583,7 +613,6 @@
                             { name: 'BrandID', value: $('#scboBrandID').val() },
                             { name: 'RecordStateID', value: $('#scboStateID').val() },
                             { name: 'Search', value: $('#stxtCatalogName').val().trim() }
-
                         );
                     },
                     sPaginationType: 'full_numbers',
@@ -605,6 +634,7 @@
                     bSort: false,
                     rowCallback: function (row, data, dataIndex) {
                         $(row).find('a[name=lnkEdit]').on('click', function () {
+                            $('#hdAction').val(hdAcctionEdit);
                             Catalog._Search.fnCatalogGet(data[0]);
                         });
                         $(row).find('a[name=lnkInactive]').on('click', function () {
@@ -618,16 +648,21 @@
                             $('#message-modal-generic #hd-modal-id').val(data[0]);
                             $('#message-modal-generic #hd-modal-action').val(Uti.Variable.FormAction.CatalogDelete); 
                         });
-                        $(row).find('a[name=lnkPresentation]').on('click', function () {                           
+                        $(row).find('a[name=lnkPresentation]').on('click', function () {    
+                            $('#hdAction').val(hdAcctionEdit);
                             Catalog._Other.fnCatalogTabs();
                             Catalog._Other.fnSearchDisabledTabs();
                             Catalog._Other.fnRegisterDisabledTabs(); 
-                            Catalog._Other.fnPresentationTabs();
+                            Catalog._Other.fnPresentationTabs(); 
+                            const CatalogHasVariants = $(this).attr('cataloghasvariants');
+                            Catalog._Other.fnCatalogHasVariants(CatalogHasVariants);
+                            $('#hdCatalogHasVariants').val(CatalogHasVariants);
                             $('#txtCatalogID').val(data[0]);
                             $('input[name="CatalogNameLabel"]').val(data[2]);
                             Catalog._Search.fnCatalogVariantGrid();
                         });
                         $(row).find('a[name=lnkPrice]').on('click', function () {
+                            $('#hdAction').val(hdAcctionEdit);
                             Catalog._Other.fnCatalogTabs();
                             Catalog._Other.fnSearchDisabledTabs();
                             Catalog._Other.fnRegisterDisabledTabs(); 
@@ -638,6 +673,7 @@
                             Catalog._Search.fnCatalogPriceGrid();
                         });
                         $(row).find('a[name=lnkTax]').on('click', function () {
+                            $('#hdAction').val(hdAcctionEdit);
                             Catalog._Other.fnCatalogTabs();
                             Catalog._Other.fnSearchDisabledTabs();
                             Catalog._Other.fnRegisterDisabledTabs(); 
@@ -648,6 +684,7 @@
                             Catalog._Search.fnCatalogTaxExemptionGrid();
                         });
                         $(row).find('a[name=lnkConfiguration]').on('click', function () {
+                            $('#hdAction').val(hdAcctionEdit);
                             Catalog._Other.fnCatalogTabs();
                             Catalog._Other.fnSearchDisabledTabs();
                             Catalog._Other.fnRegisterDisabledTabs(); 
@@ -804,8 +841,8 @@
                     }
                     if (response.type === Uti.Message.Type.Query) {
                         const { data: rowData } = response;
-                        if (rowData && rowData.length > 0) {
-                            $('.grid-variant').remove();
+                        $('.grid-variant').remove();
+                        if (rowData && rowData.length > 0) {                          
                             const linkUpdate = Uti.Variable.Control();
                             linkUpdate.Type = Uti.Variable.ButtonType.Update;
                             const linkChange = Uti.Variable.Control();
@@ -814,7 +851,8 @@
                             linkUnchange.Type = Uti.Variable.ButtonType.Unchange;
                             const linkAdd = Uti.Variable.Control();
                             linkAdd.Type = Uti.Variable.ButtonType.Add;
-
+                            let CatalogHasVariants = $('#hdCatalogHasVariants').val();
+                            CatalogHasVariants = CatalogHasVariants === true || CatalogHasVariants === 'true';
                             rowData.forEach(catalogVariant => {
                                 const attributeValueIDs = catalogVariant.catalogVariantValues.map(catalogVariantValue => catalogVariantValue.attributeValueID);
                                 const containerVariantButtonId = `acction${catalogVariant.catalogVariantID}`;
@@ -867,13 +905,20 @@
                                             </div>
                                         </div>`;
                                 $('#div-variant').after(grid);
+                                if (CatalogHasVariants === false) {
+                                    $('#hdCatalogVariantID').val(catalogVariant.catalogVariantID);
+                                    $('#txtCatalogVariantName').val(catalogVariant.catalogVariantName.trim()).data("attributeValueIDs", attributeValueIDs).attr('disabled', true);
+                                    $('#txtCatalogVariantSKU').val(catalogVariant.catalogVariantSKU.trim()).attr('disabled', true);
+                                    $('#span-catalog-variant-name').text(catalogVariant.catalogVariantName.trim());
+                                };
                                 const element = $('#' + containerVariantButtonId);
                                 element.find('a[name=slnkAdd]').on('click', function () {
                                     $('#hdCatalogVariantID').val(catalogVariant.catalogVariantID);
-                                    $('#txtCatalogVariantName').val(catalogVariant.catalogVariantName.trim()).data("attributeValueIDs", attributeValueIDs);
-                                    $('#txtCatalogVariantSKU').val(catalogVariant.catalogVariantName.trim());
+                                    $('#txtCatalogVariantName').val(catalogVariant.catalogVariantName.trim()).data("attributeValueIDs", attributeValueIDs).attr('disabled',true);
+                                    $('#txtCatalogVariantSKU').val(catalogVariant.catalogVariantSKU.trim()).attr('disabled',true);
                                     $('#span-catalog-variant-name').text(catalogVariant.catalogVariantName.trim());
                                     Catalog._Clear.fnCatalogPresentationGet();
+                                    $('#btnAttributeSearchOpen').hide();
                                     const btnCatalogPresentationCreate = $('#btnCatalogPresentationCreate');
                                     const btnCatalogVariantCreate = $('#btnCatalogVariantCreate');
                                     if (btnCatalogPresentationCreate.length > 0) btnCatalogPresentationCreate.show();
@@ -908,8 +953,8 @@
                                     element.append(column).fadeIn('slow');
                                     element.find('#' + rowId + ' a[name = slnkEdit]').on('click', function () {                                         
                                         $('#hdCatalogVariantID').val(catalogVariant.catalogVariantID);
-                                        $('#txtCatalogVariantName').val(catalogVariant.catalogVariantName.trim()).data("attributeValueIDs", attributeValueIDs);
-                                        $('#txtCatalogVariantSKU').val(catalogVariant.catalogVariantName.trim());
+                                        $('#txtCatalogVariantName').val(catalogVariant.catalogVariantName.trim()).data("attributeValueIDs", attributeValueIDs).attr('disabled', CatalogHasVariants ? false : true);
+                                        $('#txtCatalogVariantSKU').val(catalogVariant.catalogVariantSKU.trim()).attr('disabled', false);
                                         $('#span-catalog-variant-name').text(catalogVariant.catalogVariantName.trim());
                                         $('#hdCatalogPresentationID').val(catalogPresentation.catalogPresentationID);
                                         ChoicesControl.CboUnitMeasureID.setChoiceByValue(String(catalogPresentation.unitMeasureID))
@@ -936,7 +981,7 @@
                             });
                         }
                         else {
-                            $('#div-variant').append(Uti.Message.Description.NoRecordsFound);
+                            $('#div-variant').after('<div class="card grid-variant text-center">'+Uti.Message.Description.NoRecordsFound+'</div>');
                         }
                     };
                 });
@@ -1341,8 +1386,8 @@
                             if (response.data) { 
                                $('#txtCatalogID').val(response.data.catalogID);
                             };
-                            Uti.Modal.Process();                           
-                            if (CatalogID === 0) {
+                            Uti.Modal.Process();
+                            if ($('#hdAction').val() === hdAcctionNew) {
                                 Catalog._Other.fnPresentationTabs();
                             }
                             else {
@@ -1397,26 +1442,23 @@
                             };
                             Uti.Modal.Process();
                             Catalog._Search.fnCatalogVariantGrid();
-                            if (CatalogVariantID === 0) {
+                            if ($('#hdAction').val() === hdAcctionNew) {
                                 Catalog._Other.fnPriceTabs();
                                 Catalog._Search.fnCatalogPresentationComboBox();
                             }
                             else {
-                                Catalog._Clear.fnCatalogVariantGet();
-                                Catalog._Clear.fnCatalogPresentationGet();
+                                $('#btnCatalogVariantNew').click();
                             };
                         };
                     });
                 }
             },
-            fnCatalogPresentationCreateUpdate: function () {
-                if ($('#frmCatalogVariantCreateUpdate').valid()) {
-                    const CatalogPresentationID = $('#hdCatalogPresentationID').val() == '' ? 0 : $('#hdCatalogPresentationID').val();
+            fnCatalogPresentationCreate: function () {
+                if ($('#frmCatalogVariantCreateUpdate').valid()) {                
                     const options = {
-                        url: Uti.Url.Base + '/Product/CatalogPresentation/' + (CatalogPresentationID == 0 ? 'CatalogPresentationCreate' : 'CatalogPresentationCreate') + '',
+                        url: Uti.Url.Base + '/Product/CatalogPresentation/CatalogPresentationCreate',
                         data: {
-                            CatalogVariantID: $('#hdCatalogVariantID').val() == '' ? 0 : $('#hdCatalogVariantID').val(),   
-                          //CatalogPresentationID: $('#hdCatalogPresentationID').val() === '' ? 0 : $('#hdCatalogPresentationID').val(),
+                            CatalogVariantID: $('#hdCatalogVariantID').val() == '' ? 0 : $('#hdCatalogVariantID').val(),                         
                             PresentationID: $('#cboPresentationID').val(),
                             CatalogPresentationIsDefault: false,
                             CatalogPresentationEquivalence: $('#txtCatalogPresentationEquivalence').val(),
@@ -1424,7 +1466,7 @@
                             CatalogPresentationBarcode: $('#txtCatalogPresentationBarcode').val().trim(),
                             RecordStateID: $('#chkCatalogPresentationStateID').is(':checked') ? Uti.Variable.StateType.Active : Uti.Variable.StateType.Inactive                            
                         },
-                        type: CatalogPresentationID == 0 ? Uti.Variable.FetchAjax.Type.Post : Uti.Variable.FetchAjax.Type.Put
+                        type: Uti.Variable.FetchAjax.Type.Post
                     };
                     Uti.Ajax.Custom(options, function (response) {
                         Uti.Modal.Message(response.type, response.message, response.function);
@@ -1466,17 +1508,14 @@
                             Uti.Modal.Process();
                         };
                         if (response.type === Uti.Message.Type.Success) {
-                            Uti.Modal.Process();
-                            Catalog._Clear.fnCatalogPriceGet();
-                            Catalog._Search.fnCatalogPriceGrid();
-                            //if (CatalogPriceID === 0) {
-                             //   Catalog._Other.fnTaxTabs();
-                           // }
-                           // else {
-                            //    Catalog._Clear.fnCatalogPriceGet();
-                                // Catalog._Search.fnCatalogVariantGrid();
-                           // }
-                          
+                            Uti.Modal.Process();                         
+                            if ($('#hdAction').val() === hdAcctionNew) {
+                                Catalog._Other.fnTaxTabs();
+                            }
+                            else {
+                                Catalog._Clear.fnCatalogPriceGet();
+                                Catalog._Search.fnCatalogPriceGrid();
+                            };                          
                         };
                     });
                 }
@@ -1502,8 +1541,13 @@
                         };
                         if (response.type === Uti.Message.Type.Success) {
                             Uti.Modal.Process();
-                            Catalog._Clear.fnCatalogTaxGet();
-                            Catalog._Search.fnCatalogTaxGrid();
+                            if ($('#hdAction').val() === hdAcctionNew) {
+                                Catalog._Other.fnConfigurationTabs();
+                            }
+                            else{
+                               Catalog._Clear.fnCatalogTaxGet();
+                               Catalog._Search.fnCatalogTaxGrid();
+                            };
                         };
                     });
                 }

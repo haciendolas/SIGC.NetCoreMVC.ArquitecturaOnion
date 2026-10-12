@@ -6,7 +6,7 @@ using SIGC.Infrastructure.CrossCutting.Wrappers;
 
 namespace SIGC.ApplicationService.Features.CatalogPresentationFeatures.Queries.CatalogPresentationList
 {
-    internal class CatalogPresentationListQueryHandler : IRequestHandler<CatalogPresentationListQueryRequest, MsgResponse<List<CatalogVariantListQueryResponse>>>
+    internal class CatalogPresentationListQueryHandler : IRequestHandler<CatalogPresentationListQueryRequest, MsgResponse<List<CatalogPresentationListQueryResponse>>>
     {
         private readonly IMessageService MessageService;
         private readonly ICurrentSessionService CurrentSessionService;
@@ -22,15 +22,15 @@ namespace SIGC.ApplicationService.Features.CatalogPresentationFeatures.Queries.C
             this.CatalogPresentationListRepository = CatalogPresentationListRepository;        
         }
 
-        public async Task<MsgResponse<List<CatalogVariantListQueryResponse>>> Handle(CatalogPresentationListQueryRequest Request, CancellationToken CancellationToken)
+        public async Task<MsgResponse<List<CatalogPresentationListQueryResponse>>> Handle(CatalogPresentationListQueryRequest Request, CancellationToken CancellationToken)
         {
-            var MsgResponse = new MsgResponse<List<CatalogVariantListQueryResponse>>();
+            var MsgResponse = new MsgResponse<List<CatalogPresentationListQueryResponse>>();
             MsgResponse.Type = MessageTypeConst.QUERY;
             MsgResponse.Message = MessageService.GetMessageResult(MessageDescriptionConst.QUERY_RESULT);
             var CatalogPresentationList = await CatalogPresentationListRepository.ListAsync(CurrentSessionService.CompanyID,Request.CatalogID,CancellationToken);
 
             MsgResponse.Data = CatalogPresentationList.GroupBy(x => new { x.CatalogVariantID, x.CatalogVariantName})
-                                .Select(g => new CatalogVariantListQueryResponse(
+                                .Select(g => new CatalogPresentationListQueryResponse(
                                     g.Key.CatalogVariantID,
                                     g.Key.CatalogVariantName,                               
                                     g.Select(x => new CatalogPresentationListQueryResponse(

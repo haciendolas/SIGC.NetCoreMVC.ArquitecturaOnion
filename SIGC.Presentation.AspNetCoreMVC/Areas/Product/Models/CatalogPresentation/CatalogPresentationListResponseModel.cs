@@ -1,13 +1,13 @@
 ﻿namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Models.CatalogPresentation
 {
-    public sealed record CatalogVariantListResponseModel
+    public sealed record CatalogPresentationListResponseModel
     (
         int CatalogVariantID,
         string CatalogVariantName,
-        List<CatalogPresentationListResponseModel> CatalogPresentations
+        List<CatalogPresentationItemListResponseModel> CatalogPresentations
     );
 
-    public sealed record CatalogPresentationListResponseModel
+    public sealed record CatalogPresentationItemListResponseModel
     (
         int CatalogPresentationID,
         string CatalogPresentationName

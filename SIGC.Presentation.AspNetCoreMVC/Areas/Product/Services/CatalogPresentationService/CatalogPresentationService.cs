@@ -22,9 +22,9 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogPresenta
         {
             return await ApiService.PutAsync<CatalogPresentationChangeStateRequestModel, ApiResponse<object?>>($"{Controller}/CatalogPresentationChangeState", Request);
         }
-        public async Task<ApiResponse<List<CatalogVariantListResponseModel>>> CatalogPresentationList(int CatalogID)
+        public async Task<ApiResponse<List<CatalogPresentationListResponseModel>>> CatalogPresentationList(int CatalogID)
         {
-            return await ApiService.GetAsync<ApiResponse<List<CatalogVariantListResponseModel>>>($"{Controller}/CatalogPresentationList/{CatalogID}");
+            return await ApiService.GetAsync<ApiResponse<List<CatalogPresentationListResponseModel>>>($"{Controller}/CatalogPresentationList/{CatalogID}");
         }
     }
 }
