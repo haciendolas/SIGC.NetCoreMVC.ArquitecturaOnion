@@ -1,7 +1,7 @@
 ﻿@{
     Layout = null;
 }
-<form id="frmCompanyCreateUpdate" class="needs-validation" novalidate method="dialog">
+
     <h6 class="pt-2">&nbsp;&nbsp;Todos los campos(<i class="ri-asterisk align-middle text-danger"></i>) son obligatorios &nbsp;&nbsp;&nbsp;  <button type="button" class="btn btn-light" name="btnCatalogReturn"><i class="ri-reply-fill align-bottom me-1 fs-13"></i>&nbsp;Retornar&nbsp;</button>&nbsp;&nbsp;</h6>
     <div class="card-body">
         <div class="row pb-2">
@@ -21,64 +21,56 @@
                         </div>
                     </div>
                     <div class="card-body">
+                       <form id="frmCatalogStockCreateUpdate" class="needs-validation" novalidate method="dialog">
                         <div class="row pb-2">
                             <label for="cboWarehouseID" class="col-sm-2 col-form-label">Almacén<i class="ri-asterisk align-middle text-danger"></i></label>
-                            <div class="col-sm-6">
+                            <div class="col-sm-10">
                                 <select class="form-select" id="cboWarehouseID" name="WarehouseID">                                     
                                         <option value="">Seleccionar</option>                                       
                                 </select>
-                            </div>
-                            <label for="chkStateID" class="col-sm-2 col-form-label">Estado</label>
-                            <div class="col-sm-2 pt-2">
-                                <div class="form-check form-switch form-switch-md form-switch-secondary" dir="ltr">
-                                    <input type="checkbox" class="form-check-input" checked id="chkStateID">
-                                    <label class="form-check-label" for="chkStateID">Activo</label>
-                                </div>
-                            </div>                          
+                            </div>                                  
                         </div>
                         <div class="row pb-2">
-                            <label for="txtCompanyMobile" class="col-sm-2 col-form-label">Stock Min</label>
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" id="txtCompanyMobile" name="CompanyMobile" />
-                            </div>
-                            <label for="txtCompanyMobile" class="col-sm-2 col-form-label">Stock Max</label>
-                            <div class="col-sm-4">
-                                <input type="number" class="form-control" id="txtCompanyMobile" name="CompanyMobile" />
+                            <label for="cboCatalogVariantID" class="col-sm-2 col-form-label">Variante<i class="ri-asterisk align-middle text-danger"></i></label>
+                            <div class="col-sm-10">
+                                <select class="form-select" id="cboCatalogVariantID" name="CatalogVariantID">
+                                    <option value="">Seleccionar</option>
+                                </select>
                             </div>
                         </div>
                         <div class="row pb-2">
-                            <label for="txtCompanyMobile" class="col-sm-2 col-form-label">Stock Inicial</label>
+                            <label for="txtCatalogStockMinimumQuantity" class="col-sm-2 col-form-label">Stock Min</label>
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" id="txtCompanyMobile" name="CompanyMobile" />
+                                <input type="number" class="form-control" id="txtCatalogStockMinimumQuantity" name="CatalogStockMinimumQuantity" />
                             </div>
-                            <label for="txtCompanyMobile" class="col-sm-2 col-form-label">Stock Actual</label>
+                            <label for="txtCatalogStockMinimumQuantity" class="col-sm-2 col-form-label">Stock Max</label>
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" id="txtCompanyMobile" name="CompanyMobile" />
+                                <input type="number" class="form-control" id="txtCatalogStockMinimumQuantity" name="CatalogStockMinimumQuantity" />
                             </div>
-                        </div>
+                        </div>                         
                         <div class="row pb-2">
                             <div class="col-sm-12">
                                 <div class="text-end">
-                                    <button type="button" class="btn btn-light" id="btnCompanyNew"><i class="ri-file-text-fill align-bottom me-1 fs-13"></i>&nbsp;Nuevo&nbsp;</button>&nbsp;&nbsp;
-                                    <button type="button" class="btn btn-primary" id="btnCompanyCreate"><i class="ri-save-3-line align-bottom me-1 fs-13"></i><span>Guardar</span></button>
-                                    <button type="button" class="btn btn-primary" id="btnCompanyUpdate"><i class="ri-pencil-fill align-bottom me-1 fs-13"></i>Editar&nbsp;</button>
+                                    <button type="button" class="btn btn-light" id="btnCatalogStockNew"><i class="ri-file-text-fill align-bottom me-1 fs-13"></i>&nbsp;Nuevo&nbsp;</button>&nbsp;&nbsp;
+                                    <button type="button" class="btn btn-primary" id="btnCatalogStockCreate"><i class="ri-save-3-line align-bottom me-1 fs-13"></i><span>Guardar</span></button>
+                                    <button type="button" class="btn btn-primary" id="btnCatalogStockUpdate"><i class="ri-pencil-fill align-bottom me-1 fs-13"></i>Editar&nbsp;</button>
                                 </div>
                             </div>
                         </div>
+                       </form>
                         <div class="table-responsive table-card pt-3 p-1">
-                            <table class="table align-middle" id="dtCompany">
+                            <table class="table align-middle" id="dtCatalogStock">
                                 <thead class="table-light text-muted">
-                                    <tr>
+                                    <tr>                                       
+                                        <th class="text-center">Establecimiento</th>
                                         <th class="text-center">Almacén</th>
-                                        <th class="text-center">Stock Inicial</th>
                                         <th class="text-center">Stock Min</th>
                                         <th class="text-center">Stock Max</th>
-                                        <th class="text-center">Stock Act</th>
-                                        <th class="text-center">Estado</th>
-                                        <th class="text-center" colspan="2">Opciones</th>
+                                        <th class="text-center">Stock Act</th>                                        
+                                        <th class="text-center">Opción</th>
                                     </tr>
                                 </thead>
-                                <tbody id="details-list">
+                                <tbody id="catalog-stock-list">
                                 </tbody>
                             </table>
                         </div>
@@ -90,7 +82,7 @@
                     <div class="card-header p-2" style="background:#f3f3f9">
                         <div class="d-flex align-items-center">
                             <div class="flex-grow-1">
-                                <h6 class="card-title mb-0">CONFIGURACIÓN POR ESTABLECIMIENTO</h6>
+                                <h6 class="card-title mb-0">INVENTARIO POR ESTABLECIMIENTO</h6>
                             </div>
                         </div>
                     </div>
@@ -98,47 +90,37 @@
                         <div class="row pb-2">                             
                             <div class="col-sm-6">
                                 <div class="form-check form-switch form-switch-md form-switch-secondary">
-                                    <input type="checkbox" class="form-check-input" checked id="chkStateID">
-                                    <label class="form-check-label" for="chkStateID">Controla Inventario</label>
+                                <input type="checkbox" class="form-check-input" checked id="chkCatalogConfigurationIsStockManaged">
+                                <label class="form-check-label" for="chkCatalogConfigurationIsStockManaged">Controla Inventario</label>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-check form-switch form-switch-md form-switch-secondary">
-                                    <input type="checkbox" class="form-check-input" checked id="chkStateID">
-                                    <label class="form-check-label" for="chkStateID">Afecto a Stock</label>
+                                <input type="checkbox" class="form-check-input" checked id="chkCatalogConfigurationIsAffectStock">
+                                <label class="form-check-label" for="chkCatalogConfigurationIsAffectStock">Afecto a Stock</label>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row pb-2">
-                            <label for="chkStateID" class="col-sm-2 col-form-label pt-2">Estado</label>
-                            <div class="col-sm-5 pt-2">
-                                <div class="form-check form-switch form-switch-md form-switch-secondary" dir="ltr">
-                                    <input type="checkbox" class="form-check-input" checked id="chkStateID">
-                                    <label class="form-check-label" for="chkStateID">Activo</label>
-                                </div>
-                            </div>
-                        </div>
+                        </div>                       
                         <div class="row pb-2">
                             <div class="col-sm-12">
                                 <div class="text-end">
-                                    <button type="button" class="btn btn-light" id="btnCompanyNew"><i class="ri-file-text-fill align-bottom me-1 fs-13"></i>&nbsp;Nuevo&nbsp;</button>&nbsp;&nbsp;
-                                    <button type="button" class="btn btn-primary" id="btnCompanyCreate"><i class="ri-save-3-line align-bottom me-1 fs-13"></i><span>Guardar</span></button>
-                                    <button type="button" class="btn btn-primary" id="btnCompanyUpdate"><i class="ri-pencil-fill align-bottom me-1 fs-13"></i>Editar&nbsp;</button>
+                                    <button type="button" class="btn btn-light" id="btnCatalogConfigurationNew"><i class="ri-file-text-fill align-bottom me-1 fs-13"></i>&nbsp;Nuevo&nbsp;</button>&nbsp;&nbsp;
+                                    <button type="button" class="btn btn-primary" id="btnCatalogConfigurationCreate"><i class="ri-save-3-line align-bottom me-1 fs-13"></i><span>Guardar</span></button>
+                                    <button type="button" class="btn btn-primary" id="btnCatalogConfigurationUpdate"><i class="ri-pencil-fill align-bottom me-1 fs-13"></i>Editar&nbsp;</button>
                                 </div>
                             </div>
                         </div>
                         <div class="table-responsive table-card pt-3 p-1">
-                            <table class="table align-middle" id="dtCompany">
+                            <table class="table align-middle" id="dtCatalogConfiguration">
                                 <thead class="table-light text-muted">
                                     <tr>
                                         <th class="text-center">Establecimiento</th>
                                         <th class="text-center">Controla Inventario </th>
-                                        <th class="text-center">Afecto a Stock</th>
-                                        <th class="text-center">Estado</th>
-                                        <th class="text-center" colspan="2">Opciones</th>
+                                        <th class="text-center">Afecto a Stock</th>                                     
+                                        <th class="text-center">Opción</th>
                                     </tr>
                                 </thead>
-                                <tbody id="details-list">
+                                <tbody id="catalog-configuration-list">
                                 </tbody>
                             </table>
                         </div>
@@ -147,6 +129,6 @@
             </div>
         </div> 
     </div>
-</form>
+
 
 

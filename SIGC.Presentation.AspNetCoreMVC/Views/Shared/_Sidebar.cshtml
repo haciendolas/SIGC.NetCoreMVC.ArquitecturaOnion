@@ -78,10 +78,19 @@
                     sideBar += "<li class='nav-item'>";
 
                     var SubList = Pages.Where(w => w.PageParentID == item.PageID).ToList();
-                    if (SubList.Any())
-                    {
-                        sideBar += "<a class='nav-link menu-link "+collapsed+"' href='#sidebar-"+item.PageName.Replace(" ","-")+"' data-bs-toggle='collapse' role='button' aria-expanded='false' aria-controls='sidebar-"+item.PageName.Replace(" ","-")+"'>";
-                        sideBar += "<i class='ri-account-circle-line'></i> <span data-key='t-"+item.PageName+"'>"+item.PageName+"</span>";
+                    string menuLink = item.PageParentID == 0 ? "menu-link" : "";
+                    string dataKey = "data-key=t-" + item.PageName;
+                    if (SubList.Any())                    {
+                       
+                        sideBar += "<a class='nav-link " + menuLink + " " + collapsed + "' href='#sidebar-" + item.PageName.Replace(" ", "-") + "' data-bs-toggle='collapse' role='button' aria-expanded='false' aria-controls='sidebar-" + item.PageName.Replace(" ", "-") + "' " + (item.PageParentID == 0 ? "": dataKey) + ">";
+                        sideBar += "<i class='ri-account-circle-line'></i>";
+                        if(item.PageParentID==0){
+                            sideBar += "<span " + dataKey + ">" + item.PageName + "</span>";
+                        }
+                        else
+                        {
+                            sideBar += item.PageName;
+                        }
                         sideBar += "</a>";
 
                         sideBar += "<div class='collapse menu-dropdown "+(collapsed!=string.Empty ? "show":"")+"' id='sidebar-"+item.PageName.Replace(" ","-")+"'>";
@@ -92,8 +101,16 @@
                     }
                     else
                     {
-                        sideBar += "<a " + (item.PageUrlName == "" ? "" : (item.PageUrlName == "#" ? "" : "href='" + Url.Content("~/"+item.PageUrlName) + "'")) + " class='nav-link "+clase+"' data-key='t-" + item.PageName + "'>";
-                        sideBar += "<i class='ri-account-circle-line'></i>" + item.PageName;
+                        sideBar += "<a " + (item.PageUrlName == "" ? "" : (item.PageUrlName == "#" ? "" : "href='" + Url.Content("~/" + item.PageUrlName) + "'")) + " class='nav-link " + menuLink + " " + clase + "' " + (item.PageParentID == 0 ? "" : dataKey) + ">";
+                        sideBar += "<i class='ri-account-circle-line'></i>";
+                        if (item.PageParentID == 0)
+                        {
+                            sideBar += "<span " + dataKey + ">" + item.PageName + "</span>";
+                        }
+                        else
+                        {
+                            sideBar += item.PageName;
+                        }
                         sideBar += "</a>";
                     }
 

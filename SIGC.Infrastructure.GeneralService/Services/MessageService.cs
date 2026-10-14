@@ -73,7 +73,8 @@ public class MessageService(IServiceProvider ServiceProvider) : IMessageService
                 { MessageDescriptionConst.EXIST_CATALOGPRESENTATION_PRESENTATION, "The presentation already exists in this variant" },
                 { MessageDescriptionConst.EXIST_CATALOGPRICE_FIELDS, "A price already exists for the selected combination. Please verify the information entered" },
                 { MessageDescriptionConst.EXIST_CATALOGTAX_FIELDS, "A tax already exists for the selected combination. Please verify the information entered" },
-                { MessageDescriptionConst.EXIST_CATALOGTAXEXEMPTION_FIELDS, "A tax exemption already exists for the selected combination. Please verify the information entered" }
+                { MessageDescriptionConst.EXIST_CATALOGTAXEXEMPTION_FIELDS, "A tax exemption already exists for the selected combination. Please verify the information entered" },
+                { MessageDescriptionConst.EXIST_CATALOGSTOCK_VARIANT, "The variant has already been added to the warehouse" }
             },
 
             [(short)IdiomEnum.Spanish] = new()
@@ -125,7 +126,8 @@ public class MessageService(IServiceProvider ServiceProvider) : IMessageService
                 { MessageDescriptionConst.EXIST_CATALOGPRESENTATION_PRESENTATION, "La presentación ya existen en esta variante" },
                 { MessageDescriptionConst.EXIST_CATALOGPRICE_FIELDS, "Ya existe un precio registrado para la combinación seleccionada. Verifique los datos ingresados" },
                 { MessageDescriptionConst.EXIST_CATALOGTAX_FIELDS, "Ya existe un impuesto registrado para la combinación seleccionada. Verifique los datos ingresados" },
-                { MessageDescriptionConst.EXIST_CATALOGTAXEXEMPTION_FIELDS, "Ya existe una exoneración de impuesto registrado. Verifique los datos ingresados" }
+                { MessageDescriptionConst.EXIST_CATALOGTAXEXEMPTION_FIELDS, "Ya existe una exoneración de impuesto registrado. Verifique los datos ingresados" },
+                { MessageDescriptionConst.EXIST_CATALOGSTOCK_VARIANT, "La variante ya se encuentra agregada al almacen" }
             }
         };
     }

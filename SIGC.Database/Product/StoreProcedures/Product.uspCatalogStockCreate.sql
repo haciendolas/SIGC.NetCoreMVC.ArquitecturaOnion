@@ -1,7 +1,7 @@
 /*=============================================================================          
    Author:                 JOEL CASTILLO ROJAS      
    Create date:            25/07/2026
-   Description:            Permite crear un registro en la tabla Product.CatalogLot
+   Description:            Permite crear un registro en la tabla Product.CatalogStock
    Execute:	  
 
 		  DECLARE @CatalogStockID INT  
@@ -28,7 +28,7 @@
 ALTER PROCEDURE Product.uspCatalogStockCreate
 (  @CatalogStockID INT OUTPUT,
    @CompanyID INT,  
-   @CatalogVariantID INT,
+   @CatalogVariantID INT, 
    @WarehouseID INT,
    @CatalogStockCurrentQuantity NUMERIC(12,6), 
    @CatalogStockMinimumQuantity NUMERIC(12,6),

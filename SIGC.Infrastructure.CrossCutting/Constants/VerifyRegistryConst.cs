@@ -86,7 +86,12 @@
         {
             public const string OK = "OK";
             public const string FIELDS_EXISTS = "FIELDS_EXISTS";
-        }        
+        }
 
+        public static class CatalogStock
+        {
+            public const string OK = "OK";
+            public const string VARIANT_EXISTS = "VARIANT_EXISTS";
+        }
     }
 }
