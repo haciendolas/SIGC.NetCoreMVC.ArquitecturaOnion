@@ -247,6 +247,7 @@ namespace SIGC.Infrastructure.ADONET.SQLSERVER
 
             services.AddScoped<ICatalogStockCreateRepository, CatalogStockCreateRepository>();
             services.AddScoped<ICatalogStockVerifyFieldsRepository, CatalogStockVerifyFieldsRepository>();
+            services.AddScoped<ICatalogStockListRepository, CatalogStockListRepository>();
 
             return services;
         }
