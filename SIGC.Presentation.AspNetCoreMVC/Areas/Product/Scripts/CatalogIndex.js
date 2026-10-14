@@ -4,6 +4,7 @@
     let ChoicesControl = null;
     let CatalogPriceValidate = null;
     let CatalogTaxValidate = null;
+    let CatalogStockValidate = null;
     const hdAcctionNew = 'NEW';
     const hdAcctionEdit = 'EDIT';
     const Catalog = {
@@ -17,6 +18,7 @@
             Catalog._Validation.fnCatalogVariantCreateUpdateValidate();
             Catalog._Validation.fnCatalogPriceCreateUpdateValidate();
             Catalog._Validation.fnCatalogTaxCreateUpdateValidate();
+            Catalog._Validation.fnCatalogStockCreateUpdateValidate();
             Catalog._Other.fnCatalogTabs();
             Catalog._Other.fnOpenFile();
             Catalog._Search.fnCatalogDataTable();
@@ -114,6 +116,21 @@
                 $('#btnCatalogTaxUpdate').hide();
                 $('#btnCatalogTaxUpdate').on('click', function () {
                     Catalog._Operation.fnCatalogTaxCreateUpdate();
+                });
+            };
+
+            $('#btnCatalogStockNew').on('click', function () {
+                Catalog._Clear.fnCatalogStockGet();
+            });
+            if ($('#btnCatalogStockCreate').length > 0) {
+                $('#btnCatalogStockCreate').on('click', function () {
+                    Catalog._Operation.fnCatalogStockCreateUpdate();
+                });
+            };
+            if ($('#btnCatalogStockUpdate').length > 0) {
+                $('#btnCatalogStockUpdate').hide();
+                $('#btnCatalogStockUpdate').on('click', function () {
+                    Catalog._Operation.fnCatalogStockCreateUpdate();
                 });
             };
 
@@ -234,6 +251,14 @@
                 if (btnCatalogTaxUpdate.length > 0) btnCatalogTaxUpdate.hide();
                 Catalog._Validation.fnCatalogTaxCreateUpdateReset();
             },
+            fnCatalogStockGet: function () {
+                $('#hdCatalogStockID,#cboWarehouseID,#cboCatalogVariantID,#txtCatalogStockMinimumQuantity,#txtCatalogStockMaximumQuantity').val('');
+                const btnCatalogStockCreate = $('#btnCatalogStockCreate');
+                const btnCatalogStockUpdate = $('#btnCatalogStockUpdate');
+                if (btnCatalogStockCreate.length > 0) btnCatalogStockCreate.show();
+                if (btnCatalogStockUpdate.length > 0) btnCatalogStockUpdate.hide();
+                Catalog._Validation.fnCatalogStockCreateUpdateReset();
+            }
         },
         _Other: {
             fnOpenFile: function () {
@@ -557,6 +582,46 @@
                     }
                 });
             },
+
+            fnCatalogStockCreateUpdateReset: function () {
+                CatalogStockValidate.resetForm();
+                $('#frmCatalogStockCreateUpdate *').removeClass(['invalid-feedback', 'is-invalid']);
+            },
+            fnCatalogStockCreateUpdateValidate: function () {
+                CatalogStockValidate = $('#frmCatalogStockCreateUpdate').validate({
+                    ignore: [],
+                    rules: {
+                        WarehouseID: { required: true },
+                        CatalogVariantID: { required: true },
+                        CatalogStockMinimumQuantity: { required: true },
+                        CatalogStockMaximumQuantity: { required: true }
+                    },
+                    messages: {
+                        WarehouseID: { required: '*Campo requerido' },
+                        CatalogVariantID: { required: '*Campo requerido' },
+                        CatalogStockMinimumQuantity: { required: '*Campo requerido' },
+                        CatalogStockMaximumQuantity: { required: '*Campo requerido' }                        
+                    },
+                    highlight: function (element) {
+                        $(element).addClass('is-invalid');
+                    },
+                    unhighlight: function (element) {
+                        $(element).removeClass('is-invalid');
+                    },
+                    errorPlacement: function (error, element) {
+                        const $parent = $(element).closest('.error-placeholder');
+                        error.addClass('invalid-feedback');
+
+                        if ($parent.length) {
+                            $parent.append(error);
+                        } else {
+                            error.insertAfter(element);
+                        }
+                    },
+                    submitHandler: function (form) {
+                    }
+                });
+            },
         },
         _Modal: {
             fnAttributeSearchOpen: function () {
@@ -691,6 +756,7 @@
                             Catalog._Other.fnConfigurationTabs();
                             $('#txtCatalogID').val(data[0]);
                             $('input[name="CatalogNameLabel"]').val(data[2]);
+                            Catalog._Search.fnCatalogVariantComboBox();
                         });
                     },
                     drawCallback: function (data) {
@@ -824,6 +890,36 @@
                             options = `<option value="">${Uti.Message.Description.NoRecordsFound}</option>`;
                         }
                         $('#cboWarehouseID').append(options);
+                    };
+                });
+            },
+            fnCatalogVariantComboBox: function (preload = false) {
+                const CatalogID = $('#txtCatalogID').val() == 'GENERADO' ? 0 : $('#txtCatalogID').val();
+                const options = {
+                    url: Uti.Url.Base + '/Product/CatalogVariant/CatalogVariantListActive/' + CatalogID,
+                    type: Uti.Variable.FetchAjax.Type.Get,
+                    preload: preload
+                };
+                Uti.Ajax.Custom(options, function (response) {
+                    Uti.Modal.Message(response.type, response.message, response.function);
+                    if (response.type === Uti.Message.Type.Session) {
+                        Uti.Modal.Process();
+                    }
+                    if (response.type === Uti.Message.Type.Query) {
+                        const { data: rowData } = response;
+                        const comboBox = $('#cboCatalogVariantID');
+                        comboBox.empty();
+                        let options = '';
+                        if (rowData && rowData.length > 0) {
+                            options = `<option value="">${Uti.Message.Description.Select}</option>`;
+                            rowData.forEach(row => {
+                                options += `<option value="${row.value}">${row.label}</option>`;
+                            });
+                        }
+                        else {
+                            options = `<option value="">${Uti.Message.Description.NoRecordsFound}</option>`;
+                        }
+                        comboBox.append(options);
                     };
                 });
             },
@@ -1577,6 +1673,34 @@
                         Catalog._Search.fnCatalogTaxExemptionGrid();
                     };
                 });
+            },
+            fnCatalogStockCreateUpdate: function () {    
+                if ($('#frmCatalogStockCreateUpdate').valid()) {                   
+                    const CatalogStockID = $('#hdCatalogStockID').val() == '' ? 0 : $('#hdCatalogStockID').val();
+                    const options = {
+                        url: Uti.Url.Base + '/Product/CatalogStock/' + (CatalogStockID == 0 ? 'CatalogStockCreate' : 'CatalogStockUpdate') + '',
+                        data: {
+                            CatalogStockID: CatalogStockID,
+                            WarehouseID: $('#cboWarehouseID').val(),
+                            CatalogVariantID: $('#cboCatalogVariantID').val(),
+                            CatalogStockMinimumQuantity: $('#txtCatalogStockMinimumQuantity').val(),
+                            CatalogStockMaximumQuantity: $('#txtCatalogStockMaximumQuantity').val(),
+                            RecordStateID: Uti.Variable.StateType.Active
+                        },
+                        type: Uti.Variable.FetchAjax.Type.Post
+                    };
+                    Uti.Ajax.Custom(options, function (response) {
+                        Uti.Modal.Message(response.type, response.message, response.function);
+                        if (response.type === Uti.Message.Type.Session) {
+                            Uti.Modal.Process();
+                        };
+                        if (response.type === Uti.Message.Type.Success) {
+                            Uti.Modal.Process();
+                            Catalog._Clear.fnCatalogStockGet();
+                            // Catalog._Search.fnCatalogTaxExemptionGrid();
+                        };
+                    });
+                }
             }
         }
     }
