@@ -1302,6 +1302,7 @@
                             rowData.forEach(item => {
                                 const rowId = `row${item.catalogStockID}`;
                                 const column = `<tr id='${rowId}'>
+                                            <td class="text-center">${item.catalogStockID}</td>
                                             <td class="text-center">${item.establishmentName}</td>
                                             <td class="text-center">${item.warehouseCode}-${item.warehouseName}</td>
                                             <td class="text-center">${item.catalogVariantName}</td>
@@ -1325,7 +1326,7 @@
                             });
                         }
                         else {
-                            element.append(`<tr><td colspan="7" class="text-center">${Uti.Message.Description.NoRecordsFound}'</td></tr>`);
+                            element.append(`<tr><td colspan="8" class="text-center">${Uti.Message.Description.NoRecordsFound}'</td></tr>`);
                         }
                     };
                 });
@@ -1738,8 +1739,8 @@
                             CatalogStockMinimumQuantity: $('#txtCatalogStockMinimumQuantity').val(),
                             CatalogStockMaximumQuantity: $('#txtCatalogStockMaximumQuantity').val(),
                             RecordStateID: Uti.Variable.StateType.Active
-                        },
-                        type: Uti.Variable.FetchAjax.Type.Post
+                        },                        
+                        type: CatalogStockID == 0 ? Uti.Variable.FetchAjax.Type.Post : Uti.Variable.FetchAjax.Type.Put
                     };
                     Uti.Ajax.Custom(options, function (response) {
                         Uti.Modal.Message(response.type, response.message, response.function);

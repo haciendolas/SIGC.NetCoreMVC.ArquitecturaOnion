@@ -6,8 +6,7 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogStockSer
     public interface ICatalogStockService
     {      
         Task<ApiResponse<object?>> CatalogStockCreate(CatalogStockCreateUpdateRequestModel Request); 
-        //Task<ApiResponse<object?>> CatalogTaxUpdate(CatalogTaxCreateUpdateRequestModel Request);
-        Task<ApiResponse<List<CatalogStockListResponseModel>>> CatalogStockList(int CatalogID,int? EstablishmentID);
-        
+        Task<ApiResponse<object?>> CatalogStockUpdate(CatalogStockCreateUpdateRequestModel Request);
+        Task<ApiResponse<List<CatalogStockListResponseModel>>> CatalogStockList(int CatalogID,int? EstablishmentID);        
     }
 }

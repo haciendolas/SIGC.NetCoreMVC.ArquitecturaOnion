@@ -21,13 +21,13 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
             Request.CatalogStockCurrentQuantity = 0;
             return Json(await CatalogStockService.CatalogStockCreate(Request));
         }
-        /*
-         [HttpPut]
-         public async Task<IActionResult> CatalogStockUpdate([FromBody] CatalogStockCreateUpdateRequestModel Request)
-         { 
+      
+        [HttpPut]
+        public async Task<IActionResult> CatalogStockUpdate([FromBody] CatalogStockCreateUpdateRequestModel Request)
+        { 
              return Json(await CatalogStockService.CatalogStockUpdate(Request));
-         } 
-        */
+        } 
+        
         [HttpGet]
         public async Task<IActionResult> CatalogStockList([FromRoute(Name = "id")] int CatalogID,[FromQuery] int? EstablishmentID)
         {

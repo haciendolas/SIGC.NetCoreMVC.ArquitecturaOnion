@@ -17,13 +17,11 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogStockSer
         public async Task<ApiResponse<object?>> CatalogStockCreate(CatalogStockCreateUpdateRequestModel Request)
         {
             return await ApiService.PostAsync<CatalogStockCreateUpdateRequestModel, ApiResponse<object?>>($"{Controller}/CatalogStockCreate", Request);
-        }
-        /*
-        public async Task<ApiResponse<object?>> CatalogTaxUpdate(CatalogTaxCreateUpdateRequestModel Request)
+        }      
+        public async Task<ApiResponse<object?>> CatalogStockUpdate(CatalogStockCreateUpdateRequestModel Request)
         {
-            return await ApiService.PutAsync<CatalogTaxCreateUpdateRequestModel, ApiResponse<object?>>($"{Controller}/CatalogTaxUpdate", Request);
-        }
-        */
+            return await ApiService.PutAsync<CatalogStockCreateUpdateRequestModel, ApiResponse<object?>>($"{Controller}/CatalogStockUpdate", Request);
+        }       
         public async Task<ApiResponse<List<CatalogStockListResponseModel>>> CatalogStockList(int CatalogID, int? EstablishmentID)
         {
             var queryParams = EstablishmentID.HasValue ? new { EstablishmentID = EstablishmentID }: null;
