@@ -62,8 +62,7 @@
                     Catalog._Operation.fnCatalogVariantCreateUpdate();
                 });
             };
-            $('#btnCatalogVariantNew').on('click', function () {
-                debugger
+            $('#btnCatalogVariantNew').on('click', function () {            
                 let CatalogHasVariants = $('#hdCatalogHasVariants').val();
                 CatalogHasVariants = CatalogHasVariants === true || CatalogHasVariants === 'true';
                 if (CatalogHasVariants) {
@@ -155,6 +154,7 @@
             });
             $('#cboGlobalEstablishmentID').on('change', function () {
                 Catalog._Search.fnWarehouseComboBox();
+                Catalog._Search.fnCatalogStockGrid();
             });
             $('#chkCatalogHasVariants').on('change', function () {
                 const CatalogHasVariants = $(this).is(':checked');
@@ -757,6 +757,7 @@
                             $('#txtCatalogID').val(data[0]);
                             $('input[name="CatalogNameLabel"]').val(data[2]);
                             Catalog._Search.fnCatalogVariantComboBox();
+                            Catalog._Search.fnCatalogStockGrid();
                         });
                     },
                     drawCallback: function (data) {
@@ -1277,6 +1278,57 @@
                         }
                     };
                 });
+            },
+            fnCatalogStockGrid: function (preload = false) {
+                const EstablishmentID = $('#cboGlobalEstablishmentID').val() === '' ? null : $('#cboGlobalEstablishmentID').val();
+                const CatalogID = $('#txtCatalogID').val() == 'GENERADO' ? 0 : $('#txtCatalogID').val();
+                const options = {
+                    url: Uti.Url.Base + '/Product/CatalogStock/CatalogStockList/' + CatalogID+'?EstablishmentID='+EstablishmentID,
+                    type: Uti.Variable.FetchAjax.Type.Get,
+                    preload: preload
+                };
+                Uti.Ajax.Custom(options, function (response) {
+                    Uti.Modal.Message(response.type, response.message, response.function);
+                    if (response.type === Uti.Message.Type.Session) {
+                        Uti.Modal.Process();
+                    }
+                    if (response.type === Uti.Message.Type.Query) {
+                        const element = $('#catalog-stock-list');
+                        element.html('');
+                        const { data: rowData } = response;
+                        if (rowData && rowData.length > 0) {
+                            const linkUpdate = Uti.Variable.Control();
+                            linkUpdate.Type = Uti.Variable.ButtonType.Update;                          
+                            rowData.forEach(item => {
+                                const rowId = `row${item.catalogStockID}`;
+                                const column = `<tr id='${rowId}'>
+                                            <td class="text-center">${item.establishmentName}</td>
+                                            <td class="text-center">${item.warehouseCode}-${item.warehouseName}</td>
+                                            <td class="text-center">${item.catalogVariantName}</td>
+                                            <td class="text-center">${Uti.Format.Numeric2(item.catalogStockMinimumQuantity)}</td>
+                                            <td class="text-center">${Uti.Format.Numeric2(item.catalogStockMaximumQuantity)}</td>
+                                            <td class="text-center">${Uti.Format.NumericSeparator(item.catalogStockCurrentQuantity, 2)}</td>  
+                                            <td class="text-center" style="width:2%">${Uti.Control.LinkHRef(linkUpdate)}</td>
+                                          </tr>`;
+                                element.append(column).fadeIn('slow');
+                                element.find('#' + rowId + ' a[name = slnkEdit]').on('click', function () {
+                                    $('#hdCatalogStockID').val(item.catalogStockID);
+                                    $('#cboWarehouseID').val(item.warehouseID);                                    
+                                    $('#cboCatalogVariantID').val(item.catalogVariantID);
+                                    $('#txtCatalogStockMinimumQuantity').val(item.catalogStockMinimumQuantity);
+                                    $('#txtCatalogStockMaximumQuantity').val(item.catalogStockMaximumQuantity);                                    
+                                    const btnCatalogStockCreate = $('#btnCatalogStockCreate');
+                                    const btnCatalogStockUpdate = $('#btnCatalogStockUpdate');
+                                    if (btnCatalogStockCreate.length > 0) btnCatalogStockCreate.hide();
+                                    if (btnCatalogStockUpdate.length > 0) btnCatalogStockUpdate.show();
+                                }).tooltip();                       
+                            });
+                        }
+                        else {
+                            element.append(`<tr><td colspan="7" class="text-center">${Uti.Message.Description.NoRecordsFound}'</td></tr>`);
+                        }
+                    };
+                });
             }
         },
         _Operation: {
@@ -1697,7 +1749,7 @@
                         if (response.type === Uti.Message.Type.Success) {
                             Uti.Modal.Process();
                             Catalog._Clear.fnCatalogStockGet();
-                            // Catalog._Search.fnCatalogTaxExemptionGrid();
+                            Catalog._Search.fnCatalogStockGrid();
                         };
                     });
                 }

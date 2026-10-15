@@ -17,20 +17,17 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Services.CatalogStockSer
         public async Task<ApiResponse<object?>> CatalogStockCreate(CatalogStockCreateUpdateRequestModel Request)
         {
             return await ApiService.PostAsync<CatalogStockCreateUpdateRequestModel, ApiResponse<object?>>($"{Controller}/CatalogStockCreate", Request);
-        } 
+        }
         /*
         public async Task<ApiResponse<object?>> CatalogTaxUpdate(CatalogTaxCreateUpdateRequestModel Request)
         {
             return await ApiService.PutAsync<CatalogTaxCreateUpdateRequestModel, ApiResponse<object?>>($"{Controller}/CatalogTaxUpdate", Request);
         }
-        public async Task<ApiResponse<object?>> CatalogTaxChangeState(CatalogTaxChangeStateRequestModel Request)
-        {
-            return await ApiService.PutAsync<CatalogTaxChangeStateRequestModel, ApiResponse<object?>>($"{Controller}/CatalogTaxChangeState", Request);
-        }
-        public async Task<ApiResponse<List<CatalogTaxListResponseModel>>> CatalogTaxList(int CatalogID)
-        {
-            return await ApiService.GetAsync<ApiResponse<List<CatalogTaxListResponseModel>>>($"{Controller}/CatalogTaxList/{CatalogID}");
-        }
         */
+        public async Task<ApiResponse<List<CatalogStockListResponseModel>>> CatalogStockList(int CatalogID, int? EstablishmentID)
+        {
+            var queryParams = EstablishmentID.HasValue ? new { EstablishmentID = EstablishmentID }: null;
+            return await ApiService.GetAsync<ApiResponse<List<CatalogStockListResponseModel>>>($"{Controller}/CatalogStockList/{CatalogID}", queryParams);
+        }       
     }
 }

@@ -21,24 +21,17 @@ namespace SIGC.Presentation.AspNetCoreMVC.Areas.Product.Controllers
             Request.CatalogStockCurrentQuantity = 0;
             return Json(await CatalogStockService.CatalogStockCreate(Request));
         }
-       /*
-        [HttpPut]
-        public async Task<IActionResult> CatalogStockUpdate([FromBody] CatalogStockCreateUpdateRequestModel Request)
-        { 
-            return Json(await CatalogStockService.CatalogStockUpdate(Request));
-        }
-      
-        [HttpPut]
-        public async Task<IActionResult> CatalogStockChangeState([FromBody] CatalogStockChangeStateRequestModel Request)
-        {
-            return Json(await CatalogStockService.CatalogStockChangeState(Request));
-        }
- 
+        /*
+         [HttpPut]
+         public async Task<IActionResult> CatalogStockUpdate([FromBody] CatalogStockCreateUpdateRequestModel Request)
+         { 
+             return Json(await CatalogStockService.CatalogStockUpdate(Request));
+         } 
+        */
         [HttpGet]
-        public async Task<IActionResult> CatalogStockList([FromRoute(Name = "id")] int CatalogID)
+        public async Task<IActionResult> CatalogStockList([FromRoute(Name = "id")] int CatalogID,[FromQuery] int? EstablishmentID)
         {
-            return Json(await CatalogStockService.CatalogStockList(CatalogID));
-        }
-       */
+            return Json(await CatalogStockService.CatalogStockList(CatalogID, EstablishmentID));
+        }     
     }
 }
